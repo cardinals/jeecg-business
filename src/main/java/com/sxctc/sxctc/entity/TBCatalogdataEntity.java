@@ -22,7 +22,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @Title: Entity
  * @Description: 服务目录管理
  * @author onlineGenerator
- * @date 2018-08-01 09:33:00
+ * @date 2018-08-01 10:10:50
  * @version V1.0   
  *
  */
@@ -41,6 +41,12 @@ public class TBCatalogdataEntity implements java.io.Serializable {
 	/**父节点ID*/
 	@Excel(name="父节点ID",width=15)
 	private String fartherid;
+	/**数量*/
+	@Excel(name="数量",width=15)
+	private Integer num;
+	/**备注*/
+	@Excel(name="备注",width=15)
+	private String beizhu;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -112,5 +118,39 @@ public class TBCatalogdataEntity implements java.io.Serializable {
 	 */
 	public void setFartherid(String fartherid){
 		this.fartherid = fartherid;
+	}
+	/**
+	 *方法: 取得java.lang.Integer
+	 *@return: java.lang.Integer  数量
+	 */
+
+	@Column(name ="NUM",nullable=true,length=32)
+	public Integer getNum(){
+		return this.num;
+	}
+
+	/**
+	 *方法: 设置java.lang.Integer
+	 *@param: java.lang.Integer  数量
+	 */
+	public void setNum(Integer num){
+		this.num = num;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  备注
+	 */
+
+	@Column(name ="BEIZHU",nullable=true,length=64)
+	public String getBeizhu(){
+		return this.beizhu;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  备注
+	 */
+	public void setBeizhu(String beizhu){
+		this.beizhu = beizhu;
 	}
 }

@@ -87,6 +87,8 @@ public class TBCatalogdataServiceImpl extends CommonServiceImpl implements TBCat
 		map.put("name", t.getName());
 		map.put("danwei", t.getDanwei());
 		map.put("fartherid", t.getFartherid());
+		map.put("num", t.getNum());
+		map.put("beizhu", t.getBeizhu());
 		return map;
 	}
  	
@@ -101,6 +103,8 @@ public class TBCatalogdataServiceImpl extends CommonServiceImpl implements TBCat
  		sql  = sql.replace("#{name}",String.valueOf(t.getName()));
  		sql  = sql.replace("#{danwei}",String.valueOf(t.getDanwei()));
  		sql  = sql.replace("#{fartherid}",String.valueOf(t.getFartherid()));
+ 		sql  = sql.replace("#{num}",String.valueOf(t.getNum()));
+ 		sql  = sql.replace("#{beizhu}",String.valueOf(t.getBeizhu()));
  		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
  		return sql;
  	}

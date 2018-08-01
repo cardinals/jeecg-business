@@ -33,7 +33,7 @@
 			</form>
 		</div>
 		<div class="toolbar-btn">
-			<button type="button" class="tool-btn tool-btn-default tool-btn-xs" onclick="add('录入','tBCatalogdataController.do?goAdd','tBCatalogdataList',768,760)">
+			<button type="button" class="tool-btn tool-btn-default tool-btn-xs" onclick="add('录入','tBCatalogdataController.do?goAdd','tBCatalogdataList',768,500)">
 				<i class="fa fa-plus"></i>
 				<span>录入</span>
 			</button>
@@ -100,7 +100,7 @@ $(function(){
 
 //easyui-datagrid实例化
 function initDatagrid(){
-	var actionUrl = "tBCatalogdataController.do?datagrid&field=id,name,danwei,fartherid,";
+	var actionUrl = "tBCatalogdataController.do?datagrid&field=id,name,danwei,fartherid,num,beizhu,";
  	$('#tBCatalogdataList').datagrid({
 		url:actionUrl,
 		idField: 'id', 
@@ -130,7 +130,7 @@ function initDatagrid(){
 			,{
 				field : "name",
 				title : "名称",
-				width : 200,
+				width : 260,
 				sortable: true,
 			}
 			,{
@@ -142,6 +142,19 @@ function initDatagrid(){
 			,{
 				field : "fartherid",
 				title : "父节点ID",
+				width : 120,
+				sortable: true,
+				hidden:true,
+			}
+			,{
+				field : "num",
+				title : "数量",
+				width : 120,
+				sortable: true,
+			}
+			,{
+				field : "beizhu",
+				title : "备注",
 				width : 120,
 				sortable: true,
 			}
@@ -179,7 +192,7 @@ function reloadTable() {
 //easyui-datagrid搜索
 function doSearch(){
 	var queryParams = $('#tBCatalogdataList').datagrid('options').queryParams;
-	var actionUrl = "tBCatalogdataController.do?datagrid&field=id,name,danwei,fartherid,";
+	var actionUrl = "tBCatalogdataController.do?datagrid&field=id,name,danwei,fartherid,num,beizhu,";
 	$('#tBCatalogdataForm').find(':input').each(function() {
 		var paramName = $(this).attr('name');
 		if(!!paramName){
@@ -217,7 +230,7 @@ function resetSearch(){
     $('#tBCatalogdataForm').find("input[type='radio']").each(function() {
         $(this).attr('checked', false);
     });
-    var actionUrl = "tBCatalogdataController.do?datagrid&field=id,name,danwei,fartherid,";
+    var actionUrl = "tBCatalogdataController.do?datagrid&field=id,name,danwei,fartherid,num,beizhu,";
     $('#tBCatalogdataList').datagrid({
         url: actionUrl,
         pageNumber: 1
