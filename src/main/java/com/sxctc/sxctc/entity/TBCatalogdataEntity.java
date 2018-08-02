@@ -22,7 +22,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @Title: Entity
  * @Description: 服务目录管理
  * @author onlineGenerator
- * @date 2018-08-01 10:10:50
+ * @date 2018-08-01 14:40:03
  * @version V1.0   
  *
  */
@@ -73,7 +73,7 @@ public class TBCatalogdataEntity implements java.io.Serializable {
 	 *@return: java.lang.String  名称
 	 */
 
-	@Column(name ="NAME",nullable=true,length=32)
+	@Column(name ="NAME",nullable=true,length=100)
 	public String getName(){
 		return this.name;
 	}
@@ -141,7 +141,7 @@ public class TBCatalogdataEntity implements java.io.Serializable {
 	 *@return: java.lang.String  备注
 	 */
 
-	@Column(name ="BEIZHU",nullable=true,length=64)
+	@Column(name ="BEIZHU",nullable=true,length=80)
 	public String getBeizhu(){
 		return this.beizhu;
 	}

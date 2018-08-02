@@ -130,7 +130,7 @@ function initDatagrid(){
 			,{
 				field : "name",
 				title : "名称",
-				width : 260,
+				width : 300,
 				sortable: true,
 			}
 			,{
@@ -155,7 +155,7 @@ function initDatagrid(){
 			,{
 				field : "beizhu",
 				title : "备注",
-				width : 120,
+				width : 300,
 				sortable: true,
 			}
 			,{
