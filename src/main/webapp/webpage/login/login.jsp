@@ -48,8 +48,8 @@
         <div class="login-container">
           <div class="center">
             <h1 id="id-text2" class="grey">
-              <i class="ace-icon fa fa-leaf green"></i>
-               营销数据管理系统
+              <%--<i class="ace-icon fa fa-leaf green"></i>--%>
+               政务云营销数据管理系统
             </h1>
             <%--<h4 class="blue" id="id-company-text">www.jeecg.org</h4>--%>
           </div>

@@ -192,6 +192,7 @@ function initDatagrid(){
 				title : "所属部门",
 				width : 120,
 				sortable: true,
+                hidden:true,
 			}
 			,{
 				field : "sysCompanyCode",
@@ -392,9 +393,9 @@ function initDatagrid(){
 
 	                // 如果已对接显示服务目录
 	                if (rec.joinStatus == 1) {
-                        href += "<a href='#'   class='ace_button'  onclick=delObj('tBBusinessController.do?doDel&id=" + rec.id + "','tBBusinessList')>  <i class=' fa fa-trash-o'></i> ";
+                        href += "<a href='#'   class='ace_button'  onclick=add('tBBusinessController.do?doDel&id=" + rec.id + "','tBBusinessList')>  <i class=' fa fa-trash-o'></i> ";
                         href += "硬件服务目录</a>&nbsp;";
-                        href += "<a href='#'   class='ace_button'  onclick=delObj('tBBusinessController.do?doDel&id=" + rec.id + "','tBBusinessList')>  <i class=' fa fa-trash-o'></i> ";
+                        href += "<a href='#'   class='ace_button'  onclick=add('tBBusinessController.do?doDel&id=" + rec.id + "','tBBusinessList')>  <i class=' fa fa-trash-o'></i> ";
                         href += "基础层服务目录</a>&nbsp;";
                     }
 	                return href;
