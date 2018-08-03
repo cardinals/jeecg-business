@@ -69,7 +69,7 @@
 							</label>
 						</td>
 						<td class="value" >
-						  	 	<textarea id="workDay" style="width:600px;" class="inputxt" rows="6" name="workDay"  ignore="ignore" >${tBWorkreportdayPage.workDay}</textarea>
+						  	 	<textarea id="workDay" style="width:400px;height:260px;" class="inputxt" rows="6" name="workDay"  ignore="ignore" >${tBWorkreportdayPage.workDay}</textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">今日工作内容</label>
 						</td>
@@ -81,7 +81,7 @@
 							</label>
 						</td>
 						<td class="value" >
-						  	 	<textarea id="tomDay" style="width:600px;" class="inputxt" rows="6" name="tomDay"  ignore="ignore" >${tBWorkreportdayPage.tomDay}</textarea>
+						  	 	<textarea id="tomDay" style="width:400px;height:260px;" class="inputxt" rows="6" name="tomDay"  ignore="ignore" >${tBWorkreportdayPage.tomDay}</textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">明日工作计划</label>
 						</td>
@@ -93,7 +93,7 @@
 							</label>
 						</td>
 						<td class="value" >
-						  	 	<textarea id="workDays" style="width:600px;" class="inputxt" rows="6" name="workDays"  ignore="ignore" >${tBWorkreportdayPage.workDays}</textarea>
+						  	 	<textarea id="workDays" style="width:400px;height:260px;" class="inputxt" rows="6" name="workDays"  ignore="ignore" >${tBWorkreportdayPage.workDays}</textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">今日工作计划</label>
 						</td>
@@ -105,7 +105,7 @@
 							</label>
 						</td>
 						<td class="value" >
-						  	 	<textarea id="bangZhu" style="width:600px;" class="inputxt" rows="6" name="bangZhu"  ignore="ignore" >${tBWorkreportdayPage.bangZhu}</textarea>
+						  	 	<textarea id="bangZhu" style="width:400px;height:260px;" class="inputxt" rows="6" name="bangZhu"  ignore="ignore" >${tBWorkreportdayPage.bangZhu}</textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">需要的帮助和支持</label>
 						</td>
@@ -117,7 +117,7 @@
 							</label>
 						</td>
 						<td class="value" >
-						  	 	<textarea id="beizhu" style="width:600px;" class="inputxt" rows="6" name="beizhu"  ignore="ignore" >${tBWorkreportdayPage.beizhu}</textarea>
+						  	 	<textarea id="beizhu" style="width:400px;height:260px;" class="inputxt" rows="6" name="beizhu"  ignore="ignore" >${tBWorkreportdayPage.beizhu}</textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">备注</label>
 						</td>

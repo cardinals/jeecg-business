@@ -5,17 +5,17 @@
   <div region="center" style="padding:0px;border:0px">
   <t:datagrid name="tBWorkreportdayList" checkbox="true" pagination="true" fitColumns="true" title="日报管理" actionUrl="tBWorkreportdayController.do?datagrid" idField="id" fit="true" queryMode="group">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="创建人名称"  field="createName"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="创建人登录名称"  field="createBy"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="创建日期"  field="createDate"  formatter="yyyy-MM-dd"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="创建人名称"  field="createName"  query="true"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="创建日期"  field="createDate"  query="true" formatter="yyyy-MM-dd"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="所属部门"  field="sysOrgCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所属公司"  field="sysCompanyCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="厅局单位"  field="tingjvdanweiName"  queryMode="single"  dictionary="unit_name"  width="120"></t:dgCol>
    <t:dgCol title="系统名称"  field="xitongName"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="今日工作内容"  field="workDay"  queryMode="single"  width="350"></t:dgCol>
-   <t:dgCol title="明日工作计划"  field="tomDay"  queryMode="single"  width="350"></t:dgCol>
-   <t:dgCol title="今日工作计划"  field="workDays"  queryMode="single"  width="350"></t:dgCol>
-   <t:dgCol title="需要的帮助和支持"  field="bangZhu"  queryMode="single"  width="350"></t:dgCol>
+   <t:dgCol title="今日工作内容"  field="workDay"  queryMode="single"  width="300"></t:dgCol>
+   <t:dgCol title="明日工作计划"  field="tomDay"  queryMode="single"  width="300"></t:dgCol>
+   <t:dgCol title="今日工作计划"  field="workDays"  queryMode="single"  width="300"></t:dgCol>
+   <t:dgCol title="需要的帮助和支持"  field="bangZhu"  queryMode="single"  width="300"></t:dgCol>
    <t:dgCol title="备注"  field="beizhu"  queryMode="single"  width="350"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
    <t:dgDelOpt title="删除" url="tBWorkreportdayController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>

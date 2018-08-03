@@ -70,7 +70,7 @@
 						</label>
 					</td>
 					<td class="value" >
-						  	 <textarea style="width:600px;" class="inputxt" rows="6" id="workDay" name="workDay"  ignore="ignore" ></textarea>
+						  	 <textarea style="width:400px;height:260px;" class="inputxt" rows="6" id="workDay" name="workDay"  ignore="ignore" ></textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">今日工作内容</label>
 						</td>
@@ -82,7 +82,7 @@
 						</label>
 					</td>
 					<td class="value" >
-						  	 <textarea style="width:600px;" class="inputxt" rows="6" id="tomDay" name="tomDay"  ignore="ignore" ></textarea>
+						  	 <textarea style="width:400px;height:260px;" class="inputxt" rows="6" id="tomDay" name="tomDay"  ignore="ignore" ></textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">明日工作计划</label>
 						</td>
@@ -94,7 +94,7 @@
 						</label>
 					</td>
 					<td class="value" >
-						  	 <textarea style="width:600px;" class="inputxt" rows="6" id="workDays" name="workDays"  ignore="ignore" ></textarea>
+						  	 <textarea style="width:400px;height:260px;" class="inputxt" rows="6" id="workDays" name="workDays"  ignore="ignore" ></textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">今日工作计划</label>
 						</td>
@@ -106,7 +106,7 @@
 						</label>
 					</td>
 					<td class="value" >
-						  	 <textarea style="width:600px;" class="inputxt" rows="6" id="bangZhu" name="bangZhu"  ignore="ignore" ></textarea>
+						  	 <textarea style="width:400px;height:260px;" class="inputxt" rows="6" id="bangZhu" name="bangZhu"  ignore="ignore" ></textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">需要的帮助和支持</label>
 						</td>
@@ -118,7 +118,7 @@
 						</label>
 					</td>
 					<td class="value" >
-						  	 <textarea style="width:600px;" class="inputxt" rows="6" id="beizhu" name="beizhu"  ignore="ignore" ></textarea>
+						  	 <textarea style="width:400px;height:260px;" class="inputxt" rows="6" id="beizhu" name="beizhu"  ignore="ignore" ></textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">备注</label>
 						</td>
