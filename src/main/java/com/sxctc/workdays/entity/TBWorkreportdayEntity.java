@@ -1,4 +1,4 @@
-package com.sxctc.workday.entity;
+package com.sxctc.workdays.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -20,16 +20,16 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**   
  * @Title: Entity
- * @Description: 日报信息管理
+ * @Description: 日报管理
  * @author onlineGenerator
- * @date 2018-08-02 10:14:23
+ * @date 2018-08-03 09:42:43
  * @version V1.0   
  *
  */
 @Entity
-@Table(name = "t_b_workday", schema = "")
+@Table(name = "t_b_workreportday", schema = "")
 @SuppressWarnings("serial")
-public class TBWorkdayEntity implements java.io.Serializable {
+public class TBWorkreportdayEntity implements java.io.Serializable {
 	/**主键*/
 	private String id;
 	/**创建人名称*/
@@ -44,24 +44,24 @@ public class TBWorkdayEntity implements java.io.Serializable {
 	private String sysOrgCode;
 	/**所属公司*/
 	private String sysCompanyCode;
-	/**项目单位名称*/
-	@Excel(name="项目单位名称",width=15)
-	private String xiangmudanwei;
-	/**项目名称*/
-	@Excel(name="项目名称",width=15)
-	private String xiangmu;
+	/**厅局单位*/
+	@Excel(name="厅局单位",width=15,dicCode="unit_name")
+	private String tingjvdanweiName;
+	/**系统名称*/
+	@Excel(name="系统名称",width=15)
+	private String xitongName;
 	/**今日工作内容*/
 	@Excel(name="今日工作内容",width=15)
-	private String jinri;
-	/**今日工作总结*/
-	@Excel(name="今日工作总结",width=15)
-	private String jinrizongjie;
-	/**明天工作计划*/
-	@Excel(name="明天工作计划",width=15)
-	private String tojihua;
-	/**需要帮助和支持*/
-	@Excel(name="需要帮助和支持",width=15)
-	private String xvyao;
+	private String workDay;
+	/**明日工作计划*/
+	@Excel(name="明日工作计划",width=15)
+	private String tomDay;
+	/**今日工作计划*/
+	@Excel(name="今日工作计划",width=15)
+	private String workDays;
+	/**需要的帮助和支持*/
+	@Excel(name="需要的帮助和支持",width=15)
+	private String bangZhu;
 	/**备注*/
 	@Excel(name="备注",width=15)
 	private String beizhu;
@@ -173,105 +173,105 @@ public class TBWorkdayEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  项目单位名称
+	 *@return: java.lang.String  厅局单位
 	 */
 
-	@Column(name ="XIANGMUDANWEI",nullable=true,length=32)
-	public String getXiangmudanwei(){
-		return this.xiangmudanwei;
+	@Column(name ="TINGJVDANWEI_NAME",nullable=true,length=32)
+	public String getTingjvdanweiName(){
+		return this.tingjvdanweiName;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  项目单位名称
+	 *@param: java.lang.String  厅局单位
 	 */
-	public void setXiangmudanwei(String xiangmudanwei){
-		this.xiangmudanwei = xiangmudanwei;
+	public void setTingjvdanweiName(String tingjvdanweiName){
+		this.tingjvdanweiName = tingjvdanweiName;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  项目名称
+	 *@return: java.lang.String  系统名称
 	 */
 
-	@Column(name ="XIANGMU",nullable=true,length=128)
-	public String getXiangmu(){
-		return this.xiangmu;
+	@Column(name ="XITONG_NAME",nullable=true,length=32)
+	public String getXitongName(){
+		return this.xitongName;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  项目名称
+	 *@param: java.lang.String  系统名称
 	 */
-	public void setXiangmu(String xiangmu){
-		this.xiangmu = xiangmu;
+	public void setXitongName(String xitongName){
+		this.xitongName = xitongName;
 	}
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  今日工作内容
 	 */
 
-	@Column(name ="JINRI",nullable=true,length=256)
-	public String getJinri(){
-		return this.jinri;
+	@Column(name ="WORK_DAY",nullable=true,length=256)
+	public String getWorkDay(){
+		return this.workDay;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  今日工作内容
 	 */
-	public void setJinri(String jinri){
-		this.jinri = jinri;
+	public void setWorkDay(String workDay){
+		this.workDay = workDay;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  今日工作总结
+	 *@return: java.lang.String  明日工作计划
 	 */
 
-	@Column(name ="JINRIZONGJIE",nullable=true,length=256)
-	public String getJinrizongjie(){
-		return this.jinrizongjie;
+	@Column(name ="TOM_DAY",nullable=true,length=256)
+	public String getTomDay(){
+		return this.tomDay;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  今日工作总结
+	 *@param: java.lang.String  明日工作计划
 	 */
-	public void setJinrizongjie(String jinrizongjie){
-		this.jinrizongjie = jinrizongjie;
+	public void setTomDay(String tomDay){
+		this.tomDay = tomDay;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  明天工作计划
+	 *@return: java.lang.String  今日工作计划
 	 */
 
-	@Column(name ="TOJIHUA",nullable=true,length=256)
-	public String getTojihua(){
-		return this.tojihua;
+	@Column(name ="WORK_DAYS",nullable=true,length=256)
+	public String getWorkDays(){
+		return this.workDays;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  明天工作计划
+	 *@param: java.lang.String  今日工作计划
 	 */
-	public void setTojihua(String tojihua){
-		this.tojihua = tojihua;
+	public void setWorkDays(String workDays){
+		this.workDays = workDays;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  需要帮助和支持
+	 *@return: java.lang.String  需要的帮助和支持
 	 */
 
-	@Column(name ="XVYAO",nullable=true,length=256)
-	public String getXvyao(){
-		return this.xvyao;
+	@Column(name ="BANG_ZHU",nullable=true,length=256)
+	public String getBangZhu(){
+		return this.bangZhu;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  需要帮助和支持
+	 *@param: java.lang.String  需要的帮助和支持
 	 */
-	public void setXvyao(String xvyao){
-		this.xvyao = xvyao;
+	public void setBangZhu(String bangZhu){
+		this.bangZhu = bangZhu;
 	}
 	/**
 	 *方法: 取得java.lang.String

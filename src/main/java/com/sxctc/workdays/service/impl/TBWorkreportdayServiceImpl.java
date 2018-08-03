@@ -1,7 +1,7 @@
-package com.sxctc.workday.service.impl;
-import com.sxctc.workday.service.TBWorkdayServiceI;
+package com.sxctc.workdays.service.impl;
+import com.sxctc.workdays.service.TBWorkreportdayServiceI;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
-import com.sxctc.workday.entity.TBWorkdayEntity;
+import com.sxctc.workdays.entity.TBWorkreportdayEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
@@ -18,27 +18,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.jeecgframework.core.util.ResourceUtil;
 
-@Service("tBWorkdayService")
+@Service("tBWorkreportdayService")
 @Transactional
-public class TBWorkdayServiceImpl extends CommonServiceImpl implements TBWorkdayServiceI {
+public class TBWorkreportdayServiceImpl extends CommonServiceImpl implements TBWorkreportdayServiceI {
 
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	
- 	public void delete(TBWorkdayEntity entity) throws Exception{
+ 	public void delete(TBWorkreportdayEntity entity) throws Exception{
  		super.delete(entity);
  		//执行删除操作增强业务
 		this.doDelBus(entity);
  	}
  	
- 	public Serializable save(TBWorkdayEntity entity) throws Exception{
+ 	public Serializable save(TBWorkreportdayEntity entity) throws Exception{
  		Serializable t = super.save(entity);
  		//执行新增操作增强业务
  		this.doAddBus(entity);
  		return t;
  	}
  	
- 	public void saveOrUpdate(TBWorkdayEntity entity) throws Exception{
+ 	public void saveOrUpdate(TBWorkreportdayEntity entity) throws Exception{
  		super.saveOrUpdate(entity);
  		//执行更新操作增强业务
  		this.doUpdateBus(entity);
@@ -49,7 +49,7 @@ public class TBWorkdayServiceImpl extends CommonServiceImpl implements TBWorkday
 	 * @param t
 	 * @return
 	 */
-	private void doAddBus(TBWorkdayEntity t) throws Exception{
+	private void doAddBus(TBWorkreportdayEntity t) throws Exception{
 		//-----------------sql增强 start----------------------------
 	 	//-----------------sql增强 end------------------------------
 	 	
@@ -61,7 +61,7 @@ public class TBWorkdayServiceImpl extends CommonServiceImpl implements TBWorkday
 	 * @param t
 	 * @return
 	 */
-	private void doUpdateBus(TBWorkdayEntity t) throws Exception{
+	private void doUpdateBus(TBWorkreportdayEntity t) throws Exception{
 		//-----------------sql增强 start----------------------------
 	 	//-----------------sql增强 end------------------------------
 	 	
@@ -73,7 +73,7 @@ public class TBWorkdayServiceImpl extends CommonServiceImpl implements TBWorkday
 	 * @param id
 	 * @return
 	 */
-	private void doDelBus(TBWorkdayEntity t) throws Exception{
+	private void doDelBus(TBWorkreportdayEntity t) throws Exception{
 	    //-----------------sql增强 start----------------------------
 	 	//-----------------sql增强 end------------------------------
 	 	
@@ -81,7 +81,7 @@ public class TBWorkdayServiceImpl extends CommonServiceImpl implements TBWorkday
 	 	//-----------------java增强 end-----------------------------
  	}
  	
- 	private Map<String,Object> populationMap(TBWorkdayEntity t){
+ 	private Map<String,Object> populationMap(TBWorkreportdayEntity t){
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("id", t.getId());
 		map.put("create_name", t.getCreateName());
@@ -89,12 +89,12 @@ public class TBWorkdayServiceImpl extends CommonServiceImpl implements TBWorkday
 		map.put("create_date", t.getCreateDate());
 		map.put("sys_org_code", t.getSysOrgCode());
 		map.put("sys_company_code", t.getSysCompanyCode());
-		map.put("xiangmudanwei", t.getXiangmudanwei());
-		map.put("xiangmu", t.getXiangmu());
-		map.put("jinri", t.getJinri());
-		map.put("jinrizongjie", t.getJinrizongjie());
-		map.put("tojihua", t.getTojihua());
-		map.put("xvyao", t.getXvyao());
+		map.put("tingjvdanwei_name", t.getTingjvdanweiName());
+		map.put("xitong_name", t.getXitongName());
+		map.put("work_day", t.getWorkDay());
+		map.put("tom_day", t.getTomDay());
+		map.put("work_days", t.getWorkDays());
+		map.put("bang_zhu", t.getBangZhu());
 		map.put("beizhu", t.getBeizhu());
 		return map;
 	}
@@ -105,19 +105,19 @@ public class TBWorkdayServiceImpl extends CommonServiceImpl implements TBWorkday
 	 * @param t
 	 * @return
 	 */
- 	public String replaceVal(String sql,TBWorkdayEntity t){
+ 	public String replaceVal(String sql,TBWorkreportdayEntity t){
  		sql  = sql.replace("#{id}",String.valueOf(t.getId()));
  		sql  = sql.replace("#{create_name}",String.valueOf(t.getCreateName()));
  		sql  = sql.replace("#{create_by}",String.valueOf(t.getCreateBy()));
  		sql  = sql.replace("#{create_date}",String.valueOf(t.getCreateDate()));
  		sql  = sql.replace("#{sys_org_code}",String.valueOf(t.getSysOrgCode()));
  		sql  = sql.replace("#{sys_company_code}",String.valueOf(t.getSysCompanyCode()));
- 		sql  = sql.replace("#{xiangmudanwei}",String.valueOf(t.getXiangmudanwei()));
- 		sql  = sql.replace("#{xiangmu}",String.valueOf(t.getXiangmu()));
- 		sql  = sql.replace("#{jinri}",String.valueOf(t.getJinri()));
- 		sql  = sql.replace("#{jinrizongjie}",String.valueOf(t.getJinrizongjie()));
- 		sql  = sql.replace("#{tojihua}",String.valueOf(t.getTojihua()));
- 		sql  = sql.replace("#{xvyao}",String.valueOf(t.getXvyao()));
+ 		sql  = sql.replace("#{tingjvdanwei_name}",String.valueOf(t.getTingjvdanweiName()));
+ 		sql  = sql.replace("#{xitong_name}",String.valueOf(t.getXitongName()));
+ 		sql  = sql.replace("#{work_day}",String.valueOf(t.getWorkDay()));
+ 		sql  = sql.replace("#{tom_day}",String.valueOf(t.getTomDay()));
+ 		sql  = sql.replace("#{work_days}",String.valueOf(t.getWorkDays()));
+ 		sql  = sql.replace("#{bang_zhu}",String.valueOf(t.getBangZhu()));
  		sql  = sql.replace("#{beizhu}",String.valueOf(t.getBeizhu()));
  		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
  		return sql;
@@ -138,7 +138,7 @@ public class TBWorkdayServiceImpl extends CommonServiceImpl implements TBWorkday
 				}
 				if(obj instanceof CgformEnhanceJavaInter){
 					CgformEnhanceJavaInter javaInter = (CgformEnhanceJavaInter) obj;
-					javaInter.execute("t_b_workday",data);
+					javaInter.execute("t_b_workreportday",data);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -147,7 +147,7 @@ public class TBWorkdayServiceImpl extends CommonServiceImpl implements TBWorkday
 		}
  	}
  	
- 	private void executeSqlEnhance(String sqlEnhance,TBWorkdayEntity t){
+ 	private void executeSqlEnhance(String sqlEnhance,TBWorkreportdayEntity t){
 	 	Map<String,Object> data = populationMap(t);
 	 	sqlEnhance = ResourceUtil.formateSQl(sqlEnhance, data);
 	 	boolean isMiniDao = false;
