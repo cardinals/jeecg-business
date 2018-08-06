@@ -20,9 +20,9 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**   
  * @Title: Entity
- * @Description: 营销数据业务主表
+ * @Description: 营销数据业务列表
  * @author onlineGenerator
- * @date 2018-07-28 10:40:10
+ * @date 2018-08-02 15:29:29
  * @version V1.0   
  *
  */
@@ -51,9 +51,9 @@ public class TBBusinessEntity implements java.io.Serializable {
 	/**流程状态*/
 	private String bpmStatus;
 	/**厅局编号*/
+	@Excel(name="厅局编号",width=15,dicCode="unit_name")
 	private Integer unitCode;
 	/**厅局名称*/
-	@Excel(name="厅局名称",width=15)
 	private String unitName;
 	/**迁移系统编号*/
 	private String projectCode;
@@ -61,16 +61,16 @@ public class TBBusinessEntity implements java.io.Serializable {
 	@Excel(name="迁移系统名称",width=15)
 	private String projectName;
 	/**系统类型*/
-	@Excel(name="系统类型",width=15)
+	@Excel(name="系统类型",width=15,dicCode="proj_type")
 	private Integer projectStatus;
 	/**是否上云*/
-	@Excel(name="是否上云",width=15)
+	@Excel(name="是否上云",width=15,dicCode="dev_flag")
 	private Integer cloudStatus;
 	/**是否有机会*/
-	@Excel(name="是否有机会",width=15)
+	@Excel(name="是否有机会",width=15,dicCode="dev_flag")
 	private Integer chanceStatus;
 	/**对接状态*/
-	@Excel(name="对接状态",width=15)
+	@Excel(name="对接状态",width=15,dicCode="joinStatus")
 	private Integer joinStatus;
 	/**业务创建时间*/
 	@Excel(name="业务创建时间",width=15,format = "yyyy-MM-dd")
@@ -79,19 +79,17 @@ public class TBBusinessEntity implements java.io.Serializable {
 	@Excel(name="业务对接时间",width=15,format = "yyyy-MM-dd")
 	private Date busJoinTime;
 	/**硬件服务目录*/
-	@Excel(name="硬件服务目录",width=15)
 	private String hardServeCatalog;
 	/**基础层服务目录*/
-	@Excel(name="基础层服务目录",width=15)
 	private String baseServeCatalog;
 	/**是否收回协议*/
-	@Excel(name="是否收回协议",width=15)
+	@Excel(name="是否收回协议",width=15,dicCode="dev_flag")
 	private Integer protocolStatus;
 	/**收回协议时间*/
 	@Excel(name="收回协议时间",width=15,format = "yyyy-MM-dd")
 	private Date protocolTime;
 	/**是否在审计范围*/
-	@Excel(name="是否在审计范围",width=15)
+	@Excel(name="是否在审计范围",width=15,dicCode="dev_flag")
 	private Integer auditStatus;
 	/**备用字段1*/
 	private String backupField1;
