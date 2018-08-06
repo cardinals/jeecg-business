@@ -125,7 +125,7 @@
 							<label class="Validform_label" style="display: none;">父节点ID</label>
 						</td>
 				</tr>
-				<tr>
+				<%--<tr>
 					<td align="right">
 						<label class="Validform_label">
 							数量:
@@ -136,7 +136,7 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">数量</label>
 						</td>
-				</tr>
+				</tr>--%>
 				<tr>
 					<td align="right">
 						<label class="Validform_label">
