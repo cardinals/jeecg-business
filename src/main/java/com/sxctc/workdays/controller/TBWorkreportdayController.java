@@ -1,8 +1,8 @@
 package com.sxctc.workdays.controller;
 import com.sxctc.workdays.entity.TBWorkreportdayEntity;
 import com.sxctc.workdays.service.TBWorkreportdayServiceI;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,8 +43,6 @@ import java.io.IOException;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import java.util.Map;
-import java.util.HashMap;
 import org.jeecgframework.core.util.ExceptionUtil;
 
 import org.springframework.http.ResponseEntity;
@@ -58,7 +56,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.jeecgframework.core.beanvalidator.BeanValidators;
-import java.util.Set;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.net.URI;
@@ -258,9 +256,18 @@ public class TBWorkreportdayController extends BaseController {
 	 */
 	@RequestMapping(params = "goUpdate")
 	public ModelAndView goUpdate(TBWorkreportdayEntity tBWorkreportday, HttpServletRequest req) {
+        Date dt = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		if (StringUtil.isNotEmpty(tBWorkreportday.getId())) {
+
 			tBWorkreportday = tBWorkreportdayService.getEntity(TBWorkreportdayEntity.class, tBWorkreportday.getId());
-			req.setAttribute("tBWorkreportdayPage", tBWorkreportday);
+			if(df.format(tBWorkreportday.getCreateDate()).equals(df.format(dt))) {
+                req.setAttribute("tBWorkreportdayPage", tBWorkreportday);
+				return new ModelAndView("com/sxctc/workdays/tBWorkreportday-update");
+            }else{
+				req.setAttribute("tBWorkreportdayPage", "只能修改当天日报信息！");
+				return new ModelAndView("com/sxctc/workdays/tishiyemian");
+			}
 		}
 		return new ModelAndView("com/sxctc/workdays/tBWorkreportday-update");
 	}
@@ -425,4 +432,5 @@ public class TBWorkreportdayController extends BaseController {
 
 		return Result.success();
 	}
+
 }
