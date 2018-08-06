@@ -45,28 +45,28 @@
   <div class="main-content">
     <div class="row">
       <div class="col-sm-10 col-sm-offset-1">
-        <div class="login-container">
+        <div class="login-container" style="position: relative; z-index: 4; margin-top: 15%; margin-right: 0; border-radius: 25px;">
           <div class="center">
             <h1 id="id-text2" class="grey">
               <%--<i class="ace-icon fa fa-leaf green"></i>--%>
-               政务云营销数据管理系统
+               <%--政务云营销数据管理系统--%>
             </h1>
             <%--<h4 class="blue" id="id-company-text">www.jeecg.org</h4>--%>
           </div>
           <div class="space-6"></div>
           <div class="position-relative">
-            <div id="login-box" class="login-box visible widget-box no-border">
-              <div class="widget-body">
-                <form id="loinForm" class="form-horizontal"    method="post">
+            <div id="login-box" class="login-box visible widget-box no-border" style="border-radius: 25px;">
+              <div class="widget-body" style="border-radius: 25px;">
+                <form id="loinForm" class="form-horizontal"    method="post" >
                 <!-- 单点登录参数 -->
                 <input type="hidden" id="ReturnURL"  name="ReturnURL" value="${ReturnURL }"/>
-                <div class="widget-main">
+                <div class="widget-main" style="background-image:linear-gradient(to right,white,gainsboro,white); border-radius:25px;">
                  <div class="alert alert-warning alert-dismissible" role="alert" id="errMsgContiner">
 				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				  <div id="showErrMsg"></div>
 				</div>
                   <h4 class="header blue lighter bigger">
-                    <i class="ace-icon fa fa-coffee green"></i>
+                    <%--<i class="ace-icon fa fa-coffee green"></i>--%>
                 	    用户登录
                   </h4>
                   <div class="space-6"></div>
@@ -105,19 +105,19 @@
                       <div class="space-4"></div>
 
                 </div>
-                <div class="toolbar clearfix">
-                  <%--<div style="float: right">
+                <%--<div class="toolbar clearfix">
+                  <div style="float: right">
                     <a href="#"  class="forgot-password-link">
                     	  语言
                       <i class="ace-icon fa fa-arrow-right"></i>
                       <t:dictSelect id="langCode" field="langCode" typeGroupCode="lang" hasLabel="false" extendJson="{style:'padding:2px; width:80px;'}" defaultVal="zh-cn"></t:dictSelect>
                     </a>
-                  </div>--%>
-                </div>
+                  </div>
+                </div>--%>
                 </form>
               </div>
             </div>
-            <div class="center"><h4 class="blue" id="id-company-text">&copy; ——山西云时代技术有限公司——</h4></div>
+            <%--<div class="center"><h4 class="blue" id="id-company-text">&copy; ——山西云时代技术有限公司——</h4></div>
             <div class="navbar-fixed-top align-right">
               <br />
               &nbsp;
@@ -131,7 +131,7 @@
               &nbsp;
               <a id="btn-login-light" class="blue" href="#" onclick="lightStyle()">Light</a>
               &nbsp; &nbsp; &nbsp;
-            </div>
+            </div>--%>
               </div>
             </div>
           </div>
