@@ -12,11 +12,11 @@
    <t:dgCol title="所属公司"  field="sysCompanyCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="厅局单位"  field="tingjvdanweiName"  queryMode="single"  dictionary="unit_name"  width="120"></t:dgCol>
    <t:dgCol title="系统名称"  field="xitongName"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="今日工作内容"  field="workDay"  queryMode="single"  width="300"></t:dgCol>
-   <t:dgCol title="明日工作计划"  field="tomDay"  queryMode="single"  width="300"></t:dgCol>
-   <t:dgCol title="今日工作计划"  field="workDays"  queryMode="single"  width="300"></t:dgCol>
-   <t:dgCol title="需要的帮助和支持"  field="bangZhu"  queryMode="single"  width="300"></t:dgCol>
-   <t:dgCol title="备注"  field="beizhu"  queryMode="single"  width="350"></t:dgCol>
+   <t:dgCol title="今日工作内容"  field="workDay"  queryMode="single"  width="200"></t:dgCol>
+   <t:dgCol title="明日工作计划"  field="tomDay"  queryMode="single"  width="200"></t:dgCol>
+   <t:dgCol title="今日工作计划"  field="workDays"  queryMode="single"  width="200"></t:dgCol>
+   <t:dgCol title="需要的帮助和支持"  field="bangZhu"  queryMode="single"  width="200"></t:dgCol>
+   <t:dgCol title="备注"  field="beizhu"  queryMode="single"  width="200"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
    <t:dgDelOpt title="删除" url="tBWorkreportdayController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="录入" icon="icon-add" url="tBWorkreportdayController.do?goAdd" funname="add"></t:dgToolBar>
