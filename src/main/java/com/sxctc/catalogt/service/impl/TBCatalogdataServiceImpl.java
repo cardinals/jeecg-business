@@ -1,7 +1,7 @@
-package com.sxctc.catalogs.service.impl;
-import com.sxctc.catalogs.service.TBCatalogdataServiceI;
+package com.sxctc.catalogt.service.impl;
+import com.sxctc.catalogt.service.TBCatalogdataServiceI;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
-import com.sxctc.catalogs.entity.TBCatalogdataEntity;
+import com.sxctc.catalogt.entity.TBCatalogdataEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
@@ -89,6 +89,7 @@ public class TBCatalogdataServiceImpl extends CommonServiceImpl implements TBCat
 		map.put("fartherid", t.getFartherid());
 		map.put("num", t.getNum());
 		map.put("beizhu", t.getBeizhu());
+		map.put("type", t.getType());
 		return map;
 	}
  	
@@ -105,6 +106,7 @@ public class TBCatalogdataServiceImpl extends CommonServiceImpl implements TBCat
  		sql  = sql.replace("#{fartherid}",String.valueOf(t.getFartherid()));
  		sql  = sql.replace("#{num}",String.valueOf(t.getNum()));
  		sql  = sql.replace("#{beizhu}",String.valueOf(t.getBeizhu()));
+ 		sql  = sql.replace("#{type}",String.valueOf(t.getType()));
  		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
  		return sql;
  	}

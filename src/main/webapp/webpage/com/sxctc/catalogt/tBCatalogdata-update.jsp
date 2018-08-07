@@ -129,7 +129,7 @@
 							<label class="Validform_label" style="display: none;">父节点ID</label>
 						</td>
 					</tr>
-					<%--<tr>
+					<tr>
 						<td align="right">
 							<label class="Validform_label">
 								数量:
@@ -140,7 +140,7 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">数量</label>
 						</td>
-					</tr>--%>
+					</tr>
 					<tr>
 						<td align="right">
 							<label class="Validform_label">
@@ -153,8 +153,20 @@
 							<label class="Validform_label" style="display: none;">备注</label>
 						</td>
 					</tr>
+					<tr>
+						<td align="right">
+							<label class="Validform_label">
+								类型:
+							</label>
+						</td>
+						<td class="value">
+						    <input id="type" name="type" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="*" ignore="checked"  value='${tBCatalogdataPage.type}'/>
+							<span class="Validform_checktip"></span>
+							<label class="Validform_label" style="display: none;">类型</label>
+						</td>
+					</tr>
 				
 			</table>
 		</t:formvalid>
  </body>
-  <script src = "webpage/com/sxctc/catalogs/tBCatalogdata.js"></script>		
+  <script src = "webpage/com/sxctc/catalogt/tBCatalogdata.js"></script>		

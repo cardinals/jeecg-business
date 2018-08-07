@@ -1,4 +1,4 @@
-package com.sxctc.catalogs.entity;
+package com.sxctc.catalogt.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -22,7 +22,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @Title: Entity
  * @Description: 服务目录管理
  * @author onlineGenerator
- * @date 2018-08-06 09:28:43
+ * @date 2018-08-07 16:03:24
  * @version V1.0   
  *
  */
@@ -47,6 +47,9 @@ public class TBCatalogdataEntity implements java.io.Serializable {
 	/**备注*/
 	@Excel(name="备注",width=15)
 	private String beizhu;
+	/**类型*/
+	@Excel(name="类型",width=15)
+	private String type;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -152,5 +155,22 @@ public class TBCatalogdataEntity implements java.io.Serializable {
 	 */
 	public void setBeizhu(String beizhu){
 		this.beizhu = beizhu;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  类型
+	 */
+
+	@Column(name ="TYPE",nullable=true,length=32)
+	public String getType(){
+		return this.type;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  类型
+	 */
+	public void setType(String type){
+		this.type = type;
 	}
 }

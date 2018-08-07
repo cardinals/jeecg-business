@@ -1,6 +1,6 @@
-package com.sxctc.catalogs.controller;
-import com.sxctc.catalogs.entity.TBCatalogdataEntity;
-import com.sxctc.catalogs.service.TBCatalogdataServiceI;
+package com.sxctc.catalogt.controller;
+import com.sxctc.catalogt.entity.TBCatalogdataEntity;
+import com.sxctc.catalogt.service.TBCatalogdataServiceI;
 import java.util.ArrayList;
 import java.util.List;
 import java.text.SimpleDateFormat;
@@ -78,7 +78,7 @@ import io.swagger.annotations.ApiParam;
  * @Title: Controller  
  * @Description: 服务目录管理
  * @author onlineGenerator
- * @date 2018-08-06 09:28:43
+ * @date 2018-08-07 16:03:24
  * @version V1.0   
  *
  */
@@ -107,9 +107,13 @@ public class TBCatalogdataController extends BaseController {
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
-		return new ModelAndView("com/sxctc/catalogs/tBCatalogdataList");
+		return new ModelAndView("com/sxctc/catalogt/tBCatalogdataList");
 	}
 
+	@RequestMapping(params = "testlist")
+	public ModelAndView testlist(HttpServletRequest request) {
+		return new ModelAndView("com/sxctc/catalogt/tBCatalogtest");
+	}
 	/**
 	 * easyui AJAX请求数据
 	 * 
@@ -261,7 +265,7 @@ public class TBCatalogdataController extends BaseController {
 			tBCatalogdata = tBCatalogdataService.getEntity(TBCatalogdataEntity.class, tBCatalogdata.getId());
 			req.setAttribute("tBCatalogdataPage", tBCatalogdata);
 		}
-		return new ModelAndView("com/sxctc/catalogs/tBCatalogdata-add");
+		return new ModelAndView("com/sxctc/catalogt/tBCatalogdata-add");
 	}
 	/**
 	 * 服务目录管理编辑页面跳转
@@ -274,7 +278,7 @@ public class TBCatalogdataController extends BaseController {
 			tBCatalogdata = tBCatalogdataService.getEntity(TBCatalogdataEntity.class, tBCatalogdata.getId());
 			req.setAttribute("tBCatalogdataPage", tBCatalogdata);
 		}
-		return new ModelAndView("com/sxctc/catalogs/tBCatalogdata-update");
+		return new ModelAndView("com/sxctc/catalogt/tBCatalogdata-update");
 	}
 	
 	/**
