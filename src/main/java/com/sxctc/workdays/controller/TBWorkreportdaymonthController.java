@@ -1,24 +1,18 @@
 package com.sxctc.workdays.controller;
 
-import com.alibaba.fastjson.JSONArray;
 import com.sxctc.workdays.entity.TBWorkreportdayEntity;
 import com.sxctc.workdays.service.TBWorkreportdayServiceI;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.jeecgframework.core.beanvalidator.BeanValidators;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
 import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.common.model.json.DataGrid;
-import org.jeecgframework.core.constant.Globals;
 import org.jeecgframework.core.util.ExceptionUtil;
-import org.jeecgframework.core.util.MyBeanUtils;
 import org.jeecgframework.core.util.ResourceUtil;
-import org.jeecgframework.core.util.StringUtil;
 import org.jeecgframework.jwt.util.ResponseMessage;
 import org.jeecgframework.jwt.util.Result;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
@@ -28,40 +22,40 @@ import org.jeecgframework.poi.excel.entity.vo.NormalExcelConstants;
 import org.jeecgframework.tag.core.easyui.TagUtil;
 import org.jeecgframework.web.system.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**   
  * @Title: Controller  
- * @Description: 周报管理
+ * @Description: 月报管理
  * @author onlineGenerator
  * @date 2018-08-03 11:00:13
  * @version V1.0   
  *
  */
-@Api(value="TBWorkreportday",description="月报管理",tags="tBWorkreportdayweekController")
+@Api(value="TBWorkreportday",description="月报管理",tags="tBWorkreportdaymonthController")
 @Controller
-@RequestMapping("/tBWorkreportdayweekController")
-public class TBWorkreportdayweekController extends BaseController {
+@RequestMapping("/tBWorkreportdaymonthController")
+public class TBWorkreportdaymonthController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(TBWorkreportdayweekController.class);
+	private static final Logger logger = Logger.getLogger(TBWorkreportdaymonthController.class);
 
 	@Autowired
 	private TBWorkreportdayServiceI tBWorkreportdayService;
@@ -73,13 +67,13 @@ public class TBWorkreportdayweekController extends BaseController {
 
 
 	/**
-	 * 日报管理列表 页面跳转
+	 * 月报管理列表 页面跳转
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
-		return new ModelAndView("com/sxctc/workdays/tBWorkreportdayList_week");
+		return new ModelAndView("com/sxctc/workdays/tBWorkreportdayList_month");
 	}
 
 	/**
@@ -108,7 +102,7 @@ public class TBWorkreportdayweekController extends BaseController {
 
 	@RequestMapping(params = "upload")
 	public ModelAndView upload(HttpServletRequest req) {
-		req.setAttribute("controller_name","tBWorkreportdayweekController");
+		req.setAttribute("controller_name","tBWorkreportdaymonthController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
 	
@@ -124,9 +118,9 @@ public class TBWorkreportdayweekController extends BaseController {
 		CriteriaQuery cq = new CriteriaQuery(TBWorkreportdayEntity.class, dataGrid);
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBWorkreportday, request.getParameterMap());
 		List<TBWorkreportdayEntity> tBWorkreportdays = this.tBWorkreportdayService.getListByCriteriaQuery(cq,false);
-		modelMap.put(NormalExcelConstants.FILE_NAME,"周报管理");
+		modelMap.put(NormalExcelConstants.FILE_NAME,"月报管理");
 		modelMap.put(NormalExcelConstants.CLASS,TBWorkreportdayEntity.class);
-		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("周报管理列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("月报管理列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
 			"导出信息"));
 		modelMap.put(NormalExcelConstants.DATA_LIST,tBWorkreportdays);
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;
@@ -140,9 +134,9 @@ public class TBWorkreportdayweekController extends BaseController {
 	@RequestMapping(params = "exportXlsByT")
 	public String exportXlsByT(TBWorkreportdayEntity tBWorkreportday,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
-    	modelMap.put(NormalExcelConstants.FILE_NAME,"周报管理");
+    	modelMap.put(NormalExcelConstants.FILE_NAME,"月报管理");
     	modelMap.put(NormalExcelConstants.CLASS,TBWorkreportdayEntity.class);
-    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("周报管理列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("月报管理列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
     	"导出信息"));
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
@@ -184,7 +178,7 @@ public class TBWorkreportdayweekController extends BaseController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value="周报管理列表信息",produces="application/json",httpMethod="GET")
+	@ApiOperation(value="月报管理列表信息",produces="application/json",httpMethod="GET")
 	public ResponseMessage<List<TBWorkreportdayEntity>> list() {
 		List<TBWorkreportdayEntity> listTBWorkreportdays=tBWorkreportdayService.getList(TBWorkreportdayEntity.class);
 		return Result.success(listTBWorkreportdays);
@@ -192,11 +186,11 @@ public class TBWorkreportdayweekController extends BaseController {
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value="根据ID获取周报管理信息",notes="根据ID获取周报管理信息",httpMethod="GET",produces="application/json")
+	@ApiOperation(value="根据ID获取月报管理信息",notes="根据ID获取月报管理信息",httpMethod="GET",produces="application/json")
 	public ResponseMessage<?> get(@ApiParam(required=true,name="id",value="ID")@PathVariable("id") String id) {
 		TBWorkreportdayEntity task = tBWorkreportdayService.get(TBWorkreportdayEntity.class, id);
 		if (task == null) {
-			return Result.error("根据ID获取周报管理信息为空");
+			return Result.error("根据ID获取月报管理信息为空");
 		}
 		return Result.success(task);
 	}
