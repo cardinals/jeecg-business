@@ -8,9 +8,9 @@
    <t:dgCol title="名称"  field="name"  queryMode="single"  width="260"></t:dgCol>
    <t:dgCol title="单位"  field="danwei"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="父节点ID"  field="fartherid"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="数量"  field="num"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="数量"  field="num"  hidden="true" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="备注"  field="beizhu"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="类型"  field="type"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="类型"  field="type" hidden="true" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
    <t:dgDelOpt title="删除" url="tBCatalogdataController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="录入" icon="icon-add" url="tBCatalogdataController.do?goAdd" funname="add" width="600" height="280"></t:dgToolBar>
