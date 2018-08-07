@@ -1,5 +1,5 @@
-package com.sxctc.catalogt.service;
-import com.sxctc.catalogt.entity.TBCatalogdataEntity;
+package com.sxctc.catalogs.service;
+import com.sxctc.catalogs.entity.TBCatalogdataEntity;
 import org.jeecgframework.core.common.service.CommonService;
 
 import java.io.Serializable;

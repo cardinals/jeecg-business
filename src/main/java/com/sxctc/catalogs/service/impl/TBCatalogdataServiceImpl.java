@@ -1,7 +1,7 @@
-package com.sxctc.catalogt.service.impl;
-import com.sxctc.catalogt.service.TBCatalogdataServiceI;
+package com.sxctc.catalogs.service.impl;
+import com.sxctc.catalogs.service.TBCatalogdataServiceI;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
-import com.sxctc.catalogt.entity.TBCatalogdataEntity;
+import com.sxctc.catalogs.entity.TBCatalogdataEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;

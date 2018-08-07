@@ -2,8 +2,8 @@ package com.sxctc.business.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.sxctc.business.entity.TBBusiCatalogEntity;
-import com.sxctc.catalogt.entity.TBCatalogdataEntity;
-import com.sxctc.catalogt.service.TBCatalogdataServiceI;
+import com.sxctc.catalogs.entity.TBCatalogdataEntity;
+import com.sxctc.catalogs.service.TBCatalogdataServiceI;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
