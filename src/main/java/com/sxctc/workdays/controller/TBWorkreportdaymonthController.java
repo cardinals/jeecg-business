@@ -1,16 +1,20 @@
 package com.sxctc.workdays.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.sxctc.util.DateUtil;
 import com.sxctc.workdays.entity.TBWorkreportdayEntity;
 import com.sxctc.workdays.service.TBWorkreportdayServiceI;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
 import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.common.model.json.DataGrid;
+import org.jeecgframework.core.util.DateUtils;
 import org.jeecgframework.core.util.ExceptionUtil;
 import org.jeecgframework.core.util.ResourceUtil;
 import org.jeecgframework.core.util.StringUtil;
@@ -89,9 +93,19 @@ public class TBWorkreportdaymonthController extends BaseController {
 	@RequestMapping(params = "datagrid")
 	public void datagrid(TBWorkreportdayEntity tBWorkreportday,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(TBWorkreportdayEntity.class, dataGrid);
-		//查询条件组装器
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBWorkreportday, request.getParameterMap());
 		try{
+
+			// 获取当前周时间范围
+			JSONObject weekDaysRange = DateUtil.getMonthDays(0);
+			String beginDate = weekDaysRange.getString("beginDate");
+			String endDate = weekDaysRange.getString("endDate");
+			if (StringUtils.isNotBlank(beginDate) && StringUtils.isNotBlank(endDate)) {
+				cq.ge("createDate",DateUtils.parseDate(beginDate, "yyyy-MM-dd"));
+				cq.le("createDate",DateUtils.parseDate(endDate, "yyyy-MM-dd"));
+			}
+			//查询条件组装器
+			org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBWorkreportday, request.getParameterMap());
+
 		//自定义追加查询条件
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());

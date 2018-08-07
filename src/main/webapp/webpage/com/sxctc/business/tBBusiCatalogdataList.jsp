@@ -3,7 +3,7 @@
 <t:base type="jquery-webos,easyui,tools,DatePicker,autocomplete"></t:base>
 <div class="easyui-layout" fit="true">
     <div region="center" style="padding:0px;border:0px">
-        <t:datagrid name="tBCatalogdataList"  checkbox="false" pagination="true" fitColumns="true" treegrid="true" treeField="name"
+        <t:datagrid name="tBCatalogdataList"  checkbox="true" pagination="true" fitColumns="true" treegrid="true" treeField="name"
                     actionUrl="tBBusiCatalogdataController.do?datagrid&businessId=${businessId}" idField="id"  queryMode="group" singleSelect="true">
             <t:dgCol title="id"  field="id"   hidden="true"   queryMode="group"  width="140"></t:dgCol>
             <t:dgCol title="名称"  field="name" query="true" width="150"></t:dgCol>
@@ -19,6 +19,10 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
+        initTreegrid();
+    });
+
+    function initTreegrid() {
         $("#tBCatalogdataList").treegrid({
             onExpand : function(row){
                 var children = $("#tBCatalogdataList").treegrid('getChildren',row.id);
@@ -26,10 +30,17 @@
                     row.leaf=true;
                     $("#tBCatalogdataList").treegrid('refresh', row.id);
                 }
+            },
+            onLoadSuccess: function (row) {
+                var roots = $("#tBCatalogdataList").treegrid("getRoots");
+                if (roots.length > 0) {
+                    $.each(roots, function (i, item) {
+                        $("#tBCatalogdataList").treegrid("expandAll", item.id);
+                    });
+                }
             }
         });
-    });
-
+    }
     var editingId;
 
     //保存数据
@@ -50,7 +61,7 @@
             }
         }
         $.ajax({
-            url:"<%=basePath%>/"+addurl,
+            url:addurl,
             type:"post",
             data:result,
             dataType:"json",
@@ -65,19 +76,30 @@
             var t = $('#'+gname);
             t.treegrid('endEdit', editingId);
             editingId = undefined;
-            var persons = 0;
-            var rows = t.treegrid('getChildren');
-            for(var i=0; i<rows.length; i++){
-                var p = parseInt(rows[i].persons);
-                if (!isNaN(p)){
-                    persons += p;
-                }
-            }
-            var frow = t.treegrid('getFooterRows')[0];
-            frow.persons = persons;
             t.treegrid('reloadFooter');
         }
+
+        // 保存
+        var id=this.gettBCatalogdataListSelections('id').toString();
+        var num=this.gettBCatalogdataListSelections('num');
+        $.ajax({
+            url:"tBBusiCatalogController.do?doAdd",
+            type:"post",
+            data:{
+                catalogId:id,
+                businessId:"${businessId}",
+                checkNum: Number(num)
+            },
+            dataType:"json",
+            success:function(data){
+                tip(data.msg);
+                if(data.success){
+                    return;
+                }
+            }
+        });
     }
+
     // //结束编辑
     // function endEdit(gname){
     //     var  editIndex = $('#'+gname).treegrid('getRows').length-1;

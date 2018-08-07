@@ -85,11 +85,7 @@ function checkCatalog(id) {
         opacity : 0.3,
         width:900,
         height:500,
-        cache:false,
-        button: [
-            {name: "确定", callback: callbackDelegateDepartSelect, focus: true},
-            {name: "取消", callback: function (){}}
-        ]
+        cache:false
     });
 }
 
@@ -100,6 +96,9 @@ function checkCatalog(id) {
      var id=iframe.gettBCatalogdataListSelections('id').toString();
      var num=iframe.gettBCatalogdataListSelections('num');
      var busiId = $("#tBBusinessList").datagrid("getSelected");
+     if( Number(num) == 0){
+
+     }
      $.ajax({
          url:"tBBusiCatalogController.do?doAdd",
          type:"post",
