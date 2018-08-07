@@ -187,7 +187,7 @@ public class TBBusiCatalogController extends BaseController {
 	public AjaxJson doAdd(TBBusiCatalogEntity tBBusiCatalog, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "服务目录业务关联表添加成功";
+		message = "服务目录添加成功";
 		try{
 
 			// 保存之前先把所有业务有关的目录删除
@@ -195,12 +195,30 @@ public class TBBusiCatalogController extends BaseController {
 
 			String businessId = tBBusiCatalog.getBusinessId();
 			String catalogId = tBBusiCatalog.getCatalogId();
+			Integer checkNum = tBBusiCatalog.getCheckNum();
 
 			// 查询该业务id下面所有的关联
 			List<TBBusiCatalogEntity> tBusiCatalogList = systemService.findByProperty(TBBusiCatalogEntity.class, "businessId", businessId);
 
 			// 标识
 			boolean optFlag = true;
+
+			// 如果是0的话，去库中查找
+			// 1、如果库中没有，则不作处理
+			// 2、如果库中有，则删除数据
+			if (checkNum == 0) {
+				String hql = "from TBBusiCatalogEntity t where" + " t.catalogId='" + catalogId + "' and t.businessId='" + businessId + "'";
+				List<TBBusiCatalogEntity> byQueryString = systemService.findByQueryString(hql);
+				if (byQueryString.size() > 0) {
+					for (TBBusiCatalogEntity tbBusiCatalogEntity : byQueryString) {
+						systemService.deleteEntityById(TBBusiCatalogEntity.class,tbBusiCatalogEntity.getId());
+					}
+				}
+
+				// 返回结束
+				j.setMsg("服务目录删除成功");
+				return j;
+			}
 
 			// 遍历
 			for (TBBusiCatalogEntity tbBusiCatalog : tBusiCatalogList) {
@@ -209,6 +227,8 @@ public class TBBusiCatalogController extends BaseController {
 					tBBusiCatalog.setId(tbBusiCatalog.getId());
 					doUpdate(tBBusiCatalog, request);
 					optFlag = false;
+
+					message = "服务目录修改成功";
 				}
 			}
 
