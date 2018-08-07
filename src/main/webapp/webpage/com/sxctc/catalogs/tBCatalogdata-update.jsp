@@ -153,18 +153,18 @@
 							<label class="Validform_label" style="display: none;">备注</label>
 						</td>
 					</tr>
-					<tr>
-						<td align="right">
-							<label class="Validform_label">
-								类型:
-							</label>
-						</td>
-						<td class="value">
-						    <input id="type" name="type" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="*" ignore="checked"  value='${tBCatalogdataPage.type}'/>
-							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">类型</label>
-						</td>
-					</tr>
+			<tr>
+				<td align="right">
+					<label class="Validform_label">
+						类型:
+					</label>
+				</td>
+				<td class="value">
+					<t:dictSelect field="type" type="list"  datatype="*" typeGroupCode="catatype"   defaultVal="${tBCatalogdataPage.type}" hasLabel="false"  title="类型" ></t:dictSelect>
+					<span class="Validform_checktip"></span>
+					<label class="Validform_label" style="display: none;">类型</label>
+				</td>
+			</tr>
 				
 			</table>
 		</t:formvalid>

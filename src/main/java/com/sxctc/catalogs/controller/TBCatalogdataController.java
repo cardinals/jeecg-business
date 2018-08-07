@@ -95,7 +95,7 @@ public class TBCatalogdataController extends BaseController {
 
 	@RequestMapping(params = "testlist")
 	public ModelAndView testlist(HttpServletRequest request) {
-		return new ModelAndView("com/sxctc/catalogs/tBCatalogtest");
+		return new ModelAndView("com/sxctc/catalogs/tBCatalogTab");
 	}
 	/**
 	 * easyui AJAX请求数据
