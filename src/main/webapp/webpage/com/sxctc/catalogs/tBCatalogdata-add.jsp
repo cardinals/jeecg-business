@@ -166,4 +166,4 @@
 			</table>
 		</t:formvalid>
  </body>
-  <script src = "webpage/com/sxctc/catalogt/tBCatalogdata.js"></script>		
+  <script src = "webpage/com/sxctc/catalogs/tBCatalogdata.js"></script>

@@ -13,10 +13,10 @@
    <t:dgCol title="类型"  field="type"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
    <t:dgDelOpt title="删除" url="tBCatalogdataController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
-   <t:dgToolBar title="录入" icon="icon-add" url="tBCatalogdataController.do?goAdd" funname="add"></t:dgToolBar>
-   <t:dgToolBar title="编辑" icon="icon-edit" url="tBCatalogdataController.do?goUpdate" funname="updatetree" width="100%" height="100%"></t:dgToolBar>
+   <t:dgToolBar title="录入" icon="icon-add" url="tBCatalogdataController.do?goAdd" funname="add" width="600" height="280"></t:dgToolBar>
+   <t:dgToolBar title="编辑" icon="icon-edit" url="tBCatalogdataController.do?goUpdate" funname="updatetree" width="600" height="280"></t:dgToolBar>
    <t:dgToolBar title="批量删除"  icon="icon-remove" url="tBCatalogdataController.do?doBatchDel" funname="deleteALLSelecttree"></t:dgToolBar>
-   <t:dgToolBar title="查看" icon="icon-search" url="tBCatalogdataController.do?goUpdate" funname="detailtree" width="100%" height="100%"></t:dgToolBar>
+   <t:dgToolBar title="查看" icon="icon-search" url="tBCatalogdataController.do?goUpdate" funname="detailtree" width="600" height="280"></t:dgToolBar>
    <t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>
    <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
    <t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>

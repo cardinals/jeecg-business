@@ -248,7 +248,7 @@ public class TBCatalogdataController extends BaseController {
 			tBCatalogdata = tBCatalogdataService.getEntity(TBCatalogdataEntity.class, tBCatalogdata.getId());
 			req.setAttribute("tBCatalogdataPage", tBCatalogdata);
 		}
-		return new ModelAndView("com/sxctc/catalogt/tBCatalogdata-add");
+		return new ModelAndView("com/sxctc/catalogs/tBCatalogdata-add");
 	}
 	/**
 	 * 服务目录管理编辑页面跳转
@@ -261,7 +261,7 @@ public class TBCatalogdataController extends BaseController {
 			tBCatalogdata = tBCatalogdataService.getEntity(TBCatalogdataEntity.class, tBCatalogdata.getId());
 			req.setAttribute("tBCatalogdataPage", tBCatalogdata);
 		}
-		return new ModelAndView("com/sxctc/catalogt/tBCatalogdata-update");
+		return new ModelAndView("com/sxctc/catalogs/tBCatalogdata-update");
 	}
 	
 	/**
