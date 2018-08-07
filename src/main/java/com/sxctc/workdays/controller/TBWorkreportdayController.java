@@ -271,7 +271,22 @@ public class TBWorkreportdayController extends BaseController {
 		}
 		return new ModelAndView("com/sxctc/workdays/tBWorkreportday-update");
 	}
-	
+
+	/**
+	 * 日报管查看页面跳转
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "goSearch")
+	public ModelAndView goSearch(TBWorkreportdayEntity tBWorkreportday, HttpServletRequest req) {
+		if (StringUtil.isNotEmpty(tBWorkreportday.getId())) {
+
+			tBWorkreportday = tBWorkreportdayService.getEntity(TBWorkreportdayEntity.class, tBWorkreportday.getId());
+			req.setAttribute("tBWorkreportdayPage", tBWorkreportday);
+			return new ModelAndView("com/sxctc/workdays/tBWorkreportday-update");
+		}
+		return new ModelAndView("com/sxctc/workdays/tBWorkreportday-update");
+	}
 	/**
 	 * 导入功能跳转
 	 * 
