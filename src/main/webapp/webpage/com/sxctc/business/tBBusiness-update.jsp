@@ -16,13 +16,13 @@
 		<tr>
 			<td align="right">
 				<label class="Validform_label">
-					厅局编号:
+					厅局名称:
 				</label>
 			</td>
 			<td class="value">
 				<t:dictSelect field="unitCode" type="list"  datatype="*" typeGroupCode="unit_name"   defaultVal="${tBBusinessPage.unitCode}" hasLabel="false"  title="厅局编号" ></t:dictSelect>
 				<span class="Validform_checktip"></span>
-				<label class="Validform_label" style="display: none;">厅局编号</label>
+				<label class="Validform_label" style="display: none;">厅局名称</label>
 			</td>
 		</tr>
 		<tr>
