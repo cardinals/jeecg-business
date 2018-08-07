@@ -18,9 +18,9 @@
    <t:dgCol title="需要的帮助和支持"  field="bangZhu"  queryMode="single"  width="200"></t:dgCol>
    <t:dgCol title="备注"  field="beizhu"  queryMode="single"  width="200"></t:dgCol>
    <t:dgToolBar title="查看" icon="icon-search" url="tBWorkreportdayController.do?goSearch" funname="detail"></t:dgToolBar>
-   <t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>
+   <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
    <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
-   <t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>
+   <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
   </t:datagrid>
   </div>
  </div>
