@@ -1,5 +1,6 @@
 package com.sxctc.catalogs.entity;
 
+import java.math.BigDecimal;
 import java.lang.String;
 import java.lang.Integer;
 import javax.persistence.Column;
@@ -14,7 +15,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @Title: Entity
  * @Description: 服务目录管理
  * @author onlineGenerator
- * @date 2018-08-07 16:03:24
+ * @date 2018-08-08 10:45:17
  * @version V1.0   
  *
  */
@@ -40,8 +41,11 @@ public class TBCatalogdataEntity implements java.io.Serializable {
 	@Excel(name="备注",width=15)
 	private String beizhu;
 	/**类型*/
-	@Excel(name="类型",width=15)
+	@Excel(name="类型",width=15,dicCode="catatype")
 	private String type;
+	/**单价*/
+	@Excel(name="单价",width=15)
+	private BigDecimal price;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -164,5 +168,22 @@ public class TBCatalogdataEntity implements java.io.Serializable {
 	 */
 	public void setType(String type){
 		this.type = type;
+	}
+	/**
+	 *方法: 取得java.math.BigDecimal
+	 *@return: java.math.BigDecimal  单价
+	 */
+
+	@Column(name ="PRICE",nullable=true,length=32)
+	public BigDecimal getPrice(){
+		return this.price;
+	}
+
+	/**
+	 *方法: 设置java.math.BigDecimal
+	 *@param: java.math.BigDecimal  单价
+	 */
+	public void setPrice(BigDecimal price){
+		this.price = price;
 	}
 }

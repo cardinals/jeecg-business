@@ -61,7 +61,7 @@ import io.swagger.annotations.ApiParam;
  * @Title: Controller  
  * @Description: 服务目录管理
  * @author onlineGenerator
- * @date 2018-08-07 16:03:24
+ * @date 2018-08-08 10:45:17
  * @version V1.0   
  *
  */
@@ -90,6 +90,8 @@ public class TBCatalogdataController extends BaseController {
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
+		String type = request.getParameter("type");
+		request.setAttribute("type",type);
 		return new ModelAndView("com/sxctc/catalogs/tBCatalogdataList");
 	}
 
@@ -103,18 +105,22 @@ public class TBCatalogdataController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @param dataGrid
-	 * @param user
 	 */
 
 	@RequestMapping(params = "datagrid")
 	public void datagrid(TBCatalogdataEntity tBCatalogdata,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(TBCatalogdataEntity.class, dataGrid);
+		String types = request.getParameter("catalogtype");
+		System.out.println("**************************************************************");
+		System.out.println(types);
+		System.out.println("**************************************************************");
 		if(StringUtil.isEmpty(tBCatalogdata.getId())){
 			cq.isNull("fartherid");
 		}else{
 			cq.eq("fartherid", tBCatalogdata.getId());
 			tBCatalogdata.setId(null);
 		}
+		cq.eq("type",types);
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBCatalogdata, request.getParameterMap());
 		try{
@@ -183,7 +189,6 @@ public class TBCatalogdataController extends BaseController {
 	/**
 	 * 添加服务目录管理
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -210,7 +215,6 @@ public class TBCatalogdataController extends BaseController {
 	/**
 	 * 更新服务目录管理
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")

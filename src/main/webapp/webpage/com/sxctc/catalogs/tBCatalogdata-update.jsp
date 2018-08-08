@@ -132,18 +132,6 @@
 					<tr>
 						<td align="right">
 							<label class="Validform_label">
-								数量:
-							</label>
-						</td>
-						<td class="value">
-						    <input id="num" name="num" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="n"  ignore="ignore"  value='${tBCatalogdataPage.num}'/>
-							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">数量</label>
-						</td>
-					</tr>
-					<tr>
-						<td align="right">
-							<label class="Validform_label">
 								备注:
 							</label>
 						</td>
@@ -153,20 +141,32 @@
 							<label class="Validform_label" style="display: none;">备注</label>
 						</td>
 					</tr>
-			<tr>
-				<td align="right">
-					<label class="Validform_label">
-						类型:
-					</label>
-				</td>
-				<td class="value">
-					<t:dictSelect field="type" type="list"  datatype="*" typeGroupCode="catatype"   defaultVal="${tBCatalogdataPage.type}" hasLabel="false"  title="类型" ></t:dictSelect>
-					<span class="Validform_checktip"></span>
-					<label class="Validform_label" style="display: none;">类型</label>
-				</td>
-			</tr>
+					<tr>
+						<td align="right">
+							<label class="Validform_label">
+								类型:
+							</label>
+						</td>
+						<td class="value">
+									<t:dictSelect field="type" type="list"  datatype="*" typeGroupCode="catatype"   defaultVal="${tBCatalogdataPage.type}" hasLabel="false"  title="类型" ></t:dictSelect>     
+							<span class="Validform_checktip"></span>
+							<label class="Validform_label" style="display: none;">类型</label>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<label class="Validform_label">
+								单价:
+							</label>
+						</td>
+						<td class="value">
+						    <input id="price" name="price" type="text" maxlength="32" style="width: 150px" class="inputxt"  ignore="ignore"  value='${tBCatalogdataPage.price}'/>
+							<span class="Validform_checktip"></span>
+							<label class="Validform_label" style="display: none;">单价</label>
+						</td>
+					</tr>
 				
 			</table>
 		</t:formvalid>
  </body>
-  <script src = "webpage/com/sxctc/catalogs/tBCatalogdata.js"></script>
+  <script src = "webpage/com/sxctc/catalogt/tBCatalogdata.js"></script>		
