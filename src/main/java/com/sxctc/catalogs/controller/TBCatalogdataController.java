@@ -111,9 +111,6 @@ public class TBCatalogdataController extends BaseController {
 	public void datagrid(TBCatalogdataEntity tBCatalogdata,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(TBCatalogdataEntity.class, dataGrid);
 		String types = request.getParameter("catalogtype");
-		System.out.println("**************************************************************");
-		System.out.println(types);
-		System.out.println("**************************************************************");
 		if(StringUtil.isEmpty(tBCatalogdata.getId())){
 			cq.isNull("fartherid");
 		}else{

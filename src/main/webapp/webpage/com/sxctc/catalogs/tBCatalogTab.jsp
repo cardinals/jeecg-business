@@ -9,5 +9,4 @@
 		<t:tab href="tBCatalogdataController.do?list&type=03" icon="icon-search" title="SAAS层" id="tab1"></t:tab>
 		<t:tab href="tBCatalogdataController.do?list&type=04" icon="icon-search" title="DAAS层" id="tab1"></t:tab>
 	</t:tabs>
-
 </div>
