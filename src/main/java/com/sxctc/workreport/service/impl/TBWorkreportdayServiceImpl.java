@@ -1,9 +1,11 @@
-package com.sxctc.workdays.service.impl;
-import com.sxctc.workdays.service.TBWorkreportdayServiceI;
+package com.sxctc.workreport.service.impl;
+import com.sxctc.workreport.service.TBWorkreportdayServiceI;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
-import com.sxctc.workdays.entity.TBWorkreportdayEntity;
+import com.sxctc.workreport.entity.TBWorkreportdayEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -30,8 +32,8 @@ public class TBWorkreportdayServiceImpl extends CommonServiceImpl implements TBW
  		//执行删除操作增强业务
 		this.doDelBus(entity);
  	}
- 	
- 	public Serializable save(TBWorkreportdayEntity entity) throws Exception{
+
+	public Serializable save(TBWorkreportdayEntity entity) throws Exception{
  		Serializable t = super.save(entity);
  		//执行新增操作增强业务
  		this.doAddBus(entity);
@@ -70,7 +72,6 @@ public class TBWorkreportdayServiceImpl extends CommonServiceImpl implements TBW
  	}
  	/**
 	 * 删除操作增强业务
-	 * @param id
 	 * @return
 	 */
 	private void doDelBus(TBWorkreportdayEntity t) throws Exception{
@@ -89,13 +90,14 @@ public class TBWorkreportdayServiceImpl extends CommonServiceImpl implements TBW
 		map.put("create_date", t.getCreateDate());
 		map.put("sys_org_code", t.getSysOrgCode());
 		map.put("sys_company_code", t.getSysCompanyCode());
-		map.put("tingjvdanwei_name", t.getTingjvdanweiName());
-		map.put("xitong_name", t.getXitongName());
-		map.put("work_day", t.getWorkDay());
-		map.put("tom_day", t.getTomDay());
-		map.put("work_days", t.getWorkDays());
-		map.put("bang_zhu", t.getBangZhu());
-		map.put("beizhu", t.getBeizhu());
+		map.put("unit_code", t.getUnitCode());
+		map.put("project_name", t.getProjectName());
+		map.put("done_day", t.getDoneDay());
+		map.put("un_done_day", t.getUnDoneDay());
+		map.put("coordinate_work", t.getCoordinateWork());
+		map.put("remark", t.getRemark());
+		map.put("busi_report_id", t.getBusiReportId());
+		map.put("report_date", t.getReportDate());
 		return map;
 	}
  	
@@ -112,13 +114,14 @@ public class TBWorkreportdayServiceImpl extends CommonServiceImpl implements TBW
  		sql  = sql.replace("#{create_date}",String.valueOf(t.getCreateDate()));
  		sql  = sql.replace("#{sys_org_code}",String.valueOf(t.getSysOrgCode()));
  		sql  = sql.replace("#{sys_company_code}",String.valueOf(t.getSysCompanyCode()));
- 		sql  = sql.replace("#{tingjvdanwei_name}",String.valueOf(t.getTingjvdanweiName()));
- 		sql  = sql.replace("#{xitong_name}",String.valueOf(t.getXitongName()));
- 		sql  = sql.replace("#{work_day}",String.valueOf(t.getWorkDay()));
- 		sql  = sql.replace("#{tom_day}",String.valueOf(t.getTomDay()));
- 		sql  = sql.replace("#{work_days}",String.valueOf(t.getWorkDays()));
- 		sql  = sql.replace("#{bang_zhu}",String.valueOf(t.getBangZhu()));
- 		sql  = sql.replace("#{beizhu}",String.valueOf(t.getBeizhu()));
+ 		sql  = sql.replace("#{unit_code}",String.valueOf(t.getUnitCode()));
+ 		sql  = sql.replace("#{project_name}",String.valueOf(t.getProjectName()));
+ 		sql  = sql.replace("#{done_day}",String.valueOf(t.getDoneDay()));
+ 		sql  = sql.replace("#{un_done_day}",String.valueOf(t.getUnDoneDay()));
+ 		sql  = sql.replace("#{coordinate_work}",String.valueOf(t.getCoordinateWork()));
+ 		sql  = sql.replace("#{remark}",String.valueOf(t.getRemark()));
+ 		sql  = sql.replace("#{busi_report_id}",String.valueOf(t.getBusiReportId()));
+ 		sql  = sql.replace("#{report_date}",String.valueOf(t.getReportDate()));
  		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
  		return sql;
  	}
@@ -170,4 +173,5 @@ public class TBWorkreportdayServiceImpl extends CommonServiceImpl implements TBW
 			}
 		}
  	}
+
 }

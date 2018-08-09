@@ -1,4 +1,4 @@
-package com.sxctc.workdays.entity;
+package com.sxctc.workreport.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -22,7 +22,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @Title: Entity
  * @Description: 日报管理
  * @author onlineGenerator
- * @date 2018-08-03 11:00:13
+ * @date 2018-08-08 14:29:12
  * @version V1.0   
  *
  */
@@ -33,12 +33,10 @@ public class TBWorkreportdayEntity implements java.io.Serializable {
 	/**主键*/
 	private String id;
 	/**创建人名称*/
-	@Excel(name="创建人名称",width=15)
 	private String createName;
 	/**创建人登录名称*/
 	private String createBy;
 	/**创建日期*/
-	@Excel(name="创建日期",width=15,format = "yyyy-MM-dd")
 	private Date createDate;
 	/**所属部门*/
 	private String sysOrgCode;
@@ -46,25 +44,27 @@ public class TBWorkreportdayEntity implements java.io.Serializable {
 	private String sysCompanyCode;
 	/**厅局单位*/
 	@Excel(name="厅局单位",width=15,dicCode="unit_name")
-	private String tingjvdanweiName;
-	/**系统名称*/
-	@Excel(name="系统名称",width=15)
-	private String xitongName;
-	/**今日工作内容*/
-	@Excel(name="今日工作内容",width=15)
-	private String workDay;
-	/**明日工作计划*/
-	@Excel(name="明日工作计划",width=15)
-	private String tomDay;
-	/**今日工作计划*/
-	@Excel(name="今日工作计划",width=15)
-	private String workDays;
-	/**需要的帮助和支持*/
-	@Excel(name="需要的帮助和支持",width=15)
-	private String bangZhu;
+	private String unitCode;
+	/**迁移系统名称*/
+	@Excel(name="迁移系统名称",width=15)
+	private String projectName;
+	/**今日完成的工作*/
+	@Excel(name="今日完成的工作",width=15)
+	private String doneDay;
+	/**未完成的工作*/
+	@Excel(name="未完成的工作",width=15)
+	private String unDoneDay;
+	/**需要协调的工作*/
+	@Excel(name="需要协调的工作",width=15)
+	private String coordinateWork;
 	/**备注*/
 	@Excel(name="备注",width=15)
-	private String beizhu;
+	private String remark;
+	/**日志业务关联表id*/
+	private String busiReportId;
+	/**今日时间*/
+	@Excel(name="今日时间",width=15,format = "yyyy-MM-dd")
+	private Date reportDate;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -176,118 +176,135 @@ public class TBWorkreportdayEntity implements java.io.Serializable {
 	 *@return: java.lang.String  厅局单位
 	 */
 
-	@Column(name ="TINGJVDANWEI_NAME",nullable=true,length=32)
-	public String getTingjvdanweiName(){
-		return this.tingjvdanweiName;
+	@Column(name ="UNIT_CODE",nullable=true,length=32)
+	public String getUnitCode(){
+		return this.unitCode;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  厅局单位
 	 */
-	public void setTingjvdanweiName(String tingjvdanweiName){
-		this.tingjvdanweiName = tingjvdanweiName;
+	public void setUnitCode(String unitCode){
+		this.unitCode = unitCode;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  系统名称
+	 *@return: java.lang.String  迁移系统名称
 	 */
 
-	@Column(name ="XITONG_NAME",nullable=true,length=32)
-	public String getXitongName(){
-		return this.xitongName;
+	@Column(name ="PROJECT_NAME",nullable=true,length=32)
+	public String getProjectName(){
+		return this.projectName;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  系统名称
+	 *@param: java.lang.String  迁移系统名称
 	 */
-	public void setXitongName(String xitongName){
-		this.xitongName = xitongName;
+	public void setProjectName(String projectName){
+		this.projectName = projectName;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  今日工作内容
+	 *@return: java.lang.String  今日完成的工作
 	 */
 
-	@Column(name ="WORK_DAY",nullable=true,length=256)
-	public String getWorkDay(){
-		return this.workDay;
+	@Column(name ="DONE_DAY",nullable=true,length=300)
+	public String getDoneDay(){
+		return this.doneDay;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  今日工作内容
+	 *@param: java.lang.String  今日完成的工作
 	 */
-	public void setWorkDay(String workDay){
-		this.workDay = workDay;
+	public void setDoneDay(String doneDay){
+		this.doneDay = doneDay;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  明日工作计划
+	 *@return: java.lang.String  未完成的工作
 	 */
 
-	@Column(name ="TOM_DAY",nullable=true,length=256)
-	public String getTomDay(){
-		return this.tomDay;
+	@Column(name ="UN_DONE_DAY",nullable=true,length=300)
+	public String getUnDoneDay(){
+		return this.unDoneDay;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  明日工作计划
+	 *@param: java.lang.String  未完成的工作
 	 */
-	public void setTomDay(String tomDay){
-		this.tomDay = tomDay;
+	public void setUnDoneDay(String unDoneDay){
+		this.unDoneDay = unDoneDay;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  今日工作计划
+	 *@return: java.lang.String  需要协调的工作
 	 */
 
-	@Column(name ="WORK_DAYS",nullable=true,length=256)
-	public String getWorkDays(){
-		return this.workDays;
+	@Column(name ="COORDINATE_WORK",nullable=true,length=300)
+	public String getCoordinateWork(){
+		return this.coordinateWork;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  今日工作计划
+	 *@param: java.lang.String  需要协调的工作
 	 */
-	public void setWorkDays(String workDays){
-		this.workDays = workDays;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  需要的帮助和支持
-	 */
-
-	@Column(name ="BANG_ZHU",nullable=true,length=256)
-	public String getBangZhu(){
-		return this.bangZhu;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  需要的帮助和支持
-	 */
-	public void setBangZhu(String bangZhu){
-		this.bangZhu = bangZhu;
+	public void setCoordinateWork(String coordinateWork){
+		this.coordinateWork = coordinateWork;
 	}
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  备注
 	 */
 
-	@Column(name ="BEIZHU",nullable=true,length=256)
-	public String getBeizhu(){
-		return this.beizhu;
+	@Column(name ="REMARK",nullable=true,length=300)
+	public String getRemark(){
+		return this.remark;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  备注
 	 */
-	public void setBeizhu(String beizhu){
-		this.beizhu = beizhu;
+	public void setRemark(String remark){
+		this.remark = remark;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  日志业务关联表id
+	 */
+
+	@Column(name ="BUSI_REPORT_ID",nullable=true,length=36)
+	public String getBusiReportId(){
+		return this.busiReportId;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  日志业务关联表id
+	 */
+	public void setBusiReportId(String busiReportId){
+		this.busiReportId = busiReportId;
+	}
+	/**
+	 *方法: 取得java.util.Date
+	 *@return: java.util.Date  今日时间
+	 */
+
+	@Column(name ="REPORT_DATE",nullable=true,length=30)
+	public Date getReportDate(){
+		return this.reportDate;
+	}
+
+	/**
+	 *方法: 设置java.util.Date
+	 *@param: java.util.Date  今日时间
+	 */
+	public void setReportDate(Date reportDate){
+		this.reportDate = reportDate;
 	}
 }

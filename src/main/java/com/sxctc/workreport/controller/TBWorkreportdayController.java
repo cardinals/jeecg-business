@@ -1,6 +1,10 @@
-package com.sxctc.workdays.controller;
-import com.sxctc.workdays.entity.TBWorkreportdayEntity;
-import com.sxctc.workdays.service.TBWorkreportdayServiceI;
+package com.sxctc.workreport.controller;
+import com.alibaba.fastjson.JSONObject;
+import com.sxctc.util.DateUtil;
+import com.sxctc.workreport.entity.TBBusiWorkreportEntity;
+import com.sxctc.workreport.entity.TBWorkreportdayEntity;
+import com.sxctc.workreport.service.TBBusiWorkreportServiceI;
+import com.sxctc.workreport.service.TBWorkreportdayServiceI;
 
 import java.util.*;
 import java.text.SimpleDateFormat;
@@ -8,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.jeecgframework.core.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,14 +27,12 @@ import org.jeecgframework.core.common.model.common.TreeChildCount;
 import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.common.model.json.DataGrid;
 import org.jeecgframework.core.constant.Globals;
-import org.jeecgframework.core.util.StringUtil;
 import org.jeecgframework.tag.core.easyui.TagUtil;
 import org.jeecgframework.web.system.pojo.base.TSDepart;
 import org.jeecgframework.web.system.service.SystemService;
-import org.jeecgframework.core.util.MyBeanUtils;
 
 import java.io.OutputStream;
-import org.jeecgframework.core.util.BrowserUtils;
+
 import org.jeecgframework.poi.excel.ExcelExportUtil;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.entity.ExportParams;
@@ -38,12 +41,11 @@ import org.jeecgframework.poi.excel.entity.TemplateExportParams;
 import org.jeecgframework.poi.excel.entity.vo.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.vo.TemplateExcelConstants;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.jeecgframework.core.util.ResourceUtil;
+
 import java.io.IOException;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.jeecgframework.core.util.ExceptionUtil;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -76,7 +78,7 @@ import io.swagger.annotations.ApiParam;
  * @Title: Controller  
  * @Description: 日报管理
  * @author onlineGenerator
- * @date 2018-08-03 11:00:13
+ * @date 2018-08-08 14:29:12
  * @version V1.0   
  *
  */
@@ -92,6 +94,8 @@ public class TBWorkreportdayController extends BaseController {
 	@Autowired
 	private TBWorkreportdayServiceI tBWorkreportdayService;
 	@Autowired
+	private TBBusiWorkreportServiceI tBBusiWorkreportService;
+	@Autowired
 	private SystemService systemService;
 	@Autowired
 	private Validator validator;
@@ -105,7 +109,9 @@ public class TBWorkreportdayController extends BaseController {
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
-		return new ModelAndView("com/sxctc/workdays/tBWorkreportdayList");
+		String busiReportId = request.getParameter("busiReportId");
+		request.setAttribute("busiReportId",busiReportId);
+		return new ModelAndView("com/sxctc/workreport/tBWorkreportdayList");
 	}
 
 	/**
@@ -114,15 +120,27 @@ public class TBWorkreportdayController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @param dataGrid
-	 * @param user
 	 */
 
 	@RequestMapping(params = "datagrid")
 	public void datagrid(TBWorkreportdayEntity tBWorkreportday,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(TBWorkreportdayEntity.class, dataGrid);
-		//查询条件组装器
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBWorkreportday, request.getParameterMap());
+		String busiReportId = request.getParameter("busiReportId");
 		try{
+			if (StringUtils.isNotBlank(busiReportId)){
+				cq.eq("busiReportId",busiReportId);
+			}
+			// 获取当前周时间范围
+			JSONObject weekDaysRange = DateUtil.getWeekDays(0);
+			String beginDate = weekDaysRange.getString("beginDate");
+			String endDate = weekDaysRange.getString("endDate");
+			if (StringUtils.isNotBlank(beginDate) && StringUtils.isNotBlank(endDate)) {
+				cq.ge("reportDate",DateUtils.parseDate(beginDate, "yyyy-MM-dd"));
+				cq.le("reportDate",DateUtils.parseDate(endDate, "yyyy-MM-dd"));
+			}
+			//查询条件组装器
+			org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBWorkreportday, request.getParameterMap());
+
 		//自定义追加查询条件
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
@@ -188,7 +206,6 @@ public class TBWorkreportdayController extends BaseController {
 	/**
 	 * 添加日报管理
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -212,7 +229,6 @@ public class TBWorkreportdayController extends BaseController {
 	/**
 	 * 更新日报管理
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
@@ -221,10 +237,44 @@ public class TBWorkreportdayController extends BaseController {
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		message = "日报管理更新成功";
-		TBWorkreportdayEntity t = tBWorkreportdayService.get(TBWorkreportdayEntity.class, tBWorkreportday.getId());
 		try {
-			MyBeanUtils.copyBeanNotNull2Bean(tBWorkreportday, t);
-			tBWorkreportdayService.saveOrUpdate(t);
+			String busiReportId = tBWorkreportday.getId();
+
+			// 获取日报的内容
+			String doneDay = tBWorkreportday.getDoneDay();
+			String unDoneDay = tBWorkreportday.getUnDoneDay();
+			String coordinateWork = tBWorkreportday.getCoordinateWork();
+			String remark = tBWorkreportday.getRemark();
+			Date reportDate = tBWorkreportday.getReportDate();
+			String s = DateUtils.formatDate(reportDate, "yyy-MM-dd");
+			// 获取主表实体，进行保存更新
+			TBBusiWorkreportEntity tBBusiWorkreportEntity = tBBusiWorkreportService.getEntity(TBBusiWorkreportEntity.class, busiReportId);
+			// 更新内容
+			tBBusiWorkreportEntity.setDoneToday(doneDay);
+			tBBusiWorkreportEntity.setUnDoneToday(unDoneDay);
+			tBBusiWorkreportEntity.setCoordinateWork(coordinateWork);
+			tBBusiWorkreportEntity.setRemark(remark);
+			tBBusiWorkreportEntity.setReportDate(DateUtils.parseDate(s,"yyyy-MM-dd"));
+			// 保存更新
+			tBBusiWorkreportService.saveOrUpdate(tBBusiWorkreportEntity);
+
+			// 2、保存 t_b_workreportday 表
+			List<TBWorkreportdayEntity> byQueryString = tBWorkreportdayService.findByQueryString("from TBWorkreportdayEntity t where t.busiReportId=" + "'" + busiReportId + "'" + " and t.reportDate=" + "'" + s + "'");
+			if (byQueryString.size() > 0) {
+				tBWorkreportday.setId(byQueryString.get(0).getId());
+				tBWorkreportday.setBusiReportId(busiReportId);
+				tBWorkreportday.setCreateName(byQueryString.get(0).getCreateName());
+				tBWorkreportday.setCreateBy(byQueryString.get(0).getCreateBy());
+				tBWorkreportday.setCreateDate(byQueryString.get(0).getCreateDate());
+				tBWorkreportday.setSysCompanyCode(byQueryString.get(0).getSysCompanyCode());
+				tBWorkreportday.setSysOrgCode(byQueryString.get(0).getSysOrgCode());
+				//tBWorkreportdayService.saveOrUpdate(tBWorkreportday);
+				tBWorkreportdayService.getSession().merge(tBWorkreportday);
+			}else {
+				tBWorkreportday.setId(null);
+				tBWorkreportday.setBusiReportId(busiReportId);
+				tBWorkreportdayService.save(tBWorkreportday);
+			}
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -247,7 +297,7 @@ public class TBWorkreportdayController extends BaseController {
 			tBWorkreportday = tBWorkreportdayService.getEntity(TBWorkreportdayEntity.class, tBWorkreportday.getId());
 			req.setAttribute("tBWorkreportdayPage", tBWorkreportday);
 		}
-		return new ModelAndView("com/sxctc/workdays/tBWorkreportday-add");
+		return new ModelAndView("com/sxctc/workreport/tBWorkreportday-add");
 	}
 	/**
 	 * 日报管理编辑页面跳转
@@ -256,37 +306,27 @@ public class TBWorkreportdayController extends BaseController {
 	 */
 	@RequestMapping(params = "goUpdate")
 	public ModelAndView goUpdate(TBWorkreportdayEntity tBWorkreportday, HttpServletRequest req) {
-        Date dt = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		if (StringUtil.isNotEmpty(tBWorkreportday.getId())) {
-
+			String id = tBWorkreportday.getId();
 			tBWorkreportday = tBWorkreportdayService.getEntity(TBWorkreportdayEntity.class, tBWorkreportday.getId());
-			if(df.format(tBWorkreportday.getCreateDate()).equals(df.format(dt))) {
-                req.setAttribute("tBWorkreportdayPage", tBWorkreportday);
-				return new ModelAndView("com/sxctc/workdays/tBWorkreportday-update");
-            }else{
-				req.setAttribute("tBWorkreportdayPage", "只能修改当天日报信息！");
-				return new ModelAndView("com/sxctc/workdays/tishiyemian");
+			if (tBWorkreportday == null || tBWorkreportday.getUnitCode() == null){
+				// 去t_b_busi_workreport表查询回填信息
+				TBBusiWorkreportEntity tBBusiWorkreportEntity = tBBusiWorkreportService.getEntity(TBBusiWorkreportEntity.class, id);
+				tBWorkreportday = new TBWorkreportdayEntity();
+				tBWorkreportday.setUnitCode(tBBusiWorkreportEntity.getUnitCode());
+				tBWorkreportday.setProjectName(tBBusiWorkreportEntity.getReportTitle());
+				tBWorkreportday.setReportDate(DateUtils.getDate());
+				tBWorkreportday.setDoneDay(tBBusiWorkreportEntity.getDoneToday());
+				tBWorkreportday.setUnDoneDay(tBBusiWorkreportEntity.getUnDoneToday());
+				tBWorkreportday.setCoordinateWork(tBBusiWorkreportEntity.getCoordinateWork());
+				tBWorkreportday.setRemark(tBBusiWorkreportEntity.getRemark());
+				tBWorkreportday.setId(id);
 			}
-		}
-		return new ModelAndView("com/sxctc/workdays/tBWorkreportday-update");
-	}
-
-	/**
-	 * 日报管查看页面跳转
-	 *
-	 * @return
-	 */
-	@RequestMapping(params = "goSearch")
-	public ModelAndView goSearch(TBWorkreportdayEntity tBWorkreportday, HttpServletRequest req) {
-		if (StringUtil.isNotEmpty(tBWorkreportday.getId())) {
-
-			tBWorkreportday = tBWorkreportdayService.getEntity(TBWorkreportdayEntity.class, tBWorkreportday.getId());
 			req.setAttribute("tBWorkreportdayPage", tBWorkreportday);
-			return new ModelAndView("com/sxctc/workdays/tBWorkreportday-update");
 		}
-		return new ModelAndView("com/sxctc/workdays/tBWorkreportday-update");
+		return new ModelAndView("com/sxctc/workreport/tBWorkreportday-update");
 	}
+	
 	/**
 	 * 导入功能跳转
 	 * 
@@ -447,5 +487,4 @@ public class TBWorkreportdayController extends BaseController {
 
 		return Result.success();
 	}
-
 }
