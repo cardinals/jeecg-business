@@ -3,10 +3,10 @@
 <t:base type="jquery-webos,easyui,tools,DatePicker,autocomplete"></t:base>
 <div class="easyui-layout" fit="true">
     <div region="center" style="padding:0px;border:0px">
-        <t:datagrid name="tBCatalogdataList"  checkbox="true" pagination="true" fitColumns="true" treegrid="true" treeField="name"
-                    actionUrl="tBBusiCatalogdataController.do?datagrid&businessId=${businessId}" idField="id"  queryMode="group" singleSelect="true">
+        <t:datagrid name="tBCatalogdataList"  checkbox="true" pagination="false" fitColumns="true" treegrid="true" treeField="name"
+                    actionUrl="tBBusiCatalogdataController.do?datagrid&businessId=${businessId}&type=${type}" idField="id"  queryMode="group" singleSelect="true">
             <t:dgCol title="id"  field="id"   hidden="true"   queryMode="group"  width="140"></t:dgCol>
-            <t:dgCol title="名称"  field="name" query="true" width="150"></t:dgCol>
+            <t:dgCol title="名称"  field="name" width="150"></t:dgCol>
             <t:dgCol title="单位"  field="danwei" width="150"></t:dgCol>
             <t:dgCol title="数量"  field="num" extendParams="editor:'numberbox'" width="80"></t:dgCol>
             <t:dgCol title="备注"  field="beizhu" width="80"></t:dgCol>
@@ -117,6 +117,10 @@
         var rows=$('#'+gname).treegrid("getSelected");
         var children = $("#tBCatalogdataList").treegrid('getChildren',rows.id);
         if(children.length>0){
+            tip("请选择子条目");
+            return false;
+        }
+        if (rows.fartherid == undefined){
             tip("请选择子条目");
             return false;
         }

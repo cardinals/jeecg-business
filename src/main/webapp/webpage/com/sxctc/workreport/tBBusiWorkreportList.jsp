@@ -25,8 +25,8 @@
    <t:dgCol title="操作" field="opt" width="200"></t:dgCol>
    <t:dgFunOpt title="本周日报" urlclass="ace_button"  funname="checkCatalog(id)"></t:dgFunOpt>
    <t:dgToolBar title="录入今日日报" icon="icon-add" url="tBWorkreportdayController.do?goUpdate" funname="update"></t:dgToolBar>
-   <t:dgToolBar title="查看" icon="icon-search" url="tBBusiWorkreportController.do?goUpdate" funname="detail"></t:dgToolBar>
-   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
+   <t:dgToolBar title="查看最近日报" icon="icon-search" url="tBBusiWorkreportController.do?goUpdate" funname="detail"></t:dgToolBar>
+   <%--<t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>--%>
   </t:datagrid>
   </div>
  </div>

@@ -81,9 +81,16 @@ public class TBBusiCatalogdataController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(params = "list")
-	public ModelAndView list(HttpServletRequest request, String businessId) {
+	public ModelAndView list(HttpServletRequest request, String businessId, String type) {
 		request.setAttribute("businessId",businessId);
+		request.setAttribute("type",type);
 		return new ModelAndView("com/sxctc/business/tBBusiCatalogdataList");
+	}
+
+	@RequestMapping(params = "tablist")
+	public ModelAndView testlist(HttpServletRequest request, String businessId) {
+		request.setAttribute("businessId",businessId);
+		return new ModelAndView("com/sxctc/business/tBBusiCatalogTab");
 	}
 
 	/**
@@ -102,6 +109,10 @@ public class TBBusiCatalogdataController extends BaseController {
 		}else{
 			cq.eq("fartherid", tBCatalogdata.getId());
 			tBCatalogdata.setId(null);
+		}
+		String type = request.getParameter("type");
+		if (StringUtils.isNotBlank(type)){
+			cq.eq("type",type);
 		}
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBCatalogdata, request.getParameterMap());
@@ -190,7 +201,6 @@ public class TBBusiCatalogdataController extends BaseController {
 	/**
 	 * 添加服务目录管理
 	 *
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -218,7 +228,6 @@ public class TBBusiCatalogdataController extends BaseController {
 	/**
 	 * 更新服务目录管理
 	 *
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")

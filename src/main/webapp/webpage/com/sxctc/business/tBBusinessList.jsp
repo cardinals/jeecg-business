@@ -77,7 +77,7 @@ function fmtype(value,row,index) {
 }
 
 function checkCatalog(id) {
-    var url = "tBBusiCatalogdataController.do?list&businessId="+id;
+    var url = "tBBusiCatalogdataController.do?tablist&businessId="+id;
     $.dialog({
         content: "url:"+url,
         lock : true,

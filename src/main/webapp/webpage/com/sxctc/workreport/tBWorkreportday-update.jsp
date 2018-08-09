@@ -20,7 +20,7 @@
 							</label>
 						</td>
 						<td class="value">
-							<t:dictSelect field="unitCode" type="list"  typeGroupCode="unit_name"   defaultVal="${tBWorkreportdayPage.unitCode}" hasLabel="false"  title="厅局单位"></t:dictSelect>
+							<t:dictSelect field="unitCode" type="list"  typeGroupCode="unit_name"   defaultVal="${tBWorkreportdayPage.unitCode}" hasLabel="false"  title="厅局单位" readonly="readonly"></t:dictSelect>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">厅局单位</label>
 						</td>

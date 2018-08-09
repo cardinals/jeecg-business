@@ -313,14 +313,16 @@ public class TBWorkreportdayController extends BaseController {
 				// 去t_b_busi_workreport表查询回填信息
 				TBBusiWorkreportEntity tBBusiWorkreportEntity = tBBusiWorkreportService.getEntity(TBBusiWorkreportEntity.class, id);
 				tBWorkreportday = new TBWorkreportdayEntity();
-				tBWorkreportday.setUnitCode(tBBusiWorkreportEntity.getUnitCode());
-				tBWorkreportday.setProjectName(tBBusiWorkreportEntity.getReportTitle());
-				tBWorkreportday.setReportDate(DateUtils.getDate());
-				tBWorkreportday.setDoneDay(tBBusiWorkreportEntity.getDoneToday());
-				tBWorkreportday.setUnDoneDay(tBBusiWorkreportEntity.getUnDoneToday());
-				tBWorkreportday.setCoordinateWork(tBBusiWorkreportEntity.getCoordinateWork());
-				tBWorkreportday.setRemark(tBBusiWorkreportEntity.getRemark());
-				tBWorkreportday.setId(id);
+                tBWorkreportday.setId(id);
+                tBWorkreportday.setUnitCode(tBBusiWorkreportEntity.getUnitCode());
+                tBWorkreportday.setProjectName(tBBusiWorkreportEntity.getReportTitle());
+                tBWorkreportday.setReportDate(DateUtils.getDate());
+                if(DateUtils.getDate().equals(tBBusiWorkreportEntity.getReportDate())){
+                    tBWorkreportday.setDoneDay(tBBusiWorkreportEntity.getDoneToday());
+                    tBWorkreportday.setUnDoneDay(tBBusiWorkreportEntity.getUnDoneToday());
+                    tBWorkreportday.setCoordinateWork(tBBusiWorkreportEntity.getCoordinateWork());
+                    tBWorkreportday.setRemark(tBBusiWorkreportEntity.getRemark());
+                }
 			}
 			req.setAttribute("tBWorkreportdayPage", tBWorkreportday);
 		}
