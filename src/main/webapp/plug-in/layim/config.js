@@ -2,7 +2,7 @@
 //请将这个ip地址修改为本机ip地址
 //websocket 配置
 //动态配置Ip为当前服务器
-var chatIp = "127.0.0.1";
+var chatIp = "127.0.0.1:8080";
 var id = "";
 jQuery.post("chat/imController.do?getUserid", {
 

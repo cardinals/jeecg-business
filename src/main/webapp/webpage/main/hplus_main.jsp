@@ -93,7 +93,7 @@
                 
                 
                 <ul class="nav navbar-top-links navbar-right">
-                   <%--  <li class="dropdown">
+                   <li class="dropdown">
                         <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                             <i class="fa fa-envelope"></i> <span class="label label-warning">0</span>
                         </a>
@@ -139,7 +139,7 @@
                                 </div>
                             </li>
                         </ul>
-                    </li> --%>
+                    </li>
                     
                     <li class="dropdown" onfocus="bindFrameClick()">
                     	<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
@@ -154,10 +154,10 @@
                             </li>
                             <li><a href="javascript:openwindow('<t:mutiLang langKey="common.profile"/>','userController.do?userinfo')"><t:mutiLang langKey="common.profile"/></a></li>
                             <li><a href="javascript:openwindow('<t:mutiLang langKey="common.ssms.getSysInfos"/>','tSSmsController.do?getSysInfos')"><t:mutiLang langKey="common.ssms.getSysInfos"/></a></li>
-                            <li><a href="javascript:add('<t:mutiLang langKey="common.change.style"/>','userController.do?changestyle','',550,250)"><t:mutiLang langKey="common.my.style"/></a></li>
-                            <li><a href="javascript:toSwagger()">Swagger接口</a></li>
+                            <%--<li><a href="javascript:add('<t:mutiLang langKey="common.change.style"/>','userController.do?changestyle','',550,250)"><t:mutiLang langKey="common.my.style"/></a></li>--%>
+                            <%--<li><a href="javascript:toSwagger()">Swagger接口</a></li>--%>
                             <li><a href="javascript:clearLocalstorage()"><t:mutiLang langKey="common.clear.localstorage"/></a></li>
-                            <li><a href="javascript:toJeecgYun()">云应用中心</a></li>
+                            <%--<li><a href="javascript:toJeecgYun()">云应用中心</a></li>--%>
                             <!-- <li><a href="http://yun.jeecg.org" target="_blank">云应用中心</li> -->
                            <!--  <li class="divider"></li>
                             <li><a href="javascript:logout()">注销</a></li> -->
@@ -167,7 +167,7 @@
                      
                     <li class="dropdown hidden-xs">
                         <a class="right-sidebar-toggle" aria-expanded="false">
-                            <i class="fa fa-tasks"></i> 主题
+                            <i class="fa fa-comments-o"></i> 通知
                         </a>
                     </li>
                       <li class="dropdown">
@@ -224,13 +224,13 @@
     <div id="right-sidebar">
         <div class="sidebar-container">
 
-            <ul class="nav nav-tabs navs-3">
+            <ul class="nav nav-tabs navs-2">
 
-                <li class="active">
+                <%--<li class="active">
                     <a data-toggle="tab" href="#tab-1">
                         <i class="fa fa-gear"></i> 主题
                     </a>
-                </li>
+                </li>--%>
                <li class=""><a data-toggle="tab" href="#tab-2">
                    <i class="fa fa-comments-o" aria-hidden="true"></i>通知
                 </a>
@@ -242,7 +242,7 @@
             </ul>
 
             <div class="tab-content">
-                <div id="tab-1" class="tab-pane active">
+                <%--<div id="tab-1" class="tab-pane active">
                     <div class="sidebar-title">
                         <h3> <i class="fa fa-comments-o"></i> 主题设置</h3>
                         <small><i class="fa fa-tim"></i> 你可以从这里选择和预览主题的布局和样式，这些设置会被保存在本地，下次打开的时候会直接应用这些设置。</small>
@@ -312,8 +312,8 @@
                     </span>
                         </div>
                     </div>
-                </div>
-                <div id="tab-2" class="tab-pane">
+                </div>--%>
+                <div id="tab-2" class="tab-pane active">
                     <div class="sidebar-title">
                         <h3> <i class="fa fa-comments-o"></i> 最新通知<small id="messageCount"><i class="fa fa-tim"></i> 您当前有0条未读通知</small></h3>
                     </div>
@@ -468,7 +468,7 @@
 <!-- 弹出TAB -->
 <script type="text/javascript" src="plug-in/hplus/hplus-tab.js"></script>
 <!-- 在线聊天 -->
-<%--<%@include file="/context/layui.jsp"%>--%>
+<%@include file="/context/layui.jsp"%>
 <script>
     function logout(){
         /*bootbox.confirm("<t:mutiLang langKey="common.exit.confirm"/>", function(result) {
