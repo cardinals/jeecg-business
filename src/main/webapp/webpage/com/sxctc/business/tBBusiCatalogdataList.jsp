@@ -29,9 +29,17 @@
                 var children = $("#tBCatalogdataList").treegrid('getChildren',row.id);
                 if(children.length<=0){
                     row.leaf=true;
-                    $("#tBCatalogdataList").treegrid('refresh', row.id);
+                    //$("#tBCatalogdataList").treegrid('refresh', row.id);
                 }
-            }
+            },
+            // onLoadSuccess: function (row) {
+            //     var roots = $("#tBCatalogdataList").treegrid("getRoots");
+            //     if (roots.length > 0) {
+            //         $.each(roots, function (i, item) {
+            //             $("#tBCatalogdataList").treegrid("expand", item.id);
+            //         });
+            //     }
+            // }
         });
     }
     var editingId;

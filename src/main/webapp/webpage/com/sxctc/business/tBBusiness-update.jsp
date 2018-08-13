@@ -104,7 +104,7 @@
 				</label>
 			</td>
 			<td class="value">
-				<input id="busJoinTime" name="busJoinTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  ignore="ignore" value='<fmt:formatDate value='${tBBusinessPage.busJoinTime}' type="date" pattern="yyyy-MM-dd"/>'/>
+				<input id="busJoinTime" name="busJoinTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  datatype="*"  ignore="ignore" value='<fmt:formatDate value='${tBBusinessPage.busJoinTime}' type="date" pattern="yyyy-MM-dd"/>'/>
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">业务对接时间</label>
 			</td>
@@ -116,19 +116,19 @@
 				</label>
 			</td>
 			<td class="value">
-				<t:dictSelect field="protocolStatus" type="radio"  datatype="n"  typeGroupCode="dev_flag"   defaultVal="${tBBusinessPage.protocolStatus}" hasLabel="false"  title="是否收回协议" ></t:dictSelect>
+				<t:dictSelect field="protocolStatus" type="radio"  typeGroupCode="dev_flag"   defaultVal="${tBBusinessPage.protocolStatus}" hasLabel="false"  title="是否收回协议" ></t:dictSelect>
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">是否收回协议</label>
 			</td>
 		</tr>
-		<tr class="hid">
+		<tr class="hid" id="protocolTimeTr">
 			<td align="right">
 				<label class="Validform_label">
 					收回协议时间:
 				</label>
 			</td>
 			<td class="value">
-				<input id="protocolTime" name="protocolTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  ignore="ignore" value='<fmt:formatDate value='${tBBusinessPage.protocolTime}' type="date" pattern="yyyy-MM-dd"/>'/>
+				<input id="protocolTime" name="protocolTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()" datatype="*" ignore="ignore" value='<fmt:formatDate value='${tBBusinessPage.protocolTime}' type="date" pattern="yyyy-MM-dd"/>'/>
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">收回协议时间</label>
 			</td>
@@ -143,8 +143,11 @@
         var joinStat = $('input:radio[name="joinStatus"]').val();
         if(joinStat==0){
             $(".hid").hide();
+            $("#busJoinTime").attr("ignore","ignore");
         }else {
             $(".hid").show();
+            $("#busJoinTime").attr("ignore","checked");
+            $("#protocolStatus").attr("datatype","n");
         }
     });
 
@@ -159,8 +162,21 @@
     $('input:radio[name="joinStatus"]').click(function(){
         if($(this).val()==0){
             $(".hid").hide();
+            $("#busJoinTime").attr("ignore","ignore");
         }else {
             $(".hid").show();
+            $("#busJoinTime").attr("ignore","checked");
+            $("#protocolStatus").attr("datatype","n");
+        }
+    });
+
+    $('input:radio[name="protocolStatus"]').click(function(){
+        if($(this).val()==0){
+            $("#protocolTimeTr").hide();
+            $("#protocolTime").attr("ignore","ignore");
+        }else {
+            $("#protocolTimeTr").show();
+            $("#protocolTime").attr("ignore","checked");
         }
     });
 

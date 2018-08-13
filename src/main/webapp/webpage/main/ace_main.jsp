@@ -337,7 +337,7 @@
 						<div class="row">
 							<div class="col-xs-12" style="width: 99%;padding-left:2px;padding-right: 2px;" id="tabs">
 	                            <ul class="nav nav-tabs" role="tablist">
-	                                <!-- <li class="active"><a href="#Index" role="tab" data-toggle="tab">首页</a></li> -->
+	                                <!-- <li class="active"><a href="#Index" role="tab" dzata-toggle="tab">首页</a></li> -->
 	                            </ul>
 	                            <div class="tab-content">
 	                                <div role="tabpanel" class="tab-pane active" id="Index">

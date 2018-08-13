@@ -317,12 +317,18 @@ public class TBWorkreportdayController extends BaseController {
                 tBWorkreportday.setUnitCode(tBBusiWorkreportEntity.getUnitCode());
                 tBWorkreportday.setProjectName(tBBusiWorkreportEntity.getReportTitle());
                 tBWorkreportday.setReportDate(DateUtils.getDate());
-                if(DateUtils.getDate().equals(tBBusiWorkreportEntity.getReportDate())){
-                    tBWorkreportday.setDoneDay(tBBusiWorkreportEntity.getDoneToday());
-                    tBWorkreportday.setUnDoneDay(tBBusiWorkreportEntity.getUnDoneToday());
-                    tBWorkreportday.setCoordinateWork(tBBusiWorkreportEntity.getCoordinateWork());
-                    tBWorkreportday.setRemark(tBBusiWorkreportEntity.getRemark());
-                }
+
+				Date reportDate = tBBusiWorkreportEntity.getReportDate();
+				if (reportDate != null) {
+					String currentDate = DateUtils.formatDate(new Date(), "yyyy-MM-dd");
+					String reportDateStr = DateUtils.formatDate(reportDate, "yyyy-MM-dd");
+					if(currentDate.equals(reportDateStr)){
+						tBWorkreportday.setDoneDay(tBBusiWorkreportEntity.getDoneToday());
+						tBWorkreportday.setUnDoneDay(tBBusiWorkreportEntity.getUnDoneToday());
+						tBWorkreportday.setCoordinateWork(tBBusiWorkreportEntity.getCoordinateWork());
+						tBWorkreportday.setRemark(tBBusiWorkreportEntity.getRemark());
+					}
+				}
 			}
 			req.setAttribute("tBWorkreportdayPage", tBWorkreportday);
 		}

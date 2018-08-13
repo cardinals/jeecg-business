@@ -1,5 +1,7 @@
 package com.sxctc.business.controller;
+import com.sxctc.business.entity.TBBusiCatalogEntity;
 import com.sxctc.business.entity.TBBusinessEntity;
+import com.sxctc.business.service.TBBusiCatalogServiceI;
 import com.sxctc.business.service.TBBusinessServiceI;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sxctc.workreport.entity.TBBusiWorkreportEntity;
+import com.sxctc.workreport.entity.TBWorkreportdayEntity;
 import com.sxctc.workreport.service.TBBusiWorkreportServiceI;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,6 +101,8 @@ public class TBBusinessController extends BaseController {
 	@Autowired
 	private TBBusiWorkreportServiceI tBBusiWorkreportService;
 	@Autowired
+	private TBBusiCatalogServiceI tBBusiCatalogServiceI;
+	@Autowired
 	private SystemService systemService;
 	@Autowired
 	private Validator validator;
@@ -147,10 +152,37 @@ public class TBBusinessController extends BaseController {
 	public AjaxJson doDel(TBBusinessEntity tBBusiness, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		tBBusiness = systemService.getEntity(TBBusinessEntity.class, tBBusiness.getId());
+		String businessId = tBBusiness.getId();
+		tBBusiness = systemService.getEntity(TBBusinessEntity.class, businessId);
 		message = "营销数据业务列表删除成功";
 		try{
 			tBBusinessService.delete(tBBusiness);
+
+			// 接着删除日报有关信息
+			// 1、删除今日日报
+			List<TBBusiWorkreportEntity> busiReportList = tBBusiWorkreportService.findByProperty(TBBusiWorkreportEntity.class, "businessId", businessId);
+			if (busiReportList.size() > 0) {
+				for (TBBusiWorkreportEntity tbBusiWorkreportEntity : busiReportList) {
+					String busiReportId = tbBusiWorkreportEntity.getId();
+					tBBusiWorkreportService.deleteEntityById(TBBusiWorkreportEntity.class,busiReportId);
+					// 2、删除历史日报关联数据
+					List<TBWorkreportdayEntity> workReportList = tBBusiWorkreportService.findByProperty(TBWorkreportdayEntity.class, "busiReportId", busiReportId);
+					if (workReportList.size() > 0) {
+						for (TBWorkreportdayEntity tbWorkreportdayEntity : workReportList) {
+							tBBusiWorkreportService.deleteEntityById(TBWorkreportdayEntity.class,tbWorkreportdayEntity.getId());
+						}
+					}
+				}
+			}
+
+			// 删除服务目录有关信息
+			List<TBBusiCatalogEntity> busiCatalogList = tBBusiCatalogServiceI.findByProperty(TBBusiCatalogEntity.class, "businessId", businessId);
+			if (busiCatalogList.size() > 0) {
+				for (TBBusiCatalogEntity tbBusiCatalogEntity : busiCatalogList) {
+					tBBusiCatalogServiceI.deleteEntityById(TBBusiCatalogEntity.class,tbBusiCatalogEntity.getId());
+				}
+			}
+
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -178,6 +210,32 @@ public class TBBusinessController extends BaseController {
 				id
 				);
 				tBBusinessService.delete(tBBusiness);
+
+				// 接着删除日报有关信息
+				// 1、删除今日日报
+				List<TBBusiWorkreportEntity> busiReportList = tBBusiWorkreportService.findByProperty(TBBusiWorkreportEntity.class, "businessId", id);
+				if (busiReportList.size() > 0) {
+					for (TBBusiWorkreportEntity tbBusiWorkreportEntity : busiReportList) {
+						String busiReportId = tbBusiWorkreportEntity.getId();
+						tBBusiWorkreportService.deleteEntityById(TBBusiWorkreportEntity.class,busiReportId);
+						// 2、删除历史日报关联数据
+						List<TBWorkreportdayEntity> workReportList = tBBusiWorkreportService.findByProperty(TBWorkreportdayEntity.class, "busiReportId", busiReportId);
+						if (workReportList.size() > 0) {
+							for (TBWorkreportdayEntity tbWorkreportdayEntity : workReportList) {
+								tBBusiWorkreportService.deleteEntityById(TBWorkreportdayEntity.class,tbWorkreportdayEntity.getId());
+							}
+						}
+					}
+				}
+
+				// 删除服务目录有关信息
+				List<TBBusiCatalogEntity> busiCatalogList = tBBusiCatalogServiceI.findByProperty(TBBusiCatalogEntity.class, "businessId", id);
+				if (busiCatalogList.size() > 0) {
+					for (TBBusiCatalogEntity tbBusiCatalogEntity : busiCatalogList) {
+						tBBusiCatalogServiceI.deleteEntityById(TBBusiCatalogEntity.class,tbBusiCatalogEntity.getId());
+					}
+				}
+
 				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 			}
 		}catch(Exception e){

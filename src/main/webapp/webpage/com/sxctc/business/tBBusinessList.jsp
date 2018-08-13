@@ -37,7 +37,7 @@
    <t:dgCol title="备用字段6"  field="backupField6"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="200"></t:dgCol>
    <t:dgDelOpt title="删除" url="tBBusinessController.do?doDel&id={id}" urlclass="ace_button" urlStyle="background-color:#ec4758;" urlfont="fa-trash-o" operationCode="delete"/>
-   <t:dgFunOpt title="服务目录" urlclass="ace_button" urlfont="fa-trash-o" funname="checkCatalog(id)" operationCode="catalog" exp="joinStatus#eq#1"></t:dgFunOpt>
+   <t:dgFunOpt title="服务目录" urlclass="ace_button" urlfont="fa fa-user" funname="checkCatalog(id)" operationCode="catalog" exp="joinStatus#eq#1"></t:dgFunOpt>
    <t:dgToolBar title="录入" icon="icon-add" url="tBBusinessController.do?goAdd" funname="add" operationCode="add"></t:dgToolBar>
    <t:dgToolBar title="编辑" icon="icon-edit" url="tBBusinessController.do?goUpdate" funname="update" operationCode="update"></t:dgToolBar>
    <t:dgToolBar title="批量删除"  icon="icon-remove" url="tBBusinessController.do?doBatchDel" funname="deleteALLSelect" operationCode="batchDelete"></t:dgToolBar>

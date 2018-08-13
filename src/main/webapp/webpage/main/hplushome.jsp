@@ -26,7 +26,7 @@
 <div class="row  border-bottom white-bg dashboard-header">
     <div class="col-sm-12">
         <blockquote class="text-warning" style="font-size:14px">
-            <h1 class="text-warning">山西省政务云服务营销管理大数据分析系统</h1>
+            <h1 class="text-warning" style="font-weight: bold">山西省政务云服务营销管理大数据分析系统</h1>
             <h4 class="text-danger">欢迎光临</h4>
             <iframe id="fancybox-frame" name="fancybox-frame1533801934382" frameborder="0" scrolling="no" hspace="0" height="25px" style="margin-bottom: -7px;" src="http://i.tianqi.com/index.php?c=code&a=getcode&id=34&h=25&w=280&py=taiyuan"></iframe>
         </blockquote>
@@ -129,9 +129,8 @@
                     <h5>使用教程</h5>
                 </div>
                 <div class="ibox-content">
-                    <video width="100%" height="240" controls>
-                        <source src="movie.mp4" type="video/mp4">
-                        <source src="movie.ogg" type="video/ogg">
+                    <video width="100%" height="100" controls>
+                        <source src="video/study.mp4" type="video/mp4">
                         您的浏览器不支持 HTML5 video 标签。
                     </video>
                     <hr>
