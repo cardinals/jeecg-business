@@ -29,7 +29,7 @@
                 var children = $("#tBCatalogdataList").treegrid('getChildren',row.id);
                 if(children.length<=0){
                     row.leaf=true;
-                    //$("#tBCatalogdataList").treegrid('refresh', row.id);
+                    $("#tBCatalogdataList").treegrid('refresh', row.id);
                 }
             },
             // onLoadSuccess: function (row) {
