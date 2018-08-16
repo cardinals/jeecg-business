@@ -116,7 +116,7 @@
 				</label>
 			</td>
 			<td class="value">
-				<t:dictSelect field="protocolStatus" type="radio"  typeGroupCode="dev_flag"   defaultVal="${tBBusinessPage.protocolStatus}" hasLabel="false"  title="是否收回协议" ></t:dictSelect>
+				<t:dictSelect field="protocolStatus" type="radio"  typeGroupCode="dev_flag" defaultVal="${tBBusinessPage.protocolStatus}" hasLabel="false"  title="是否收回协议" ></t:dictSelect>
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">是否收回协议</label>
 			</td>
@@ -140,7 +140,10 @@
 <script src = "webpage/com/sxctc/business/tBBusiness.js"></script>
 <script>
 	$(function () {
-        var joinStat = $('input:radio[name="joinStatus"]').val();
+        //var joinStat = $('input:radio[name="joinStatus"]').val();
+		var joinStat = ${tBBusinessPage.joinStatus};
+        var protocolStatus = ${tBBusinessPage.protocolStatus};
+        // 业务对接时间下面选项显隐
         if(joinStat==0){
             $(".hid").hide();
             $("#busJoinTime").attr("ignore","ignore");
@@ -148,6 +151,14 @@
             $(".hid").show();
             $("#busJoinTime").attr("ignore","checked");
             $("#protocolStatus").attr("datatype","n");
+        }
+        //收回协议时间显隐
+        if (protocolStatus == 0){
+            $("#protocolTimeTr").hide();
+            $("#protocolTime").attr("ignore","ignore");
+        }else {
+            $("#protocolTimeTr").show();
+            $("#protocolTime").attr("ignore","checked");
         }
     });
 

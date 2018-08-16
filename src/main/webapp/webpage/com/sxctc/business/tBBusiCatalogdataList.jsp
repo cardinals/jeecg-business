@@ -31,7 +31,7 @@
                     row.leaf=true;
                     $("#tBCatalogdataList").treegrid('refresh', row.id);
                 }
-            },
+            }
             // onLoadSuccess: function (row) {
             //     var roots = $("#tBCatalogdataList").treegrid("getRoots");
             //     if (roots.length > 0) {
@@ -128,7 +128,7 @@
             tip("请选择子条目");
             return false;
         }
-        if (rows.fartherid == undefined){
+        if (rows._parentId == undefined){
             tip("请选择子条目");
             return false;
         }

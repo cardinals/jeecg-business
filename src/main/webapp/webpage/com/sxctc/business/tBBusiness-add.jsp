@@ -117,7 +117,7 @@
 				</label>
 			</td>
 			<td class="value">
-				<t:dictSelect id="protocolStatus" field="protocolStatus" type="radio"  typeGroupCode="dev_flag"  defaultVal="${tBBusinessPage.protocolStatus}" hasLabel="false"  title="是否收回协议" ></t:dictSelect>
+				<t:dictSelect id="protocolStatus" field="protocolStatus" type="radio" typeGroupCode="dev_flag"  defaultVal="${tBBusinessPage.protocolStatus}" hasLabel="false"  title="是否收回协议" ></t:dictSelect>
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">是否收回协议</label>
 			</td>
@@ -151,8 +151,9 @@
 
     $('input:radio[name="joinStatus"]').click(function(){
         if($(this).val()==0){
-            $(".hid").hide();
             $("#busJoinTime").attr("ignore","ignore");
+            $("#protocolStatus").removeAttr("datatype");
+            $(".hid").hide();
         }else {
             $(".hid").show();
             $("#busJoinTime").attr("ignore","checked");

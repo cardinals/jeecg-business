@@ -95,7 +95,7 @@ public class TBCatalogdataController extends BaseController {
 		return new ModelAndView("com/sxctc/catalogs/tBCatalogdataList");
 	}
 
-	@RequestMapping(params = "testlist")
+	@RequestMapping(params = "tablist")
 	public ModelAndView testlist(HttpServletRequest request) {
 		return new ModelAndView("com/sxctc/catalogs/tBCatalogTab");
 	}
