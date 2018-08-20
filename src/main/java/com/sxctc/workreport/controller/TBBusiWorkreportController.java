@@ -190,7 +190,6 @@ public class TBBusiWorkreportController extends BaseController {
 	/**
 	 * 添加今日日报列表
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -214,7 +213,6 @@ public class TBBusiWorkreportController extends BaseController {
 	/**
 	 * 更新今日日报列表
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
@@ -260,6 +258,10 @@ public class TBBusiWorkreportController extends BaseController {
 	public ModelAndView goUpdate(TBBusiWorkreportEntity tBBusiWorkreport, HttpServletRequest req) {
 		if (StringUtil.isNotEmpty(tBBusiWorkreport.getId())) {
 			tBBusiWorkreport = tBBusiWorkreportService.getEntity(TBBusiWorkreportEntity.class, tBBusiWorkreport.getId());
+			tBBusiWorkreport.setDoneToday(tBBusiWorkreport.getDoneToday().replace("|","\r\n"));
+			tBBusiWorkreport.setUnDoneToday(tBBusiWorkreport.getUnDoneToday().replace("|","\r\n"));
+			tBBusiWorkreport.setCoordinateWork(tBBusiWorkreport.getCoordinateWork().replace("|","\r\n"));
+			tBBusiWorkreport.setRemark(tBBusiWorkreport.getRemark().replace("|","\r\n"));
 			req.setAttribute("tBBusiWorkreportPage", tBBusiWorkreport);
 		}
 		return new ModelAndView("com/sxctc/workreport/tBBusiWorkreport-update");

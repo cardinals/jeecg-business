@@ -20,7 +20,7 @@
 							</label>
 						</td>
 						<td class="value">
-									<t:dictSelect field="unitCode" type="list"  typeGroupCode=""   defaultVal="${tBWorkreportdayWeekPage.unitCode}" hasLabel="false"  title="厅局单位" ></t:dictSelect>     
+									<t:dictSelect field="unitCode" type="list"  typeGroupCode="unit_name"   defaultVal="${tBWorkreportdayWeekPage.unitCode}" hasLabel="false"  title="厅局单位" ></t:dictSelect>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">厅局单位</label>
 						</td>
@@ -69,7 +69,7 @@
 							</label>
 						</td>
 						<td class="value" >
-						  	 	<textarea id="doneDay" style="width:600px;" class="inputxt" rows="6" name="doneDay"  ignore="ignore" >${tBWorkreportdayWeekPage.doneDay}</textarea>
+						  	 	<textarea id="doneDay" style="width:600px;height: 260px;" class="inputxt" rows="6" name="doneDay"  ignore="ignore" >${tBWorkreportdayWeekPage.doneDay}</textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">今日完成的工作</label>
 						</td>
@@ -81,7 +81,7 @@
 							</label>
 						</td>
 						<td class="value" >
-						  	 	<textarea id="unDoneDay" style="width:600px;" class="inputxt" rows="6" name="unDoneDay"  ignore="ignore" >${tBWorkreportdayWeekPage.unDoneDay}</textarea>
+						  	 	<textarea id="unDoneDay" style="width:600px;height: 260px;" class="inputxt" rows="6" name="unDoneDay"  ignore="ignore" >${tBWorkreportdayWeekPage.unDoneDay}</textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">未完成的工作</label>
 						</td>
@@ -93,7 +93,7 @@
 							</label>
 						</td>
 						<td class="value" >
-						  	 	<textarea id="coordinateWork" style="width:600px;" class="inputxt" rows="6" name="coordinateWork"  ignore="ignore" >${tBWorkreportdayWeekPage.coordinateWork}</textarea>
+						  	 	<textarea id="coordinateWork" style="width:600px;height: 260px;" class="inputxt" rows="6" name="coordinateWork"  ignore="ignore" >${tBWorkreportdayWeekPage.coordinateWork}</textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">需要协调的工作</label>
 						</td>
@@ -105,7 +105,7 @@
 							</label>
 						</td>
 						<td class="value" >
-						  	 	<textarea id="remark" style="width:600px;" class="inputxt" rows="6" name="remark"  ignore="ignore" >${tBWorkreportdayWeekPage.remark}</textarea>
+						  	 	<textarea id="remark" style="width:600px;height: 260px;" class="inputxt" rows="6" name="remark"  ignore="ignore" >${tBWorkreportdayWeekPage.remark}</textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">备注</label>
 						</td>
@@ -113,4 +113,4 @@
 			</table>
 		</t:formvalid>
  </body>
-  <script src = "webpage/com/sxctc/week/tBWorkreportdayWeek.js"></script>		
+  <script src = "webpage/com/sxctc/week/tBWorkreportdayWeek.js"></script>

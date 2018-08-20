@@ -109,8 +109,8 @@ public class TBWorkreportdayController extends BaseController {
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
-		String busiReportId = request.getParameter("busiReportId");
-		request.setAttribute("busiReportId",busiReportId);
+//		String busiReportId = request.getParameter("busiReportId");
+//		request.setAttribute("busiReportId",busiReportId);
 		return new ModelAndView("com/sxctc/workreport/tBWorkreportdayList");
 	}
 
@@ -125,19 +125,19 @@ public class TBWorkreportdayController extends BaseController {
 	@RequestMapping(params = "datagrid")
 	public void datagrid(TBWorkreportdayEntity tBWorkreportday,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(TBWorkreportdayEntity.class, dataGrid);
-		String busiReportId = request.getParameter("busiReportId");
+		//String busiReportId = request.getParameter("busiReportId");
 		try{
-			if (StringUtils.isNotBlank(busiReportId)){
-				cq.eq("busiReportId",busiReportId);
-			}
-			// 获取当前周时间范围
-			JSONObject weekDaysRange = DateUtil.getWeekDays(0);
-			String beginDate = weekDaysRange.getString("beginDate");
-			String endDate = weekDaysRange.getString("endDate");
-			if (StringUtils.isNotBlank(beginDate) && StringUtils.isNotBlank(endDate)) {
-				cq.ge("reportDate",DateUtils.parseDate(beginDate, "yyyy-MM-dd"));
-				cq.le("reportDate",DateUtils.parseDate(endDate, "yyyy-MM-dd"));
-			}
+//			if (StringUtils.isNotBlank(busiReportId)){
+//				cq.eq("busiReportId",busiReportId);
+//			}
+//			// 获取当前周时间范围
+//			JSONObject weekDaysRange = DateUtil.getWeekDays(0);
+//			String beginDate = weekDaysRange.getString("beginDate");
+//			String endDate = weekDaysRange.getString("endDate");
+//			if (StringUtils.isNotBlank(beginDate) && StringUtils.isNotBlank(endDate)) {
+//				cq.ge("reportDate",DateUtils.parseDate(beginDate, "yyyy-MM-dd"));
+//				cq.le("reportDate",DateUtils.parseDate(endDate, "yyyy-MM-dd"));
+//			}
 			//查询条件组装器
 			org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBWorkreportday, request.getParameterMap());
 
@@ -250,15 +250,19 @@ public class TBWorkreportdayController extends BaseController {
 			// 获取主表实体，进行保存更新
 			TBBusiWorkreportEntity tBBusiWorkreportEntity = tBBusiWorkreportService.getEntity(TBBusiWorkreportEntity.class, busiReportId);
 			// 更新内容
-			tBBusiWorkreportEntity.setDoneToday(doneDay);
-			tBBusiWorkreportEntity.setUnDoneToday(unDoneDay);
-			tBBusiWorkreportEntity.setCoordinateWork(coordinateWork);
-			tBBusiWorkreportEntity.setRemark(remark);
+			tBBusiWorkreportEntity.setDoneToday(doneDay.replace("\r\n","|"));
+			tBBusiWorkreportEntity.setUnDoneToday(unDoneDay.replace("\r\n","|"));
+			tBBusiWorkreportEntity.setCoordinateWork(coordinateWork.replace("\r\n","|"));
+			tBBusiWorkreportEntity.setRemark(remark.replace("\r\n","|"));
 			tBBusiWorkreportEntity.setReportDate(DateUtils.parseDate(s,"yyyy-MM-dd"));
 			// 保存更新
 			tBBusiWorkreportService.saveOrUpdate(tBBusiWorkreportEntity);
 
 			// 2、保存 t_b_workreportday 表
+			tBWorkreportday.setDoneDay(doneDay.replace("\r\n","|"));
+			tBWorkreportday.setUnDoneDay(unDoneDay.replace("\r\n","|"));
+			tBWorkreportday.setCoordinateWork(coordinateWork.replace("\r\n","|"));
+			tBWorkreportday.setRemark(remark.replace("\r\n","|"));
 			List<TBWorkreportdayEntity> byQueryString = tBWorkreportdayService.findByQueryString("from TBWorkreportdayEntity t where t.busiReportId=" + "'" + busiReportId + "'" + " and t.reportDate=" + "'" + s + "'");
 			if (byQueryString.size() > 0) {
 				tBWorkreportday.setId(byQueryString.get(0).getId());
@@ -268,6 +272,7 @@ public class TBWorkreportdayController extends BaseController {
 				tBWorkreportday.setCreateDate(byQueryString.get(0).getCreateDate());
 				tBWorkreportday.setSysCompanyCode(byQueryString.get(0).getSysCompanyCode());
 				tBWorkreportday.setSysOrgCode(byQueryString.get(0).getSysOrgCode());
+
 				//tBWorkreportdayService.saveOrUpdate(tBWorkreportday);
 				tBWorkreportdayService.getSession().merge(tBWorkreportday);
 			}else {
@@ -323,13 +328,18 @@ public class TBWorkreportdayController extends BaseController {
 					String currentDate = DateUtils.formatDate(new Date(), "yyyy-MM-dd");
 					String reportDateStr = DateUtils.formatDate(reportDate, "yyyy-MM-dd");
 					if(currentDate.equals(reportDateStr)){
-						tBWorkreportday.setDoneDay(tBBusiWorkreportEntity.getDoneToday());
-						tBWorkreportday.setUnDoneDay(tBBusiWorkreportEntity.getUnDoneToday());
-						tBWorkreportday.setCoordinateWork(tBBusiWorkreportEntity.getCoordinateWork());
-						tBWorkreportday.setRemark(tBBusiWorkreportEntity.getRemark());
+						tBWorkreportday.setDoneDay(tBBusiWorkreportEntity.getDoneToday().replace("|","\r\n"));
+						tBWorkreportday.setUnDoneDay(tBBusiWorkreportEntity.getUnDoneToday().replace("|","\r\n"));
+						tBWorkreportday.setCoordinateWork(tBBusiWorkreportEntity.getCoordinateWork().replace("|","\r\n"));
+						tBWorkreportday.setRemark(tBBusiWorkreportEntity.getRemark().replace("|","\r\n"));
 					}
 				}
 			}
+			tBWorkreportday.setDoneDay(tBWorkreportday.getDoneDay().replace("|","\r\n"));
+			tBWorkreportday.setUnDoneDay(tBWorkreportday.getUnDoneDay().replace("|","\r\n"));
+			tBWorkreportday.setCoordinateWork(tBWorkreportday.getCoordinateWork().replace("|","\r\n"));
+			tBWorkreportday.setRemark(tBWorkreportday.getRemark().replace("|","\r\n"));
+
 			req.setAttribute("tBWorkreportdayPage", tBWorkreportday);
 		}
 		return new ModelAndView("com/sxctc/workreport/tBWorkreportday-update");

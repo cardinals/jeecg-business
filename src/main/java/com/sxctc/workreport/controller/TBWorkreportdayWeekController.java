@@ -190,7 +190,6 @@ public class TBWorkreportdayWeekController extends BaseController {
 	/**
 	 * 添加周报
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -214,7 +213,6 @@ public class TBWorkreportdayWeekController extends BaseController {
 	/**
 	 * 更新周报
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
@@ -260,6 +258,10 @@ public class TBWorkreportdayWeekController extends BaseController {
 	public ModelAndView goUpdate(TBWorkreportdayWeekEntity tBWorkreportdayWeek, HttpServletRequest req) {
 		if (StringUtil.isNotEmpty(tBWorkreportdayWeek.getId())) {
 			tBWorkreportdayWeek = tBWorkreportdayWeekService.getEntity(TBWorkreportdayWeekEntity.class, tBWorkreportdayWeek.getId());
+			tBWorkreportdayWeek.setDoneDay(tBWorkreportdayWeek.getDoneDay().replace("|","\r\n").replace("<br>","\n\n"));
+			tBWorkreportdayWeek.setUnDoneDay(tBWorkreportdayWeek.getUnDoneDay().replace("|","\r\n").replace("<br>","\n\n"));
+			tBWorkreportdayWeek.setCoordinateWork(tBWorkreportdayWeek.getCoordinateWork().replace("|","\r\n").replace("<br>","\n\n"));
+			tBWorkreportdayWeek.setRemark(tBWorkreportdayWeek.getRemark().replace("|","\r\n").replace("<br>","\n\n"));
 			req.setAttribute("tBWorkreportdayWeekPage", tBWorkreportdayWeek);
 		}
 		return new ModelAndView("com/sxctc/workreport/tBWorkreportdayWeek-update");
