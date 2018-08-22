@@ -12,7 +12,8 @@
  <body>
 		<t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" action="tBWorkreportdayController.do?doUpdate" >
 					<input id="id" name="id" type="hidden" value="${tBWorkreportdayPage.id }"/>
-		<table style="width: 600px;" cellpadding="0" cellspacing="1" class="formtable">
+		<table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable">
+					<c:if test="${toolFlag == '1'}">
 					<tr>
 						<td align="right">
 							<label class="Validform_label">
@@ -37,8 +38,9 @@
 							<label class="Validform_label" style="display: none;">迁移系统名称</label>
 						</td>
 					</tr>
+					</c:if>
 					<tr>
-						<td align="right">
+						<td align="right" style="width: 20%;">
 							<label class="Validform_label">
 								今日时间:
 							</label>
@@ -49,15 +51,15 @@
 							<label class="Validform_label" style="display: none;">今日时间</label>
 						</td>
 					</tr>
-				
+					<c:if test="${toolFlag == '1'}">
 					<tr>
 						<td align="right">
 							<label class="Validform_label">
 								今日完成的工作:
 							</label>
 						</td>
-						<td class="value" >
-						  	 	<textarea id="doneDay" style="width:100%;height: 260px;" class="inputxt" rows="6" name="doneDay"  ignore="checked" >${tBWorkreportdayPage.doneDay}</textarea>
+						<td class="value"">
+						  	 	<textarea id="doneDay" style="width:90%;height: 100px;" class="inputxt" rows="6" name="doneDay"  ignore="checked" >${tBWorkreportdayPage.doneDay}</textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">今日完成的工作</label>
 						</td>
@@ -69,7 +71,7 @@
 							</label>
 						</td>
 						<td class="value" >
-						  	 	<textarea id="unDoneDay" style="width:100%;height: 260px;" class="inputxt" rows="6" name="unDoneDay"  ignore="ignore" >${tBWorkreportdayPage.unDoneDay}</textarea>
+						  	 	<textarea id="unDoneDay" style="width:90%;height: 100px;" class="inputxt" rows="6" name="unDoneDay"  ignore="ignore" >${tBWorkreportdayPage.unDoneDay}</textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">未完成的工作</label>
 						</td>
@@ -81,7 +83,7 @@
 							</label>
 						</td>
 						<td class="value" >
-						  	 	<textarea id="coordinateWork" style="width:100%;height: 260px;" class="inputxt" rows="6" name="coordinateWork"  ignore="ignore" >${tBWorkreportdayPage.coordinateWork}</textarea>
+						  	 	<textarea id="coordinateWork" style="width:90%;height: 100px;" class="inputxt" rows="6" name="coordinateWork"  ignore="ignore" >${tBWorkreportdayPage.coordinateWork}</textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">需要协调的工作</label>
 						</td>
@@ -93,11 +95,26 @@
 							</label>
 						</td>
 						<td class="value" >
-						  	 	<textarea id="remark" style="width:100%;height: 260px;" class="inputxt" rows="6" name="remark"  ignore="ignore" >${tBWorkreportdayPage.remark}</textarea>
+						  	 	<textarea id="remark" style="width:90%;height: 100px;" class="inputxt" rows="6" name="remark"  ignore="ignore" >${tBWorkreportdayPage.remark}</textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">备注</label>
 						</td>
 					</tr>
+					</c:if>
+					<c:if test="${toolFlag == '0'}">
+						<tr>
+							<td align="right">
+								<label class="Validform_label">
+									日志内容:
+								</label>
+							</td>
+							<td class="value">
+								<textarea id="doneToday" style="width:90%;height: 100px;" class="inputxt" rows="6" name="doneToday"  ignore="checked" >${tBWorkreportdayPage.doneDay}</textarea>
+								<span class="Validform_checktip"></span>
+								<label class="Validform_label" style="display: none;">完成工作</label>
+							</td>
+						</tr>
+					</c:if>
 			</table>
 		</t:formvalid>
  </body>

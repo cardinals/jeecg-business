@@ -1,13 +1,16 @@
 package com.sxctc.workreport.controller;
 import com.sxctc.workreport.entity.TBBusiWorkreportEntity;
+import com.sxctc.workreport.entity.TBWorkreportdayEntity;
 import com.sxctc.workreport.service.TBBusiWorkreportServiceI;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.hibernate.criterion.Restrictions;
+import org.jeecgframework.core.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,14 +25,12 @@ import org.jeecgframework.core.common.model.common.TreeChildCount;
 import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.common.model.json.DataGrid;
 import org.jeecgframework.core.constant.Globals;
-import org.jeecgframework.core.util.StringUtil;
 import org.jeecgframework.tag.core.easyui.TagUtil;
 import org.jeecgframework.web.system.pojo.base.TSDepart;
 import org.jeecgframework.web.system.service.SystemService;
-import org.jeecgframework.core.util.MyBeanUtils;
 
 import java.io.OutputStream;
-import org.jeecgframework.core.util.BrowserUtils;
+
 import org.jeecgframework.poi.excel.ExcelExportUtil;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.entity.ExportParams;
@@ -38,14 +39,11 @@ import org.jeecgframework.poi.excel.entity.TemplateExportParams;
 import org.jeecgframework.poi.excel.entity.vo.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.vo.TemplateExcelConstants;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.jeecgframework.core.util.ResourceUtil;
+
 import java.io.IOException;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import java.util.Map;
-import java.util.HashMap;
-import org.jeecgframework.core.util.ExceptionUtil;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -58,7 +56,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.jeecgframework.core.beanvalidator.BeanValidators;
-import java.util.Set;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.net.URI;
@@ -106,8 +104,14 @@ public class TBBusiWorkreportController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(params = "list")
-	public ModelAndView list(HttpServletRequest request) {
+	public ModelAndView list(HttpServletRequest request, String toolFlag) {
+		request.setAttribute("toolFlag", toolFlag);
 		return new ModelAndView("com/sxctc/workreport/tBBusiWorkreportList");
+	}
+
+	@RequestMapping(params = "mainlist")
+	public ModelAndView mainlist(HttpServletRequest request) {
+		return new ModelAndView("com/sxctc/workreport/tBBusiWorkreportMainList");
 	}
 
 	/**
@@ -116,16 +120,22 @@ public class TBBusiWorkreportController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @param dataGrid
-	 * @param user
 	 */
 
 	@RequestMapping(params = "datagrid")
-	public void datagrid(TBBusiWorkreportEntity tBBusiWorkreport,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+	public void datagrid(TBBusiWorkreportEntity tBBusiWorkreport,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid, String reportOpt) {
 		CriteriaQuery cq = new CriteriaQuery(TBBusiWorkreportEntity.class, dataGrid);
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBBusiWorkreport, request.getParameterMap());
 		try{
 		//自定义追加查询条件
+			if (StringUtils.isNotBlank(reportOpt)){
+				if ("0".equals(reportOpt)){
+					cq.eq("reportType",0);
+				}else {
+					cq.notEq("reportType",0);
+				}
+			}
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
@@ -218,7 +228,7 @@ public class TBBusiWorkreportController extends BaseController {
 	@RequestMapping(params = "doUpdate")
 	@ResponseBody
 	public AjaxJson doUpdate(TBBusiWorkreportEntity tBBusiWorkreport, HttpServletRequest request) {
-		String message = null;
+		/*String message = null;
 		AjaxJson j = new AjaxJson();
 		message = "今日日报列表更新成功";
 		TBBusiWorkreportEntity t = tBBusiWorkreportService.get(TBBusiWorkreportEntity.class, tBBusiWorkreport.getId());
@@ -229,6 +239,64 @@ public class TBBusiWorkreportController extends BaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			message = "今日日报列表更新失败";
+			throw new BusinessException(e.getMessage());
+		}
+		j.setMsg(message);
+		return j;*/
+		String message = null;
+		AjaxJson j = new AjaxJson();
+		message = "日报管理更新成功";
+		try {
+			String busiReportId = tBBusiWorkreport.getId();
+
+			// 获取日报的内容
+			String doneDay = tBBusiWorkreport.getDoneToday();
+			String unDoneDay = tBBusiWorkreport.getUnDoneToday();
+			String coordinateWork = tBBusiWorkreport.getCoordinateWork();
+			String remark = tBBusiWorkreport.getRemark();
+			Date reportDate = tBBusiWorkreport.getReportDate();
+			String s = DateUtils.formatDate(reportDate, "yyy-MM-dd");
+			// 获取主表实体，进行保存更新
+			TBBusiWorkreportEntity tBBusiWorkreportEntity = tBBusiWorkreportService.getEntity(TBBusiWorkreportEntity.class, busiReportId);
+
+			// 更新内容
+			tBBusiWorkreportEntity.setDoneToday(StringUtils.isNotBlank(doneDay)?doneDay.replace("\r\n","|"):doneDay);
+			tBBusiWorkreportEntity.setUnDoneToday(StringUtils.isNotBlank(unDoneDay)?unDoneDay.replace("\r\n","|"):unDoneDay);
+			tBBusiWorkreportEntity.setCoordinateWork(StringUtils.isNotBlank(coordinateWork)?coordinateWork.replace("\r\n","|"):coordinateWork);
+			tBBusiWorkreportEntity.setRemark(StringUtils.isNotBlank(remark)?remark.replace("\r\n","|"):remark);
+			tBBusiWorkreportEntity.setReportDate(DateUtils.parseDate(s,"yyyy-MM-dd"));
+			// 保存更新
+			tBBusiWorkreportService.saveOrUpdate(tBBusiWorkreportEntity);
+
+			// 2、保存 t_b_workreportday 表
+			TBWorkreportdayEntity tBWorkreportday = new TBWorkreportdayEntity();
+			tBWorkreportday.setDoneDay(StringUtils.isNotBlank(doneDay)?doneDay.replace("\r\n","|"):doneDay);
+			tBWorkreportday.setUnDoneDay(StringUtils.isNotBlank(unDoneDay)?unDoneDay.replace("\r\n","|"):unDoneDay);
+			tBWorkreportday.setCoordinateWork(StringUtils.isNotBlank(coordinateWork)?coordinateWork.replace("\r\n","|"):coordinateWork);
+			tBWorkreportday.setRemark(StringUtils.isNotBlank(remark)?remark.replace("\r\n","|"):remark);
+			tBWorkreportday.setReportDate(DateUtils.parseDate(s,"yyyy-MM-dd"));
+			tBWorkreportday.setUnitCode(tBBusiWorkreportEntity.getUnitCode());
+			tBWorkreportday.setProjectName(tBBusiWorkreportEntity.getReportTitle());
+			List<TBWorkreportdayEntity> byQueryString = tBBusiWorkreportService.findByQueryString("from TBWorkreportdayEntity t where t.busiReportId=" + "'" + busiReportId + "'" + " and t.reportDate=" + "'" + s + "'");
+			if (byQueryString.size() > 0) {
+				tBWorkreportday.setId(byQueryString.get(0).getId());
+				tBWorkreportday.setBusiReportId(busiReportId);
+				tBWorkreportday.setCreateName(byQueryString.get(0).getCreateName());
+				tBWorkreportday.setCreateBy(byQueryString.get(0).getCreateBy());
+				tBWorkreportday.setCreateDate(byQueryString.get(0).getCreateDate());
+				tBWorkreportday.setSysCompanyCode(byQueryString.get(0).getSysCompanyCode());
+				tBWorkreportday.setSysOrgCode(byQueryString.get(0).getSysOrgCode());
+				//tBWorkreportdayService.saveOrUpdate(tBWorkreportday);
+				tBBusiWorkreportService.getSession().merge(tBWorkreportday);
+			}else {
+				tBWorkreportday.setId(null);
+				tBWorkreportday.setBusiReportId(busiReportId);
+				tBBusiWorkreportService.save(tBWorkreportday);
+			}
+			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
+		} catch (Exception e) {
+			e.printStackTrace();
+			message = "日报管理更新失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -255,15 +323,30 @@ public class TBBusiWorkreportController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
-	public ModelAndView goUpdate(TBBusiWorkreportEntity tBBusiWorkreport, HttpServletRequest req) {
+	public ModelAndView goUpdate(TBBusiWorkreportEntity tBBusiWorkreport, HttpServletRequest req, String toolFlag) {
+//		if (StringUtil.isNotEmpty(tBBusiWorkreport.getId())) {
+//			tBBusiWorkreport = tBBusiWorkreportService.getEntity(TBBusiWorkreportEntity.class, tBBusiWorkreport.getId());
+//			String doneToday = tBBusiWorkreport.getDoneToday();
+//			String unDoneToday = tBBusiWorkreport.getUnDoneToday();
+//			String coordinateWork = tBBusiWorkreport.getCoordinateWork();
+//			String remark = tBBusiWorkreport.getRemark();
+//			tBBusiWorkreport.setDoneToday(StringUtils.isNotBlank(doneToday) ? doneToday.replace("|","\r\n") : doneToday);
+//			tBBusiWorkreport.setUnDoneToday(StringUtils.isNotBlank(unDoneToday) ? unDoneToday.replace("|","\r\n") : unDoneToday);
+//			tBBusiWorkreport.setCoordinateWork(StringUtils.isNotBlank(coordinateWork) ? coordinateWork.replace("|","\r\n") : coordinateWork);
+//			tBBusiWorkreport.setRemark(StringUtils.isNotBlank(remark) ? remark.replace("|","\r\n") : remark);
+//			req.setAttribute("tBBusiWorkreportPage", tBBusiWorkreport);
+//		}
+
 		if (StringUtil.isNotEmpty(tBBusiWorkreport.getId())) {
-			tBBusiWorkreport = tBBusiWorkreportService.getEntity(TBBusiWorkreportEntity.class, tBBusiWorkreport.getId());
-			tBBusiWorkreport.setDoneToday(tBBusiWorkreport.getDoneToday().replace("|","\r\n"));
-			tBBusiWorkreport.setUnDoneToday(tBBusiWorkreport.getUnDoneToday().replace("|","\r\n"));
-			tBBusiWorkreport.setCoordinateWork(tBBusiWorkreport.getCoordinateWork().replace("|","\r\n"));
-			tBBusiWorkreport.setRemark(tBBusiWorkreport.getRemark().replace("|","\r\n"));
-			req.setAttribute("tBBusiWorkreportPage", tBBusiWorkreport);
+			String id = tBBusiWorkreport.getId();
+			// 去t_b_busi_workreport表查询回填信息
+			TBBusiWorkreportEntity tBBusiWorkreportEntity = tBBusiWorkreportService.getEntity(TBBusiWorkreportEntity.class, id);
+			tBBusiWorkreportEntity.setReportDate(DateUtils.getDate());
+
+			req.setAttribute("tBBusiWorkreportPage", tBBusiWorkreportEntity);
+			req.setAttribute("toolFlag", toolFlag);
 		}
+
 		return new ModelAndView("com/sxctc/workreport/tBBusiWorkreport-update");
 	}
 	

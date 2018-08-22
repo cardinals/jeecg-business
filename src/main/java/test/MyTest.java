@@ -1,5 +1,10 @@
 package test;
 
+import com.sxctc.util.DateUtil;
+import org.jeecgframework.core.common.model.json.DataGrid;
+import org.jeecgframework.core.util.DateUtils;
+import org.jsoup.helper.DataUtil;
+
 /**
  * @author liuzc
  * @version V1.0
@@ -9,17 +14,8 @@ package test;
  */
 public class MyTest {
     public static void main(String[] args) {
-        int add = 1;
 
-        if (add == 0 ){
-            if(add == 0){
-                System.out.println("-1");
-            }else{
-                System.out.println("处理");
-            }
-        }else {
-            System.out.println("处理");
-        }
+        System.out.println(DateUtils.getYear());
 
     }
 }

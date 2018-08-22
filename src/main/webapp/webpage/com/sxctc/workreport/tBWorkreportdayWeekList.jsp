@@ -14,11 +14,12 @@
    <t:dgCol title="迁移系统名称"  field="projectName"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="周报日期开始"  field="reportStartDate"  formatter="yyyy-MM-dd"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="周报日期结束"  field="reportEndDate"  formatter="yyyy-MM-dd"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="今日完成的工作"  field="doneDay"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="未完成的工作"  field="unDoneDay"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="本周完成的工作"  field="doneDay"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="下周工作计划"  field="unDoneDay"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="需要协调的工作"  field="coordinateWork"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="备注"  field="remark"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="日志业务关联表id"  field="busiReportId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgToolBar title="编辑本周周报" icon="icon-edit" url="tBWorkreportdayWeekController.do?goUpdate" funname="update"></t:dgToolBar>
    <t:dgToolBar title="查看" icon="icon-search" url="tBWorkreportdayWeekController.do?goUpdate" funname="detail"></t:dgToolBar>
    <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
    <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>

@@ -3,8 +3,8 @@ import com.sxctc.business.entity.TBBusiCatalogEntity;
 import com.sxctc.business.entity.TBBusinessEntity;
 import com.sxctc.business.service.TBBusiCatalogServiceI;
 import com.sxctc.business.service.TBBusinessServiceI;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,8 +48,6 @@ import java.io.IOException;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import java.util.Map;
-import java.util.HashMap;
 import org.jeecgframework.core.util.ExceptionUtil;
 
 import org.springframework.http.ResponseEntity;
@@ -63,7 +61,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.jeecgframework.core.beanvalidator.BeanValidators;
-import java.util.Set;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.net.URI;
@@ -133,7 +131,11 @@ public class TBBusinessController extends BaseController {
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBBusiness, request.getParameterMap());
 		try{
-		//自定义追加查询条件
+			//自定义追加查询条件
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("unitCode", "desc");
+			cq.setOrder(map);
+
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
@@ -260,17 +262,40 @@ public class TBBusinessController extends BaseController {
 		AjaxJson j = new AjaxJson();
 		message = "营销数据业务列表添加成功";
 		try{
+			Date finishTime = tBBusiness.getFinishTime();
+			Date busJoinTime = tBBusiness.getBusJoinTime();
+			if (finishTime != null) {
+				long day=(finishTime.getTime()-busJoinTime.getTime())/(24*60*60*1000);
+				if (day >= 0) {
+					tBBusiness.setDayRange((int)day);
+				}
+			}
 			tBBusinessService.save(tBBusiness);
 
 			// 同时往日志表里存一条数据
-			TBBusiWorkreportEntity tbBusiWorkreportEntity = new TBBusiWorkreportEntity();
-			tbBusiWorkreportEntity.setBusinessId(tBBusiness.getId());
-			tbBusiWorkreportEntity.setUnitCode(String.valueOf(tBBusiness.getUnitCode()));
-			tbBusiWorkreportEntity.setReportTitle(tBBusiness.getProjectName());
-			tbBusiWorkreportEntity.setReportType(0);
-
+			TBBusiWorkreportEntity tbBusiWorkreportEntity1 = new TBBusiWorkreportEntity();
+			tbBusiWorkreportEntity1.setBusinessId(tBBusiness.getId());
+			tbBusiWorkreportEntity1.setUnitCode(String.valueOf(tBBusiness.getUnitCode()));
+			tbBusiWorkreportEntity1.setReportTitle(tBBusiness.getProjectName());
+			tbBusiWorkreportEntity1.setReportType(0);
 			// 保存初级日报
-			tBBusiWorkreportService.save(tbBusiWorkreportEntity);
+			tBBusiWorkreportService.save(tbBusiWorkreportEntity1);
+
+			// 同时往日志表里存一条数据
+			TBBusiWorkreportEntity tbBusiWorkreportEntity2 = new TBBusiWorkreportEntity();
+			tbBusiWorkreportEntity2.setBusinessId(tBBusiness.getId());
+			tbBusiWorkreportEntity2.setReportTitle("个人学习");
+			tbBusiWorkreportEntity2.setReportType(1);
+			// 保存初级日报
+			tBBusiWorkreportService.save(tbBusiWorkreportEntity2);
+
+			// 同时往日志表里存一条数据
+			TBBusiWorkreportEntity tbBusiWorkreportEntity3 = new TBBusiWorkreportEntity();
+			tbBusiWorkreportEntity3.setBusinessId(tBBusiness.getId());
+			tbBusiWorkreportEntity3.setReportTitle("其他事项");
+			tbBusiWorkreportEntity3.setReportType(2);
+			// 保存初级日报
+			tBBusiWorkreportService.save(tbBusiWorkreportEntity3);
 
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
@@ -293,6 +318,15 @@ public class TBBusinessController extends BaseController {
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		message = "营销数据业务列表更新成功";
+		Date finishTime = tBBusiness.getFinishTime();
+		Date busJoinTime = tBBusiness.getBusJoinTime();
+		if (finishTime != null) {
+			long day=(finishTime.getTime()-busJoinTime.getTime())/(24*60*60*1000);
+			if (day >= 0) {
+				tBBusiness.setDayRange((int)day);
+			}
+		}
+
 		TBBusinessEntity t = tBBusinessService.get(TBBusinessEntity.class, tBBusiness.getId());
 		try {
 			MyBeanUtils.copyBeanNotNull2Bean(tBBusiness, t);

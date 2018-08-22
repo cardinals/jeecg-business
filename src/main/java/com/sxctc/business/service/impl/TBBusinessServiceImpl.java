@@ -70,7 +70,6 @@ public class TBBusinessServiceImpl extends CommonServiceImpl implements TBBusine
  	}
  	/**
 	 * 删除操作增强业务
-	 * @param id
 	 * @return
 	 */
 	private void doDelBus(TBBusinessEntity t) throws Exception{
@@ -108,12 +107,13 @@ public class TBBusinessServiceImpl extends CommonServiceImpl implements TBBusine
 		map.put("protocol_status", t.getProtocolStatus());
 		map.put("protocol_time", t.getProtocolTime());
 		map.put("audit_status", t.getAuditStatus());
-		map.put("backup_field1", t.getBackupField1());
-		map.put("backup_field2", t.getBackupField2());
-		map.put("backup_field3", t.getBackupField3());
-		map.put("backup_field4", t.getBackupField4());
-		map.put("backup_field5", t.getBackupField5());
-		map.put("backup_field6", t.getBackupField6());
+		map.put("demand_time", t.getDemandTime());
+		map.put("plan_time", t.getPlanTime());
+		map.put("resource_time", t.getResourceTime());
+		map.put("test_time", t.getTestTime());
+		map.put("finish_time", t.getFinishTime());
+		map.put("funds_provided", t.getFundsProvided());
+		map.put("day_range", t.getDayRange());
 		return map;
 	}
  	
@@ -124,39 +124,40 @@ public class TBBusinessServiceImpl extends CommonServiceImpl implements TBBusine
 	 * @return
 	 */
  	public String replaceVal(String sql,TBBusinessEntity t){
- 		sql  = sql.replace("#{id}",String.valueOf(t.getId()));
- 		sql  = sql.replace("#{create_name}",String.valueOf(t.getCreateName()));
- 		sql  = sql.replace("#{create_by}",String.valueOf(t.getCreateBy()));
- 		sql  = sql.replace("#{create_date}",String.valueOf(t.getCreateDate()));
- 		sql  = sql.replace("#{update_name}",String.valueOf(t.getUpdateName()));
- 		sql  = sql.replace("#{update_by}",String.valueOf(t.getUpdateBy()));
- 		sql  = sql.replace("#{update_date}",String.valueOf(t.getUpdateDate()));
- 		sql  = sql.replace("#{sys_org_code}",String.valueOf(t.getSysOrgCode()));
- 		sql  = sql.replace("#{sys_company_code}",String.valueOf(t.getSysCompanyCode()));
- 		sql  = sql.replace("#{bpm_status}",String.valueOf(t.getBpmStatus()));
- 		sql  = sql.replace("#{unit_code}",String.valueOf(t.getUnitCode()));
- 		sql  = sql.replace("#{unit_name}",String.valueOf(t.getUnitName()));
- 		sql  = sql.replace("#{project_code}",String.valueOf(t.getProjectCode()));
- 		sql  = sql.replace("#{project_name}",String.valueOf(t.getProjectName()));
- 		sql  = sql.replace("#{project_status}",String.valueOf(t.getProjectStatus()));
- 		sql  = sql.replace("#{cloud_status}",String.valueOf(t.getCloudStatus()));
- 		sql  = sql.replace("#{chance_status}",String.valueOf(t.getChanceStatus()));
- 		sql  = sql.replace("#{join_status}",String.valueOf(t.getJoinStatus()));
- 		sql  = sql.replace("#{bus_create_time}",String.valueOf(t.getBusCreateTime()));
- 		sql  = sql.replace("#{bus_join_time}",String.valueOf(t.getBusJoinTime()));
- 		sql  = sql.replace("#{hard_serve_catalog}",String.valueOf(t.getHardServeCatalog()));
- 		sql  = sql.replace("#{base_serve_catalog}",String.valueOf(t.getBaseServeCatalog()));
- 		sql  = sql.replace("#{protocol_status}",String.valueOf(t.getProtocolStatus()));
- 		sql  = sql.replace("#{protocol_time}",String.valueOf(t.getProtocolTime()));
- 		sql  = sql.replace("#{audit_status}",String.valueOf(t.getAuditStatus()));
- 		sql  = sql.replace("#{backup_field1}",String.valueOf(t.getBackupField1()));
- 		sql  = sql.replace("#{backup_field2}",String.valueOf(t.getBackupField2()));
- 		sql  = sql.replace("#{backup_field3}",String.valueOf(t.getBackupField3()));
- 		sql  = sql.replace("#{backup_field4}",String.valueOf(t.getBackupField4()));
- 		sql  = sql.replace("#{backup_field5}",String.valueOf(t.getBackupField5()));
- 		sql  = sql.replace("#{backup_field6}",String.valueOf(t.getBackupField6()));
- 		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
- 		return sql;
+		sql  = sql.replace("#{id}",String.valueOf(t.getId()));
+		sql  = sql.replace("#{create_name}",String.valueOf(t.getCreateName()));
+		sql  = sql.replace("#{create_by}",String.valueOf(t.getCreateBy()));
+		sql  = sql.replace("#{create_date}",String.valueOf(t.getCreateDate()));
+		sql  = sql.replace("#{update_name}",String.valueOf(t.getUpdateName()));
+		sql  = sql.replace("#{update_by}",String.valueOf(t.getUpdateBy()));
+		sql  = sql.replace("#{update_date}",String.valueOf(t.getUpdateDate()));
+		sql  = sql.replace("#{sys_org_code}",String.valueOf(t.getSysOrgCode()));
+		sql  = sql.replace("#{sys_company_code}",String.valueOf(t.getSysCompanyCode()));
+		sql  = sql.replace("#{bpm_status}",String.valueOf(t.getBpmStatus()));
+		sql  = sql.replace("#{unit_code}",String.valueOf(t.getUnitCode()));
+		sql  = sql.replace("#{unit_name}",String.valueOf(t.getUnitName()));
+		sql  = sql.replace("#{project_code}",String.valueOf(t.getProjectCode()));
+		sql  = sql.replace("#{project_name}",String.valueOf(t.getProjectName()));
+		sql  = sql.replace("#{project_status}",String.valueOf(t.getProjectStatus()));
+		sql  = sql.replace("#{cloud_status}",String.valueOf(t.getCloudStatus()));
+		sql  = sql.replace("#{chance_status}",String.valueOf(t.getChanceStatus()));
+		sql  = sql.replace("#{join_status}",String.valueOf(t.getJoinStatus()));
+		sql  = sql.replace("#{bus_create_time}",String.valueOf(t.getBusCreateTime()));
+		sql  = sql.replace("#{bus_join_time}",String.valueOf(t.getBusJoinTime()));
+		sql  = sql.replace("#{hard_serve_catalog}",String.valueOf(t.getHardServeCatalog()));
+		sql  = sql.replace("#{base_serve_catalog}",String.valueOf(t.getBaseServeCatalog()));
+		sql  = sql.replace("#{protocol_status}",String.valueOf(t.getProtocolStatus()));
+		sql  = sql.replace("#{protocol_time}",String.valueOf(t.getProtocolTime()));
+		sql  = sql.replace("#{audit_status}",String.valueOf(t.getAuditStatus()));
+		sql  = sql.replace("#{demand_time}",String.valueOf(t.getDemandTime()));
+		sql  = sql.replace("#{plan_time}",String.valueOf(t.getPlanTime()));
+		sql  = sql.replace("#{resource_time}",String.valueOf(t.getResourceTime()));
+		sql  = sql.replace("#{test_time}",String.valueOf(t.getTestTime()));
+		sql  = sql.replace("#{finish_time}",String.valueOf(t.getFinishTime()));
+		sql  = sql.replace("#{funds_provided}",String.valueOf(t.getFundsProvided()));
+		sql  = sql.replace("#{day_range}",String.valueOf(t.getDayRange()));
+		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
+		return sql;
  	}
  	
  	/**

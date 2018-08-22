@@ -22,7 +22,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @Title: Entity
  * @Description: 营销数据业务列表
  * @author onlineGenerator
- * @date 2018-08-02 15:29:29
+ * @date 2018-08-21 17:11:25
  * @version V1.0   
  *
  */
@@ -75,8 +75,8 @@ public class TBBusinessEntity implements java.io.Serializable {
 	/**业务创建时间*/
 	@Excel(name="业务创建时间",width=15,format = "yyyy-MM-dd")
 	private Date busCreateTime;
-	/**业务对接时间*/
-	@Excel(name="业务对接时间",width=15,format = "yyyy-MM-dd")
+	/**上云对接时间*/
+	@Excel(name="上云对接时间",width=15,format = "yyyy-MM-dd")
 	private Date busJoinTime;
 	/**硬件服务目录*/
 	private String hardServeCatalog;
@@ -89,20 +89,22 @@ public class TBBusinessEntity implements java.io.Serializable {
 	@Excel(name="收回协议时间",width=15,format = "yyyy-MM-dd")
 	private Date protocolTime;
 	/**是否在审计范围*/
-	@Excel(name="是否在审计范围",width=15,dicCode="dev_flag")
 	private Integer auditStatus;
-	/**备用字段1*/
-	private String backupField1;
-	/**备用字段2*/
-	private String backupField2;
-	/**备用字段3*/
-	private String backupField3;
-	/**备用字段4*/
-	private String backupField4;
-	/**备用字段5*/
-	private String backupField5;
-	/**备用字段6*/
-	private String backupField6;
+	/**需求确认时间*/
+	private Date demandTime;
+	/**迁移方案时间*/
+	private Date planTime;
+	/**开通云资源时间*/
+	private Date resourceTime;
+	/**部署测试时间*/
+	private Date testTime;
+	/**上云完成时间*/
+	private Date finishTime;
+	/**资金来源*/
+	private Integer fundsProvided;
+	/**时间跨越*/
+	@Excel(name="时间跨越",width=15)
+	private Integer dayRange;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -367,7 +369,7 @@ public class TBBusinessEntity implements java.io.Serializable {
 	 *@return: java.lang.Integer  是否上云
 	 */
 
-	@Column(name ="CLOUD_STATUS",nullable=false,length=32)
+	@Column(name ="CLOUD_STATUS",nullable=true,length=32)
 	public Integer getCloudStatus(){
 		return this.cloudStatus;
 	}
@@ -432,7 +434,7 @@ public class TBBusinessEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.util.Date
-	 *@return: java.util.Date  业务对接时间
+	 *@return: java.util.Date  上云对接时间
 	 */
 
 	@Column(name ="BUS_JOIN_TIME",nullable=true,length=32)
@@ -442,7 +444,7 @@ public class TBBusinessEntity implements java.io.Serializable {
 
 	/**
 	 *方法: 设置java.util.Date
-	 *@param: java.util.Date  业务对接时间
+	 *@param: java.util.Date  上云对接时间
 	 */
 	public void setBusJoinTime(Date busJoinTime){
 		this.busJoinTime = busJoinTime;
@@ -533,105 +535,122 @@ public class TBBusinessEntity implements java.io.Serializable {
 		this.auditStatus = auditStatus;
 	}
 	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  备用字段1
+	 *方法: 取得java.util.Date
+	 *@return: java.util.Date  需求确认时间
 	 */
 
-	@Column(name ="BACKUP_FIELD1",nullable=true,length=32)
-	public String getBackupField1(){
-		return this.backupField1;
+	@Column(name ="DEMAND_TIME",nullable=true,length=32)
+	public Date getDemandTime(){
+		return this.demandTime;
 	}
 
 	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  备用字段1
+	 *方法: 设置java.util.Date
+	 *@param: java.util.Date  需求确认时间
 	 */
-	public void setBackupField1(String backupField1){
-		this.backupField1 = backupField1;
+	public void setDemandTime(Date demandTime){
+		this.demandTime = demandTime;
 	}
 	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  备用字段2
+	 *方法: 取得java.util.Date
+	 *@return: java.util.Date  迁移方案时间
 	 */
 
-	@Column(name ="BACKUP_FIELD2",nullable=true,length=32)
-	public String getBackupField2(){
-		return this.backupField2;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  备用字段2
-	 */
-	public void setBackupField2(String backupField2){
-		this.backupField2 = backupField2;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  备用字段3
-	 */
-
-	@Column(name ="BACKUP_FIELD3",nullable=true,length=32)
-	public String getBackupField3(){
-		return this.backupField3;
+	@Column(name ="PLAN_TIME",nullable=true,length=32)
+	public Date getPlanTime(){
+		return this.planTime;
 	}
 
 	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  备用字段3
+	 *方法: 设置java.util.Date
+	 *@param: java.util.Date  迁移方案时间
 	 */
-	public void setBackupField3(String backupField3){
-		this.backupField3 = backupField3;
+	public void setPlanTime(Date planTime){
+		this.planTime = planTime;
 	}
 	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  备用字段4
+	 *方法: 取得java.util.Date
+	 *@return: java.util.Date  开通云资源时间
 	 */
 
-	@Column(name ="BACKUP_FIELD4",nullable=true,length=32)
-	public String getBackupField4(){
-		return this.backupField4;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  备用字段4
-	 */
-	public void setBackupField4(String backupField4){
-		this.backupField4 = backupField4;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  备用字段5
-	 */
-
-	@Column(name ="BACKUP_FIELD5",nullable=true,length=32)
-	public String getBackupField5(){
-		return this.backupField5;
+	@Column(name ="RESOURCE_TIME",nullable=true,length=32)
+	public Date getResourceTime(){
+		return this.resourceTime;
 	}
 
 	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  备用字段5
+	 *方法: 设置java.util.Date
+	 *@param: java.util.Date  开通云资源时间
 	 */
-	public void setBackupField5(String backupField5){
-		this.backupField5 = backupField5;
+	public void setResourceTime(Date resourceTime){
+		this.resourceTime = resourceTime;
 	}
 	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  备用字段6
+	 *方法: 取得java.util.Date
+	 *@return: java.util.Date  部署测试时间
 	 */
 
-	@Column(name ="BACKUP_FIELD6",nullable=true,length=32)
-	public String getBackupField6(){
-		return this.backupField6;
+	@Column(name ="TEST_TIME",nullable=true,length=32)
+	public Date getTestTime(){
+		return this.testTime;
 	}
 
 	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  备用字段6
+	 *方法: 设置java.util.Date
+	 *@param: java.util.Date  部署测试时间
 	 */
-	public void setBackupField6(String backupField6){
-		this.backupField6 = backupField6;
+	public void setTestTime(Date testTime){
+		this.testTime = testTime;
+	}
+	/**
+	 *方法: 取得java.util.Date
+	 *@return: java.util.Date  上云完成时间
+	 */
+
+	@Column(name ="FINISH_TIME",nullable=true,length=32)
+	public Date getFinishTime(){
+		return this.finishTime;
+	}
+
+	/**
+	 *方法: 设置java.util.Date
+	 *@param: java.util.Date  上云完成时间
+	 */
+	public void setFinishTime(Date finishTime){
+		this.finishTime = finishTime;
+	}
+	/**
+	 *方法: 取得java.lang.Integer
+	 *@return: java.lang.Integer  资金来源
+	 */
+
+	@Column(name ="FUNDS_PROVIDED",nullable=true,length=32)
+	public Integer getFundsProvided(){
+		return this.fundsProvided;
+	}
+
+	/**
+	 *方法: 设置java.lang.Integer
+	 *@param: java.lang.Integer  资金来源
+	 */
+	public void setFundsProvided(Integer fundsProvided){
+		this.fundsProvided = fundsProvided;
+	}
+	/**
+	 *方法: 取得java.lang.Integer
+	 *@return: java.lang.Integer  时间跨越
+	 */
+
+	@Column(name ="DAY_RANGE",nullable=true,length=32)
+	public Integer getDayRange(){
+		return this.dayRange;
+	}
+
+	/**
+	 *方法: 设置java.lang.Integer
+	 *@param: java.lang.Integer  时间跨越
+	 */
+	public void setDayRange(Integer dayRange){
+		this.dayRange = dayRange;
 	}
 }
