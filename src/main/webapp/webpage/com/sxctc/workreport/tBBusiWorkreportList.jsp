@@ -32,7 +32,7 @@
    </c:if>
 
    <c:if test="${toolFlag == '0'}">
-    <t:datagrid name="tBBusiWorkreportList" checkbox="true" pagination="false" fitColumns="true" actionUrl="tBBusiWorkreportController.do?datagrid&reportOpt=1" idField="id" fit="true" queryMode="group" singleSelect="true">
+    <t:datagrid name="tBBusiWorkreportList" checkbox="true" pagination="true" fitColumns="true" actionUrl="tBBusiWorkreportController.do?datagrid&reportOpt=1" idField="id" fit="true" queryMode="group" singleSelect="true">
      <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="20"></t:dgCol>
      <t:dgCol title="创建人名称"  field="createName"  queryMode="single"  width="120"></t:dgCol>
      <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
