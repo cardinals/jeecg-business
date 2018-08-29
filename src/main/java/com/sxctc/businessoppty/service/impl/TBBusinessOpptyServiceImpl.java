@@ -288,32 +288,33 @@ public class TBBusinessOpptyServiceImpl extends CommonServiceImpl implements TBB
 				tBBusinessOppty.setOpptyPoint(2);
 			}
 
-			/*// 商机评估
-			String hql = "from TBBusinessOpptyEntity where evaluateWin=? and evaluateFirst=? and evaluateConfirm=? and businessId is null and createBy=?";
-			List<TBBusinessOpptyEntity> tBBusinessOpptyList = this.findHql(hql, evaluateWin, evaluateWinFirst, evaluateConfirm, tsUser.getUserName());
-			if (tBBusinessOpptyList.size() == 1) {
-				tBBusinessOppty.setId(tBBusinessOpptyList.get(0).getId());
-				this.getSession().merge(tBBusinessOppty);
-			}else {
-				tBBusinessOppty.setUpdateName(tsUser.getRealName());
-				tBBusinessOppty.setUpdateBy(tsUser.getUserName());
-				tBBusinessOppty.setUpdateDate(new Date());
-				this.save(tBBusinessOppty);
-
-			}*/
-
 			// 判断该系统是否已经评估过
 			// 商机评估
 			String hql2 = "from TBBusinessOpptyEntity where businessId=? and createBy=? and businessStatus=1";
 			List<TBBusinessOpptyEntity> opptyList = this.findHql(hql2, tBBusinessOppty.getBusinessId(), tsUser.getUserName());
+			// 已评估过：接下来判断是覆盖还是新的评估
 			if (opptyList.size() == 1) {
 				TBBusinessOpptyEntity tbBusinessOpptyEntity = opptyList.get(0);
+
+				// 判断是不是其评级下面唯一一个
 				String hql3 = "from TBBusinessOpptyEntity where evaluateWin=? and evaluateFirst=? and evaluateConfirm=? and createBy=? and businessStatus=1";
 				List<TBBusinessOpptyEntity> arrayList = this.findHql(hql3, tbBusinessOpptyEntity.getEvaluateWin(), tbBusinessOpptyEntity.getEvaluateFirst(), tbBusinessOpptyEntity.getEvaluateConfirm(), tsUser.getUserName());
+				// 是唯一一个，需要更新
 				if (arrayList.size() == 1) {
-					// 删掉原来记录新建初始化数据并更新
 					TBBusinessOpptyEntity tbBusiness = arrayList.get(0);
-					if (tbBusiness.getSortNum() != tBBusinessOppty.getSortNum()) {
+					// 如果是评级更新，则需要覆盖
+					if (tbBusiness.getSortNum() == tBBusinessOppty.getSortNum()) {
+						tBBusinessOppty.setId(tbBusiness.getId());
+						tBBusinessOppty.setCreateName(tbBusiness.getCreateName());
+						tBBusinessOppty.setCreateBy(tbBusiness.getCreateBy());
+						tBBusinessOppty.setCreateDate(tbBusiness.getCreateDate());
+						tBBusinessOppty.setSysOrgCode(tbBusiness.getSysOrgCode());
+						tBBusinessOppty.setSysCompanyCode(tbBusiness.getSysCompanyCode());
+						this.getSession().merge(tBBusinessOppty);
+
+					}else {
+						// 如果不是统一评级，需要删除之前的，再保存（删除时候注意判断是否最后一个）
+						// 删除之前的
 						tbBusiness.setUpdateDate(null);
 						tbBusiness.setUpdateBy(null);
 						tbBusiness.setUpdateName(null);
@@ -322,7 +323,7 @@ public class TBBusinessOpptyServiceImpl extends CommonServiceImpl implements TBB
 						tbBusiness.setBusinessId(null);
 						this.updateEntitie(tbBusiness);
 
-						// 商机评估
+						// 保存新的,要注意保存和覆盖
 						String hql4 = "from TBBusinessOpptyEntity where evaluateWin=? and evaluateFirst=? and evaluateConfirm=? and businessId is null and createBy=?";
 						List<TBBusinessOpptyEntity> tBBusinessOpptyList1 = this.findHql(hql4, evaluateWin, evaluateWinFirst, evaluateConfirm, tsUser.getUserName());
 						if (tBBusinessOpptyList1.size() == 1) {
@@ -340,29 +341,32 @@ public class TBBusinessOpptyServiceImpl extends CommonServiceImpl implements TBB
 							this.save(tBBusinessOppty);
 						}
 
-						// 修改项目机会池评估状态
-						String businessId = tBBusinessOppty.getBusinessId();
-						List<TBChancePoolEntity> byQueryString = this.findByQueryString("from TBChancePoolEntity where businessId='" + businessId + "' and evaluateStatus is null");
-						if (byQueryString.size() > 0) {
-							for (TBChancePoolEntity tbChancePoolEntity : byQueryString) {
-								tbChancePoolEntity.setEvaluateStatus(1);
-								this.updateEntitie(tbChancePoolEntity);
-							}
-						}
+					}
+				}else {
+					// 不是唯一一个，删除原来的，直接保存
+					this.delete(tbBusinessOpptyEntity);
 
-						return;
+					// 保存新的
+					String hql4 = "from TBBusinessOpptyEntity where evaluateWin=? and evaluateFirst=? and evaluateConfirm=? and businessId is null and createBy=?";
+					List<TBBusinessOpptyEntity> tBBusinessOpptyList1 = this.findHql(hql4, evaluateWin, evaluateWinFirst, evaluateConfirm, tsUser.getUserName());
+					if (tBBusinessOpptyList1.size() == 1) {
+						tBBusinessOppty.setId(tBBusinessOpptyList1.get(0).getId());
+						tBBusinessOppty.setCreateName(tBBusinessOpptyList1.get(0).getCreateName());
+						tBBusinessOppty.setCreateBy(tBBusinessOpptyList1.get(0).getCreateBy());
+						tBBusinessOppty.setCreateDate(tBBusinessOpptyList1.get(0).getCreateDate());
+						tBBusinessOppty.setSysOrgCode(tBBusinessOpptyList1.get(0).getSysOrgCode());
+						tBBusinessOppty.setSysCompanyCode(tBBusinessOpptyList1.get(0).getSysCompanyCode());
+						this.getSession().merge(tBBusinessOppty);
 					}else {
-
-						this.delete(tbBusiness);
+						tBBusinessOppty.setUpdateName(tsUser.getRealName());
+						tBBusinessOppty.setUpdateBy(tsUser.getUserName());
+						tBBusinessOppty.setUpdateDate(new Date());
+						this.save(tBBusinessOppty);
 					}
 				}
 
-				tBBusinessOppty.setUpdateName(tsUser.getRealName());
-				tBBusinessOppty.setUpdateBy(tsUser.getUserName());
-				tBBusinessOppty.setUpdateDate(new Date());
-				this.save(tBBusinessOppty);
-
 			}else {
+				// 没有评估过的话直接进行评估，要注意保存和覆盖
 				// 商机评估
 				String hql4 = "from TBBusinessOpptyEntity where evaluateWin=? and evaluateFirst=? and evaluateConfirm=? and businessId is null and createBy=?";
 				List<TBBusinessOpptyEntity> tBBusinessOpptyList1 = this.findHql(hql4, evaluateWin, evaluateWinFirst, evaluateConfirm, tsUser.getUserName());

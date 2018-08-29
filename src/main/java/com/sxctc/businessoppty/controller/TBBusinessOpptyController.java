@@ -153,6 +153,16 @@ public class TBBusinessOpptyController extends BaseController {
 		}
 		cq.add();
 		this.tBBusinessOpptyService.getDataGridReturn(cq, true);
+
+		// 判断输出结果
+		List<TBBusinessOpptyEntity> results = dataGrid.getResults();
+		for (TBBusinessOpptyEntity result : results) {
+			String businessId = result.getBusinessId();
+			if (StringUtils.isBlank(businessId)) {
+				result.setUpdateDate(null);
+			}
+		}
+
 		TagUtil.datagrid(response, dataGrid);
 	}
 	
