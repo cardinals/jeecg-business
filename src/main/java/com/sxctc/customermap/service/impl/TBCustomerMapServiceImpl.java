@@ -1,7 +1,7 @@
-package com.sxctc.projectrack.service.impl;
-import com.sxctc.projectrack.service.TBChancePoolServiceI;
+package com.sxctc.customermap.service.impl;
+import com.sxctc.customermap.service.TBCustomerMapServiceI;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
-import com.sxctc.projectrack.entity.TBChancePoolEntity;
+import com.sxctc.customermap.entity.TBCustomerMapEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
@@ -18,27 +18,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.jeecgframework.core.util.ResourceUtil;
 
-@Service("tBChancePoolService")
+@Service("tBCustomerMapService")
 @Transactional
-public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChancePoolServiceI {
+public class TBCustomerMapServiceImpl extends CommonServiceImpl implements TBCustomerMapServiceI {
 
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	
- 	public void delete(TBChancePoolEntity entity) throws Exception{
+ 	public void delete(TBCustomerMapEntity entity) throws Exception{
  		super.delete(entity);
  		//执行删除操作增强业务
 		this.doDelBus(entity);
  	}
  	
- 	public Serializable save(TBChancePoolEntity entity) throws Exception{
+ 	public Serializable save(TBCustomerMapEntity entity) throws Exception{
  		Serializable t = super.save(entity);
  		//执行新增操作增强业务
  		this.doAddBus(entity);
  		return t;
  	}
  	
- 	public void saveOrUpdate(TBChancePoolEntity entity) throws Exception{
+ 	public void saveOrUpdate(TBCustomerMapEntity entity) throws Exception{
  		super.saveOrUpdate(entity);
  		//执行更新操作增强业务
  		this.doUpdateBus(entity);
@@ -49,7 +49,7 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 	 * @param t
 	 * @return
 	 */
-	private void doAddBus(TBChancePoolEntity t) throws Exception{
+	private void doAddBus(TBCustomerMapEntity t) throws Exception{
 		//-----------------sql增强 start----------------------------
 	 	//-----------------sql增强 end------------------------------
 	 	
@@ -61,7 +61,7 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 	 * @param t
 	 * @return
 	 */
-	private void doUpdateBus(TBChancePoolEntity t) throws Exception{
+	private void doUpdateBus(TBCustomerMapEntity t) throws Exception{
 		//-----------------sql增强 start----------------------------
 	 	//-----------------sql增强 end------------------------------
 	 	
@@ -70,9 +70,10 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
  	}
  	/**
 	 * 删除操作增强业务
+	 * @param id
 	 * @return
 	 */
-	private void doDelBus(TBChancePoolEntity t) throws Exception{
+	private void doDelBus(TBCustomerMapEntity t) throws Exception{
 	    //-----------------sql增强 start----------------------------
 	 	//-----------------sql增强 end------------------------------
 	 	
@@ -80,7 +81,7 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 	 	//-----------------java增强 end-----------------------------
  	}
  	
- 	private Map<String,Object> populationMap(TBChancePoolEntity t){
+ 	private Map<String,Object> populationMap(TBCustomerMapEntity t){
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("id", t.getId());
 		map.put("create_name", t.getCreateName());
@@ -91,24 +92,12 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 		map.put("update_date", t.getUpdateDate());
 		map.put("sys_org_code", t.getSysOrgCode());
 		map.put("sys_company_code", t.getSysCompanyCode());
-		map.put("unit_code", t.getUnitCode());
-		map.put("project_name", t.getProjectName());
-		map.put("project_budget", t.getProjectBudget());
-		map.put("project_server", t.getProjectServer());
-		map.put("project_hardware", t.getProjectHardware());
-		map.put("business_parters", t.getBusinessParters());
-		map.put("business_competitor", t.getBusinessCompetitor());
-		map.put("predict_tender_time", t.getPredictTenderTime());
-		map.put("funds_provided", t.getFundsProvided());
-		map.put("top_relation", t.getTopRelation());
-		map.put("mid_relation", t.getMidRelation());
-		map.put("bottom_relation", t.getBottomRelation());
-		map.put("control_degree", t.getControlDegree());
-		map.put("project_plan", t.getProjectPlan());
-		map.put("remark", t.getRemark());
-		map.put("winning_result", t.getWinningResult());
+		map.put("worth_low", t.getWorthLow());
+		map.put("worth_mid", t.getWorthMid());
+		map.put("worth_high", t.getWorthHigh());
+		map.put("cooperate_status", t.getCooperateStatus());
 		map.put("business_id", t.getBusinessId());
-		map.put("evaluate_status", t.getEvaluateStatus());
+		map.put("unit_code", t.getUnitCode());
 		return map;
 	}
  	
@@ -118,7 +107,7 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 	 * @param t
 	 * @return
 	 */
- 	public String replaceVal(String sql,TBChancePoolEntity t){
+ 	public String replaceVal(String sql,TBCustomerMapEntity t){
  		sql  = sql.replace("#{id}",String.valueOf(t.getId()));
  		sql  = sql.replace("#{create_name}",String.valueOf(t.getCreateName()));
  		sql  = sql.replace("#{create_by}",String.valueOf(t.getCreateBy()));
@@ -128,24 +117,12 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
  		sql  = sql.replace("#{update_date}",String.valueOf(t.getUpdateDate()));
  		sql  = sql.replace("#{sys_org_code}",String.valueOf(t.getSysOrgCode()));
  		sql  = sql.replace("#{sys_company_code}",String.valueOf(t.getSysCompanyCode()));
- 		sql  = sql.replace("#{unit_code}",String.valueOf(t.getUnitCode()));
- 		sql  = sql.replace("#{project_name}",String.valueOf(t.getProjectName()));
- 		sql  = sql.replace("#{project_budget}",String.valueOf(t.getProjectBudget()));
- 		sql  = sql.replace("#{project_server}",String.valueOf(t.getProjectServer()));
- 		sql  = sql.replace("#{project_hardware}",String.valueOf(t.getProjectHardware()));
- 		sql  = sql.replace("#{business_parters}",String.valueOf(t.getBusinessParters()));
- 		sql  = sql.replace("#{business_competitor}",String.valueOf(t.getBusinessCompetitor()));
- 		sql  = sql.replace("#{predict_tender_time}",String.valueOf(t.getPredictTenderTime()));
- 		sql  = sql.replace("#{funds_provided}",String.valueOf(t.getFundsProvided()));
- 		sql  = sql.replace("#{top_relation}",String.valueOf(t.getTopRelation()));
- 		sql  = sql.replace("#{mid_relation}",String.valueOf(t.getMidRelation()));
- 		sql  = sql.replace("#{bottom_relation}",String.valueOf(t.getBottomRelation()));
- 		sql  = sql.replace("#{control_degree}",String.valueOf(t.getControlDegree()));
- 		sql  = sql.replace("#{project_plan}",String.valueOf(t.getProjectPlan()));
- 		sql  = sql.replace("#{remark}",String.valueOf(t.getRemark()));
- 		sql  = sql.replace("#{winning_result}",String.valueOf(t.getWinningResult()));
+ 		sql  = sql.replace("#{worth_low}",String.valueOf(t.getWorthLow()));
+ 		sql  = sql.replace("#{worth_mid}",String.valueOf(t.getWorthMid()));
+ 		sql  = sql.replace("#{worth_high}",String.valueOf(t.getWorthHigh()));
+ 		sql  = sql.replace("#{cooperate_status}",String.valueOf(t.getCooperateStatus()));
  		sql  = sql.replace("#{business_id}",String.valueOf(t.getBusinessId()));
- 		sql  = sql.replace("#{evaluate_status}",String.valueOf(t.getEvaluateStatus()));
+ 		sql  = sql.replace("#{unit_code}",String.valueOf(t.getUnitCode()));
  		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
  		return sql;
  	}
@@ -165,7 +142,7 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 				}
 				if(obj instanceof CgformEnhanceJavaInter){
 					CgformEnhanceJavaInter javaInter = (CgformEnhanceJavaInter) obj;
-					javaInter.execute("t_b_chance_pool",data);
+					javaInter.execute("t_b_customer_map",data);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -174,7 +151,7 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 		}
  	}
  	
- 	private void executeSqlEnhance(String sqlEnhance,TBChancePoolEntity t){
+ 	private void executeSqlEnhance(String sqlEnhance,TBCustomerMapEntity t){
 	 	Map<String,Object> data = populationMap(t);
 	 	sqlEnhance = ResourceUtil.formateSQl(sqlEnhance, data);
 	 	boolean isMiniDao = false;

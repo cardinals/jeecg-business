@@ -22,7 +22,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @Title: Entity
  * @Description: 项目机会池
  * @author onlineGenerator
- * @date 2018-08-23 16:20:22
+ * @date 2018-08-28 10:12:39
  * @version V1.0   
  *
  */
@@ -98,6 +98,8 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	private Integer winningResult;
 	/**业务主表id*/
 	private String businessId;
+	/**评估状态*/
+	private Integer evaluateStatus;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -543,5 +545,22 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 	public void setBusinessId(String businessId){
 		this.businessId = businessId;
+	}
+	/**
+	 *方法: 取得java.lang.Integer
+	 *@return: java.lang.Integer  评估状态
+	 */
+
+	@Column(name ="EVALUATE_STATUS",nullable=true,length=4)
+	public Integer getEvaluateStatus(){
+		return this.evaluateStatus;
+	}
+
+	/**
+	 *方法: 设置java.lang.Integer
+	 *@param: java.lang.Integer  评估状态
+	 */
+	public void setEvaluateStatus(Integer evaluateStatus){
+		this.evaluateStatus = evaluateStatus;
 	}
 }

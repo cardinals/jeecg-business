@@ -9,10 +9,15 @@ import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sxctc.projectrack.entity.TBChancePoolEntity;
+import com.sxctc.projectrack.service.TBChancePoolServiceI;
+import com.sxctc.unitManage.entity.TBUnitManageEntity;
+import com.sxctc.unitManage.service.TBUnitManageServiceI;
 import com.sxctc.workreport.entity.TBBusiWorkreportEntity;
 import com.sxctc.workreport.entity.TBWorkreportdayEntity;
 import com.sxctc.workreport.service.TBBusiWorkreportServiceI;
 import org.apache.log4j.Logger;
+import org.jeecgframework.web.system.pojo.base.TSUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -100,6 +105,10 @@ public class TBBusinessController extends BaseController {
 	private TBBusiWorkreportServiceI tBBusiWorkreportService;
 	@Autowired
 	private TBBusiCatalogServiceI tBBusiCatalogServiceI;
+	@Autowired
+	private TBChancePoolServiceI tbChancePoolService;
+	@Autowired
+	private TBUnitManageServiceI tbUnitManageService;
 	@Autowired
 	private SystemService systemService;
 	@Autowired
@@ -297,6 +306,17 @@ public class TBBusinessController extends BaseController {
 			// 保存初级日报
 			tBBusiWorkreportService.save(tbBusiWorkreportEntity3);
 
+			// 判断是否跟踪：如果是，则往项目跟踪表插入数据
+			Integer chanceStatus = tBBusiness.getChanceStatus();
+			if (chanceStatus == 1) {
+				TBChancePoolEntity tbChancePoolEntity = new TBChancePoolEntity();
+				tbChancePoolEntity.setBusinessId(tBBusiness.getId());
+				tbChancePoolEntity.setUnitCode(tBBusiness.getUnitCode());
+				tbChancePoolEntity.setProjectName(tBBusiness.getProjectName());
+				tbChancePoolEntity.setWinningResult(0);
+				tbChancePoolService.save(tbChancePoolEntity);
+			}
+
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -353,6 +373,9 @@ public class TBBusinessController extends BaseController {
 			tBBusiness = tBBusinessService.getEntity(TBBusinessEntity.class, tBBusiness.getId());
 			req.setAttribute("tBBusinessPage", tBBusiness);
 		}
+		TSUser user = ResourceUtil.getSessionUser();
+		String currentUser = user.getUserName();
+		req.setAttribute("currentUser", currentUser);
 		return new ModelAndView("com/sxctc/business/tBBusiness-add");
 	}
 	/**

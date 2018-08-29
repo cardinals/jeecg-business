@@ -1,4 +1,10 @@
 package com.sxctc.projectrack.controller;
+import com.jeecg.demo.dao.JeecgMinidaoDao;
+import com.sxctc.businessoppty.entity.TBBusinessOpptyEntity;
+import com.sxctc.businessoppty.service.TBBusinessOpptyServiceI;
+import com.sxctc.profit.entity.TBProfitTargetEntity;
+import com.sxctc.profit.service.TBProfitTargetServiceI;
+import com.sxctc.projectrack.dao.TBChancePoolDao;
 import com.sxctc.projectrack.entity.TBChancePoolEntity;
 import com.sxctc.projectrack.service.TBChancePoolServiceI;
 import java.util.ArrayList;
@@ -94,10 +100,15 @@ public class TBChancePoolController extends BaseController {
 	@Autowired
 	private TBChancePoolServiceI tBChancePoolService;
 	@Autowired
+	private TBProfitTargetServiceI tBProfitTargetService;
+	@Autowired
+	private TBBusinessOpptyServiceI tBBusinessOpptyService;
+	@Autowired
 	private SystemService systemService;
 	@Autowired
 	private Validator validator;
-	
+	@Autowired
+	private TBChancePoolDao tbChancePoolDao;
 
 
 	/**
@@ -116,7 +127,6 @@ public class TBChancePoolController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @param dataGrid
-	 * @param user
 	 */
 
 	@RequestMapping(params = "datagrid")
@@ -125,15 +135,50 @@ public class TBChancePoolController extends BaseController {
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBChancePool, request.getParameterMap());
 		try{
-		//自定义追加查询条件
+			//自定义追加查询条件
+			cq.notEq("winningResult",1);
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
 		cq.add();
 		this.tBChancePoolService.getDataGridReturn(cq, true);
+
+		/*
+		 * 说明：格式为 字段名:值(可选，不写该值时为分页数据的合计) 多个合计 以 , 分割
+		 */
+		String userName = ResourceUtil.getSessionUser().getUserName();
+		String sumProjectBudget = String.valueOf(tbChancePoolDao.getSumProjectBudget(userName));
+		String sumProjectServer = String.valueOf(tbChancePoolDao.getSumProjectServer(userName));
+		String sumProjectHardware = String.valueOf(tbChancePoolDao.getSumProjectHardware(userName));
+		dataGrid.setFooter("projectBudget:"+(sumProjectBudget.equalsIgnoreCase("null")?"0.0":sumProjectBudget)+",projectServer:"+(sumProjectServer.equalsIgnoreCase("null")?"0.0":sumProjectServer)+",projectHardware:"+(sumProjectHardware.equalsIgnoreCase("null")?"0.0":sumProjectHardware)+",projectName:合计");
+
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
+
+    /**
+     * easyui AJAX请求数据
+     *
+     * @param request
+     * @param response
+     * @param dataGrid
+     */
+
+    @RequestMapping(params = "busiDatagrid")
+    public void busiDatagrid(TBChancePoolEntity tBChancePool,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+        CriteriaQuery cq = new CriteriaQuery(TBChancePoolEntity.class, dataGrid);
+        //查询条件组装器
+        org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBChancePool, request.getParameterMap());
+        try{
+            //自定义追加查询条件
+            cq.notEq("winningResult",1);
+        }catch (Exception e) {
+            throw new BusinessException(e.getMessage());
+        }
+        cq.add();
+        this.tBChancePoolService.getDataGridReturn(cq, true);
+        TagUtil.datagrid(response, dataGrid);
+    }
+
 	/**
 	 * 删除项目机会池
 	 * 
@@ -190,7 +235,6 @@ public class TBChancePoolController extends BaseController {
 	/**
 	 * 添加项目机会池
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -214,7 +258,6 @@ public class TBChancePoolController extends BaseController {
 	/**
 	 * 更新项目机会池
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
@@ -227,6 +270,47 @@ public class TBChancePoolController extends BaseController {
 		try {
 			MyBeanUtils.copyBeanNotNull2Bean(tBChancePool, t);
 			tBChancePoolService.saveOrUpdate(t);
+
+			// 如果是已中标，则将数据添加到已签订项目中
+			Integer winningResult = tBChancePool.getWinningResult();
+			if (winningResult == 1) {
+				// 将数据添加到已签订项目中
+				TBProfitTargetEntity tbProfitTargetEntity = new TBProfitTargetEntity();
+				tbProfitTargetEntity.setBusinessId(tBChancePool.getBusinessId());
+				tbProfitTargetEntity.setProjectName(tBChancePool.getProjectName());
+				tbProfitTargetEntity.setUnitCode(tBChancePool.getUnitCode());
+				tBProfitTargetService.save(tbProfitTargetEntity);
+
+				// 更新商机评估表将业务状态置为0
+				List<TBBusinessOpptyEntity> byQueryString = tBBusinessOpptyService.findByQueryString("from TBBusinessOpptyEntity where businessId='" + t.getBusinessId() + "'");
+				if (byQueryString.size() > 0) {
+					for (TBBusinessOpptyEntity tbBusinessOpptyEntity : byQueryString) {
+						tbBusinessOpptyEntity.setBusinessStatus(0);
+						tBBusinessOpptyService.saveOrUpdate(tbBusinessOpptyEntity);
+
+						String evaluateWin = tbBusinessOpptyEntity.getEvaluateWin();
+						String evaluateFirst = tbBusinessOpptyEntity.getEvaluateFirst();
+						String evaluateConfirm = tbBusinessOpptyEntity.getEvaluateConfirm();
+						String hql = "from TBBusinessOpptyEntity where evaluateWin=? and evaluateFirst=? and evaluateConfirm=? and businessStatus=1";
+						List<TBBusinessOpptyEntity> tBBusinessOpptyList = tBBusinessOpptyService.findHql(hql, evaluateWin, evaluateFirst, evaluateConfirm);
+						if (tBBusinessOpptyList.size() == 0) {
+							TBBusinessOpptyEntity tbBusinessOppty = new TBBusinessOpptyEntity();
+							tbBusinessOppty.setBusinessStatus(1);
+							tbBusinessOppty.setSortNum(tbBusinessOpptyEntity.getSortNum());
+							tbBusinessOppty.setOpptyPoint(tbBusinessOpptyEntity.getOpptyPoint());
+							tbBusinessOppty.setOpptyRatio(tbBusinessOpptyEntity.getOpptyRatio());
+							tbBusinessOppty.setEvaluateConfirm(tbBusinessOpptyEntity.getEvaluateConfirm());
+							tbBusinessOppty.setEvaluateFirst(tbBusinessOpptyEntity.getEvaluateFirst());
+							tbBusinessOppty.setEvaluateWin(tbBusinessOpptyEntity.getEvaluateWin());
+							tbBusinessOppty.setOpptyRange(tbBusinessOpptyEntity.getOpptyRange());
+
+							tBBusinessOpptyService.save(tbBusinessOppty);
+
+						}
+					}
+				}
+			}
+
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {
 			e.printStackTrace();

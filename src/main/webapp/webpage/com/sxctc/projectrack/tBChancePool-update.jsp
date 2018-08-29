@@ -12,9 +12,9 @@
  <body>
 		<t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" action="tBChancePoolController.do?doUpdate" >
 					<input id="id" name="id" type="hidden" value="${tBChancePoolPage.id }"/>
-		<table style="width: 600px;" cellpadding="0" cellspacing="1" class="formtable">
+		<table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable">
 					<tr>
-						<td align="right">
+						<td align="right" style="width: 30%">
 							<label class="Validform_label">
 								单位名称:
 							</label>
@@ -24,6 +24,8 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">单位名称</label>
 						</td>
+					</tr>
+					<tr>
 						<td align="right">
 							<label class="Validform_label">
 								项目名称:
@@ -46,6 +48,8 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">项目预算</label>
 						</td>
+					</tr>
+					<tr>
 						<td align="right">
 							<label class="Validform_label">
 								软件和服务:
@@ -68,6 +72,8 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">硬件</label>
 						</td>
+					</tr>
+					<tr>
 						<td align="right">
 							<label class="Validform_label">
 								主要合作公司:
@@ -90,6 +96,8 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">竞争对手</label>
 						</td>
+					</tr>
+					<tr>
 						<td align="right">
 							<label class="Validform_label">
 								预计招标时间:
@@ -112,6 +120,8 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">资金来源</label>
 						</td>
+					</tr>
+					<tr>
 						<td align="right">
 							<label class="Validform_label">
 								上层关系:
@@ -134,6 +144,8 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">中层关系</label>
 						</td>
+					</tr>
+					<tr>
 						<td align="right">
 							<label class="Validform_label">
 								下层关系:
@@ -156,6 +168,8 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">当年把控度</label>
 						</td>
+					</tr>
+					<tr>
 						<td align="right">
 							<label class="Validform_label">
 								现在及下一步计划:
@@ -178,6 +192,8 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">备注</label>
 						</td>
+					</tr>
+					<tr>
 						<td align="right">
 							<label class="Validform_label">
 								是否中标:

@@ -15,13 +15,13 @@
 	<input id="unitName" name="unitName" type="hidden" value="${tBBusinessPage.unitName }"/>
 	<table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable">
 		<tr>
-			<td align="right">
+			<td align="right" style="width: 20%">
 				<label class="Validform_label">
 					单位名称:
 				</label>
 			</td>
 			<td class="value">
-				<t:dictSelect field="unitCode" type="list"  datatype="*" typeGroupCode="unit_name"  defaultVal="${tBBusinessPage.unitCode}" hasLabel="false"  title="厅局编号" ></t:dictSelect>
+				<t:dictSelect id="unitCode" field="unitCode" dictTable="t_b_unit_manage" dictCondition="where user_code=\'${currentUser}\'" dictField="unit_code" dictText="unit_name" title="厅局编号" datatype="*" hasLabel="false"></t:dictSelect>
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">单位名称</label>
 			</td>
