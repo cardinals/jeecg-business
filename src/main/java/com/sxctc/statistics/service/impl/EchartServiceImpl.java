@@ -40,4 +40,86 @@ public class EchartServiceImpl extends CommonServiceImpl implements EchartServic
     public List<StatisticsVo> getEveryProjectCount() {
         return echartsDao.getEveryProjectCount();
     }
+
+    @Override
+    public int getCloudConfirmCount() {
+        return echartsDao.getCloudConfirmCount();
+    }
+
+    @Override
+    public int getTrackConfirmCount() {
+        return echartsDao.getTrackConfirmCount();
+    }
+
+    @Override
+    public int getCloudCompleteNum() {
+        return echartsDao.getCloudCompleteNum();
+    }
+
+    @Override
+    public int getTransferCompleteNum() {
+        return echartsDao.getTransferCompleteNum();
+    }
+
+    @Override
+    public int getCheckedSystemNum() {
+        return echartsDao.getCheckedSystemNum();
+    }
+
+    @Override
+    public int getNotDockSystemNum() {
+        return echartsDao.getNotDockSystemNum();
+    }
+
+    @Override
+    public int getCloudDockSystemNum() {
+        return echartsDao.getCloudDockSystemNum();
+    }
+
+    @Override
+    public int getResearchFormSystemNum() {
+        return echartsDao.getResearchFormSystemNum();
+    }
+
+    @Override
+    public int getSignPlanSystemNum() {
+        return echartsDao.getSignPlanSystemNum();
+    }
+
+    @Override
+    public int getAllocatingResourcesSystemNum() {
+        return echartsDao.getAllocatingResourcesSystemNum();
+    }
+
+    @Override
+    public int getCloudTestSystemNum() {
+        return echartsDao.getCloudTestSystemNum();
+    }
+
+    @Override
+    public int getRecoveryAgreementSystemNum() {
+        return echartsDao.getRecoveryAgreementSystemNum();
+    }
+
+    @Override
+    public int getCloudCompleteSystemNum() {
+        return echartsDao.getCloudCompleteSystemNum();
+    }
+
+    @Override
+    public int getWinTheBidProjectNum() {
+        return echartsDao.getWinTheBidProjectNum();
+    }
+
+    @Override
+    public int getTargetCloudSystemNum() {
+        return echartsDao.getTargetCloudSystemNum();
+    }
+
+    @Override
+    public int getTargetConstructProjectNum() {
+        return echartsDao.getTargetConstructProjectNum();
+    }
+
+
 }

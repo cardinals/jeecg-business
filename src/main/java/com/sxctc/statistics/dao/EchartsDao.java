@@ -22,4 +22,52 @@ public interface EchartsDao {
 
     @ResultType(StatisticsVo.class)
     public List<StatisticsVo> getEveryProjectCount();
+
+    @ResultType(Integer.class)
+    public int getCloudConfirmCount();
+
+    @ResultType(Integer.class)
+    public int getTrackConfirmCount();
+
+    @ResultType(Integer.class)
+    public int getCloudCompleteNum();
+
+    @ResultType(Integer.class)
+    public int getTransferCompleteNum();
+
+    @ResultType(Integer.class)
+    public int getCheckedSystemNum();
+
+    @ResultType(Integer.class)
+    public int getNotDockSystemNum();
+
+    @ResultType(Integer.class)
+    public int getCloudDockSystemNum();
+
+    @ResultType(Integer.class)
+    public int getResearchFormSystemNum();
+
+    @ResultType(Integer.class)
+    public int getSignPlanSystemNum();
+
+    @ResultType(Integer.class)
+    public int getAllocatingResourcesSystemNum();
+
+    @ResultType(Integer.class)
+    public int getCloudTestSystemNum();
+
+    @ResultType(Integer.class)
+    public int getRecoveryAgreementSystemNum();
+
+    @ResultType(Integer.class)
+    public int getCloudCompleteSystemNum();
+
+    @ResultType(Integer.class)
+    public int getWinTheBidProjectNum();
+
+    @ResultType(Integer.class)
+    public int getTargetCloudSystemNum();
+
+    @ResultType(Integer.class)
+    public int getTargetConstructProjectNum();
 }
