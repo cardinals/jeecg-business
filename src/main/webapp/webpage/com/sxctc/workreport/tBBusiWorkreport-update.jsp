@@ -12,6 +12,7 @@
  <body>
 		<t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" action="tBBusiWorkreportController.do?doUpdate" >
 					<input id="id" name="id" type="hidden" value="${tBBusiWorkreportPage.id }"/>
+					<input id="reportType" name="reportType" type="hidden" value="${tBBusiWorkreportPage.reportType }"/>
 		<table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable">
 					<c:if test="${toolFlag == '1'}">
 					<tr>

@@ -128,7 +128,7 @@ public class TBBusiWorkreportController extends BaseController {
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBBusiWorkreport, request.getParameterMap());
 		try{
-		//自定义追加查询条件
+			//自定义追加查询条件
 			if (StringUtils.isNotBlank(reportOpt)){
 				if ("0".equals(reportOpt)){
 					cq.eq("reportType",0);
@@ -277,6 +277,7 @@ public class TBBusiWorkreportController extends BaseController {
 			tBWorkreportday.setReportDate(DateUtils.parseDate(s,"yyyy-MM-dd"));
 			tBWorkreportday.setUnitCode(tBBusiWorkreportEntity.getUnitCode());
 			tBWorkreportday.setProjectName(tBBusiWorkreportEntity.getReportTitle());
+			tBWorkreportday.setReportType(tBBusiWorkreportEntity.getReportType());
 			List<TBWorkreportdayEntity> byQueryString = tBBusiWorkreportService.findByQueryString("from TBWorkreportdayEntity t where t.busiReportId=" + "'" + busiReportId + "'" + " and t.reportDate=" + "'" + s + "'");
 			if (byQueryString.size() > 0) {
 				tBWorkreportday.setId(byQueryString.get(0).getId());

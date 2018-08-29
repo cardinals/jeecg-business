@@ -1,12 +1,17 @@
 package com.sxctc.business.service.impl;
+import com.sxctc.business.entity.TBBusiCatalogEntity;
 import com.sxctc.business.service.TBBusinessServiceI;
+import com.sxctc.projectrack.entity.TBChancePoolEntity;
+import com.sxctc.workreport.entity.TBBusiWorkreportEntity;
+import com.sxctc.workreport.entity.TBWorkreportdayEntity;
+import com.sxctc.workreport.entity.TBWorkreportdayMonthEntity;
+import com.sxctc.workreport.entity.TBWorkreportdayWeekEntity;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import com.sxctc.business.entity.TBBusinessEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+
+import java.util.*;
 import java.io.Serializable;
 import org.jeecgframework.core.util.ApplicationContextUtil;
 import org.jeecgframework.core.util.MyClassLoader;
@@ -207,4 +212,101 @@ public class TBBusinessServiceImpl extends CommonServiceImpl implements TBBusine
 			}
 		}
  	}
+
+
+	/**
+	 * @Title deleteBusiness
+	 * @Description 上云业务列表删除逻辑
+	 * @Param [tBBusiness, busiWorkreportId]
+	 * @Return void
+	 * @Author liuzc
+	 * @Date 2018/8/29 下午1:53
+	 **/
+	public void deleteBusiness(TBBusinessEntity tBBusiness, String busiWorkreportId) throws Exception{
+		// 删除业务主表
+		this.delete(tBBusiness);
+
+		// 接着删除日报有关信息
+		// 1、删除今日日报
+		List<TBBusiWorkreportEntity> busiReportList = this.findByProperty(TBBusiWorkreportEntity.class, "businessId", busiWorkreportId);
+		if (busiReportList.size() > 0) {
+			for (TBBusiWorkreportEntity tbBusiWorkreportEntity : busiReportList) {
+				String busiReportId = tbBusiWorkreportEntity.getId();
+				this.deleteEntityById(TBBusiWorkreportEntity.class,busiReportId);
+				// 2、删除历史日报关联数据
+				List<TBWorkreportdayEntity> workReportList = this.findByProperty(TBWorkreportdayEntity.class, "busiReportId", busiReportId);
+				if (workReportList.size() > 0) {
+					for (TBWorkreportdayEntity tbWorkreportdayEntity : workReportList) {
+						this.deleteEntityById(TBWorkreportdayEntity.class,tbWorkreportdayEntity.getId());
+					}
+				}
+			}
+		}
+
+		// 删除服务目录有关信息
+		List<TBBusiCatalogEntity> busiCatalogList = this.findByProperty(TBBusiCatalogEntity.class, "businessId", busiWorkreportId);
+		if (busiCatalogList.size() > 0) {
+			for (TBBusiCatalogEntity tbBusiCatalogEntity : busiCatalogList) {
+				this.deleteEntityById(TBBusiCatalogEntity.class,tbBusiCatalogEntity.getId());
+			}
+		}
+	}
+
+	/**
+	 * @Title doAddBusiness
+	 * @Description 上云业务保存逻辑
+	 * @Param [tBBusiness, busiWorkreportId]
+	 * @Return void
+	 * @Author liuzc
+	 * @Date 2018/8/29 下午2:02
+	 **/
+	public void doAddBusiness(TBBusinessEntity tBBusiness) throws Exception{
+		Date finishTime = tBBusiness.getFinishTime();
+		Date busJoinTime = tBBusiness.getBusJoinTime();
+		if (finishTime != null) {
+			long day=(finishTime.getTime()-busJoinTime.getTime())/(24*60*60*1000);
+			if (day >= 0) {
+				tBBusiness.setDayRange((int)day);
+			}
+		}
+		this.save(tBBusiness);
+
+		// 同时往日志表里存一条数据
+		TBBusiWorkreportEntity tbBusiWorkreportEntity1 = new TBBusiWorkreportEntity();
+		tbBusiWorkreportEntity1.setBusinessId(tBBusiness.getId());
+		tbBusiWorkreportEntity1.setUnitCode(String.valueOf(tBBusiness.getUnitCode()));
+		tbBusiWorkreportEntity1.setReportTitle(tBBusiness.getProjectName());
+		tbBusiWorkreportEntity1.setReportType(0);
+		// 保存初级日报
+		this.save(tbBusiWorkreportEntity1);
+
+		// 同时往周报表里存一条数据
+		TBWorkreportdayWeekEntity tbWorkreportdayWeekEntity = new TBWorkreportdayWeekEntity();
+		tbWorkreportdayWeekEntity.setBusinessId(tBBusiness.getId());
+		tbWorkreportdayWeekEntity.setUnitCode(String.valueOf(tBBusiness.getUnitCode()));
+		tbWorkreportdayWeekEntity.setProjectName(tBBusiness.getProjectName());
+		tbWorkreportdayWeekEntity.setReportType(0);
+		// 保存周报
+		this.save(tbWorkreportdayWeekEntity);
+
+		// 同时往月报表里存一条数据
+		TBWorkreportdayMonthEntity tbWorkreportdayMonthEntity = new TBWorkreportdayMonthEntity();
+		tbWorkreportdayMonthEntity.setBusinessId(tBBusiness.getId());
+		tbWorkreportdayMonthEntity.setUnitCode(tBBusiness.getUnitCode());
+		tbWorkreportdayMonthEntity.setReportTitle(tBBusiness.getProjectName());
+		tbWorkreportdayMonthEntity.setReportType(0);
+		// 保存月报
+		this.save(tbWorkreportdayMonthEntity);
+
+		// 判断是否跟踪：如果是，则往项目跟踪表插入数据
+		Integer chanceStatus = tBBusiness.getChanceStatus();
+		if (chanceStatus == 1) {
+			TBChancePoolEntity tbChancePoolEntity = new TBChancePoolEntity();
+			tbChancePoolEntity.setBusinessId(tBBusiness.getId());
+			tbChancePoolEntity.setUnitCode(tBBusiness.getUnitCode());
+			tbChancePoolEntity.setProjectName(tBBusiness.getProjectName());
+			tbChancePoolEntity.setWinningResult(0);
+			this.save(tbChancePoolEntity);
+		}
+	}
 }

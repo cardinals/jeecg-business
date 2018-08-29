@@ -25,7 +25,7 @@
    <t:dgCol title="备注"  field="remark"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="200"></t:dgCol>
    <t:dgFunOpt title="本周日报" urlclass="ace_button"  funname="checkCatalog(id)"></t:dgFunOpt>
-   <t:dgToolBar title="录入今日日报" icon="icon-add" url="tBBusiWorkreportController.do?goUpdate&toolFlag=1" funname="update"></t:dgToolBar>
+   <t:dgToolBar title="录入今日日报" icon="icon-add" url="tBBusiWorkreportController.do?goUpdate&toolFlag=1" funname="update" operationCode="update"></t:dgToolBar>
    <t:dgToolBar title="查看最近日报" icon="icon-search" url="tBBusiWorkreportController.do?goUpdate&toolFlag=1" funname="detail"></t:dgToolBar>
     <%--<t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>--%>
    </t:datagrid>
@@ -47,7 +47,7 @@
      <t:dgCol title="日志内容"  field="doneToday"  queryMode="single"  width="120"></t:dgCol>
      <t:dgCol title="操作" field="opt" width="200"></t:dgCol>
      <t:dgFunOpt title="本周日报" urlclass="ace_button"  funname="checkCatalog(id)"></t:dgFunOpt>
-     <t:dgToolBar title="录入今日日报" icon="icon-add" url="tBBusiWorkreportController.do?goUpdate&toolFlag=0" funname="update"></t:dgToolBar>
+     <t:dgToolBar title="录入今日日报" icon="icon-add" url="tBBusiWorkreportController.do?goUpdate&toolFlag=0" funname="update" operationCode="update"></t:dgToolBar>
      <t:dgToolBar title="查看最近日报" icon="icon-search" url="tBBusiWorkreportController.do?goUpdate&toolFlag=0" funname="detail"></t:dgToolBar>
      <%--<t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>--%>
     </t:datagrid>

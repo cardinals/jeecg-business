@@ -1,22 +1,18 @@
-package com.sxctc.business.controller;
-import com.sxctc.business.entity.TBBusiCatalogEntity;
-import com.sxctc.business.entity.TBBusinessEntity;
-import com.sxctc.business.service.TBBusiCatalogServiceI;
-import com.sxctc.business.service.TBBusinessServiceI;
+package com.sxctc.workreport.controller;
+import com.alibaba.fastjson.JSONObject;
+import com.sxctc.util.DateUtil;
+import com.sxctc.workreport.entity.TBWorkreportdayEntity;
+import com.sxctc.workreport.entity.TBWorkreportdayMonthEntity;
+import com.sxctc.workreport.entity.TBWorkreportdayWeekEntity;
+import com.sxctc.workreport.service.TBWorkreportdayMonthServiceI;
 
 import java.util.*;
 import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sxctc.projectrack.entity.TBChancePoolEntity;
-import com.sxctc.projectrack.service.TBChancePoolServiceI;
-import com.sxctc.unitManage.entity.TBUnitManageEntity;
-import com.sxctc.unitManage.service.TBUnitManageServiceI;
-import com.sxctc.workreport.entity.TBBusiWorkreportEntity;
-import com.sxctc.workreport.entity.TBWorkreportdayEntity;
-import com.sxctc.workreport.service.TBBusiWorkreportServiceI;
 import org.apache.log4j.Logger;
+import org.jeecgframework.core.util.*;
 import org.jeecgframework.web.system.pojo.base.TSUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,14 +28,12 @@ import org.jeecgframework.core.common.model.common.TreeChildCount;
 import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.common.model.json.DataGrid;
 import org.jeecgframework.core.constant.Globals;
-import org.jeecgframework.core.util.StringUtil;
 import org.jeecgframework.tag.core.easyui.TagUtil;
 import org.jeecgframework.web.system.pojo.base.TSDepart;
 import org.jeecgframework.web.system.service.SystemService;
-import org.jeecgframework.core.util.MyBeanUtils;
 
 import java.io.OutputStream;
-import org.jeecgframework.core.util.BrowserUtils;
+
 import org.jeecgframework.poi.excel.ExcelExportUtil;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.entity.ExportParams;
@@ -48,12 +42,11 @@ import org.jeecgframework.poi.excel.entity.TemplateExportParams;
 import org.jeecgframework.poi.excel.entity.vo.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.vo.TemplateExcelConstants;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.jeecgframework.core.util.ResourceUtil;
+
 import java.io.IOException;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.jeecgframework.core.util.ExceptionUtil;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -84,31 +77,23 @@ import io.swagger.annotations.ApiParam;
 
 /**   
  * @Title: Controller  
- * @Description: 营销数据业务列表
+ * @Description: 月报
  * @author onlineGenerator
- * @date 2018-08-02 15:29:29
+ * @date 2018-08-29 14:54:50
  * @version V1.0   
  *
  */
-@Api(value="TBBusiness",description="营销数据业务列表",tags="tBBusinessController")
+@Api(value="TBWorkreportdayMonth",description="月报",tags="tBWorkreportdayMonthController")
 @Controller
-@RequestMapping("/tBBusinessController")
-public class TBBusinessController extends BaseController {
+@RequestMapping("/tBWorkreportdayMonthController")
+public class TBWorkreportdayMonthController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(TBBusinessController.class);
+	private static final Logger logger = Logger.getLogger(TBWorkreportdayMonthController.class);
 
 	@Autowired
-	private TBBusinessServiceI tBBusinessService;
-	@Autowired
-	private TBBusiWorkreportServiceI tBBusiWorkreportService;
-	@Autowired
-	private TBBusiCatalogServiceI tBBusiCatalogServiceI;
-	@Autowired
-	private TBChancePoolServiceI tbChancePoolService;
-	@Autowired
-	private TBUnitManageServiceI tbUnitManageService;
+	private TBWorkreportdayMonthServiceI tBWorkreportdayMonthService;
 	@Autowired
 	private SystemService systemService;
 	@Autowired
@@ -117,13 +102,19 @@ public class TBBusinessController extends BaseController {
 
 
 	/**
-	 * 营销数据业务列表列表 页面跳转
+	 * 月报列表 页面跳转
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "list")
-	public ModelAndView list(HttpServletRequest request) {
-		return new ModelAndView("com/sxctc/business/tBBusinessList");
+	public ModelAndView list(HttpServletRequest request, String toolFlag) {
+		request.setAttribute("toolFlag", toolFlag);
+		return new ModelAndView("com/sxctc/workreport/tBWorkreportdayMonthList");
+	}
+
+	@RequestMapping(params = "mainlist")
+	public ModelAndView mainlist(HttpServletRequest request) {
+		return new ModelAndView("com/sxctc/workreport/tBBusiWorkreportMonthMainList");
 	}
 
 	/**
@@ -135,44 +126,45 @@ public class TBBusinessController extends BaseController {
 	 */
 
 	@RequestMapping(params = "datagrid")
-	public void datagrid(TBBusinessEntity tBBusiness,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
-		CriteriaQuery cq = new CriteriaQuery(TBBusinessEntity.class, dataGrid);
+	public void datagrid(TBWorkreportdayMonthEntity tBWorkreportdayMonth,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid, String reportOpt) {
+		CriteriaQuery cq = new CriteriaQuery(TBWorkreportdayMonthEntity.class, dataGrid);
 		//查询条件组装器
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBBusiness, request.getParameterMap());
+		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBWorkreportdayMonth, request.getParameterMap());
 		try{
 			//自定义追加查询条件
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("unitCode", "desc");
-			cq.setOrder(map);
-
+			if (StringUtils.isNotBlank(reportOpt)){
+				if ("0".equals(reportOpt)){
+					cq.eq("reportType",0);
+				}else {
+					cq.notEq("reportType",0);
+				}
+			}
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
 		cq.add();
-		this.tBBusinessService.getDataGridReturn(cq, true);
+		this.tBWorkreportdayMonthService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
 	
 	/**
-	 * 删除营销数据业务列表
+	 * 删除月报
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
 	@ResponseBody
-	public AjaxJson doDel(TBBusinessEntity tBBusiness, HttpServletRequest request) {
+	public AjaxJson doDel(TBWorkreportdayMonthEntity tBWorkreportdayMonth, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		String businessId = tBBusiness.getId();
-		tBBusiness = systemService.getEntity(TBBusinessEntity.class, businessId);
-		message = "营销数据业务列表删除成功";
+		tBWorkreportdayMonth = systemService.getEntity(TBWorkreportdayMonthEntity.class, tBWorkreportdayMonth.getId());
+		message = "月报删除成功";
 		try{
-
-            tBBusinessService.deleteBusiness(tBBusiness, businessId);
+			tBWorkreportdayMonthService.delete(tBWorkreportdayMonth);
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "营销数据业务列表删除失败";
+			message = "月报删除失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -180,7 +172,7 @@ public class TBBusinessController extends BaseController {
 	}
 	
 	/**
-	 * 批量删除营销数据业务列表
+	 * 批量删除月报
 	 * 
 	 * @return
 	 */
@@ -189,18 +181,18 @@ public class TBBusinessController extends BaseController {
 	public AjaxJson doBatchDel(String ids,HttpServletRequest request){
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "营销数据业务列表删除成功";
+		message = "月报删除成功";
 		try{
 			for(String id:ids.split(",")){
-				TBBusinessEntity tBBusiness = systemService.getEntity(TBBusinessEntity.class, 
+				TBWorkreportdayMonthEntity tBWorkreportdayMonth = systemService.getEntity(TBWorkreportdayMonthEntity.class, 
 				id
 				);
-				tBBusinessService.deleteBusiness(tBBusiness,id);
+				tBWorkreportdayMonthService.delete(tBWorkreportdayMonth);
 				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "营销数据业务列表删除失败";
+			message = "月报删除失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -209,22 +201,22 @@ public class TBBusinessController extends BaseController {
 
 
 	/**
-	 * 添加营销数据业务列表
+	 * 添加月报
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
 	@ResponseBody
-	public AjaxJson doAdd(TBBusinessEntity tBBusiness, HttpServletRequest request) {
+	public AjaxJson doAdd(TBWorkreportdayMonthEntity tBWorkreportdayMonth, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "营销数据业务列表添加成功";
+		message = "月报添加成功";
 		try{
-			tBBusinessService.doAddBusiness(tBBusiness);
+			tBWorkreportdayMonthService.save(tBWorkreportdayMonth);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "营销数据业务列表添加失败";
+			message = "月报添加失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -232,33 +224,24 @@ public class TBBusinessController extends BaseController {
 	}
 	
 	/**
-	 * 更新营销数据业务列表
+	 * 更新月报
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
 	@ResponseBody
-	public AjaxJson doUpdate(TBBusinessEntity tBBusiness, HttpServletRequest request) {
+	public AjaxJson doUpdate(TBWorkreportdayMonthEntity tBWorkreportdayMonth, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "营销数据业务列表更新成功";
-		Date finishTime = tBBusiness.getFinishTime();
-		Date busJoinTime = tBBusiness.getBusJoinTime();
-		if (finishTime != null) {
-			long day=(finishTime.getTime()-busJoinTime.getTime())/(24*60*60*1000);
-			if (day >= 0) {
-				tBBusiness.setDayRange((int)day);
-			}
-		}
-
-		TBBusinessEntity t = tBBusinessService.get(TBBusinessEntity.class, tBBusiness.getId());
+		message = "月报更新成功";
+		TBWorkreportdayMonthEntity t = tBWorkreportdayMonthService.get(TBWorkreportdayMonthEntity.class, tBWorkreportdayMonth.getId());
 		try {
-			MyBeanUtils.copyBeanNotNull2Bean(tBBusiness, t);
-			tBBusinessService.saveOrUpdate(t);
+			MyBeanUtils.copyBeanNotNull2Bean(tBWorkreportdayMonth, t);
+			tBWorkreportdayMonthService.saveOrUpdate(t);
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {
 			e.printStackTrace();
-			message = "营销数据业务列表更新失败";
+			message = "月报更新失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -267,33 +250,58 @@ public class TBBusinessController extends BaseController {
 	
 
 	/**
-	 * 营销数据业务列表新增页面跳转
+	 * 月报新增页面跳转
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
-	public ModelAndView goAdd(TBBusinessEntity tBBusiness, HttpServletRequest req) {
-		if (StringUtil.isNotEmpty(tBBusiness.getId())) {
-			tBBusiness = tBBusinessService.getEntity(TBBusinessEntity.class, tBBusiness.getId());
-			req.setAttribute("tBBusinessPage", tBBusiness);
+	public ModelAndView goAdd(TBWorkreportdayMonthEntity tBWorkreportdayMonth, HttpServletRequest req) {
+		if (StringUtil.isNotEmpty(tBWorkreportdayMonth.getId())) {
+			tBWorkreportdayMonth = tBWorkreportdayMonthService.getEntity(TBWorkreportdayMonthEntity.class, tBWorkreportdayMonth.getId());
+			req.setAttribute("tBWorkreportdayMonthPage", tBWorkreportdayMonth);
 		}
-		TSUser user = ResourceUtil.getSessionUser();
-		String currentUser = user.getUserName();
-		req.setAttribute("currentUser", currentUser);
-		return new ModelAndView("com/sxctc/business/tBBusiness-add");
+		return new ModelAndView("com/sxctc/workreport/tBWorkreportdayMonth-add");
 	}
 	/**
-	 * 营销数据业务列表编辑页面跳转
+	 * 月报编辑页面跳转
 	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
-	public ModelAndView goUpdate(TBBusinessEntity tBBusiness, HttpServletRequest req) {
-		if (StringUtil.isNotEmpty(tBBusiness.getId())) {
-			tBBusiness = tBBusinessService.getEntity(TBBusinessEntity.class, tBBusiness.getId());
-			req.setAttribute("tBBusinessPage", tBBusiness);
+	public ModelAndView goUpdate(TBWorkreportdayMonthEntity tBWorkreportdayMonth, HttpServletRequest req, String toolFlag) {
+		TSUser tsUser = ResourceUtil.getSessionUser();
+		try {
+			if (StringUtil.isNotEmpty(tBWorkreportdayMonth.getId())) {
+				tBWorkreportdayMonth = tBWorkreportdayMonthService.getEntity(TBWorkreportdayMonthEntity.class, tBWorkreportdayMonth.getId());
+				JSONObject monthDays = DateUtil.getMonthDays(0);
+				String beginDate = monthDays.getString("beginDate");
+				String endDate = monthDays.getString("endDate");
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+				Date date = sdf.parse(sdf.format(new Date()));
+				tBWorkreportdayMonth.setReportDate(date);
+
+				// 拼装工作内容
+				String doneWork = "";
+				List<TBWorkreportdayEntity> byQueryString = tBWorkreportdayMonthService.findByQueryString("from TBWorkreportdayEntity where createBy='" + tsUser.getUserName() + "' and reportType=" + tBWorkreportdayMonth.getReportType() + " and reportDate>='" + beginDate + "' and reportDate<='" + endDate + "'");
+				if (byQueryString.size() > 0) {
+					for (TBWorkreportdayEntity tbWorkreportdayEntity : byQueryString) {
+						String doneDay = tbWorkreportdayEntity.getDoneDay();
+						if (StringUtils.isNotBlank(doneDay)) {
+							doneWork += (doneDay.replace("|","\r\n") + "\r\n");
+						}
+					}
+				}
+				if (StringUtils.isNotBlank(doneWork)) {
+					tBWorkreportdayMonth.setDoneToday(doneWork);
+				}
+				req.setAttribute("tBWorkreportdayMonthPage", tBWorkreportdayMonth);
+				req.setAttribute("toolFlag", toolFlag);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new BusinessException(e.getMessage());
 		}
-		return new ModelAndView("com/sxctc/business/tBBusiness-update");
+		return new ModelAndView("com/sxctc/workreport/tBWorkreportdayMonth-update");
 	}
 	
 	/**
@@ -303,7 +311,7 @@ public class TBBusinessController extends BaseController {
 	 */
 	@RequestMapping(params = "upload")
 	public ModelAndView upload(HttpServletRequest req) {
-		req.setAttribute("controller_name","tBBusinessController");
+		req.setAttribute("controller_name","tBWorkreportdayMonthController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
 	
@@ -314,16 +322,16 @@ public class TBBusinessController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(params = "exportXls")
-	public String exportXls(TBBusinessEntity tBBusiness,HttpServletRequest request,HttpServletResponse response
+	public String exportXls(TBWorkreportdayMonthEntity tBWorkreportdayMonth,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
-		CriteriaQuery cq = new CriteriaQuery(TBBusinessEntity.class, dataGrid);
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBBusiness, request.getParameterMap());
-		List<TBBusinessEntity> tBBusinesss = this.tBBusinessService.getListByCriteriaQuery(cq,false);
-		modelMap.put(NormalExcelConstants.FILE_NAME,"营销数据业务列表");
-		modelMap.put(NormalExcelConstants.CLASS,TBBusinessEntity.class);
-		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("营销数据业务列表列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+		CriteriaQuery cq = new CriteriaQuery(TBWorkreportdayMonthEntity.class, dataGrid);
+		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBWorkreportdayMonth, request.getParameterMap());
+		List<TBWorkreportdayMonthEntity> tBWorkreportdayMonths = this.tBWorkreportdayMonthService.getListByCriteriaQuery(cq,false);
+		modelMap.put(NormalExcelConstants.FILE_NAME,"月报");
+		modelMap.put(NormalExcelConstants.CLASS,TBWorkreportdayMonthEntity.class);
+		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("月报列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
 			"导出信息"));
-		modelMap.put(NormalExcelConstants.DATA_LIST,tBBusinesss);
+		modelMap.put(NormalExcelConstants.DATA_LIST,tBWorkreportdayMonths);
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
 	/**
@@ -333,11 +341,11 @@ public class TBBusinessController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(params = "exportXlsByT")
-	public String exportXlsByT(TBBusinessEntity tBBusiness,HttpServletRequest request,HttpServletResponse response
+	public String exportXlsByT(TBWorkreportdayMonthEntity tBWorkreportdayMonth,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
-    	modelMap.put(NormalExcelConstants.FILE_NAME,"营销数据业务列表");
-    	modelMap.put(NormalExcelConstants.CLASS,TBBusinessEntity.class);
-    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("营销数据业务列表列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+    	modelMap.put(NormalExcelConstants.FILE_NAME,"月报");
+    	modelMap.put(NormalExcelConstants.CLASS,TBWorkreportdayMonthEntity.class);
+    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("月报列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
     	"导出信息"));
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
@@ -358,9 +366,9 @@ public class TBBusinessController extends BaseController {
 			params.setHeadRows(1);
 			params.setNeedSave(true);
 			try {
-				List<TBBusinessEntity> listTBBusinessEntitys = ExcelImportUtil.importExcel(file.getInputStream(),TBBusinessEntity.class,params);
-				for (TBBusinessEntity tBBusiness : listTBBusinessEntitys) {
-					tBBusinessService.save(tBBusiness);
+				List<TBWorkreportdayMonthEntity> listTBWorkreportdayMonthEntitys = ExcelImportUtil.importExcel(file.getInputStream(),TBWorkreportdayMonthEntity.class,params);
+				for (TBWorkreportdayMonthEntity tBWorkreportdayMonth : listTBWorkreportdayMonthEntitys) {
+					tBWorkreportdayMonthService.save(tBWorkreportdayMonth);
 				}
 				j.setMsg("文件导入成功！");
 			} catch (Exception e) {
@@ -379,68 +387,68 @@ public class TBBusinessController extends BaseController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value="营销数据业务列表列表信息",produces="application/json",httpMethod="GET")
-	public ResponseMessage<List<TBBusinessEntity>> list() {
-		List<TBBusinessEntity> listTBBusinesss=tBBusinessService.getList(TBBusinessEntity.class);
-		return Result.success(listTBBusinesss);
+	@ApiOperation(value="月报列表信息",produces="application/json",httpMethod="GET")
+	public ResponseMessage<List<TBWorkreportdayMonthEntity>> list() {
+		List<TBWorkreportdayMonthEntity> listTBWorkreportdayMonths=tBWorkreportdayMonthService.getList(TBWorkreportdayMonthEntity.class);
+		return Result.success(listTBWorkreportdayMonths);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value="根据ID获取营销数据业务列表信息",notes="根据ID获取营销数据业务列表信息",httpMethod="GET",produces="application/json")
+	@ApiOperation(value="根据ID获取月报信息",notes="根据ID获取月报信息",httpMethod="GET",produces="application/json")
 	public ResponseMessage<?> get(@ApiParam(required=true,name="id",value="ID")@PathVariable("id") String id) {
-		TBBusinessEntity task = tBBusinessService.get(TBBusinessEntity.class, id);
+		TBWorkreportdayMonthEntity task = tBWorkreportdayMonthService.get(TBWorkreportdayMonthEntity.class, id);
 		if (task == null) {
-			return Result.error("根据ID获取营销数据业务列表信息为空");
+			return Result.error("根据ID获取月报信息为空");
 		}
 		return Result.success(task);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	@ApiOperation(value="创建营销数据业务列表")
-	public ResponseMessage<?> create(@ApiParam(name="营销数据业务列表对象")@RequestBody TBBusinessEntity tBBusiness, UriComponentsBuilder uriBuilder) {
+	@ApiOperation(value="创建月报")
+	public ResponseMessage<?> create(@ApiParam(name="月报对象")@RequestBody TBWorkreportdayMonthEntity tBWorkreportdayMonth, UriComponentsBuilder uriBuilder) {
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
-		Set<ConstraintViolation<TBBusinessEntity>> failures = validator.validate(tBBusiness);
+		Set<ConstraintViolation<TBWorkreportdayMonthEntity>> failures = validator.validate(tBWorkreportdayMonth);
 		if (!failures.isEmpty()) {
 			return Result.error(JSONArray.toJSONString(BeanValidators.extractPropertyAndMessage(failures)));
 		}
 
 		//保存
 		try{
-			tBBusinessService.save(tBBusiness);
+			tBWorkreportdayMonthService.save(tBWorkreportdayMonth);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Result.error("营销数据业务列表信息保存失败");
+			return Result.error("月报信息保存失败");
 		}
-		return Result.success(tBBusiness);
+		return Result.success(tBWorkreportdayMonth);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	@ApiOperation(value="更新营销数据业务列表",notes="更新营销数据业务列表")
-	public ResponseMessage<?> update(@ApiParam(name="营销数据业务列表对象")@RequestBody TBBusinessEntity tBBusiness) {
+	@ApiOperation(value="更新月报",notes="更新月报")
+	public ResponseMessage<?> update(@ApiParam(name="月报对象")@RequestBody TBWorkreportdayMonthEntity tBWorkreportdayMonth) {
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
-		Set<ConstraintViolation<TBBusinessEntity>> failures = validator.validate(tBBusiness);
+		Set<ConstraintViolation<TBWorkreportdayMonthEntity>> failures = validator.validate(tBWorkreportdayMonth);
 		if (!failures.isEmpty()) {
 			return Result.error(JSONArray.toJSONString(BeanValidators.extractPropertyAndMessage(failures)));
 		}
 
 		//保存
 		try{
-			tBBusinessService.saveOrUpdate(tBBusiness);
+			tBWorkreportdayMonthService.saveOrUpdate(tBWorkreportdayMonth);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Result.error("更新营销数据业务列表信息失败");
+			return Result.error("更新月报信息失败");
 		}
 
 		//按Restful约定，返回204状态码, 无内容. 也可以返回200状态码.
-		return Result.success("更新营销数据业务列表信息成功");
+		return Result.success("更新月报信息成功");
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@ApiOperation(value="删除营销数据业务列表")
+	@ApiOperation(value="删除月报")
 	public ResponseMessage<?> delete(@ApiParam(name="id",value="ID",required=true)@PathVariable("id") String id) {
 		logger.info("delete[{}]" + id);
 		// 验证
@@ -448,10 +456,10 @@ public class TBBusinessController extends BaseController {
 			return Result.error("ID不能为空");
 		}
 		try {
-			tBBusinessService.deleteEntityById(TBBusinessEntity.class, id);
+			tBWorkreportdayMonthService.deleteEntityById(TBWorkreportdayMonthEntity.class, id);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Result.error("营销数据业务列表删除失败");
+			return Result.error("月报删除失败");
 		}
 
 		return Result.success();

@@ -20,16 +20,16 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**   
  * @Title: Entity
- * @Description: 日报管理
+ * @Description: 月报
  * @author onlineGenerator
- * @date 2018-08-29 16:22:24
+ * @date 2018-08-29 15:11:08
  * @version V1.0   
  *
  */
 @Entity
-@Table(name = "t_b_workreportday", schema = "")
+@Table(name = "t_b_workreportday_month", schema = "")
 @SuppressWarnings("serial")
-public class TBWorkreportdayEntity implements java.io.Serializable {
+public class TBWorkreportdayMonthEntity implements java.io.Serializable {
 	/**主键*/
 	private String id;
 	/**创建人名称*/
@@ -38,36 +38,41 @@ public class TBWorkreportdayEntity implements java.io.Serializable {
 	private String createBy;
 	/**创建日期*/
 	private Date createDate;
+//	/**更新人名称*/
+//	private String updateName;
+//	/**更新人登录名称*/
+//	private String updateBy;
+//	/**更新日期*/
+//	private Date updateDate;
 	/**所属部门*/
 	private String sysOrgCode;
 	/**所属公司*/
 	private String sysCompanyCode;
-	/**厅局单位*/
-	@Excel(name="厅局单位",width=15,dicCode="unit_name")
-	private String unitCode;
-	/**迁移系统名称*/
-	@Excel(name="迁移系统名称",width=15)
-	private String projectName;
-	/**今日完成的工作*/
-	@Excel(name="今日完成的工作",width=15)
-	private String doneDay;
-	/**未完成的工作*/
-	@Excel(name="未完成的工作",width=15)
-	private String unDoneDay;
-	/**需要协调的工作*/
-	@Excel(name="需要协调的工作",width=15)
-	private String coordinateWork;
-	/**备注*/
-	@Excel(name="备注",width=15)
-	private String remark;
-	/**日志业务关联表id*/
-	private String busiReportId;
-	/**今日时间*/
-	@Excel(name="今日时间",width=15,format = "yyyy-MM-dd")
+	/**厅局编号*/
+	@Excel(name="厅局编号",width=15,dicCode="unit_name")
+	private Integer unitCode;
+	/**厅局名称*/
+	@Excel(name="厅局名称",width=15)
+	private String reportTitle;
+	/**月份*/
+	@Excel(name="月份",width=15,format = "yyyy-MM-dd")
 	private Date reportDate;
+	/**本月工作工作*/
+	@Excel(name="本月工作工作",width=15)
+	private String doneToday;
+	/**下月工作计划*/
+	@Excel(name="下月工作计划",width=15)
+	private String nextDone;
+	/**协调工作*/
+	@Excel(name="协调工作",width=15)
+	private String coordinateWork;
 	/**日志类型*/
-	@Excel(name="日志类型",width=15)
 	private Integer reportType;
+	/**业务id*/
+	private String businessId;
+	/**工作总结*/
+	@Excel(name="工作总结",width=15)
+	private String workSum;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -140,6 +145,7 @@ public class TBWorkreportdayEntity implements java.io.Serializable {
 	public void setCreateDate(Date createDate){
 		this.createDate = createDate;
 	}
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  所属部门
@@ -175,140 +181,106 @@ public class TBWorkreportdayEntity implements java.io.Serializable {
 		this.sysCompanyCode = sysCompanyCode;
 	}
 	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  厅局单位
+	 *方法: 取得java.lang.Integer
+	 *@return: java.lang.Integer  厅局编号
 	 */
 
-	@Column(name ="UNIT_CODE",nullable=true,length=32)
-	public String getUnitCode(){
+	@Column(name ="UNIT_CODE",nullable=true,length=4)
+	public Integer getUnitCode(){
 		return this.unitCode;
 	}
 
 	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  厅局单位
+	 *方法: 设置java.lang.Integer
+	 *@param: java.lang.Integer  厅局编号
 	 */
-	public void setUnitCode(String unitCode){
+	public void setUnitCode(Integer unitCode){
 		this.unitCode = unitCode;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  迁移系统名称
+	 *@return: java.lang.String  厅局名称
 	 */
 
-	@Column(name ="PROJECT_NAME",nullable=true,length=32)
-	public String getProjectName(){
-		return this.projectName;
+	@Column(name ="REPORT_TITLE",nullable=true,length=32)
+	public String getReportTitle(){
+		return this.reportTitle;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  迁移系统名称
+	 *@param: java.lang.String  厅局名称
 	 */
-	public void setProjectName(String projectName){
-		this.projectName = projectName;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  今日完成的工作
-	 */
-
-	@Column(name ="DONE_DAY",nullable=true,length=300)
-	public String getDoneDay(){
-		return this.doneDay;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  今日完成的工作
-	 */
-	public void setDoneDay(String doneDay){
-		this.doneDay = doneDay;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  未完成的工作
-	 */
-
-	@Column(name ="UN_DONE_DAY",nullable=true,length=300)
-	public String getUnDoneDay(){
-		return this.unDoneDay;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  未完成的工作
-	 */
-	public void setUnDoneDay(String unDoneDay){
-		this.unDoneDay = unDoneDay;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  需要协调的工作
-	 */
-
-	@Column(name ="COORDINATE_WORK",nullable=true,length=300)
-	public String getCoordinateWork(){
-		return this.coordinateWork;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  需要协调的工作
-	 */
-	public void setCoordinateWork(String coordinateWork){
-		this.coordinateWork = coordinateWork;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  备注
-	 */
-
-	@Column(name ="REMARK",nullable=true,length=300)
-	public String getRemark(){
-		return this.remark;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  备注
-	 */
-	public void setRemark(String remark){
-		this.remark = remark;
-	}
-	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  日志业务关联表id
-	 */
-
-	@Column(name ="BUSI_REPORT_ID",nullable=true,length=36)
-	public String getBusiReportId(){
-		return this.busiReportId;
-	}
-
-	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  日志业务关联表id
-	 */
-	public void setBusiReportId(String busiReportId){
-		this.busiReportId = busiReportId;
+	public void setReportTitle(String reportTitle){
+		this.reportTitle = reportTitle;
 	}
 	/**
 	 *方法: 取得java.util.Date
-	 *@return: java.util.Date  今日时间
+	 *@return: java.util.Date  月份
 	 */
 
-	@Column(name ="REPORT_DATE",nullable=true,length=30)
+	@Column(name ="REPORT_DATE",nullable=true)
 	public Date getReportDate(){
 		return this.reportDate;
 	}
 
 	/**
 	 *方法: 设置java.util.Date
-	 *@param: java.util.Date  今日时间
+	 *@param: java.util.Date  月份
 	 */
 	public void setReportDate(Date reportDate){
 		this.reportDate = reportDate;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  本月工作工作
+	 */
+
+	@Column(name ="DONE_TODAY",nullable=true)
+	public String getDoneToday(){
+		return this.doneToday;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  本月工作工作
+	 */
+	public void setDoneToday(String doneToday){
+		this.doneToday = doneToday;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  下月工作计划
+	 */
+
+	@Column(name ="NEXT_DONE",nullable=true)
+	public String getNextDone(){
+		return this.nextDone;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  下月工作计划
+	 */
+	public void setNextDone(String nextDone){
+		this.nextDone = nextDone;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  协调工作
+	 */
+
+	@Column(name ="COORDINATE_WORK",nullable=true)
+	public String getCoordinateWork(){
+		return this.coordinateWork;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  协调工作
+	 */
+	public void setCoordinateWork(String coordinateWork){
+		this.coordinateWork = coordinateWork;
 	}
 	/**
 	 *方法: 取得java.lang.Integer
@@ -326,5 +298,39 @@ public class TBWorkreportdayEntity implements java.io.Serializable {
 	 */
 	public void setReportType(Integer reportType){
 		this.reportType = reportType;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  业务id
+	 */
+
+	@Column(name ="BUSINESS_ID",nullable=true,length=36)
+	public String getBusinessId(){
+		return this.businessId;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  业务id
+	 */
+	public void setBusinessId(String businessId){
+		this.businessId = businessId;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  工作总结
+	 */
+
+	@Column(name ="WORK_SUM",nullable=true)
+	public String getWorkSum(){
+		return this.workSum;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  工作总结
+	 */
+	public void setWorkSum(String workSum){
+		this.workSum = workSum;
 	}
 }

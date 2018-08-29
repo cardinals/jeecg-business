@@ -98,6 +98,7 @@ public class TBWorkreportdayServiceImpl extends CommonServiceImpl implements TBW
 		map.put("remark", t.getRemark());
 		map.put("busi_report_id", t.getBusiReportId());
 		map.put("report_date", t.getReportDate());
+		map.put("report_type", t.getReportType());
 		return map;
 	}
  	
@@ -122,6 +123,7 @@ public class TBWorkreportdayServiceImpl extends CommonServiceImpl implements TBW
  		sql  = sql.replace("#{remark}",String.valueOf(t.getRemark()));
  		sql  = sql.replace("#{busi_report_id}",String.valueOf(t.getBusiReportId()));
  		sql  = sql.replace("#{report_date}",String.valueOf(t.getReportDate()));
+ 		sql  = sql.replace("#{report_type}",String.valueOf(t.getReportType()));
  		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
  		return sql;
  	}

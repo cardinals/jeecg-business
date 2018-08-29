@@ -22,7 +22,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @Title: Entity
  * @Description: 周报
  * @author onlineGenerator
- * @date 2018-08-13 10:00:26
+ * @date 2018-08-29 15:11:23
  * @version V1.0   
  *
  */
@@ -48,12 +48,12 @@ public class TBWorkreportdayWeekEntity implements java.io.Serializable {
 	/**迁移系统名称*/
 	@Excel(name="迁移系统名称",width=15)
 	private String projectName;
-	/**今日完成的工作*/
-	@Excel(name="今日完成的工作",width=15)
+	/**本周工作内容*/
+	@Excel(name="本周工作内容",width=15)
 	private String doneDay;
-	/**未完成的工作*/
-	@Excel(name="未完成的工作",width=15)
-	private String unDoneDay;
+	/**下周工作计划*/
+	@Excel(name="下周工作计划",width=15)
+	private String nextDone;
 	/**需要协调的工作*/
 	@Excel(name="需要协调的工作",width=15)
 	private String coordinateWork;
@@ -61,13 +61,18 @@ public class TBWorkreportdayWeekEntity implements java.io.Serializable {
 	@Excel(name="备注",width=15)
 	private String remark;
 	/**日志业务关联表id*/
-	private String busiReportId;
+	private String businessId;
 	/**周报日期开始*/
 	@Excel(name="周报日期开始",width=15,format = "yyyy-MM-dd")
 	private Date reportStartDate;
 	/**周报日期结束*/
 	@Excel(name="周报日期结束",width=15,format = "yyyy-MM-dd")
 	private Date reportEndDate;
+	/**周报类型*/
+	private Integer reportType;
+	/**本周工作总结*/
+	@Excel(name="本周工作总结",width=15)
+	private String workSum;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -210,7 +215,7 @@ public class TBWorkreportdayWeekEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  今日完成的工作
+	 *@return: java.lang.String  本周工作内容
 	 */
 
 	@Column(name ="DONE_DAY",nullable=true)
@@ -220,27 +225,27 @@ public class TBWorkreportdayWeekEntity implements java.io.Serializable {
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  今日完成的工作
+	 *@param: java.lang.String  本周工作内容
 	 */
 	public void setDoneDay(String doneDay){
 		this.doneDay = doneDay;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  未完成的工作
+	 *@return: java.lang.String  下周工作计划
 	 */
 
-	@Column(name ="UN_DONE_DAY",nullable=true)
-	public String getUnDoneDay(){
-		return this.unDoneDay;
+	@Column(name ="NEXT_DONE",nullable=true)
+	public String getNextDone(){
+		return this.nextDone;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  未完成的工作
+	 *@param: java.lang.String  下周工作计划
 	 */
-	public void setUnDoneDay(String unDoneDay){
-		this.unDoneDay = unDoneDay;
+	public void setNextDone(String nextDone){
+		this.nextDone = nextDone;
 	}
 	/**
 	 *方法: 取得java.lang.String
@@ -281,17 +286,17 @@ public class TBWorkreportdayWeekEntity implements java.io.Serializable {
 	 *@return: java.lang.String  日志业务关联表id
 	 */
 
-	@Column(name ="BUSI_REPORT_ID",nullable=true,length=36)
-	public String getBusiReportId(){
-		return this.busiReportId;
+	@Column(name ="BUSINESS_ID",nullable=true,length=36)
+	public String getBusinessId(){
+		return this.businessId;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  日志业务关联表id
 	 */
-	public void setBusiReportId(String busiReportId){
-		this.busiReportId = busiReportId;
+	public void setBusinessId(String businessId){
+		this.businessId = businessId;
 	}
 	/**
 	 *方法: 取得java.util.Date
@@ -326,5 +331,39 @@ public class TBWorkreportdayWeekEntity implements java.io.Serializable {
 	 */
 	public void setReportEndDate(Date reportEndDate){
 		this.reportEndDate = reportEndDate;
+	}
+	/**
+	 *方法: 取得java.lang.Integer
+	 *@return: java.lang.Integer  周报类型
+	 */
+
+	@Column(name ="REPORT_TYPE",nullable=true,length=4)
+	public Integer getReportType(){
+		return this.reportType;
+	}
+
+	/**
+	 *方法: 设置java.lang.Integer
+	 *@param: java.lang.Integer  周报类型
+	 */
+	public void setReportType(Integer reportType){
+		this.reportType = reportType;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  本周工作总结
+	 */
+
+	@Column(name ="WORK_SUM",nullable=true)
+	public String getWorkSum(){
+		return this.workSum;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  本周工作总结
+	 */
+	public void setWorkSum(String workSum){
+		this.workSum = workSum;
 	}
 }
