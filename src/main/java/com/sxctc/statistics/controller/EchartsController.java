@@ -45,36 +45,143 @@ public class EchartsController {
     @Autowired
     private SystemService systemService;
 
+//    /**
+//     * @Title getPieChartData1
+//     * @Description 获取已对接系统数占总系统比例
+//     * @Param [request]
+//     * @Return org.jeecgframework.core.common.model.json.AjaxJson
+//     * @Author liuzc
+//     * @Date 2018/8/15 下午3:02
+//     **/
+//    @RequestMapping(params = "getPieChartData1")
+//    @ResponseBody
+//    public AjaxJson getPieChartData1(HttpServletRequest request) {
+//        AjaxJson json=new AjaxJson();
+//        Map<String,Object> result = new HashMap<String,Object>();
+//        TSUser user = ResourceUtil.getSessionUser();
+//        try{
+//            String id = null;
+//            String userName = user.getUserName();
+//            String orgCode = user.getCurrentDepart().getOrgCode();
+//            if ("A04A01A01A01".equals(orgCode)) {
+//                id = userName;
+//            }
+//            int allCount = echartService.getProjectCountByUserid(id, null);
+//            int joinCount = echartService.getProjectCountByUserid(id, "1");
+//            result.put("allCount",allCount);
+//            result.put("joinCount",joinCount);
+//            result.put("unjoinCount",allCount - joinCount);
+//
+//        }catch(Exception e){
+//            e.printStackTrace();
+//            throw new BusinessException(e.getMessage());
+//        }
+//
+//        json.setAttributes(result);
+//        json.setMsg("查询成功！");
+//        return json;
+//    }
+//
+//    /**
+//     * @Title getBarGraphData1
+//     * @Description 获取每个月新增的对接系统
+//     * @Param [request]
+//     * @Return org.jeecgframework.core.common.model.json.AjaxJson
+//     * @Author liuzc
+//     * @Date 2018/8/15 下午4:56
+//     **/
+//    @RequestMapping(params = "getBarGraphData1")
+//    @ResponseBody
+//    public AjaxJson getBarGraphData1(HttpServletRequest request) {
+//        AjaxJson json=new AjaxJson();
+//        Map<String,Object> result = new HashMap<String,Object>();
+//        TSUser user = ResourceUtil.getSessionUser();
+//        try{
+//            String id = null;
+//            String userName = user.getUserName();
+//            String orgCode = user.getCurrentDepart().getOrgCode();
+//            if ("A04A01A01A01".equals(orgCode)) {
+//                id = userName;
+//            }
+//            for (int i = 1; i <=12; i++) {
+//                String month = DateUtils.getYear() + "-" + i;
+//                if (i < 10) {
+//                    month = DateUtils.getYear() + "-0" + i;
+//                }
+//                int projectCount = echartService.getProjectCountByMonth(id, month);
+//                result.put(i+"",projectCount);
+//            }
+//
+//        }catch(Exception e){
+//            e.printStackTrace();
+//            throw new BusinessException(e.getMessage());
+//        }
+//
+//        json.setAttributes(result);
+//        json.setMsg("查询成功！");
+//        return json;
+//    }
+//
+//
+//    /**
+//     * @Title getBarGraphData2
+//     * @Description 获取每个用户负责的系统数
+//     * @Param [request]
+//     * @Return org.jeecgframework.core.common.model.json.AjaxJson
+//     * @Author liuzc
+//     * @Date 2018/8/15 下午4:58
+//     **/
+//    @RequestMapping(params = "getBarGraphData2")
+//    @ResponseBody
+//    public AjaxJson getBarGraphData2(HttpServletRequest request) {
+//        AjaxJson json=new AjaxJson();
+//        try{
+//            List<StatisticsVo> allCount = echartService.getEveryProjectCount();
+//            json.setObj(allCount);
+//        }catch(Exception e){
+//            e.printStackTrace();
+//            throw new BusinessException(e.getMessage());
+//        }
+//        json.setMsg("查询成功！");
+//        return json;
+//    }
     /**
-     * @Title getPieChartData1
-     * @Description 获取已对接系统数占总系统比例
+     * @Title getPieChartData2
+     * @Description 获取上云完成和迁移完成金额
      * @Param [request]
      * @Return org.jeecgframework.core.common.model.json.AjaxJson
-     * @Author liuzc
-     * @Date 2018/8/15 下午3:02
      **/
-    @RequestMapping(params = "getPieChartData1")
+    @RequestMapping(params = "getPieChartData2")
     @ResponseBody
-    public AjaxJson getPieChartData1(HttpServletRequest request) {
+    public AjaxJson getPieChartData2(HttpServletRequest request) {
+        AjaxJson json=new AjaxJson();
+        Map<String,Object> result = new HashMap<String,Object>();
+
+
+        json.setAttributes(result);
+        json.setMsg("查询成功！");
+        return json;
+    }
+    /**
+     * @Title getPieChartData3
+     * @Description 获取已中标项目数量
+     * @Param [request]
+     * @Return org.jeecgframework.core.common.model.json.AjaxJson
+     **/
+    @RequestMapping(params = "getPieChartData3")
+    @ResponseBody
+    public AjaxJson getPieChartData3(HttpServletRequest request) {
         AjaxJson json=new AjaxJson();
         Map<String,Object> result = new HashMap<String,Object>();
         TSUser user = ResourceUtil.getSessionUser();
-        try{
-            String id = null;
-            String userName = user.getUserName();
-            String orgCode = user.getCurrentDepart().getOrgCode();
-            if ("A04A01A01A01".equals(orgCode)) {
-                id = userName;
-            }
-            int allCount = echartService.getProjectCountByUserid(id, null);
-            int joinCount = echartService.getProjectCountByUserid(id, "1");
-            result.put("allCount",allCount);
-            result.put("joinCount",joinCount);
-            result.put("unjoinCount",allCount - joinCount);
 
-        }catch(Exception e){
+        try {
+            int winTheBidProjectNum = echartService.getWinTheBidProjectNum();
+            int targetConstructProjectNum = echartService.getTargetConstructProjectNum();
+            result.put("winTheBidProjectNum",winTheBidProjectNum);
+            result.put("targetConstructProjectNum",targetConstructProjectNum);
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new BusinessException(e.getMessage());
         }
 
         json.setAttributes(result);
@@ -83,67 +190,70 @@ public class EchartsController {
     }
 
     /**
-     * @Title getBarGraphData1
-     * @Description 获取每个月新增的对接系统
+     * @Title getPieChartData4
+     * @Description 获取上云各阶段进展数量对比
      * @Param [request]
      * @Return org.jeecgframework.core.common.model.json.AjaxJson
-     * @Author liuzc
-     * @Date 2018/8/15 下午4:56
      **/
-    @RequestMapping(params = "getBarGraphData1")
+    @RequestMapping(params = "getPieChartData4")
     @ResponseBody
-    public AjaxJson getBarGraphData1(HttpServletRequest request) {
+    public AjaxJson getPieChartData4(HttpServletRequest request) {
         AjaxJson json=new AjaxJson();
         Map<String,Object> result = new HashMap<String,Object>();
         TSUser user = ResourceUtil.getSessionUser();
-        try{
-            String id = null;
-            String userName = user.getUserName();
-            String orgCode = user.getCurrentDepart().getOrgCode();
-            if ("A04A01A01A01".equals(orgCode)) {
-                id = userName;
-            }
-            for (int i = 1; i <=12; i++) {
-                String month = DateUtils.getYear() + "-" + i;
-                if (i < 10) {
-                    month = DateUtils.getYear() + "-0" + i;
-                }
-                int projectCount = echartService.getProjectCountByMonth(id, month);
-                result.put(i+"",projectCount);
-            }
 
-        }catch(Exception e){
+        try {
+            int notDockSystemNum = echartService.getNotDockSystemNum();
+            int cloudDockSystemNum = echartService.getCloudDockSystemNum();
+            int researchFormSystemNum = echartService.getResearchFormSystemNum();
+            int allocatingResourcesSystemNum = echartService.getAllocatingResourcesSystemNum();
+            int signPlanSystemNum = echartService.getSignPlanSystemNum();
+            int cloudTestSystemNum = echartService.getCloudTestSystemNum();
+            int recoveryAgreementSystemNum = echartService.getRecoveryAgreementSystemNum();
+            int cloudCompleteNum = echartService.getCloudCompleteNum();
+
+            result.put("notDockSystemNum",notDockSystemNum);
+            result.put("cloudDockSystemNum",cloudDockSystemNum);
+            result.put("researchFormSystemNum",researchFormSystemNum);
+            result.put("signPlanSystemNum",signPlanSystemNum);
+            result.put("allocatingResourcesSystemNum",allocatingResourcesSystemNum);
+            result.put("cloudTestSystemNum",cloudTestSystemNum);
+            result.put("recoveryAgreementSystemNum",recoveryAgreementSystemNum);
+            result.put("cloudCompleteNum",cloudCompleteNum);
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new BusinessException(e.getMessage());
         }
+
 
         json.setAttributes(result);
         json.setMsg("查询成功！");
         return json;
     }
 
-
     /**
-     * @Title getBarGraphData2
-     * @Description 获取每个用户负责的系统数
+     * @Title getPieChartData5
+     * @Description 获取2018上云系统数量
      * @Param [request]
      * @Return org.jeecgframework.core.common.model.json.AjaxJson
-     * @Author liuzc
-     * @Date 2018/8/15 下午4:58
      **/
-    @RequestMapping(params = "getBarGraphData2")
+    @RequestMapping(params = "getPieChartData5")
     @ResponseBody
-    public AjaxJson getBarGraphData2(HttpServletRequest request) {
+    public AjaxJson getPieChartData5(HttpServletRequest request) {
         AjaxJson json=new AjaxJson();
-        try{
-            List<StatisticsVo> allCount = echartService.getEveryProjectCount();
-            json.setObj(allCount);
-        }catch(Exception e){
+        Map<String,Object> result = new HashMap<String,Object>();
+        TSUser user = ResourceUtil.getSessionUser();
+
+        try {
+            int targetCloudSystemNum = echartService.getTargetCloudSystemNum();
+            int cloudCompleteNum = echartService.getCloudCompleteNum();
+            result.put("targetCloudSystemNum",targetCloudSystemNum);
+            result.put("cloudCompleteNum",cloudCompleteNum);
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new BusinessException(e.getMessage());
         }
+
+        json.setAttributes(result);
         json.setMsg("查询成功！");
         return json;
     }
-
 }
