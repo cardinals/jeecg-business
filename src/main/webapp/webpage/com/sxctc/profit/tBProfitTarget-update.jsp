@@ -76,13 +76,13 @@
 					<tr>
 						<td align="right">
 							<label class="Validform_label">
-								合同额:
+								合同额(万元):
 							</label>
 						</td>
 						<td class="value">
-						    <input id="contractValue" name="contractValue" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="d" ignore="ignore"  value='${tBProfitTargetPage.contractValue}'/>
+						    <input id="contractValue" name="contractValue" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="n0-6" ignore="ignore"  value='${tBProfitTargetPage.contractValue}'/>
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">合同额</label>
+							<label class="Validform_label" style="display: none;">合同额(万元)</label>
 						</td>
 					</tr>
 					<tr>
@@ -100,25 +100,25 @@
 					<tr>
 						<td align="right">
 							<label class="Validform_label">
-								毛利润:
+								毛利润(万元):
 							</label>
 						</td>
 						<td class="value">
-						    <input id="profitTarget" name="profitTarget" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="d" ignore="ignore"  value='${tBProfitTargetPage.profitTarget}'/>
+						    <input id="profitTarget" name="profitTarget" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="n0-6" ignore="ignore"  value='${tBProfitTargetPage.profitTarget}'/>
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">毛利润</label>
+							<label class="Validform_label" style="display: none;">毛利润(万元)</label>
 						</td>
 					</tr>
 					<tr>
 						<td align="right">
 							<label class="Validform_label">
-								确认收入额:
+								确认收入额(万元):
 							</label>
 						</td>
 						<td class="value">
-						    <input id="confirmIncome" name="confirmIncome" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="d" ignore="ignore"  value='${tBProfitTargetPage.confirmIncome}'/>
+						    <input id="confirmIncome" name="confirmIncome" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="n0-6" ignore="ignore"  value='${tBProfitTargetPage.confirmIncome}'/>
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">确认收入额</label>
+							<label class="Validform_label" style="display: none;">确认收入额(万元)</label>
 						</td>
 					</tr>
 					<tr>
@@ -136,13 +136,13 @@
 					<tr>
 						<td align="right">
 							<label class="Validform_label">
-								回款总额:
+								回款总额(万元):
 							</label>
 						</td>
 						<td class="value">
-						    <input id="receivedPay" name="receivedPay" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="d" ignore="ignore"  value='${tBProfitTargetPage.receivedPay}'/>
+						    <input id="receivedPay" name="receivedPay" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="n0-6" ignore="ignore"  value='${tBProfitTargetPage.receivedPay}'/>
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">回款总额</label>
+							<label class="Validform_label" style="display: none;">回款总额(万元)</label>
 						</td>
 					</tr>
 					<tr>

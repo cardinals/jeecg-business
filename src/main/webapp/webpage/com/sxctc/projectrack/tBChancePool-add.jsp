@@ -38,35 +38,35 @@
 				<tr>
 					<td align="right">
 						<label class="Validform_label">
-							项目预算:
+							项目预算(万元):
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="projectBudget" name="projectBudget" type="text" maxlength="32" style="width: 150px" class="inputxt"  ignore="ignore" />
+					     	 <input id="projectBudget" name="projectBudget" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="n0-6" ignore="ignore" />
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">项目预算</label>
+							<label class="Validform_label" style="display: none;">项目预算(万元)</label>
 						</td>
 					<td align="right">
 						<label class="Validform_label">
-							软件和服务:
+							软件和服务(万元):
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="projectServer" name="projectServer" type="text" maxlength="32" style="width: 150px" class="inputxt"  ignore="ignore" />
+					     	 <input id="projectServer" name="projectServer" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="n0-6" ignore="ignore" />
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">软件和服务</label>
+							<label class="Validform_label" style="display: none;">软件和服务(万元)</label>
 						</td>
 					</tr>
 				<tr>
 					<td align="right">
 						<label class="Validform_label">
-							硬件:
+							硬件(万元):
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="projectHardware" name="projectHardware" type="text" maxlength="32" style="width: 150px" class="inputxt"  ignore="ignore" />
+					     	 <input id="projectHardware" name="projectHardware" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="n0-6" ignore="ignore" />
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">硬件</label>
+							<label class="Validform_label" style="display: none;">硬件(万元)</label>
 						</td>
 					<td align="right">
 						<label class="Validform_label">
@@ -158,13 +158,13 @@
 						</td>
 					<td align="right">
 						<label class="Validform_label">
-							现在及下一步计划:
+							现状及下一步计划:
 						</label>
 					</td>
 					<td class="value">
 					     	 <input id="projectPlan" name="projectPlan" type="text" maxlength="0" style="width: 150px" class="inputxt"  ignore="ignore" />
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">现在及下一步计划</label>
+							<label class="Validform_label" style="display: none;">现状及下一步计划</label>
 						</td>
 					</tr>
 				<tr>

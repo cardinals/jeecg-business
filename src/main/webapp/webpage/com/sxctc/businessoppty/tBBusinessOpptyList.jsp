@@ -19,16 +19,16 @@
    <%--<t:dgCol title="" rowspan="1"  width="120"></t:dgCol>--%>
    <%--<t:dgCol title="入职状态"  field="status" rowspan="2"></t:dgCol>--%>
    <%--<t:dgCol title="创建日期"  field="createDate" rowspan="2" formatter="yyyy-MM-dd"  queryMode="group" editor="datebox" width="120"></t:dgCol>--%>
-   <t:dgCol title="操作" field="opt" width="150"  newColumn="true" rowspan="2"></t:dgCol>
+   <t:dgCol title="操作" field="opt" width="80"  newColumn="true" rowspan="2" align="center"></t:dgCol>
 
-   <t:dgCol title=""  field="opptyRange"  queryMode="single"  dictionary="oppty"  width="120"></t:dgCol>
-   <t:dgCol title=""  field="evaluateWin" queryMode="single"  width="120" extendParams="styler:fmtype"></t:dgCol>
-   <t:dgCol title=""  field="evaluateFirst"  queryMode="single"  width="120" extendParams="styler:fmtype"></t:dgCol>
-   <t:dgCol title=""  field="evaluateConfirm"  queryMode="single"  width="120" extendParams="styler:fmtype"></t:dgCol>
-   <t:dgCol title="赢单率"  field="opptyRatio"  queryMode="single"  width="80" extendParams="styler:fmtype"></t:dgCol>
-   <t:dgCol title=""  field="opptyPoint"  queryMode="single"  width="120" dictionary="opptypoint" extendParams="styler:fmtype"></t:dgCol>
-   <t:dgCol title="项目名称"  field="projectName"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="更新日期"  field="updateDate"  formatter="yyyy-MM-dd"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title=""  field="opptyRange"  queryMode="single"  dictionary="oppty"  width="50" align="center"></t:dgCol>
+   <t:dgCol title=""  field="evaluateWin" queryMode="single"  width="50" extendParams="styler:fmtype" align="center"></t:dgCol>
+   <t:dgCol title=""  field="evaluateFirst"  queryMode="single"  width="50" extendParams="styler:fmtype" align="center"></t:dgCol>
+   <t:dgCol title=""  field="evaluateConfirm"  queryMode="single"  width="50" extendParams="styler:fmtype" align="center"></t:dgCol>
+   <t:dgCol title="赢单率"  field="opptyRatio"  queryMode="single"  width="70" extendParams="styler:fmtype" align="center"></t:dgCol>
+   <t:dgCol title=""  field="opptyPoint"  queryMode="single"  width="70" dictionary="opptypoint" extendParams="styler:fmtype" align="center"></t:dgCol>
+   <t:dgCol title="项目名称"  field="projectName"  queryMode="single"  width="200" align="center"></t:dgCol>
+   <t:dgCol title="更新日期"  field="updateDate"  formatter="yyyy-MM-dd"  queryMode="single"  width="100" align="center"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="单位编号"  field="unitCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="业务id"  field="businessId"  hidden="true"  queryMode="single"  width="120"></t:dgCol>

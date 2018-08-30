@@ -11,7 +11,7 @@
  </head>
  <body>
 		<t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" action="tBChancePoolController.do?doUpdate" >
-					<input id="id" name="id" type="hidden" value="${tBChancePoolPage.id }"/>
+			<input id="id" name="id" type="hidden" value="${tBChancePoolPage.id }"/>
 		<table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable">
 					<tr>
 						<td align="right" style="width: 30%">
@@ -44,9 +44,9 @@
 							</label>
 						</td>
 						<td class="value">
-						    <input id="projectBudget" name="projectBudget" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="n" ignore="ignore"  value='${tBChancePoolPage.projectBudget}'/>
+						    <input id="projectBudget" name="projectBudget" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="n0-6" ignore="ignore"  value='${tBChancePoolPage.projectBudget}'/>
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">项目预算</label>
+							<label class="Validform_label" style="display: none;">项目预算(万元)</label>
 						</td>
 					</tr>
 					<tr>
@@ -56,9 +56,9 @@
 							</label>
 						</td>
 						<td class="value">
-						    <input id="projectServer" name="projectServer" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="n" ignore="ignore"  value='${tBChancePoolPage.projectServer}'/>
+						    <input id="projectServer" name="projectServer" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="n0-6" ignore="ignore"  value='${tBChancePoolPage.projectServer}'/>
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">软件和服务</label>
+							<label class="Validform_label" style="display: none;">软件和服务(万元)</label>
 						</td>
 					</tr>
 					<tr>
@@ -68,7 +68,7 @@
 							</label>
 						</td>
 						<td class="value">
-						    <input id="projectHardware" name="projectHardware" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="n" ignore="ignore"  value='${tBChancePoolPage.projectHardware}'/>
+						    <input id="projectHardware" name="projectHardware" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="n0-6" ignore="ignore"  value='${tBChancePoolPage.projectHardware}'/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">硬件(万元)</label>
 						</td>
@@ -172,25 +172,13 @@
 					<tr>
 						<td align="right">
 							<label class="Validform_label">
-								现在及下一步计划:
+								现状及下一步计划:
 							</label>
 						</td>
 						<td class="value">
 						    <input id="projectPlan" name="projectPlan" type="text" maxlength="0" style="width: 150px" class="inputxt" datatype="*" ignore="ignore"  value='${tBChancePoolPage.projectPlan}'/>
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">现在及下一步计划</label>
-						</td>
-					</tr>
-					<tr>
-						<td align="right">
-							<label class="Validform_label">
-								更新时间:
-							</label>
-						</td>
-						<td class="value">
-							<input id="sysUpdateTime" name="sysUpdateTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()" datatype="*" ignore="ignore" value='<fmt:formatDate value='${tBChancePoolPage.sysUpdateTime}' type="date" pattern="yyyy-MM-dd"/>'/>
-							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">更新时间</label>
+							<label class="Validform_label" style="display: none;">现状及下一步计划</label>
 						</td>
 					</tr>
 					<tr>

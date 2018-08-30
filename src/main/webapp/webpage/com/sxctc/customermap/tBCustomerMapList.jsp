@@ -12,14 +12,14 @@
    <t:dgCol title="更新日期"  field="updateDate"  formatter="yyyy-MM-dd"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所属部门"  field="sysOrgCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所属公司"  field="sysCompanyCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="合作状态"  field="cooperateStatus"  queryMode="single"  dictionary="cooperate"  width="120" extendParams="styler:fmtype1"></t:dgCol>
-   <t:dgCol title="价值-低（500万以下）"  field="worthLow"  queryMode="single"  width="200" extendParams="styler:fmtype2"></t:dgCol>
-   <t:dgCol title="价值-中（500—1000万）"  field="worthMid"  queryMode="single"  width="200" extendParams="styler:fmtype3"></t:dgCol>
-   <t:dgCol title="价值-高（1000万以上）"  field="worthHigh"  queryMode="single"  width="200" extendParams="styler:fmtype4"></t:dgCol>
+   <t:dgCol title="合作状态"  field="cooperateStatus"  queryMode="single"  dictionary="cooperate"  width="120" extendParams="styler:fmtype1" align="center"></t:dgCol>
+   <t:dgCol title="价值-低（500万以下）"  field="worthLow"  queryMode="single"  width="200" extendParams="styler:fmtype2" align="center"></t:dgCol>
+   <t:dgCol title="价值-中（500—1000万）"  field="worthMid"  queryMode="single"  width="200" extendParams="styler:fmtype3" align="center"></t:dgCol>
+   <t:dgCol title="价值-高（1000万以上）"  field="worthHigh"  queryMode="single"  width="200" extendParams="styler:fmtype4" align="center"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="业务id"  field="businessId"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="单位编号"  field="unitCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
+   <t:dgCol title="操作" field="opt" width="100" align="center"></t:dgCol>
    <t:dgDelOpt title="删除" url="tBCustomerMapController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="录入" icon="icon-add" url="tBCustomerMapController.do?goAdd" funname="add" operationCode="add"></t:dgToolBar>
 	<t:dgToolBar title="编辑" icon="icon-edit" url="tBCustomerMapController.do?goUpdate" funname="update" operationCode="update"></t:dgToolBar>

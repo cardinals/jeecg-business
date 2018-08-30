@@ -13,21 +13,21 @@
    <t:dgCol title="更新日期"  field="updateDate"  formatter="yyyy-MM-dd"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所属部门"  field="sysOrgCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所属公司"  field="sysCompanyCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="单位名称"  field="unitCode"  queryMode="single"  dictionary="unit_name"  width="180"></t:dgCol>
-   <t:dgCol title="项目名称"  field="projectName"  queryMode="single"  width="180"></t:dgCol>
-   <t:dgCol title="项目令号"  field="projectOrder"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="项目经理"  field="projectManage"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="合同签订时间"  field="signTime"  formatter="yyyy-MM-dd"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="合同额"  field="contractValue"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="毛利率"  field="profitTargetRatio"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="毛利润"  field="profitTarget"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="确认收入额"  field="confirmIncome"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="确认收入比率"  field="confirmIncomeRatio"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="回款总额"  field="receivedPay"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="回款比例"  field="receivedPayRatio"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="项目实施状态"  field="projectStatus"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="业务id"  field="businessId"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
+   <t:dgCol title="单位名称"  field="unitCode"  queryMode="single"  dictionary="unit_name"  width="180" align="center"></t:dgCol>
+   <t:dgCol title="项目名称"  field="projectName"  queryMode="single"  width="180" align="center"></t:dgCol>
+   <t:dgCol title="项目令号"  field="projectOrder"  queryMode="single"  width="80" align="center"></t:dgCol>
+   <t:dgCol title="项目经理"  field="projectManage"  queryMode="single"  width="80" align="center"></t:dgCol>
+   <t:dgCol title="合同签订时间"  field="signTime"  formatter="yyyy-MM-dd"  queryMode="single"  width="100" align="center"></t:dgCol>
+   <t:dgCol title="合同额(万元)"  field="contractValue"  queryMode="single"  width="90" align="center"></t:dgCol>
+   <t:dgCol title="毛利率"  field="profitTargetRatio"  queryMode="single"  width="80" align="center"></t:dgCol>
+   <t:dgCol title="毛利润(万元)"  field="profitTarget"  queryMode="single"  width="90" align="center"></t:dgCol>
+   <t:dgCol title="确认收入额(万元)"  field="confirmIncome"  queryMode="single"  width="120" align="center"></t:dgCol>
+   <t:dgCol title="确认收入比率"  field="confirmIncomeRatio"  queryMode="single"  width="100" align="center"></t:dgCol>
+   <t:dgCol title="回款总额(万元)"  field="receivedPay"  queryMode="single"  width="100" align="center"></t:dgCol>
+   <t:dgCol title="回款比例"  field="receivedPayRatio"  queryMode="single"  width="100" align="center"></t:dgCol>
+   <t:dgCol title="项目实施状态"  field="projectStatus"  queryMode="single"  width="120" align="center"></t:dgCol>
+   <t:dgCol title="业务id"  field="businessId"  hidden="true"  queryMode="single"  width="120" align="center"></t:dgCol>
+   <t:dgCol title="操作" field="opt" width="60" align="center"></t:dgCol>
    <%--<t:dgDelOpt title="删除" url="tBProfitTargetController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>--%>
    <%--<t:dgToolBar title="录入" icon="icon-add" url="tBProfitTargetController.do?goAdd" funname="add"></t:dgToolBar>--%>
    <t:dgToolBar title="编辑" icon="icon-edit" url="tBProfitTargetController.do?goUpdate" funname="update" operationCode="update"></t:dgToolBar>

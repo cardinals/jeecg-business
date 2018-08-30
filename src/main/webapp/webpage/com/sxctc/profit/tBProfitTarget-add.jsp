@@ -76,7 +76,7 @@
 				<tr>
 					<td align="right">
 						<label class="Validform_label">
-							合同额:
+							合同额(万元):
 						</label>
 					</td>
 					<td class="value">
@@ -100,7 +100,7 @@
 				<tr>
 					<td align="right">
 						<label class="Validform_label">
-							毛利润:
+							毛利润(万元):
 						</label>
 					</td>
 					<td class="value">
@@ -112,7 +112,7 @@
 				<tr>
 					<td align="right">
 						<label class="Validform_label">
-							确认收入额:
+							确认收入额(万元):
 						</label>
 					</td>
 					<td class="value">
@@ -136,7 +136,7 @@
 				<tr>
 					<td align="right">
 						<label class="Validform_label">
-							回款总额:
+							回款总额(万元):
 						</label>
 					</td>
 					<td class="value">
