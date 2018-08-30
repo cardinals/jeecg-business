@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/context/mytags.jsp"%>
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
+<style>
+ .datagrid-header-row td{background-color:#C5d9f1;color:#000}
+</style>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="tBChancePoolList" checkbox="false" pagination="true" fitColumns="false" title="项目机会池" actionUrl="tBChancePoolController.do?datagrid" idField="id" fit="true" queryMode="group"  >
+  <t:datagrid name="tBChancePoolList" checkbox="false" pagination="true" fitColumns="false" title="项目机会池" actionUrl="tBChancePoolController.do?datagrid" idField="id" fit="true" queryMode="group" extendParams="" >
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  queryMode="single"  width="120"></t:dgCol>
@@ -15,9 +18,9 @@
    <t:dgCol title="所属公司"  field="sysCompanyCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="单位名称"  field="unitCode"  queryMode="single"  dictionary="unit_name"  width="120"></t:dgCol>
    <t:dgCol title="项目名称"  field="projectName"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="项目预算"  field="projectBudget"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="软件和服务"  field="projectServer"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="硬件"  field="projectHardware"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="项目预算(万元)"  field="projectBudget"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="软件和服务(万元)"  field="projectServer"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="硬件(万元)"  field="projectHardware"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="主要合作公司"  field="businessParters"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="竞争对手"  field="businessCompetitor"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="预计招标时间"  field="predictTenderTime"  formatter="yyyy-MM-dd"  queryMode="single"  width="120"></t:dgCol>
