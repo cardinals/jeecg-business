@@ -18,8 +18,8 @@
    <%--<t:dgCol title="项目预算"  field="projectBudget"  queryMode="single"  width="120"></t:dgCol>--%>
    <%--<t:dgCol title="软件和服务"  field="projectServer"  queryMode="single"  width="120"></t:dgCol>--%>
    <%--<t:dgCol title="硬件"  field="projectHardware"  queryMode="single"  width="120"></t:dgCol>--%>
-   <t:dgCol title="主要合作公司"  field="businessParters"  queryMode="single"  width="120" align="center"></t:dgCol>
-   <t:dgCol title="竞争对手"  field="businessCompetitor"  queryMode="single"  width="120" align="center"></t:dgCol>
+   <t:dgCol title="主要合作公司"  field="businessParters" hidden="true" queryMode="single"  width="120" align="center"></t:dgCol>
+   <t:dgCol title="竞争对手"  field="businessCompetitor" hidden="true" queryMode="single"  width="120" align="center"></t:dgCol>
    <%--<t:dgCol title="预计招标时间"  field="predictTenderTime"  formatter="yyyy-MM-dd"  queryMode="single"  width="120"></t:dgCol>--%>
    <%--<t:dgCol title="资金来源"  field="fundsProvided"  queryMode="single"  dictionary="provide"  width="120"></t:dgCol>--%>
    <%--<t:dgCol title="上层关系"  field="topRelation"  queryMode="single"  width="120"></t:dgCol>--%>
@@ -30,7 +30,7 @@
    <%--<t:dgCol title="备注"  field="remark"  queryMode="single"  width="120"></t:dgCol>--%>
    <%--<t:dgCol title="是否中标"  field="winningResult"  queryMode="single"  dictionary="dev_flag"  width="120"></t:dgCol>--%>
    <t:dgCol title="业务主表id"  field="businessId"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="评估状态"  field="evaluateStatus" queryMode="single"  width="120" dictionary="evalStatus" extendParams="styler:fmtype" align="center"></t:dgCol>
+   <t:dgCol title="评估状态"  field="evaluateStatus" queryMode="single"  width="70" dictionary="evalStatus" extendParams="styler:fmtype" align="center"></t:dgCol>
    <%--<t:dgCol title="操作" field="opt" width="100"></t:dgCol>--%>
    <%--<t:dgFunOpt title="评估" urlclass="ace_button" urlfont="fa fa-user" funname="checkEvaluate(id)" operationCode="update" exp="evaluateStatus#ne#1"></t:dgFunOpt>--%>
    <%--<t:dgDelOpt title="删除" url="tBChancePoolController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>--%>

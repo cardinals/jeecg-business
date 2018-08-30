@@ -144,4 +144,4 @@
 			</table>
 		</t:formvalid>
  </body>
-  <script src = "webpage/com/sxctc/workreport/tBBusiWorkreport.js"></script>		
+  <script src = "webpage/com/sxctc/workreport/tBBusiWorkreport.js"></script>

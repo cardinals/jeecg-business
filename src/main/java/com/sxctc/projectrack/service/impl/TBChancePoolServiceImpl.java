@@ -109,6 +109,7 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 		map.put("winning_result", t.getWinningResult());
 		map.put("business_id", t.getBusinessId());
 		map.put("evaluate_status", t.getEvaluateStatus());
+		map.put("history_plan", t.getHistoryPlan());
 		return map;
 	}
  	
@@ -146,6 +147,7 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
  		sql  = sql.replace("#{winning_result}",String.valueOf(t.getWinningResult()));
  		sql  = sql.replace("#{business_id}",String.valueOf(t.getBusinessId()));
  		sql  = sql.replace("#{evaluate_status}",String.valueOf(t.getEvaluateStatus()));
+ 		sql  = sql.replace("#{history_plan}",String.valueOf(t.getHistoryPlan()));
  		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
  		return sql;
  	}

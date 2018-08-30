@@ -320,7 +320,8 @@ public class DictSelectTag extends TagSupport {
 			sb.append(" "+this.getExtendJsonCommon(extendJson));
 		}
 		sb.append(" />");
-		sb.append(MutiLangUtil.getLang(name)+"&nbsp;&nbsp;");
+		sb.append(MutiLangUtil.getLang(name));
+		//sb.append(MutiLangUtil.getLang(name)+"&nbsp;&nbsp;");
 
 	}
 

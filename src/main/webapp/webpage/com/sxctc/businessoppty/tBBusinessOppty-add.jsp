@@ -70,6 +70,13 @@
  </body>
   <script src = "webpage/com/sxctc/businessoppty/tBBusinessOppty.js"></script>
  <script type="text/javascript">
+     $(function(){
+         var box = document.getElementsByTagName('td');
+		 //获取标签的内容
+         var box1 = box.innerHTML;
+         console.log(box);
+     });
+
 	 function beforeTijiao() {
 		 var sumWin = $("input[name='1win']:checked").length;
 		 var sumFirst = $("input[name='3first']:checked").length;

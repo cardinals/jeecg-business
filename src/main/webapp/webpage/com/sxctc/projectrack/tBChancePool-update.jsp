@@ -11,7 +11,7 @@
  </head>
  <body>
 		<t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" action="tBChancePoolController.do?doUpdate" >
-			<input id="id" name="id" type="hidden" value="${tBChancePoolPage.id }"/>
+					<input id="id" name="id" type="hidden" value="${tBChancePoolPage.id }"/>
 		<table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable">
 					<tr>
 						<td align="right" style="width: 30%">
@@ -20,7 +20,7 @@
 							</label>
 						</td>
 						<td class="value">
-							<t:dictSelect field="unitCode" type="list"  datatype="*"  typeGroupCode="unit_name"   defaultVal="${tBChancePoolPage.unitCode}" hasLabel="false"  title="单位名称" ></t:dictSelect>
+									<t:dictSelect field="unitCode" type="list"  datatype="n"  typeGroupCode="unit_name"   defaultVal="${tBChancePoolPage.unitCode}" hasLabel="false"  title="单位名称" ></t:dictSelect>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">单位名称</label>
 						</td>
@@ -164,7 +164,8 @@
 							</label>
 						</td>
 						<td class="value">
-						    <input id="controlDegree" name="controlDegree" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="*" ignore="ignore"  value='${tBChancePoolPage.controlDegree}'/>
+						    <%--<input id="controlDegree" name="controlDegree" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="*" ignore="ignore"  value='${tBChancePoolPage.controlDegree}'/>--%>
+							<t:dictSelect id="controlDegree" field="controlDegree" type="list"  datatype="n"  typeGroupCode="control"   defaultVal="${tBChancePoolPage.controlDegree}" hasLabel="false"  title="当年把控度" ></t:dictSelect>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">当年把控度</label>
 						</td>
@@ -176,7 +177,8 @@
 							</label>
 						</td>
 						<td class="value">
-						    <input id="projectPlan" name="projectPlan" type="text" maxlength="0" style="width: 150px" class="inputxt" datatype="*" ignore="ignore"  value='${tBChancePoolPage.projectPlan}'/>
+							<textarea id="projectPlan" style="width:50%;height: 100px;" class="inputxt" rows="6" name="projectPlan"  ignore="ignore" >${tBChancePoolPage.projectPlan}</textarea>
+							<button id="projectPlanBtn" class="btn btn-success" type="button" onclick="checkHistory('${tBChancePoolPage.id}')" style="border-radius: 5px"><span><i class="fa fa-search"></i>查询历史</span></button>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">现状及下一步计划</label>
 						</td>
@@ -209,4 +211,22 @@
 			</table>
 		</t:formvalid>
  </body>
-  <script src = "webpage/com/sxctc/projectrack/tBChancePool.js"></script>		
+ <script src = "webpage/com/sxctc/projectrack/tBChancePool.js"></script>
+ <script type="text/javascript">
+	 $(function () {
+		 $("#projectPlanBtn").removeAttr("disabled");
+     })
+     function checkHistory(id) {
+         var url = "tBChancePoolController.do?goHistoryPlan&id="+id;
+         $.dialog({
+             content: "url:" + url,
+             lock : true,
+             title:'历史计划',
+             zIndex: getzIndex(),
+             opacity : 0.3,
+             width:400,
+             height:300,
+             cache:false
+         });
+     }
+ </script>

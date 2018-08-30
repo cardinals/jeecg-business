@@ -80,7 +80,7 @@
 							</label>
 						</td>
 						<td class="value">
-						    <input id="contractValue" name="contractValue" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="n0-6" ignore="ignore"  value='${tBProfitTargetPage.contractValue}'/>
+						    <input id="contractValue" name="contractValue" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/,*0-7" ignore="ignore"  value='${tBProfitTargetPage.contractValue}'/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">合同额(万元)</label>
 						</td>
@@ -104,7 +104,7 @@
 							</label>
 						</td>
 						<td class="value">
-						    <input id="profitTarget" name="profitTarget" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="n0-6" ignore="ignore"  value='${tBProfitTargetPage.profitTarget}'/>
+						    <input id="profitTarget" name="profitTarget" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/,*0-7" ignore="ignore" readonly="readonly" value='${tBProfitTargetPage.profitTarget}'/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">毛利润(万元)</label>
 						</td>
@@ -116,7 +116,7 @@
 							</label>
 						</td>
 						<td class="value">
-						    <input id="confirmIncome" name="confirmIncome" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="n0-6" ignore="ignore"  value='${tBProfitTargetPage.confirmIncome}'/>
+						    <input id="confirmIncome" name="confirmIncome" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/,*0-7" ignore="ignore"  value='${tBProfitTargetPage.confirmIncome}'/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">确认收入额(万元)</label>
 						</td>
@@ -124,13 +124,13 @@
 					<tr>
 						<td align="right">
 							<label class="Validform_label">
-								确认收入比率:
+								确认收入比例:
 							</label>
 						</td>
 						<td class="value">
-						    <input id="confirmIncomeRatio" name="confirmIncomeRatio" type="text" maxlength="32" style="width: 150px" class="inputxt"  ignore="ignore"  value='${tBProfitTargetPage.confirmIncomeRatio}'/>
+						    <input id="confirmIncomeRatio" name="confirmIncomeRatio" type="text" maxlength="32" style="width: 150px" class="inputxt"  ignore="ignore" readonly="readonly" value='${tBProfitTargetPage.confirmIncomeRatio}'/>
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">确认收入比率</label>
+							<label class="Validform_label" style="display: none;">确认收入比例</label>
 						</td>
 					</tr>
 					<tr>
@@ -140,7 +140,7 @@
 							</label>
 						</td>
 						<td class="value">
-						    <input id="receivedPay" name="receivedPay" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="n0-6" ignore="ignore"  value='${tBProfitTargetPage.receivedPay}'/>
+						    <input id="receivedPay" name="receivedPay" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/,*0-7" ignore="ignore"  value='${tBProfitTargetPage.receivedPay}'/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">回款总额(万元)</label>
 						</td>
@@ -152,7 +152,7 @@
 							</label>
 						</td>
 						<td class="value">
-						    <input id="receivedPayRatio" name="receivedPayRatio" type="text" maxlength="32" style="width: 150px" class="inputxt"  ignore="ignore"  value='${tBProfitTargetPage.receivedPayRatio}'/>
+						    <input id="receivedPayRatio" name="receivedPayRatio" type="text" maxlength="32" style="width: 150px" class="inputxt"  ignore="ignore" readonly="readonly" value='${tBProfitTargetPage.receivedPayRatio}'/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">回款比例</label>
 						</td>
@@ -173,4 +173,49 @@
 			</table>
 		</t:formvalid>
  </body>
-  <script src = "webpage/com/sxctc/profit/tBProfitTarget.js"></script>		
+ <script src = "webpage/com/sxctc/profit/tBProfitTarget.js"></script>
+ <script type="text/javascript">
+     $("#profitTargetRatio").blur(function(){
+         var contractValue = $("#contractValue").val();
+         var radio = $("#profitTargetRatio").val();
+         if (radio == null) {
+             radio = 0.00;
+             $("#profitTargetRatio").val("0%");
+			 $("#profitTarget").val(0);
+			 return;
+		 }
+
+         var oldRadio = $("#profitTargetRatio").val();
+		 if (oldRadio !=null && oldRadio.substr(oldRadio.length-1,1) == "%") {
+		     return;
+		 }
+         $("#profitTargetRatio").val(radio + "%");
+
+         if (contractValue != null) {
+             var num = (contractValue * radio)/100;
+             //alert(num.toFixed(2));
+             $("#profitTarget").val(num.toFixed(2));
+		 }
+
+
+
+     });
+
+     $("#confirmIncome").blur(function(){
+         var contractValue = $("#contractValue").val();
+         var confirmIncome = $("#confirmIncome").val();
+         if (confirmIncome != null && contractValue != null && contractValue != 0) {
+             var num = (confirmIncome/contractValue)*100;
+             $("#confirmIncomeRatio").val(num.toFixed(2) + "%");
+         }
+     });
+
+     $("#receivedPay").blur(function(){
+         var receivedPay = $("#receivedPay").val();
+         var confirmIncome = $("#confirmIncome").val();
+         if (receivedPay != null && confirmIncome != null && confirmIncome != 0) {
+             var num = (receivedPay/confirmIncome)*100;
+             $("#receivedPayRatio").val(num.toFixed(2) + "%");
+         }
+     });
+ </script>

@@ -21,7 +21,7 @@
    <%--<t:dgCol title="创建日期"  field="createDate" rowspan="2" formatter="yyyy-MM-dd"  queryMode="group" editor="datebox" width="120"></t:dgCol>--%>
    <t:dgCol title="操作" field="opt" width="80"  newColumn="true" rowspan="2" align="center"></t:dgCol>
 
-   <t:dgCol title=""  field="opptyRange"  queryMode="single"  dictionary="oppty"  width="50" align="center"></t:dgCol>
+   <t:dgCol title=""  field="opptyRange"  queryMode="single"  dictionary="oppty"  width="60" align="center"></t:dgCol>
    <t:dgCol title=""  field="evaluateWin" queryMode="single"  width="50" extendParams="styler:fmtype" align="center"></t:dgCol>
    <t:dgCol title=""  field="evaluateFirst"  queryMode="single"  width="50" extendParams="styler:fmtype" align="center"></t:dgCol>
    <t:dgCol title=""  field="evaluateConfirm"  queryMode="single"  width="50" extendParams="styler:fmtype" align="center"></t:dgCol>
