@@ -1,9 +1,12 @@
 package com.sxctc.business.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.sxctc.business.entity.TBBusiCatalogEntity;
 import com.sxctc.catalogs.entity.TBCatalogdataEntity;
 import com.sxctc.catalogs.service.TBCatalogdataServiceI;
+import com.sxctc.util.DateUtil;
+import com.sxctc.util.FastJsonUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -132,16 +135,32 @@ public class TBBusiCatalogdataController extends BaseController {
 		List<TBCatalogdataEntity> results = dataGrid.getResults();
 		for (int i = 0; i < results.size(); i++) {
 			String catalogId = results.get(i).getId();
-
-
+			String currentYear = DateUtil.getCurrentYear();
 			// 遍历
 			for (TBBusiCatalogEntity tbBusiCatalog : tBusiCatalogList) {
 				if (tbBusiCatalog.getCatalogId().equals(catalogId)) {
+//					String checkNumJson = tbBusiCatalog.getCheckNumJson();
+//					if (StringUtils.isNotBlank(checkNumJson)) {
+//						JSONObject jsonObject = JSONObject.parseObject(checkNumJson);
+//						Integer checkNum = jsonObject.getInteger(currentYear);
+//						results.get(i).setNum(checkNum);
+//					}
 					results.get(i).setNum(tbBusiCatalog.getCheckNum());
 				}
 			}
 		}
 		dataGrid.setResults(results);
+
+		/*
+		 * 说明：格式为 字段名:值(可选，不写该值时为分页数据的合计) 多个合计 以 , 分割
+		 */
+//		String userName = ResourceUtil.getSessionUser().getUserName();
+//		String sumProjectBudget = String.valueOf(tbChancePoolDao.getSumProjectBudget(userName));
+//		String sumProjectServer = String.valueOf(tbChancePoolDao.getSumProjectServer(userName));
+//		String sumProjectHardware = String.valueOf(tbChancePoolDao.getSumProjectHardware(userName));
+//		dataGrid.setFooter("projectBudget:"+(sumProjectBudget.equalsIgnoreCase("null")?"0.0":sumProjectBudget)+",projectServer:"+(sumProjectServer.equalsIgnoreCase("null")?"0.0":sumProjectServer)+",projectHardware:"+(sumProjectHardware.equalsIgnoreCase("null")?"0.0":sumProjectHardware)+",projectName:合计");
+
+
 		TagUtil.treegrid(response, dataGrid);
 	}
 

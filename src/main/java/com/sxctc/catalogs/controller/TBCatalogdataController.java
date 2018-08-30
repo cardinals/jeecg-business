@@ -1,11 +1,16 @@
 package com.sxctc.catalogs.controller;
+import com.alibaba.fastjson.JSONObject;
 import com.sxctc.catalogs.entity.TBCatalogdataEntity;
 import com.sxctc.catalogs.service.TBCatalogdataServiceI;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sxctc.util.DateUtil;
+import com.sxctc.util.FastJsonUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -198,6 +203,13 @@ public class TBCatalogdataController extends BaseController {
 			if(StringUtil.isEmpty(tBCatalogdata.getFartherid())){
 				tBCatalogdata.setFartherid(null);
 			}
+
+			// 按年份拼装数量
+			String currentYear = DateUtil.getCurrentYear();
+			JSONObject sumJson = new JSONObject();
+			sumJson.put(currentYear,tBCatalogdata.getPrice());
+			tBCatalogdata.setPriceJson(sumJson.toJSONString());
+
 			tBCatalogdataService.save(tBCatalogdata);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
@@ -226,6 +238,17 @@ public class TBCatalogdataController extends BaseController {
 			if(StringUtil.isEmpty(t.getFartherid())){
 				t.setFartherid(null);
 			}
+
+			// 更新单价json
+			String priceJson = t.getPriceJson();
+			JSONObject jsonObject = JSONObject.parseObject(priceJson);
+			String currentYear = DateUtil.getCurrentYear();
+			if (FastJsonUtil.isEmpty(jsonObject)) {
+                jsonObject = new JSONObject();
+            }
+			jsonObject.put(currentYear,tBCatalogdata.getPrice());
+			t.setPriceJson(jsonObject.toJSONString());
+
 			tBCatalogdataService.saveOrUpdate(t);
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {

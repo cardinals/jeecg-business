@@ -1,4 +1,5 @@
 package com.sxctc.business.controller;
+import com.alibaba.fastjson.JSONObject;
 import com.sxctc.business.service.TBBusiCatalogServiceI;
 import com.sxctc.business.entity.TBBusiCatalogEntity;
 
@@ -7,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sxctc.util.DateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -220,11 +222,20 @@ public class TBBusiCatalogController extends BaseController {
 				return j;
 			}
 
+			// 获取当前年份
+			String currentYear = DateUtil.getCurrentYear();
+
 			// 遍历
 			for (TBBusiCatalogEntity tbBusiCatalog : tBusiCatalogList) {
 				// 如果是修改，则执行更新方法
 				if (tbBusiCatalog.getCatalogId().equals(catalogId)) {
 					tBBusiCatalog.setId(tbBusiCatalog.getId());
+					String checkNumJson = tbBusiCatalog.getCheckNumJson();
+					JSONObject jsonObject = JSONObject.parseObject(checkNumJson);
+					jsonObject.put(currentYear,tBBusiCatalog.getCheckNum());
+					tBBusiCatalog.setCheckNumJson(jsonObject.toJSONString());
+
+					// 更新
 					doUpdate(tBBusiCatalog, request);
 					optFlag = false;
 
@@ -234,6 +245,10 @@ public class TBBusiCatalogController extends BaseController {
 
 			// 如果没有进行过修改，则保存
 			if (optFlag) {
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put(currentYear,tBBusiCatalog.getCheckNum());
+				tBBusiCatalog.setCheckNumJson(jsonObject.toJSONString());
+
 				tBBusiCatalogService.save(tBBusiCatalog);
 				systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 			}

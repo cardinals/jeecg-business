@@ -1,21 +1,28 @@
 package com.sxctc.catalogs.entity;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.lang.String;
+import java.lang.Double;
 import java.lang.Integer;
+import java.math.BigDecimal;
+import javax.xml.soap.Text;
+import java.sql.Blob;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.SequenceGenerator;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**   
  * @Title: Entity
  * @Description: 服务目录管理
  * @author onlineGenerator
- * @date 2018-08-08 10:45:17
+ * @date 2018-08-30 09:42:53
  * @version V1.0   
  *
  */
@@ -46,6 +53,9 @@ public class TBCatalogdataEntity implements java.io.Serializable {
 	/**单价*/
 	@Excel(name="单价",width=15)
 	private BigDecimal price;
+	/**单价汇总*/
+	@Excel(name="单价汇总",width=15)
+	private String priceJson;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -185,5 +195,22 @@ public class TBCatalogdataEntity implements java.io.Serializable {
 	 */
 	public void setPrice(BigDecimal price){
 		this.price = price;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  单价汇总
+	 */
+
+	@Column(name ="PRICE_JSON",nullable=true)
+	public String getPriceJson(){
+		return this.priceJson;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  单价汇总
+	 */
+	public void setPriceJson(String priceJson){
+		this.priceJson = priceJson;
 	}
 }

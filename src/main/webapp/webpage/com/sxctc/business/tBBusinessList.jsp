@@ -18,8 +18,8 @@
    <t:dgCol title="厅局名称"  field="unitName"  hidden="true"  queryMode="single"  width="200"></t:dgCol>
    <t:dgCol title="迁移系统编号"  field="projectCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="系统名称"  field="projectName"  queryMode="single"  width="200"></t:dgCol>
-   <t:dgCol title="资金来源"  field="fundsProvided" queryMode="single"  dictionary="provide"  width="150"></t:dgCol>
-   <t:dgCol title="是否审计系统"  field="auditStatus"  queryMode="single"  dictionary="dev_flag"  width="120"></t:dgCol>
+   <t:dgCol title="资金来源"  field="fundsProvided" queryMode="single"  dictionary="provide"  width="100"></t:dgCol>
+   <t:dgCol title="是否审计系统"  field="auditStatus"  queryMode="single"  dictionary="dev_flag"  width="95"></t:dgCol>
    <t:dgCol title="系统状态"  field="projectStatus"  queryMode="single"  dictionary="proj_type"  width="80"></t:dgCol>
    <t:dgCol title="是否上云"  field="cloudStatus" hidden="true" queryMode="single"  dictionary="dev_flag"  width="80"></t:dgCol>
    <t:dgCol title="是否跟踪"  field="chanceStatus"  queryMode="single"  dictionary="dev_flag"  width="80"></t:dgCol>

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="/jodd" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -24,10 +25,11 @@
         <blockquote class="text-warning" style="font-size:14px">
             <h1 class="text-warning" style="font-weight: bold;color:#4F5050">政务云营销大数据管理系统</h1>
             <h4 class="text-danger">欢迎光临</h4>
-            <iframe id="fancybox-frame" name="fancybox-frame1533801934382" frameborder="0" scrolling="no" hspace="0" height="25px" style="margin-bottom: -7px;" src="http://i.tianqi.com/index.php?c=code&a=getcode&id=34&h=25&w=280&py=taiyuan"></iframe>
+            <%--<iframe id="fancybox-frame" name="fancybox-frame1533801934382" frameborder="0" scrolling="no" hspace="0" height="25px" style="margin-bottom: -7px;" src="http://i.tianqi.com/index.php?c=code&a=getcode&id=34&h=25&w=280&py=taiyuan"></iframe>--%>
         </blockquote>
         <hr>
     </div>
+    <c:if test="${optFlag == 1}">
     <div class="col-sm-12">
 
         <div class="col-sm-4" id="pieChart2">
@@ -49,6 +51,7 @@
 
 
     </div>
+    </c:if>
 </div>
 
 <!-- 全局js -->

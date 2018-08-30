@@ -569,6 +569,12 @@ public class LoginController extends BaseController{
 	 */
 	@RequestMapping(params = "hplushome")
 	public ModelAndView hplushome(HttpServletRequest request) {
+		// 只有非业务人员才能查看
+		TSUser tsUser = ResourceUtil.getSessionUser();
+		String orgCode = tsUser.getCurrentDepart().getOrgCode();
+		if (!"A04A01A01A01".equals(orgCode)) {
+			request.setAttribute("optFlag", 1);
+		}
 		return new ModelAndView("main/hplushome");
 	}
 	

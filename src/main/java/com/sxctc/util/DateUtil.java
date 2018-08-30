@@ -132,6 +132,19 @@ public class DateUtil {
         return result;
     }
 
+    /**
+     * @Title getCurrentYear
+     * @Description 获取当前年份
+     * @Param []
+     * @Return java.lang.String
+     * @Author liuzc
+     * @Date 2018/8/30 上午9:27
+     **/
+    public static String getCurrentYear(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        return sdf.format(date);
+    }
 
     public static void main(String[] args) {
         getMonthDays(0);

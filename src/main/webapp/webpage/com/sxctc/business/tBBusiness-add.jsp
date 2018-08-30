@@ -81,7 +81,7 @@
 				</label>
 			</td>
 			<td class="value" style="background-color: yellow">
-				<t:dictSelect field="chanceStatus" type="radio"  datatype="*" typeGroupCode="dev_flag"  defaultVal="${tBBusinessPage.chanceStatus}" hasLabel="false"  title="是否有机会" ></t:dictSelect>
+				<t:dictSelect field="chanceStatus" type="radio"  datatype="*" typeGroupCode="dev_flag"  defaultVal="0" hasLabel="false"  title="是否有机会" ></t:dictSelect>
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">是否跟踪</label>
 			</td>
@@ -205,13 +205,13 @@
         var currTime = getNowFormatDate();
         $("#busCreateTime").val(currTime);
 	})
-    $('input:radio[name="projectStatus"]').click(function(){
-        if($(this).val()==1){
-            $("input:radio[name='chanceStatus'][value=1]").attr("checked",true);
-        }else {
-            $("input:radio[name='chanceStatus'][value=0]").attr("checked",true);
-        }
-    });
+    // $('input:radio[name="projectStatus"]').click(function(){
+    //     if($(this).val()==1){
+    //         $("input:radio[name='chanceStatus'][value=1]").attr("checked",true);
+    //     }else {
+    //         $("input:radio[name='chanceStatus'][value=0]").attr("checked",true);
+    //     }
+    // });
 
     $('#joinStatus').change(function(){
         var joinStatusVal = $(this).val();

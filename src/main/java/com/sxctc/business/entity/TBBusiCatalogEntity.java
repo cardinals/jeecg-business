@@ -22,7 +22,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @Title: Entity
  * @Description: 服务目录业务关联表
  * @author onlineGenerator
- * @date 2018-08-05 16:48:39
+ * @date 2018-08-30 09:58:10
  * @version V1.0   
  *
  */
@@ -41,6 +41,9 @@ public class TBBusiCatalogEntity implements java.io.Serializable {
 	/**服务目录选择数量*/
 	@Excel(name="服务目录选择数量",width=15)
 	private Integer checkNum;
+	/**选择数量汇总*/
+	@Excel(name="选择数量汇总",width=15)
+	private String checkNumJson;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -67,7 +70,7 @@ public class TBBusiCatalogEntity implements java.io.Serializable {
 	 *@return: java.lang.String  所选服务目录id
 	 */
 
-	@Column(name ="CATALOG_ID",nullable=false,length=36)
+	@Column(name ="CATALOG_ID",nullable=true,length=36)
 	public String getCatalogId(){
 		return this.catalogId;
 	}
@@ -84,7 +87,7 @@ public class TBBusiCatalogEntity implements java.io.Serializable {
 	 *@return: java.lang.String  业务id
 	 */
 
-	@Column(name ="BUSINESS_ID",nullable=false,length=36)
+	@Column(name ="BUSINESS_ID",nullable=true,length=36)
 	public String getBusinessId(){
 		return this.businessId;
 	}
@@ -112,5 +115,22 @@ public class TBBusiCatalogEntity implements java.io.Serializable {
 	 */
 	public void setCheckNum(Integer checkNum){
 		this.checkNum = checkNum;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  选择数量汇总
+	 */
+
+	@Column(name ="CHECK_NUM_JSON",nullable=true)
+	public String getCheckNumJson(){
+		return this.checkNumJson;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  选择数量汇总
+	 */
+	public void setCheckNumJson(String checkNumJson){
+		this.checkNumJson = checkNumJson;
 	}
 }

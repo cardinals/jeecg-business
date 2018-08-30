@@ -70,7 +70,6 @@ public class TBBusiCatalogServiceImpl extends CommonServiceImpl implements TBBus
  	}
  	/**
 	 * 删除操作增强业务
-	 * @param id
 	 * @return
 	 */
 	private void doDelBus(TBBusiCatalogEntity t) throws Exception{
@@ -87,6 +86,7 @@ public class TBBusiCatalogServiceImpl extends CommonServiceImpl implements TBBus
 		map.put("catalog_id", t.getCatalogId());
 		map.put("business_id", t.getBusinessId());
 		map.put("check_num", t.getCheckNum());
+		map.put("check_num_json", t.getCheckNumJson());
 		return map;
 	}
  	
@@ -101,6 +101,7 @@ public class TBBusiCatalogServiceImpl extends CommonServiceImpl implements TBBus
  		sql  = sql.replace("#{catalog_id}",String.valueOf(t.getCatalogId()));
  		sql  = sql.replace("#{business_id}",String.valueOf(t.getBusinessId()));
  		sql  = sql.replace("#{check_num}",String.valueOf(t.getCheckNum()));
+ 		sql  = sql.replace("#{check_num_json}",String.valueOf(t.getCheckNumJson()));
  		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
  		return sql;
  	}
