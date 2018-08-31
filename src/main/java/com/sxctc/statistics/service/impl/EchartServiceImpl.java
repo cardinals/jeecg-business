@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.sxctc.statistics.dao.EchartsDao;
 import com.sxctc.statistics.service.EchartServiceI;
+import com.sxctc.statistics.vo.Histogram;
 import com.sxctc.statistics.vo.StatisticsVo;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,27 @@ public class EchartServiceImpl extends CommonServiceImpl implements EchartServic
     @Override
     public List<StatisticsVo> getEveryProjectCount() {
         return echartsDao.getEveryProjectCount();
+    }
+
+
+    @Override
+    public List<Histogram> getRankOfUnit(){
+        return echartsDao.getRankOfUnit();
+    }
+
+    @Override
+    public List<Histogram> getRankOfSale(){
+        return echartsDao.getRankOfSale();
+    }
+
+     @Override
+    public List<Histogram> getGradeTotal(){
+        return echartsDao.getGradeTotal();
+    }
+
+    @Override
+    public String getSequenceStatistics(){
+        return echartsDao.getSequenceStatistics();
     }
 
     @Override

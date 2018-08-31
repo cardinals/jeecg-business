@@ -2,6 +2,7 @@ package com.sxctc.statistics.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.sxctc.statistics.vo.Histogram;
 import com.sxctc.statistics.vo.StatisticsVo;
 import org.jeecgframework.core.common.service.CommonService;
 
@@ -47,6 +48,27 @@ public interface EchartServiceI extends CommonService {
     public List<StatisticsVo> getEveryProjectCount();
 
     /**
+     * 获取厅局费用排名
+     * @return
+     */
+    public List<Histogram> getRankOfUnit();
+    /**
+     * 获取销售总额费用排名
+     * @return
+     */
+    public List<Histogram> getRankOfSale();
+    /**
+     * 获取平台各层费用
+     * @return
+     */
+    public List<Histogram> getGradeTotal();
+    /**
+     * 获取时间差统计
+     * @return
+     */
+    public String getSequenceStatistics();
+
+    /**
     * @Title: getCloudConfirmCount
     * @description: 获取上云完成金额
     * @Param
@@ -89,10 +111,10 @@ public interface EchartServiceI extends CommonService {
     /**
     * @Title: getCheckedSystemNum
     * @description: 获取已验收系统总数
-    * @Param 
-    * @Return 
+    * @Param
+    * @Return
     * @author: Dukaimin
-    * @data:  
+    * @data:
     **/
     public int getCheckedSystemNum();
 

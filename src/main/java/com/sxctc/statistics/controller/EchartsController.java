@@ -3,6 +3,7 @@ package com.sxctc.statistics.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.sxctc.statistics.service.EchartServiceI;
+import com.sxctc.statistics.vo.Histogram;
 import com.sxctc.statistics.vo.StatisticsVo;
 import io.swagger.annotations.Api;
 import org.apache.log4j.Logger;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -253,6 +255,81 @@ public class EchartsController {
         }
 
         json.setAttributes(result);
+        json.setMsg("查询成功！");
+        return json;
+    }
+
+    /**
+     * 获取厅局费用排名
+     *
+     * @return
+     */
+    @RequestMapping(params = "getRankOfUnit")
+    @ResponseBody
+    public AjaxJson getRankOfUnit(HttpServletRequest request) {
+        AjaxJson json=new AjaxJson();
+        try{
+            List<Histogram> allCount = echartService.getRankOfUnit();
+            json.setObj(allCount);
+        }catch(Exception e){
+            e.printStackTrace();
+            throw new BusinessException(e.getMessage());
+        }
+        json.setMsg("查询成功！");
+        return json;
+    }
+
+    /**
+     *获取销售总额排名
+     * @return
+     */
+    @RequestMapping(params = "getRankOfSale")
+    @ResponseBody
+    public AjaxJson getRankOfSale(HttpServletRequest request) {
+        AjaxJson json=new AjaxJson();
+        try{
+            List<Histogram> allCount = echartService.getRankOfSale();
+            json.setObj(allCount);
+        }catch(Exception e){
+            e.printStackTrace();
+            throw new BusinessException(e.getMessage());
+        }
+        json.setMsg("查询成功！");
+        return json;
+    }
+    /**
+     *获取各层费用
+     * @return
+     */
+    @RequestMapping(params = "getGradeTotal")
+    @ResponseBody
+    public AjaxJson getGradeTotal(HttpServletRequest request) {
+        AjaxJson json=new AjaxJson();
+        try{
+            List<Histogram> allCount = echartService.getGradeTotal();
+            json.setObj(allCount);
+        }catch(Exception e){
+            e.printStackTrace();
+            throw new BusinessException(e.getMessage());
+        }
+        json.setMsg("查询成功！");
+        return json;
+    }
+    /**
+     *获取时间差统计
+     * @return
+     */
+    @RequestMapping(params = "getSequenceStatistics")
+    @ResponseBody
+    public AjaxJson getSequenceStatistics(HttpServletRequest request) {
+        AjaxJson json=new AjaxJson();
+        try{
+            String[] allCount= echartService.getSequenceStatistics().split(",");
+            json.setObj(allCount);
+        }catch(Exception e){
+            e.printStackTrace();
+            throw new BusinessException(e.getMessage());
+        }
         json.setMsg("查询成功！");
         return json;
     }

@@ -70,6 +70,7 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
  	}
  	/**
 	 * 删除操作增强业务
+	 * @param id
 	 * @return
 	 */
 	private void doDelBus(TBChancePoolEntity t) throws Exception{
@@ -108,8 +109,9 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 		map.put("remark", t.getRemark());
 		map.put("winning_result", t.getWinningResult());
 		map.put("business_id", t.getBusinessId());
-		map.put("evaluate_status", t.getEvaluateStatus());
-		map.put("history_plan", t.getHistoryPlan());
+		map.put("evaluate_win", t.getEvaluateWin());
+		map.put("evaluate_first", t.getEvaluateFirst());
+		map.put("evaluate_confirm", t.getEvaluateConfirm());
 		return map;
 	}
  	
@@ -146,8 +148,9 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
  		sql  = sql.replace("#{remark}",String.valueOf(t.getRemark()));
  		sql  = sql.replace("#{winning_result}",String.valueOf(t.getWinningResult()));
  		sql  = sql.replace("#{business_id}",String.valueOf(t.getBusinessId()));
- 		sql  = sql.replace("#{evaluate_status}",String.valueOf(t.getEvaluateStatus()));
- 		sql  = sql.replace("#{history_plan}",String.valueOf(t.getHistoryPlan()));
+ 		sql  = sql.replace("#{evaluate_win}",String.valueOf(t.getEvaluateWin()));
+ 		sql  = sql.replace("#{evaluate_first}",String.valueOf(t.getEvaluateFirst()));
+ 		sql  = sql.replace("#{evaluate_confirm}",String.valueOf(t.getEvaluateConfirm()));
  		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
  		return sql;
  	}

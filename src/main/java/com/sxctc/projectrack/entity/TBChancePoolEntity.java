@@ -22,7 +22,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @Title: Entity
  * @Description: 项目机会池
  * @author onlineGenerator
- * @date 2018-08-30 16:20:03
+ * @date 2018-08-23 17:07:58
  * @version V1.0   
  *
  */
@@ -31,78 +31,79 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 @SuppressWarnings("serial")
 public class TBChancePoolEntity implements java.io.Serializable {
 	/**主键*/
-	private String id;
+	private java.lang.String id;
 	/**创建人名称*/
-	private String createName;
+	private java.lang.String createName;
 	/**创建人登录名称*/
-	private String createBy;
+	private java.lang.String createBy;
 	/**创建日期*/
-	private Date createDate;
+	private java.util.Date createDate;
 	/**更新人名称*/
-	private String updateName;
+	private java.lang.String updateName;
 	/**更新人登录名称*/
-	private String updateBy;
+	private java.lang.String updateBy;
 	/**更新日期*/
-	private Date updateDate;
+	private java.util.Date updateDate;
 	/**所属部门*/
-	private String sysOrgCode;
+	private java.lang.String sysOrgCode;
 	/**所属公司*/
-	private String sysCompanyCode;
+	private java.lang.String sysCompanyCode;
 	/**单位名称*/
 	@Excel(name="单位名称",width=15,dicCode="unit_name")
-	private Integer unitCode;
+	private java.lang.Integer unitCode;
 	/**项目名称*/
 	@Excel(name="项目名称",width=15)
-	private String projectName;
+	private java.lang.String projectName;
 	/**项目预算*/
 	@Excel(name="项目预算",width=15)
-	private BigDecimal projectBudget;
+	private java.math.BigDecimal projectBudget;
 	/**软件和服务*/
 	@Excel(name="软件和服务",width=15)
-	private BigDecimal projectServer;
+	private java.math.BigDecimal projectServer;
 	/**硬件*/
 	@Excel(name="硬件",width=15)
-	private BigDecimal projectHardware;
+	private java.math.BigDecimal projectHardware;
 	/**主要合作公司*/
 	@Excel(name="主要合作公司",width=15)
-	private String businessParters;
+	private java.lang.String businessParters;
 	/**竞争对手*/
 	@Excel(name="竞争对手",width=15)
-	private String businessCompetitor;
+	private java.lang.String businessCompetitor;
 	/**预计招标时间*/
 	@Excel(name="预计招标时间",width=15,format = "yyyy-MM-dd")
-	private Date predictTenderTime;
+	private java.util.Date predictTenderTime;
 	/**资金来源*/
 	@Excel(name="资金来源",width=15,dicCode="provide")
-	private Integer fundsProvided;
+	private java.lang.Integer fundsProvided;
 	/**上层关系*/
 	@Excel(name="上层关系",width=15)
-	private String topRelation;
+	private java.lang.String topRelation;
 	/**中层关系*/
 	@Excel(name="中层关系",width=15)
-	private String midRelation;
+	private java.lang.String midRelation;
 	/**下层关系*/
 	@Excel(name="下层关系",width=15)
-	private String bottomRelation;
+	private java.lang.String bottomRelation;
 	/**当年把控度*/
 	@Excel(name="当年把控度",width=15)
-	private String controlDegree;
+	private java.lang.String controlDegree;
 	/**现在及下一步计划*/
 	@Excel(name="现在及下一步计划",width=15)
-	private String projectPlan;
+	private java.lang.String projectPlan;
 	/**备注*/
 	@Excel(name="备注",width=15)
-	private String remark;
+	private java.lang.String remark;
 	/**是否中标*/
 	@Excel(name="是否中标",width=15,dicCode="dev_flag")
-	private Integer winningResult;
+	private java.lang.Integer winningResult;
 	/**业务主表id*/
-	private String businessId;
-	/**评估状态*/
-	private Integer evaluateStatus;
-	/**历史计划*/
-	@Excel(name="历史计划",width=15)
-	private String historyPlan;
+	private java.lang.String businessId;
+	/**商机评估要素1win*/
+	private java.lang.Integer evaluateWin;
+	/**商机评估要素3first*/
+	private java.lang.Integer evaluateFirst;
+	/**商机评估要素9confirm*/
+	private java.lang.Integer evaluateConfirm;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -113,7 +114,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
 
 	@Column(name ="ID",nullable=false,length=36)
-	public String getId(){
+	public java.lang.String getId(){
 		return this.id;
 	}
 
@@ -121,7 +122,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  主键
 	 */
-	public void setId(String id){
+	public void setId(java.lang.String id){
 		this.id = id;
 	}
 	/**
@@ -130,7 +131,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="CREATE_NAME",nullable=true,length=50)
-	public String getCreateName(){
+	public java.lang.String getCreateName(){
 		return this.createName;
 	}
 
@@ -138,7 +139,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  创建人名称
 	 */
-	public void setCreateName(String createName){
+	public void setCreateName(java.lang.String createName){
 		this.createName = createName;
 	}
 	/**
@@ -147,7 +148,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="CREATE_BY",nullable=true,length=50)
-	public String getCreateBy(){
+	public java.lang.String getCreateBy(){
 		return this.createBy;
 	}
 
@@ -155,7 +156,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  创建人登录名称
 	 */
-	public void setCreateBy(String createBy){
+	public void setCreateBy(java.lang.String createBy){
 		this.createBy = createBy;
 	}
 	/**
@@ -164,7 +165,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="CREATE_DATE",nullable=true,length=20)
-	public Date getCreateDate(){
+	public java.util.Date getCreateDate(){
 		return this.createDate;
 	}
 
@@ -172,7 +173,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.util.Date
 	 *@param: java.util.Date  创建日期
 	 */
-	public void setCreateDate(Date createDate){
+	public void setCreateDate(java.util.Date createDate){
 		this.createDate = createDate;
 	}
 	/**
@@ -181,7 +182,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="UPDATE_NAME",nullable=true,length=50)
-	public String getUpdateName(){
+	public java.lang.String getUpdateName(){
 		return this.updateName;
 	}
 
@@ -189,7 +190,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  更新人名称
 	 */
-	public void setUpdateName(String updateName){
+	public void setUpdateName(java.lang.String updateName){
 		this.updateName = updateName;
 	}
 	/**
@@ -198,7 +199,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="UPDATE_BY",nullable=true,length=50)
-	public String getUpdateBy(){
+	public java.lang.String getUpdateBy(){
 		return this.updateBy;
 	}
 
@@ -206,7 +207,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  更新人登录名称
 	 */
-	public void setUpdateBy(String updateBy){
+	public void setUpdateBy(java.lang.String updateBy){
 		this.updateBy = updateBy;
 	}
 	/**
@@ -215,7 +216,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="UPDATE_DATE",nullable=true,length=20)
-	public Date getUpdateDate(){
+	public java.util.Date getUpdateDate(){
 		return this.updateDate;
 	}
 
@@ -223,7 +224,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.util.Date
 	 *@param: java.util.Date  更新日期
 	 */
-	public void setUpdateDate(Date updateDate){
+	public void setUpdateDate(java.util.Date updateDate){
 		this.updateDate = updateDate;
 	}
 	/**
@@ -232,7 +233,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="SYS_ORG_CODE",nullable=true,length=50)
-	public String getSysOrgCode(){
+	public java.lang.String getSysOrgCode(){
 		return this.sysOrgCode;
 	}
 
@@ -240,7 +241,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  所属部门
 	 */
-	public void setSysOrgCode(String sysOrgCode){
+	public void setSysOrgCode(java.lang.String sysOrgCode){
 		this.sysOrgCode = sysOrgCode;
 	}
 	/**
@@ -249,7 +250,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="SYS_COMPANY_CODE",nullable=true,length=50)
-	public String getSysCompanyCode(){
+	public java.lang.String getSysCompanyCode(){
 		return this.sysCompanyCode;
 	}
 
@@ -257,7 +258,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  所属公司
 	 */
-	public void setSysCompanyCode(String sysCompanyCode){
+	public void setSysCompanyCode(java.lang.String sysCompanyCode){
 		this.sysCompanyCode = sysCompanyCode;
 	}
 	/**
@@ -266,7 +267,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="UNIT_CODE",nullable=true,length=10)
-	public Integer getUnitCode(){
+	public java.lang.Integer getUnitCode(){
 		return this.unitCode;
 	}
 
@@ -274,7 +275,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.Integer
 	 *@param: java.lang.Integer  单位名称
 	 */
-	public void setUnitCode(Integer unitCode){
+	public void setUnitCode(java.lang.Integer unitCode){
 		this.unitCode = unitCode;
 	}
 	/**
@@ -283,7 +284,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="PROJECT_NAME",nullable=true,length=32)
-	public String getProjectName(){
+	public java.lang.String getProjectName(){
 		return this.projectName;
 	}
 
@@ -291,7 +292,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  项目名称
 	 */
-	public void setProjectName(String projectName){
+	public void setProjectName(java.lang.String projectName){
 		this.projectName = projectName;
 	}
 	/**
@@ -300,7 +301,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="PROJECT_BUDGET",nullable=true,length=32)
-	public BigDecimal getProjectBudget(){
+	public java.math.BigDecimal getProjectBudget(){
 		return this.projectBudget;
 	}
 
@@ -308,7 +309,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.math.BigDecimal
 	 *@param: java.math.BigDecimal  项目预算
 	 */
-	public void setProjectBudget(BigDecimal projectBudget){
+	public void setProjectBudget(java.math.BigDecimal projectBudget){
 		this.projectBudget = projectBudget;
 	}
 	/**
@@ -317,7 +318,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="PROJECT_SERVER",nullable=true,length=32)
-	public BigDecimal getProjectServer(){
+	public java.math.BigDecimal getProjectServer(){
 		return this.projectServer;
 	}
 
@@ -325,7 +326,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.math.BigDecimal
 	 *@param: java.math.BigDecimal  软件和服务
 	 */
-	public void setProjectServer(BigDecimal projectServer){
+	public void setProjectServer(java.math.BigDecimal projectServer){
 		this.projectServer = projectServer;
 	}
 	/**
@@ -334,7 +335,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="PROJECT_HARDWARE",nullable=true,length=32)
-	public BigDecimal getProjectHardware(){
+	public java.math.BigDecimal getProjectHardware(){
 		return this.projectHardware;
 	}
 
@@ -342,7 +343,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.math.BigDecimal
 	 *@param: java.math.BigDecimal  硬件
 	 */
-	public void setProjectHardware(BigDecimal projectHardware){
+	public void setProjectHardware(java.math.BigDecimal projectHardware){
 		this.projectHardware = projectHardware;
 	}
 	/**
@@ -351,7 +352,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="BUSINESS_PARTERS",nullable=true,length=32)
-	public String getBusinessParters(){
+	public java.lang.String getBusinessParters(){
 		return this.businessParters;
 	}
 
@@ -359,7 +360,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  主要合作公司
 	 */
-	public void setBusinessParters(String businessParters){
+	public void setBusinessParters(java.lang.String businessParters){
 		this.businessParters = businessParters;
 	}
 	/**
@@ -368,7 +369,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="BUSINESS_COMPETITOR",nullable=true,length=200)
-	public String getBusinessCompetitor(){
+	public java.lang.String getBusinessCompetitor(){
 		return this.businessCompetitor;
 	}
 
@@ -376,7 +377,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  竞争对手
 	 */
-	public void setBusinessCompetitor(String businessCompetitor){
+	public void setBusinessCompetitor(java.lang.String businessCompetitor){
 		this.businessCompetitor = businessCompetitor;
 	}
 	/**
@@ -385,7 +386,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="PREDICT_TENDER_TIME",nullable=true)
-	public Date getPredictTenderTime(){
+	public java.util.Date getPredictTenderTime(){
 		return this.predictTenderTime;
 	}
 
@@ -393,7 +394,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.util.Date
 	 *@param: java.util.Date  预计招标时间
 	 */
-	public void setPredictTenderTime(Date predictTenderTime){
+	public void setPredictTenderTime(java.util.Date predictTenderTime){
 		this.predictTenderTime = predictTenderTime;
 	}
 	/**
@@ -402,7 +403,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="FUNDS_PROVIDED",nullable=true,length=4)
-	public Integer getFundsProvided(){
+	public java.lang.Integer getFundsProvided(){
 		return this.fundsProvided;
 	}
 
@@ -410,7 +411,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.Integer
 	 *@param: java.lang.Integer  资金来源
 	 */
-	public void setFundsProvided(Integer fundsProvided){
+	public void setFundsProvided(java.lang.Integer fundsProvided){
 		this.fundsProvided = fundsProvided;
 	}
 	/**
@@ -419,7 +420,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="TOP_RELATION",nullable=true,length=500)
-	public String getTopRelation(){
+	public java.lang.String getTopRelation(){
 		return this.topRelation;
 	}
 
@@ -427,7 +428,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  上层关系
 	 */
-	public void setTopRelation(String topRelation){
+	public void setTopRelation(java.lang.String topRelation){
 		this.topRelation = topRelation;
 	}
 	/**
@@ -436,7 +437,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="MID_RELATION",nullable=true,length=500)
-	public String getMidRelation(){
+	public java.lang.String getMidRelation(){
 		return this.midRelation;
 	}
 
@@ -444,7 +445,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  中层关系
 	 */
-	public void setMidRelation(String midRelation){
+	public void setMidRelation(java.lang.String midRelation){
 		this.midRelation = midRelation;
 	}
 	/**
@@ -453,7 +454,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="BOTTOM_RELATION",nullable=true,length=500)
-	public String getBottomRelation(){
+	public java.lang.String getBottomRelation(){
 		return this.bottomRelation;
 	}
 
@@ -461,7 +462,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  下层关系
 	 */
-	public void setBottomRelation(String bottomRelation){
+	public void setBottomRelation(java.lang.String bottomRelation){
 		this.bottomRelation = bottomRelation;
 	}
 	/**
@@ -470,7 +471,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="CONTROL_DEGREE",nullable=true,length=32)
-	public String getControlDegree(){
+	public java.lang.String getControlDegree(){
 		return this.controlDegree;
 	}
 
@@ -478,7 +479,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  当年把控度
 	 */
-	public void setControlDegree(String controlDegree){
+	public void setControlDegree(java.lang.String controlDegree){
 		this.controlDegree = controlDegree;
 	}
 	/**
@@ -487,7 +488,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="PROJECT_PLAN",nullable=true)
-	public String getProjectPlan(){
+	public java.lang.String getProjectPlan(){
 		return this.projectPlan;
 	}
 
@@ -495,7 +496,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  现在及下一步计划
 	 */
-	public void setProjectPlan(String projectPlan){
+	public void setProjectPlan(java.lang.String projectPlan){
 		this.projectPlan = projectPlan;
 	}
 	/**
@@ -504,7 +505,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="REMARK",nullable=true,length=32)
-	public String getRemark(){
+	public java.lang.String getRemark(){
 		return this.remark;
 	}
 
@@ -512,7 +513,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  备注
 	 */
-	public void setRemark(String remark){
+	public void setRemark(java.lang.String remark){
 		this.remark = remark;
 	}
 	/**
@@ -521,7 +522,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="WINNING_RESULT",nullable=true,length=4)
-	public Integer getWinningResult(){
+	public java.lang.Integer getWinningResult(){
 		return this.winningResult;
 	}
 
@@ -529,7 +530,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.Integer
 	 *@param: java.lang.Integer  是否中标
 	 */
-	public void setWinningResult(Integer winningResult){
+	public void setWinningResult(java.lang.Integer winningResult){
 		this.winningResult = winningResult;
 	}
 	/**
@@ -538,7 +539,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 */
 
 	@Column(name ="BUSINESS_ID",nullable=true,length=36)
-	public String getBusinessId(){
+	public java.lang.String getBusinessId(){
 		return this.businessId;
 	}
 
@@ -546,41 +547,58 @@ public class TBChancePoolEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  业务主表id
 	 */
-	public void setBusinessId(String businessId){
+	public void setBusinessId(java.lang.String businessId){
 		this.businessId = businessId;
 	}
 	/**
 	 *方法: 取得java.lang.Integer
-	 *@return: java.lang.Integer  评估状态
+	 *@return: java.lang.Integer  商机评估要素1win
 	 */
 
-	@Column(name ="EVALUATE_STATUS",nullable=true,length=4)
-	public Integer getEvaluateStatus(){
-		return this.evaluateStatus;
+	@Column(name ="EVALUATE_WIN",nullable=true,length=4)
+	public java.lang.Integer getEvaluateWin(){
+		return this.evaluateWin;
 	}
 
 	/**
 	 *方法: 设置java.lang.Integer
-	 *@param: java.lang.Integer  评估状态
+	 *@param: java.lang.Integer  商机评估要素1win
 	 */
-	public void setEvaluateStatus(Integer evaluateStatus){
-		this.evaluateStatus = evaluateStatus;
+	public void setEvaluateWin(java.lang.Integer evaluateWin){
+		this.evaluateWin = evaluateWin;
 	}
 	/**
-	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  历史计划
+	 *方法: 取得java.lang.Integer
+	 *@return: java.lang.Integer  商机评估要素3first
 	 */
 
-	@Column(name ="HISTORY_PLAN",nullable=true)
-	public String getHistoryPlan(){
-		return this.historyPlan;
+	@Column(name ="EVALUATE_FIRST",nullable=true,length=4)
+	public java.lang.Integer getEvaluateFirst(){
+		return this.evaluateFirst;
 	}
 
 	/**
-	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  历史计划
+	 *方法: 设置java.lang.Integer
+	 *@param: java.lang.Integer  商机评估要素3first
 	 */
-	public void setHistoryPlan(String historyPlan){
-		this.historyPlan = historyPlan;
+	public void setEvaluateFirst(java.lang.Integer evaluateFirst){
+		this.evaluateFirst = evaluateFirst;
+	}
+	/**
+	 *方法: 取得java.lang.Integer
+	 *@return: java.lang.Integer  商机评估要素9confirm
+	 */
+
+	@Column(name ="EVALUATE_CONFIRM",nullable=true,length=4)
+	public java.lang.Integer getEvaluateConfirm(){
+		return this.evaluateConfirm;
+	}
+
+	/**
+	 *方法: 设置java.lang.Integer
+	 *@param: java.lang.Integer  商机评估要素9confirm
+	 */
+	public void setEvaluateConfirm(java.lang.Integer evaluateConfirm){
+		this.evaluateConfirm = evaluateConfirm;
 	}
 }

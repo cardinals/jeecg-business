@@ -2,6 +2,7 @@ package com.sxctc.statistics.dao;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.sxctc.statistics.vo.Histogram;
 import com.sxctc.statistics.vo.StatisticsVo;
 import org.jeecgframework.minidao.annotation.Arguments;
 import org.jeecgframework.minidao.annotation.MiniDao;
@@ -22,6 +23,20 @@ public interface EchartsDao {
 
     @ResultType(StatisticsVo.class)
     public List<StatisticsVo> getEveryProjectCount();
+
+
+    @ResultType(Histogram.class)
+    public List<Histogram> getRankOfUnit();
+
+
+    @ResultType(Histogram.class)
+    public List<Histogram> getRankOfSale();
+
+    @ResultType(Histogram.class)
+    public List<Histogram> getGradeTotal();
+
+    @ResultType(String.class)
+    public String getSequenceStatistics();
 
     @ResultType(Integer.class)
     public int getCloudConfirmCount();

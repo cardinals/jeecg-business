@@ -83,7 +83,7 @@ import io.swagger.annotations.ApiParam;
  * @Title: Controller  
  * @Description: 项目机会池
  * @author onlineGenerator
- * @date 2018-08-23 16:20:22
+ * @date 2018-08-23 17:07:58
  * @version V1.0   
  *
  */
@@ -373,6 +373,45 @@ public class TBChancePoolController extends BaseController {
 		req.setAttribute("controller_name","tBChancePoolController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
+
+	/**
+	 * 导入功能跳转
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "doEvaluate")
+	@ResponseBody
+	public AjaxJson doEvaluate(TBChancePoolEntity tBChancePool, HttpServletRequest request) {
+		String message = null;
+		AjaxJson j = new AjaxJson();
+		message = "项目机会池更新成功";
+		TBChancePoolEntity t = tBChancePoolService.get(TBChancePoolEntity.class, tBChancePool.getId());
+		try {
+			MyBeanUtils.copyBeanNotNull2Bean(tBChancePool, t);
+			tBChancePoolService.saveOrUpdate(t);
+			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
+		} catch (Exception e) {
+			e.printStackTrace();
+			message = "项目机会池更新失败";
+			throw new BusinessException(e.getMessage());
+		}
+		j.setMsg(message);
+		return j;
+	}
+
+	/**
+	 * 项目机会池编辑页面跳转
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "goEvaluate")
+	public ModelAndView goEvaluate(TBChancePoolEntity tBChancePool, HttpServletRequest req) {
+		if (StringUtil.isNotEmpty(tBChancePool.getId())) {
+			tBChancePool = tBChancePoolService.getEntity(TBChancePoolEntity.class, tBChancePool.getId());
+			req.setAttribute("tBChancePoolPage", tBChancePool);
+		}
+		return new ModelAndView("com/sxctc/projectrack/tBChancePool-evaluation");
+}
 	
 	/**
 	 * 导出excel

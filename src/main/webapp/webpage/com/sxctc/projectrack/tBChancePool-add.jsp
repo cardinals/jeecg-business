@@ -194,4 +194,5 @@
 			</table>
 		</t:formvalid>
  </body>
-  <script src = "webpage/com/sxctc/projectrack/tBChancePool.js"></script>		
+  <script src = "webpage/com/sxctc/projectrack/tBChancePool.js"></script>
+</html>
