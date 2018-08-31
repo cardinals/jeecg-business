@@ -1,27 +1,20 @@
 package com.sxctc.statistics.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.sxctc.statistics.service.EchartServiceI;
 import com.sxctc.statistics.vo.Histogram;
-import com.sxctc.statistics.vo.StatisticsVo;
 import io.swagger.annotations.Api;
 import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.model.json.AjaxJson;
-import org.jeecgframework.core.util.DateUtils;
 import org.jeecgframework.core.util.ResourceUtil;
-import org.jeecgframework.web.system.pojo.base.TSDepart;
 import org.jeecgframework.web.system.pojo.base.TSUser;
 import org.jeecgframework.web.system.service.SystemService;
-import org.jeecgframework.web.system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

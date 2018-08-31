@@ -1,7 +1,5 @@
 package com.sxctc.statistics.service.impl;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.sxctc.statistics.dao.EchartsDao;
 import com.sxctc.statistics.service.EchartServiceI;
 import com.sxctc.statistics.vo.Histogram;

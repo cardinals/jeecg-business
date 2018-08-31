@@ -1,7 +1,5 @@
 package com.sxctc.statistics.service;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.sxctc.statistics.vo.Histogram;
 import com.sxctc.statistics.vo.StatisticsVo;
 import org.jeecgframework.core.common.service.CommonService;
