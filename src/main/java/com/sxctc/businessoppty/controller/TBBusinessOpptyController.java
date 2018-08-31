@@ -7,9 +7,11 @@ import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sxctc.profit.entity.TBProfitTargetEntity;
 import com.sxctc.projectrack.entity.TBChancePoolEntity;
 import io.swagger.models.auth.In;
 import org.apache.log4j.Logger;
+import org.jeecgframework.web.system.pojo.base.TSUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -161,6 +163,30 @@ public class TBBusinessOpptyController extends BaseController {
 			if (StringUtils.isBlank(businessId)) {
 				result.setUpdateDate(null);
 			}
+		}
+
+		TSUser tsUser = ResourceUtil.getSessionUser();
+		String orgCode = tsUser.getCurrentDepart().getOrgCode();
+		int total = dataGrid.getTotal();
+		List<TBBusinessOpptyEntity> tbProfitTargetEntities = new ArrayList<>();
+		HashMap<Integer, String> map = new HashMap<Integer, String>();
+		if (!"A04A01A01A01".equals(orgCode)) {
+			for (TBBusinessOpptyEntity result : results) {
+				String projectName = result.getProjectName();
+				Integer num = result.getSortNum();
+				if (!map.containsKey(num)) {
+					tbProfitTargetEntities.add(result);
+					map.put(num,num+"");
+				}
+				if (StringUtils.isNotBlank(projectName)) {
+					tbProfitTargetEntities.add(result);
+				}else {
+					total--;
+				}
+			}
+			// 重新组装数据
+			dataGrid.setResults(tbProfitTargetEntities);
+			dataGrid.setTotal(total);
 		}
 
 		TagUtil.datagrid(response, dataGrid);

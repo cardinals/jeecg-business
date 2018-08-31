@@ -18,13 +18,9 @@
    <t:dgToolBar title="编辑" icon="icon-edit" url="tBCatalogdataController.do?goUpdate" funname="updatetree" width="600" height="280"></t:dgToolBar>
    <t:dgToolBar title="批量删除"  icon="icon-remove" url="tBCatalogdataController.do?doBatchDel" funname="deleteALLSelecttree"></t:dgToolBar>
    <t:dgToolBar title="查看" icon="icon-search" url="tBCatalogdataController.do?goUpdate" funname="detailtree" width="600" height="280"></t:dgToolBar>
-   <t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>
-   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
-   <t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>
   </t:datagrid>
   </div>
  </div>
- <script src = "webpage/com/sxctc/catalogt/tBCatalogdataList.js"></script>		
  <script type="text/javascript">
  $(document).ready(function(){
 		$("#tBCatalogdataList").treegrid({

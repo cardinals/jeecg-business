@@ -1,12 +1,12 @@
 package com.sxctc.catalogs.service.impl;
 import com.sxctc.catalogs.service.TBCatalogdataServiceI;
+import org.apache.commons.lang3.StringUtils;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import com.sxctc.catalogs.entity.TBCatalogdataEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+
+import java.util.*;
 import java.io.Serializable;
 import org.jeecgframework.core.util.ApplicationContextUtil;
 import org.jeecgframework.core.util.MyClassLoader;
@@ -92,6 +92,9 @@ public class TBCatalogdataServiceImpl extends CommonServiceImpl implements TBCat
 		map.put("type", t.getType());
 		map.put("price", t.getPrice());
 		map.put("price_json", t.getPriceJson());
+		map.put("status", t.getStatus());
+		map.put("catalog_code", t.getCatalogCode());
+		map.put("node_id", t.getNodeId());
 		return map;
 	}
  	
@@ -111,6 +114,9 @@ public class TBCatalogdataServiceImpl extends CommonServiceImpl implements TBCat
  		sql  = sql.replace("#{type}",String.valueOf(t.getType()));
  		sql  = sql.replace("#{price}",String.valueOf(t.getPrice()));
  		sql  = sql.replace("#{price_json}",String.valueOf(t.getPriceJson()));
+ 		sql  = sql.replace("#{status}",String.valueOf(t.getStatus()));
+ 		sql  = sql.replace("#{catalog_code}",String.valueOf(t.getCatalogCode()));
+ 		sql  = sql.replace("#{node_id}",String.valueOf(t.getNodeId()));
  		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
  		return sql;
  	}
@@ -162,4 +168,63 @@ public class TBCatalogdataServiceImpl extends CommonServiceImpl implements TBCat
 			}
 		}
  	}
+
+	/**
+	 * @Title makeCatalogCode
+	 * @Description 生成服务目录编号
+	 * @Param [entity]
+	 * @Return java.lang.String
+	 * @Author liuzc
+	 * @Date 2018/8/31 下午5:57
+	 **/
+	public String makeCatalogCode(String type, String fartherid) throws Exception {
+		int nextCode = 0;
+		String prefix = "";
+		if ("01".equals(type)) {prefix = "IAAS-";}
+		if ("02".equals(type)) {prefix = "PAAS-";}
+		if ("03".equals(type)) {prefix = "SAAS-";}
+		if ("04".equals(type)) {prefix = "DAAS-";}
+
+		List<TBCatalogdataEntity> tBCatalogList = new ArrayList<TBCatalogdataEntity>();
+		if(StringUtil.isEmpty(fartherid)){
+			// 获取父节点编号
+			tBCatalogList = this.findByQueryString("from TBCatalogdataEntity where fartherid is null and type='" + type + "' order by catalogCode desc");
+		}else {
+			// 获取父节点编号
+			tBCatalogList = this.findByQueryString("from TBCatalogdataEntity where fartherid='" + fartherid + "' and type='" + type + "' order by catalogCode desc");
+		}
+
+		if (tBCatalogList.size() > 0) {
+			TBCatalogdataEntity tbCatalogdataEntity = tBCatalogList.get(0);
+			String catalogCode = tbCatalogdataEntity.getCatalogCode();
+			if (StringUtils.isNotBlank(catalogCode)) {
+				String code = catalogCode.substring(catalogCode.length()-3,catalogCode.length());
+				nextCode = Integer.parseInt(code);
+				String strCode = String.format("%0" + 3 + "d", (nextCode+1));
+				if (StringUtil.isEmpty(fartherid)) {
+					return prefix + strCode;
+				}else {
+					return catalogCode.substring(0,catalogCode.length()-4) + "-" + strCode;
+				}
+			}else {
+				String strCode = String.format("%0" + 3 + "d", (nextCode+1));
+				if (StringUtil.isEmpty(fartherid)) {
+					return prefix + strCode;
+				}else {
+					return catalogCode + "-" + strCode;
+				}
+			}
+
+		}else {
+			tBCatalogList = this.findByQueryString("from TBCatalogdataEntity where id='" + fartherid + "' and type='" + type + "'");
+			if (tBCatalogList.size() > 0) {
+				TBCatalogdataEntity tbCatalogdataEntity = tBCatalogList.get(0);
+				String catalogCode = tbCatalogdataEntity.getCatalogCode();
+				String strCode = String.format("%0" + 3 + "d", (nextCode+1));
+				return catalogCode + "-" + strCode;
+			}
+		}
+
+		return null;
+	}
 }

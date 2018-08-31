@@ -16,11 +16,11 @@
 					<tr>
 						<td align="right" style="width: 30%">
 							<label class="Validform_label">
-								单位编号:
+								单位名称:
 							</label>
 						</td>
 						<td class="value">
-						    <input id="unitCode" name="unitCode" type="text" maxlength="4" style="width: 150px" class="inputxt"  datatype="n"  ignore="ignore"  value='${tBProfitTargetPage.unitCode}'/>
+							<t:dictSelect field="unitCode" type="list"  datatype="n"  typeGroupCode="unit_name"   defaultVal="${tBProfitTargetPage.unitCode}" hasLabel="false"  title="单位名称" readonly="readonly"></t:dictSelect>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">单位编号</label>
 						</td>
@@ -32,7 +32,7 @@
 							</label>
 						</td>
 						<td class="value">
-						    <input id="projectName" name="projectName" type="text" maxlength="32" style="width: 150px" class="inputxt"  ignore="ignore"  value='${tBProfitTargetPage.projectName}'/>
+						    <input id="projectName" name="projectName" type="text" maxlength="32" style="width: 150px" class="inputxt"  ignore="ignore"  value='${tBProfitTargetPage.projectName}' readonly="readonly"/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">项目名称</label>
 						</td>
@@ -164,7 +164,7 @@
 							</label>
 						</td>
 						<td class="value">
-						    <input id="projectStatus" name="projectStatus" type="text" maxlength="4" style="width: 150px" class="inputxt"  datatype="n"  ignore="ignore"  value='${tBProfitTargetPage.projectStatus}'/>
+							<t:dictSelect field="projectStatus" type="list"  datatype="n"  typeGroupCode="proj_stat"   defaultVal="${tBProfitTargetPage.projectStatus}" hasLabel="false"  title="项目实施状态"></t:dictSelect>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">项目实施状态</label>
 						</td>

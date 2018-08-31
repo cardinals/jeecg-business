@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.jeecgframework.web.system.pojo.base.TSUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -138,12 +139,16 @@ public class TBProfitTargetController extends BaseController {
 		/*
 		 * 说明：格式为 字段名:值(可选，不写该值时为分页数据的合计) 多个合计 以 , 分割
 		 */
-		String userName = ResourceUtil.getSessionUser().getUserName();
+		TSUser tsUser = ResourceUtil.getSessionUser();
+		String orgCode = tsUser.getCurrentDepart().getOrgCode();
+		String userName = tsUser.getUserName();
+		if (!"A04A01A01A01".equals(orgCode)) {
+			userName = null;
+		}
 		String sumContractValue = String.valueOf(tbProfitTargetDao.getSumContractValue(userName));
 		String sumProfitTarget = String.valueOf(tbProfitTargetDao.getSumProfitTarget(userName));
 		String sumConfirmIncome = String.valueOf(tbProfitTargetDao.getSumConfirmIncome(userName));
-		dataGrid.setFooter("contractValue:"+(sumContractValue.equalsIgnoreCase("null")?"0.0":sumContractValue)+",profitTarget:"+(sumProfitTarget.equalsIgnoreCase("null")?"0.0":sumProfitTarget)+",confirmIncome:"+(sumConfirmIncome.equalsIgnoreCase("null")?"0.0":sumConfirmIncome)+",signTime:合计:");
-
+		dataGrid.setFooter("contractValue:"+(sumContractValue.equalsIgnoreCase("null")?"0.0":sumContractValue)+",profitTarget:"+(sumProfitTarget.equalsIgnoreCase("null")?"0.0":sumProfitTarget)+",confirmIncome:"+(sumConfirmIncome.equalsIgnoreCase("null")?"0.0":sumConfirmIncome)+",projectName:合计（万元）:");
 
 		TagUtil.datagrid(response, dataGrid);
 	}

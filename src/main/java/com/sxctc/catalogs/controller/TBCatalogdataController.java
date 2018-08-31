@@ -199,16 +199,21 @@ public class TBCatalogdataController extends BaseController {
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		message = "服务目录管理添加成功";
+		String type = tBCatalogdata.getType();
+		String fartherid = tBCatalogdata.getFartherid();
 		try{
-			if(StringUtil.isEmpty(tBCatalogdata.getFartherid())){
+			if(StringUtil.isEmpty(fartherid)){
 				tBCatalogdata.setFartherid(null);
 			}
+			String catalogCode = tBCatalogdataService.makeCatalogCode(type, fartherid);
+			tBCatalogdata.setCatalogCode(catalogCode);
 
 			// 按年份拼装数量
 			String currentYear = DateUtil.getCurrentYear();
 			JSONObject sumJson = new JSONObject();
 			sumJson.put(currentYear,tBCatalogdata.getPrice());
 			tBCatalogdata.setPriceJson(sumJson.toJSONString());
+
 
 			tBCatalogdataService.save(tBCatalogdata);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
@@ -238,6 +243,10 @@ public class TBCatalogdataController extends BaseController {
 			if(StringUtil.isEmpty(t.getFartherid())){
 				t.setFartherid(null);
 			}
+            String type = t.getType();
+            String fartherid = t.getFartherid();
+            String catalogCode = tBCatalogdataService.makeCatalogCode(type, fartherid);
+            tBCatalogdata.setCatalogCode(catalogCode);
 
 			// 更新单价json
 			String priceJson = t.getPriceJson();

@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="tBProfitTargetList" checkbox="false" pagination="true" fitColumns="false" title="毛利润指标" actionUrl="tBProfitTargetController.do?datagrid" idField="id" fit="true" queryMode="group">
+  <t:datagrid name="tBProfitTargetList" checkbox="false" pagination="true" sortName="unitCode" fitColumns="false" title="毛利润指标" actionUrl="tBProfitTargetController.do?datagrid" idField="id" fit="true" queryMode="group"  onLoadSuccess="mergeCells" >
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -60,4 +60,19 @@ function ExportXlsByT() {
 	JeecgExcelExport("tBProfitTargetController.do?exportXlsByT","tBProfitTargetList");
 }
 
+function mergeCells(data) {
+    var mark=1;                                                 //这里涉及到简单的运算，mark是计算每次需要合并的格子数
+    for (var i=1; i <data.rows.length; i++) {     //这里循环表格当前的数据
+        if (data.rows[i]['unitCode'] == data.rows[i-1]['unitCode']) {   //后一行的值与前一行的值做比较，相同就需要合并
+            mark += 1;
+            $("#tBProfitTargetList").datagrid('mergeCells',{
+                index: i+1-mark,                 //datagrid的index，表示从第几行开始合并；紫色的内容需是最精髓的，就是记住最开始需要合并的位置
+                field: 'unitCode',                 //合并单元格的区域，就是clomun中的filed对应的列
+                rowspan:mark                   //纵向合并的格数，如果想要横向合并，就使用colspan：mark
+            });
+        }else{
+            mark=1;                                         //一旦前后两行的值不一样了，那么需要合并的格子数mark就需要重新计算
+        }
+    }
+}
  </script>

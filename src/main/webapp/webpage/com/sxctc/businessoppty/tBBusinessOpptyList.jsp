@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="tBBusinessOpptyList" checkbox="false" sortName="opptyRange,sortNum" pagination="true" fitColumns="false" title="商机评估结果（赢单区、输单区和抖动区）" actionUrl="tBBusinessOpptyController.do?datagrid" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells" pageSize="30"  >
+  <t:datagrid name="tBBusinessOpptyList" checkbox="false" sortName="opptyRange,sortNum" pagination="true" fitColumns="false" title="商机评估结果（赢单区、输单区和抖动区）" actionUrl="tBBusinessOpptyController.do?datagrid" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells" pageSize="150"  >
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建日期"  field="createDate"  formatter="yyyy-MM-dd"  hidden="true"  queryMode="single"  width="120"></t:dgCol>

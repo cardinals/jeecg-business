@@ -215,8 +215,8 @@
             <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="loginController.do?hplushome" frameborder="0" data-id="loginController.do?hplushome" seamless></iframe>
         </div>
         <div class="footer" style="border-top:none;">
-            <%--<div class="pull-right">&copy; <t:mutiLang langKey="system.version.number"/> <a href="http://www.jeecg.org/" target="_blank">jeecg</a>
-            </div>--%>
+            <div class="pull-right">&copy;  <a href="http://www.sxctc.net/" target="_blank">山西云时代技术有限公司</a>
+            </div>
         </div>        
     </div>
     <!--右侧部分结束-->

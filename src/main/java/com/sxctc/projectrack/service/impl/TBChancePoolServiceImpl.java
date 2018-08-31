@@ -24,64 +24,63 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-	
- 	public void delete(TBChancePoolEntity entity) throws Exception{
- 		super.delete(entity);
- 		//执行删除操作增强业务
+
+	public void delete(TBChancePoolEntity entity) throws Exception{
+		super.delete(entity);
+		//执行删除操作增强业务
 		this.doDelBus(entity);
- 	}
- 	
- 	public Serializable save(TBChancePoolEntity entity) throws Exception{
- 		Serializable t = super.save(entity);
- 		//执行新增操作增强业务
- 		this.doAddBus(entity);
- 		return t;
- 	}
- 	
- 	public void saveOrUpdate(TBChancePoolEntity entity) throws Exception{
- 		super.saveOrUpdate(entity);
- 		//执行更新操作增强业务
- 		this.doUpdateBus(entity);
- 	}
- 	
- 	/**
+	}
+
+	public Serializable save(TBChancePoolEntity entity) throws Exception{
+		Serializable t = super.save(entity);
+		//执行新增操作增强业务
+		this.doAddBus(entity);
+		return t;
+	}
+
+	public void saveOrUpdate(TBChancePoolEntity entity) throws Exception{
+		super.saveOrUpdate(entity);
+		//执行更新操作增强业务
+		this.doUpdateBus(entity);
+	}
+
+	/**
 	 * 新增操作增强业务
 	 * @param t
 	 * @return
 	 */
 	private void doAddBus(TBChancePoolEntity t) throws Exception{
 		//-----------------sql增强 start----------------------------
-	 	//-----------------sql增强 end------------------------------
-	 	
-	 	//-----------------java增强 start---------------------------
-	 	//-----------------java增强 end-----------------------------
- 	}
- 	/**
+		//-----------------sql增强 end------------------------------
+
+		//-----------------java增强 start---------------------------
+		//-----------------java增强 end-----------------------------
+	}
+	/**
 	 * 更新操作增强业务
 	 * @param t
 	 * @return
 	 */
 	private void doUpdateBus(TBChancePoolEntity t) throws Exception{
 		//-----------------sql增强 start----------------------------
-	 	//-----------------sql增强 end------------------------------
-	 	
-	 	//-----------------java增强 start---------------------------
-	 	//-----------------java增强 end-----------------------------
- 	}
- 	/**
+		//-----------------sql增强 end------------------------------
+
+		//-----------------java增强 start---------------------------
+		//-----------------java增强 end-----------------------------
+	}
+	/**
 	 * 删除操作增强业务
-	 * @param id
 	 * @return
 	 */
 	private void doDelBus(TBChancePoolEntity t) throws Exception{
-	    //-----------------sql增强 start----------------------------
-	 	//-----------------sql增强 end------------------------------
-	 	
-	 	//-----------------java增强 start---------------------------
-	 	//-----------------java增强 end-----------------------------
- 	}
- 	
- 	private Map<String,Object> populationMap(TBChancePoolEntity t){
+		//-----------------sql增强 start----------------------------
+		//-----------------sql增强 end------------------------------
+
+		//-----------------java增强 start---------------------------
+		//-----------------java增强 end-----------------------------
+	}
+
+	private Map<String,Object> populationMap(TBChancePoolEntity t){
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("id", t.getId());
 		map.put("create_name", t.getCreateName());
@@ -109,57 +108,55 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 		map.put("remark", t.getRemark());
 		map.put("winning_result", t.getWinningResult());
 		map.put("business_id", t.getBusinessId());
-		map.put("evaluate_win", t.getEvaluateWin());
-		map.put("evaluate_first", t.getEvaluateFirst());
-		map.put("evaluate_confirm", t.getEvaluateConfirm());
+		map.put("evaluate_status", t.getEvaluateStatus());
+		map.put("history_plan", t.getHistoryPlan());
 		return map;
 	}
- 	
- 	/**
+
+	/**
 	 * 替换sql中的变量
 	 * @param sql
 	 * @param t
 	 * @return
 	 */
- 	public String replaceVal(String sql,TBChancePoolEntity t){
- 		sql  = sql.replace("#{id}",String.valueOf(t.getId()));
- 		sql  = sql.replace("#{create_name}",String.valueOf(t.getCreateName()));
- 		sql  = sql.replace("#{create_by}",String.valueOf(t.getCreateBy()));
- 		sql  = sql.replace("#{create_date}",String.valueOf(t.getCreateDate()));
- 		sql  = sql.replace("#{update_name}",String.valueOf(t.getUpdateName()));
- 		sql  = sql.replace("#{update_by}",String.valueOf(t.getUpdateBy()));
- 		sql  = sql.replace("#{update_date}",String.valueOf(t.getUpdateDate()));
- 		sql  = sql.replace("#{sys_org_code}",String.valueOf(t.getSysOrgCode()));
- 		sql  = sql.replace("#{sys_company_code}",String.valueOf(t.getSysCompanyCode()));
- 		sql  = sql.replace("#{unit_code}",String.valueOf(t.getUnitCode()));
- 		sql  = sql.replace("#{project_name}",String.valueOf(t.getProjectName()));
- 		sql  = sql.replace("#{project_budget}",String.valueOf(t.getProjectBudget()));
- 		sql  = sql.replace("#{project_server}",String.valueOf(t.getProjectServer()));
- 		sql  = sql.replace("#{project_hardware}",String.valueOf(t.getProjectHardware()));
- 		sql  = sql.replace("#{business_parters}",String.valueOf(t.getBusinessParters()));
- 		sql  = sql.replace("#{business_competitor}",String.valueOf(t.getBusinessCompetitor()));
- 		sql  = sql.replace("#{predict_tender_time}",String.valueOf(t.getPredictTenderTime()));
- 		sql  = sql.replace("#{funds_provided}",String.valueOf(t.getFundsProvided()));
- 		sql  = sql.replace("#{top_relation}",String.valueOf(t.getTopRelation()));
- 		sql  = sql.replace("#{mid_relation}",String.valueOf(t.getMidRelation()));
- 		sql  = sql.replace("#{bottom_relation}",String.valueOf(t.getBottomRelation()));
- 		sql  = sql.replace("#{control_degree}",String.valueOf(t.getControlDegree()));
- 		sql  = sql.replace("#{project_plan}",String.valueOf(t.getProjectPlan()));
- 		sql  = sql.replace("#{remark}",String.valueOf(t.getRemark()));
- 		sql  = sql.replace("#{winning_result}",String.valueOf(t.getWinningResult()));
- 		sql  = sql.replace("#{business_id}",String.valueOf(t.getBusinessId()));
- 		sql  = sql.replace("#{evaluate_win}",String.valueOf(t.getEvaluateWin()));
- 		sql  = sql.replace("#{evaluate_first}",String.valueOf(t.getEvaluateFirst()));
- 		sql  = sql.replace("#{evaluate_confirm}",String.valueOf(t.getEvaluateConfirm()));
- 		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
- 		return sql;
- 	}
- 	
- 	/**
+	public String replaceVal(String sql,TBChancePoolEntity t){
+		sql  = sql.replace("#{id}",String.valueOf(t.getId()));
+		sql  = sql.replace("#{create_name}",String.valueOf(t.getCreateName()));
+		sql  = sql.replace("#{create_by}",String.valueOf(t.getCreateBy()));
+		sql  = sql.replace("#{create_date}",String.valueOf(t.getCreateDate()));
+		sql  = sql.replace("#{update_name}",String.valueOf(t.getUpdateName()));
+		sql  = sql.replace("#{update_by}",String.valueOf(t.getUpdateBy()));
+		sql  = sql.replace("#{update_date}",String.valueOf(t.getUpdateDate()));
+		sql  = sql.replace("#{sys_org_code}",String.valueOf(t.getSysOrgCode()));
+		sql  = sql.replace("#{sys_company_code}",String.valueOf(t.getSysCompanyCode()));
+		sql  = sql.replace("#{unit_code}",String.valueOf(t.getUnitCode()));
+		sql  = sql.replace("#{project_name}",String.valueOf(t.getProjectName()));
+		sql  = sql.replace("#{project_budget}",String.valueOf(t.getProjectBudget()));
+		sql  = sql.replace("#{project_server}",String.valueOf(t.getProjectServer()));
+		sql  = sql.replace("#{project_hardware}",String.valueOf(t.getProjectHardware()));
+		sql  = sql.replace("#{business_parters}",String.valueOf(t.getBusinessParters()));
+		sql  = sql.replace("#{business_competitor}",String.valueOf(t.getBusinessCompetitor()));
+		sql  = sql.replace("#{predict_tender_time}",String.valueOf(t.getPredictTenderTime()));
+		sql  = sql.replace("#{funds_provided}",String.valueOf(t.getFundsProvided()));
+		sql  = sql.replace("#{top_relation}",String.valueOf(t.getTopRelation()));
+		sql  = sql.replace("#{mid_relation}",String.valueOf(t.getMidRelation()));
+		sql  = sql.replace("#{bottom_relation}",String.valueOf(t.getBottomRelation()));
+		sql  = sql.replace("#{control_degree}",String.valueOf(t.getControlDegree()));
+		sql  = sql.replace("#{project_plan}",String.valueOf(t.getProjectPlan()));
+		sql  = sql.replace("#{remark}",String.valueOf(t.getRemark()));
+		sql  = sql.replace("#{winning_result}",String.valueOf(t.getWinningResult()));
+		sql  = sql.replace("#{business_id}",String.valueOf(t.getBusinessId()));
+		sql  = sql.replace("#{evaluate_status}",String.valueOf(t.getEvaluateStatus()));
+		sql  = sql.replace("#{history_plan}",String.valueOf(t.getHistoryPlan()));
+		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
+		return sql;
+	}
+
+	/**
 	 * 执行JAVA增强
 	 */
- 	private void executeJavaExtend(String cgJavaType,String cgJavaValue,Map<String,Object> data) throws Exception {
- 		if(StringUtil.isNotEmpty(cgJavaValue)){
+	private void executeJavaExtend(String cgJavaType,String cgJavaValue,Map<String,Object> data) throws Exception {
+		if(StringUtil.isNotEmpty(cgJavaValue)){
 			Object obj = null;
 			try {
 				if("class".equals(cgJavaType)){
@@ -175,21 +172,21 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 			} catch (Exception e) {
 				e.printStackTrace();
 				throw new Exception("执行JAVA增强出现异常！");
-			} 
+			}
 		}
- 	}
- 	
- 	private void executeSqlEnhance(String sqlEnhance,TBChancePoolEntity t){
-	 	Map<String,Object> data = populationMap(t);
-	 	sqlEnhance = ResourceUtil.formateSQl(sqlEnhance, data);
-	 	boolean isMiniDao = false;
-	 	try {
-	 		data = ResourceUtil.minidaoReplaceExtendSqlSysVar(data);
-	 		sqlEnhance = FreemarkerParseFactory.parseTemplateContent(sqlEnhance, data);
+	}
+
+	private void executeSqlEnhance(String sqlEnhance,TBChancePoolEntity t){
+		Map<String,Object> data = populationMap(t);
+		sqlEnhance = ResourceUtil.formateSQl(sqlEnhance, data);
+		boolean isMiniDao = false;
+		try {
+			data = ResourceUtil.minidaoReplaceExtendSqlSysVar(data);
+			sqlEnhance = FreemarkerParseFactory.parseTemplateContent(sqlEnhance, data);
 			isMiniDao = true;
 		} catch (Exception e) {
 		}
-	 	String [] sqls = sqlEnhance.split(";");
+		String [] sqls = sqlEnhance.split(";");
 		for(String sql:sqls){
 			if(sql == null || sql.toLowerCase().trim().equals("")){
 				continue;
@@ -201,5 +198,5 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 				num = this.executeSql(sql);
 			}
 		}
- 	}
+	}
 }

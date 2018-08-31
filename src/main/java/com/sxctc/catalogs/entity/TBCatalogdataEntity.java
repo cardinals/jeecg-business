@@ -22,7 +22,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @Title: Entity
  * @Description: 服务目录管理
  * @author onlineGenerator
- * @date 2018-08-30 09:42:53
+ * @date 2018-08-31 15:49:03
  * @version V1.0   
  *
  */
@@ -56,6 +56,15 @@ public class TBCatalogdataEntity implements java.io.Serializable {
 	/**单价汇总*/
 	@Excel(name="单价汇总",width=15)
 	private String priceJson;
+	/**服务目录状态*/
+	@Excel(name="服务目录状态",width=15)
+	private Integer status;
+	/**服务目录编码*/
+	@Excel(name="服务目录编码",width=15)
+	private String catalogCode;
+	/**节点ID*/
+	@Excel(name="节点ID",width=15)
+	private Integer nodeId;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -212,5 +221,56 @@ public class TBCatalogdataEntity implements java.io.Serializable {
 	 */
 	public void setPriceJson(String priceJson){
 		this.priceJson = priceJson;
+	}
+	/**
+	 *方法: 取得java.lang.Integer
+	 *@return: java.lang.Integer  服务目录状态
+	 */
+
+	@Column(name ="STATUS",nullable=true,length=4)
+	public Integer getStatus(){
+		return this.status;
+	}
+
+	/**
+	 *方法: 设置java.lang.Integer
+	 *@param: java.lang.Integer  服务目录状态
+	 */
+	public void setStatus(Integer status){
+		this.status = status;
+	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  服务目录编码
+	 */
+
+	@Column(name ="CATALOG_CODE",nullable=true,length=32)
+	public String getCatalogCode(){
+		return this.catalogCode;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  服务目录编码
+	 */
+	public void setCatalogCode(String catalogCode){
+		this.catalogCode = catalogCode;
+	}
+	/**
+	 *方法: 取得java.lang.Integer
+	 *@return: java.lang.Integer  节点ID
+	 */
+
+	@Column(name ="NODE_ID",nullable=true,length=4)
+	public Integer getNodeId(){
+		return this.nodeId;
+	}
+
+	/**
+	 *方法: 设置java.lang.Integer
+	 *@param: java.lang.Integer  节点ID
+	 */
+	public void setNodeId(Integer nodeId){
+		this.nodeId = nodeId;
 	}
 }
