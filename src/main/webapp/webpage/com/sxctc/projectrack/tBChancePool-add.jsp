@@ -42,7 +42,7 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="projectBudget" name="projectBudget" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="n0-6" ignore="ignore" />
+					     	 <input id="projectBudget" name="projectBudget" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/,*0-7" ignore="ignore" />
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">项目预算(万元)</label>
 						</td>
@@ -52,7 +52,7 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="projectServer" name="projectServer" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="n0-6" ignore="ignore" />
+					     	 <input id="projectServer" name="projectServer" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/,*0-7" ignore="ignore" />
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">软件和服务(万元)</label>
 						</td>
@@ -64,7 +64,7 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="projectHardware" name="projectHardware" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="n0-6" ignore="ignore" />
+					     	 <input id="projectHardware" name="projectHardware" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/,*0-7" ignore="ignore" />
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">硬件(万元)</label>
 						</td>

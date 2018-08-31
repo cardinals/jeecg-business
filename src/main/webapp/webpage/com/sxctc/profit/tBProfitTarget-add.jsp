@@ -80,9 +80,9 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="contractValue" name="contractValue" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="d" ignore="ignore" />
+					     	 <input id="contractValue" name="contractValue" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/,*0-7" ignore="ignore" />
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">合同额</label>
+							<label class="Validform_label" style="display: none;">合同额(万元)</label>
 						</td>
 					</tr>
 				<tr>
@@ -104,9 +104,9 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="profitTarget" name="profitTarget" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="d" ignore="ignore" />
+					     	 <input id="profitTarget" name="profitTarget" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/,*0-7" ignore="ignore" />
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">毛利润</label>
+							<label class="Validform_label" style="display: none;">毛利润(万元)</label>
 						</td>
 					</tr>
 				<tr>
@@ -116,9 +116,9 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="confirmIncome" name="confirmIncome" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="d" ignore="ignore" />
+					     	 <input id="confirmIncome" name="confirmIncome" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/,*0-7" ignore="ignore" />
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">确认收入额</label>
+							<label class="Validform_label" style="display: none;">确认收入额(万元)</label>
 						</td>
 				</tr>
 				<tr>
@@ -140,9 +140,9 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="receivedPay" name="receivedPay" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="d" ignore="ignore" />
+					     	 <input id="receivedPay" name="receivedPay" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/,*0-7" ignore="ignore" />
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">回款总额</label>
+							<label class="Validform_label" style="display: none;">回款总额(万元)</label>
 						</td>
 				</tr>
 				<tr>
