@@ -4,7 +4,7 @@
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
    <c:if test="${toolFlag == '1'}">
-   <t:datagrid name="tBBusiWorkreportList" checkbox="true" pagination="true" fitColumns="true" title="今日日报列表" actionUrl="tBBusiWorkreportController.do?datagrid&reportOpt=0" idField="id" fit="true" queryMode="group" singleSelect="true">
+   <t:datagrid name="tBBusiWorkreportList" checkbox="true" pagination="true" sortName="unitCode" fitColumns="true" title="今日日报列表" actionUrl="tBBusiWorkreportController.do?datagrid&reportOpt=0" idField="id" fit="true" queryMode="group" singleSelect="true" onLoadSuccess="mergeCells">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -114,5 +114,21 @@ Date.prototype.Format = function (fmt) { // author: meizz
     for (var k in o)
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
+}
+
+function mergeCells(data) {
+    var mark=1;
+    for (var i=1; i <data.rows.length; i++) {
+        if (data.rows[i]['unitCode'] == data.rows[i-1]['unitCode']) {
+            mark += 1;
+            $("#tBBusiWorkreportList").datagrid('mergeCells',{
+                index: i+1-mark,
+                field: 'unitCode',
+                rowspan:mark
+            });
+        }else{
+            mark=1;
+        }
+    }
 }
  </script>

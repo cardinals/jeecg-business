@@ -208,6 +208,25 @@ public class TBCatalogdataController extends BaseController {
 			String catalogCode = tBCatalogdataService.makeCatalogCode(type, fartherid);
 			tBCatalogdata.setCatalogCode(catalogCode);
 
+			// 拼装节点类型 0根节点，1..2..
+			if (StringUtils.isBlank(fartherid)) {
+				tBCatalogdata.setNodeId(0); // 设置为根节点
+			}else {
+				String initFartherId = fartherid;
+				int deep = 0;
+				while (StringUtils.isNotBlank(initFartherId)) {
+					// 计数
+					deep ++;
+
+					// 查询
+					TBCatalogdataEntity fartherCatalog = tBCatalogdataService.get(TBCatalogdataEntity.class, initFartherId);
+					if (fartherCatalog != null) {
+						initFartherId = fartherCatalog.getFartherid();
+					}
+				}
+				tBCatalogdata.setNodeId(deep);
+			}
+
 			// 按年份拼装数量
 			String currentYear = DateUtil.getCurrentYear();
 			JSONObject sumJson = new JSONObject();
@@ -239,14 +258,37 @@ public class TBCatalogdataController extends BaseController {
 		message = "服务目录管理更新成功";
 		TBCatalogdataEntity t = tBCatalogdataService.get(TBCatalogdataEntity.class, tBCatalogdata.getId());
 		try {
-			MyBeanUtils.copyBeanNotNull2Bean(tBCatalogdata, t);
+			// 拼装节点编号
+            String type = tBCatalogdata.getType();
+            String fartherid = tBCatalogdata.getFartherid();
+            if (StringUtils.isBlank(t.getCatalogCode())) {
+				String catalogCode = tBCatalogdataService.makeCatalogCode(type, fartherid);
+				t.setCatalogCode(catalogCode);
+			}
+
+			// 拼装节点类型 0根节点，1..2..
+            if (StringUtils.isBlank(fartherid)) {
+            	t.setNodeId(0); // 设置为根节点
+			}else {
+            	String initFartherId = fartherid;
+            	int deep = 0;
+            	while (StringUtils.isNotBlank(initFartherId)) {
+            		// 计数
+					deep ++;
+
+					// 查询
+					TBCatalogdataEntity fartherCatalog = tBCatalogdataService.get(TBCatalogdataEntity.class, initFartherId);
+					if (fartherCatalog != null) {
+						initFartherId = fartherCatalog.getFartherid();
+					}
+				}
+				t.setNodeId(deep);
+			}
+
+            MyBeanUtils.copyBeanNotNull2Bean(tBCatalogdata, t);
 			if(StringUtil.isEmpty(t.getFartherid())){
 				t.setFartherid(null);
 			}
-            String type = t.getType();
-            String fartherid = t.getFartherid();
-            String catalogCode = tBCatalogdataService.makeCatalogCode(type, fartherid);
-            tBCatalogdata.setCatalogCode(catalogCode);
 
 			// 更新单价json
 			String priceJson = t.getPriceJson();

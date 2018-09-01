@@ -25,9 +25,9 @@
    <t:dgCol title="确认收入比率"  field="confirmIncomeRatio"  queryMode="single"  width="100" align="center"></t:dgCol>
    <t:dgCol title="回款总额(万元)"  field="receivedPay"  queryMode="single"  width="100" align="center"></t:dgCol>
    <t:dgCol title="回款比例"  field="receivedPayRatio"  queryMode="single"  width="100" align="center"></t:dgCol>
-   <t:dgCol title="项目实施状态"  field="projectStatus"  queryMode="single"  width="120" align="center"></t:dgCol>
+   <t:dgCol title="项目实施状态"  field="projectStatus"  queryMode="single" dictionary="proj_stat"  width="120" align="center"></t:dgCol>
    <t:dgCol title="业务id"  field="businessId"  hidden="true"  queryMode="single"  width="120" align="center"></t:dgCol>
-   <t:dgCol title="操作" field="opt" width="60" align="center"></t:dgCol>
+   <%--<t:dgCol title="操作" field="opt" width="60" align="center"></t:dgCol>--%>
    <%--<t:dgDelOpt title="删除" url="tBProfitTargetController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>--%>
    <%--<t:dgToolBar title="录入" icon="icon-add" url="tBProfitTargetController.do?goAdd" funname="add"></t:dgToolBar>--%>
    <t:dgToolBar title="编辑" icon="icon-edit" url="tBProfitTargetController.do?goUpdate" funname="update" operationCode="update"></t:dgToolBar>

@@ -70,7 +70,6 @@ public class TBCatalogdataServiceImpl extends CommonServiceImpl implements TBCat
  	}
  	/**
 	 * 删除操作增强业务
-	 * @param id
 	 * @return
 	 */
 	private void doDelBus(TBCatalogdataEntity t) throws Exception{
@@ -207,6 +206,11 @@ public class TBCatalogdataServiceImpl extends CommonServiceImpl implements TBCat
 					return catalogCode.substring(0,catalogCode.length()-4) + "-" + strCode;
 				}
 			}else {
+				List<TBCatalogdataEntity> tBCatalogList1 = this.findByQueryString("from TBCatalogdataEntity where id='" + fartherid + "' and type='" + type + "'");
+				if (tBCatalogList1.size() == 1) {
+					TBCatalogdataEntity tbCatalogdataEntity1 = tBCatalogList1.get(0);
+					catalogCode = tbCatalogdataEntity1.getCatalogCode();
+				}
 				String strCode = String.format("%0" + 3 + "d", (nextCode+1));
 				if (StringUtil.isEmpty(fartherid)) {
 					return prefix + strCode;

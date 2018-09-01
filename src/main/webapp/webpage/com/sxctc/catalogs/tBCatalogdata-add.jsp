@@ -64,6 +64,58 @@
 				<tr>
 					<td align="right">
 						<label class="Validform_label">
+							类型:
+						</label>
+					</td>
+					<td class="value">
+						<t:dictSelect field="type" type="list"  datatype="*" typeGroupCode="catatype"  defaultVal="${tBCatalogdataPage.type}" hasLabel="false"  title="类型" ></t:dictSelect>
+						<span class="Validform_checktip"></span>
+						<label class="Validform_label" style="display: none;">类型</label>
+					</td>
+				</tr>
+				<tr>
+					<td align="right">
+						<label class="Validform_label">
+							父节点:
+						</label>
+					</td>
+					<td class="value">
+						<input id="fartherid" name="fartherid" type="text" style="width: 150px" class="inputxt easyui-combotree"  ignore="ignore"
+							   data-options="panelHeight:'220',
+										url: 'tBCatalogdataController.do?datagrid&field=id,name',
+										loadFilter: function(data) {
+											var rows = data.rows || data;
+											var win = frameElement.api.opener;
+											var listRows = win.getDataGrid().treegrid('getData');
+											joinTreeChildren(rows, listRows);
+											convertTreeData(rows, 'name');
+											return rows;
+										},
+										onSelect:function(node){
+											$('#fartherid').val(node.id);
+										},
+										onLoadSuccess: function() {
+											var win = frameElement.api.opener;
+											var currRow = win.getDataGrid().treegrid('getSelected');
+											if(!'${tBCatalogdataPage.id}') {
+												//增加时，选择当前父菜单
+												if(currRow) {
+													$('#fartherid').combotree('setValue', currRow.id);
+												}
+											}else {
+												//编辑时，选择当前父菜单
+												if(currRow) {
+													$('#fartherid').combotree('setValue', currRow.fartherid);
+												}
+											}
+										}"/>
+						<span class="Validform_checktip"></span>
+						<label class="Validform_label" style="display: none;">父节点</label>
+					</td>
+				</tr>
+				<tr>
+					<td align="right">
+						<label class="Validform_label">
 							名称:
 						</label>
 					</td>
@@ -88,42 +140,27 @@
 				<tr>
 					<td align="right">
 						<label class="Validform_label">
-							父节点ID:
+							单价:
 						</label>
 					</td>
 					<td class="value">
-							<input id="fartherid" name="fartherid" type="text" style="width: 150px" class="inputxt easyui-combotree"  ignore="ignore" 
-							data-options="panelHeight:'220',
-				                    url: 'tBCatalogdataController.do?datagrid&field=id,name',  
-				                    loadFilter: function(data) {
-				                    	var rows = data.rows || data;
-				                    	var win = frameElement.api.opener;
-				                    	var listRows = win.getDataGrid().treegrid('getData');
-				                    	joinTreeChildren(rows, listRows);
-				                    	convertTreeData(rows, 'name');
-				                    	return rows; 
-				                    },
-				                    onSelect:function(node){
-				                    	$('#fartherid').val(node.id);
-				                    },
-				                    onLoadSuccess: function() {
-				                    	var win = frameElement.api.opener;
-				                    	var currRow = win.getDataGrid().treegrid('getSelected');
-				                    	if(!'${tBCatalogdataPage.id}') {
-				                    		//增加时，选择当前父菜单
-				                    		if(currRow) {
-				                    			$('#fartherid').combotree('setValue', currRow.id);
-				                    		}
-				                    	}else {
-				                    		//编辑时，选择当前父菜单
-				                    		if(currRow) {
-				                    			$('#fartherid').combotree('setValue', currRow.fartherid);
-				                    		}
-				                    	}
-				                    }"/>
-							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">父节点ID</label>
-						</td>
+						<input id="price" name="price" type="text" maxlength="32" style="width: 150px" class="inputxt"  ignore="ignore" />
+						<span class="Validform_checktip"></span>
+						<label class="Validform_label" style="display: none;">单价</label>
+					</td>
+				</tr>
+				<tr>
+					<td align="right">
+						<label class="Validform_label">
+							是否有效:
+						</label>
+					</td>
+					<td class="value">
+						<%--<input id="beizhu" name="beizhu" type="text" maxlength="64" style="width: 150px" class="inputxt"  ignore="ignore" />--%>
+						<t:dictSelect field="status" type="radio"  datatype="*" typeGroupCode="dev_flag"  defaultVal="1" hasLabel="false"  title="是否有效" ></t:dictSelect>
+						<span class="Validform_checktip"></span>
+						<label class="Validform_label" style="display: none;">是否有效</label>
+					</td>
 				</tr>
 				<tr>
 					<td align="right">
@@ -135,30 +172,6 @@
 					     	 <input id="beizhu" name="beizhu" type="text" maxlength="64" style="width: 150px" class="inputxt"  ignore="ignore" />
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">备注</label>
-						</td>
-				</tr>
-				<tr>
-					<td align="right">
-						<label class="Validform_label">
-							类型:
-						</label>
-					</td>
-					<td class="value">
-							  <t:dictSelect field="type" type="list"  datatype="*" typeGroupCode="catatype"  defaultVal="${tBCatalogdataPage.type}" hasLabel="false"  title="类型" ></t:dictSelect>     
-							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">类型</label>
-						</td>
-				</tr>
-				<tr>
-					<td align="right">
-						<label class="Validform_label">
-							单价:
-						</label>
-					</td>
-					<td class="value">
-					     	 <input id="price" name="price" type="text" maxlength="32" style="width: 150px" class="inputxt"  ignore="ignore" />
-							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">单价</label>
 						</td>
 				</tr>
 				

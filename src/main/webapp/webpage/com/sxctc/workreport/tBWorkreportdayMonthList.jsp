@@ -4,7 +4,7 @@
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
   <c:if test="${toolFlag == '1'}">
-  <t:datagrid name="tBWorkreportdayMonthList" checkbox="false" pagination="true" fitColumns="false" title="月报" actionUrl="tBWorkreportdayMonthController.do?datagrid&reportOpt=0" idField="id" fit="true" queryMode="group">
+  <t:datagrid name="tBWorkreportdayMonthList" checkbox="false" pagination="true" sortName="unitCode" fitColumns="false" title="月报" actionUrl="tBWorkreportdayMonthController.do?datagrid&reportOpt=0" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -90,4 +90,19 @@ function ExportXlsByT() {
 	JeecgExcelExport("tBWorkreportdayMonthController.do?exportXlsByT","tBWorkreportdayMonthList");
 }
 
+function mergeCells(data) {
+    var mark=1;
+    for (var i=1; i <data.rows.length; i++) {
+        if (data.rows[i]['unitCode'] == data.rows[i-1]['unitCode']) {
+            mark += 1;
+            $("#tBWorkreportdayMonthList").datagrid('mergeCells',{
+                index: i+1-mark,
+                field: 'unitCode',
+                rowspan:mark
+            });
+        }else{
+            mark=1;
+        }
+    }
+}
  </script>

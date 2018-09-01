@@ -35,7 +35,7 @@
    <t:dgCol title="业务id"  field="sortNum"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
 
    <%--<t:dgCol title="操作" field="opt" width="100"></t:dgCol>--%>
-   <t:dgDelOpt title="删除" url="tBBusinessOpptyController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o" exp="businessId#ne#"/>
+   <t:dgDelOpt title="删除" url="tBBusinessOpptyController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o" exp="businessId#ne#" operationCode="delete"/>
    <%--<t:dgToolBar title="录入" icon="icon-add" url="tBBusinessOpptyController.do?goAdd" funname="add"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="编辑" icon="icon-edit" url="tBBusinessOpptyController.do?goUpdate" funname="update"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="tBBusinessOpptyController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
