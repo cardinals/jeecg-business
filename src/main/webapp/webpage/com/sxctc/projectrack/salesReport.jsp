@@ -14,6 +14,14 @@
 <body class="gray-bg">
 <div class="container-fluid" style="margin:30px;">
     <div class="row  border-bottom white-bg dashboard-header">
+        <blockquote class="text-warning" style="font-size:14px">
+            <h1 class="text-warning" style="font-weight: bold;color:#4F5050">政务云营销大数据管理系统</h1>
+            <h4 class="text-danger">欢迎光临</h4>
+            <%--<iframe id="fancybox-frame" name="fancybox-frame1533801934382" frameborder="0" scrolling="no" hspace="0" height="25px" style="margin-bottom: -7px;" src="http://i.tianqi.com/index.php?c=code&a=getcode&id=34&h=25&w=280&py=taiyuan"></iframe>--%>
+        </blockquote>
+        <hr>
+    </div>
+    <div class="row  border-bottom white-bg dashboard-header">
             <div class="col-sm-5 col-md-5" id="rankOfSale"></div>
             <div class="col-sm-5 col-md-5 col-md-offset-1 col-md-offset-1" id="rankOfUnit"></div>
     </div>

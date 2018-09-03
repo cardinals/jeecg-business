@@ -575,6 +575,9 @@ public class LoginController extends BaseController{
 		if (!"A04A01A01A01".equals(orgCode)) {
 			request.setAttribute("optFlag", 1);
 		}
+		if ("A04".equals(orgCode)) {
+			return new ModelAndView("com/sxctc/projectrack/salesReport");
+		}
 		return new ModelAndView("main/hplushome");
 	}
 	

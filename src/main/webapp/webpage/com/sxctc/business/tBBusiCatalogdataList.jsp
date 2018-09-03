@@ -7,7 +7,8 @@
                     actionUrl="tBBusiCatalogdataController.do?datagrid&businessId=${businessId}&type=${type}" idField="id"  queryMode="group" singleSelect="true">
             <t:dgCol title="id"  field="id"   hidden="true"   queryMode="group"  width="140"></t:dgCol>
             <t:dgCol title="名称"  field="name" width="150"></t:dgCol>
-            <t:dgCol title="单位"  field="danwei" width="150"></t:dgCol>
+            <t:dgCol title="单位"  field="danwei" width="40"></t:dgCol>
+            <t:dgCol title="单价"  field="price" width="40"></t:dgCol>
             <t:dgCol title="数量"  field="num" extendParams="editor:'numberbox'" width="80"></t:dgCol>
             <t:dgCol title="备注"  field="beizhu" width="80"></t:dgCol>
 
