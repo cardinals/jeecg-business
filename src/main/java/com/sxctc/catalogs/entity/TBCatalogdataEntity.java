@@ -6,16 +6,11 @@ import java.lang.String;
 import java.lang.Double;
 import java.lang.Integer;
 import java.math.BigDecimal;
+import javax.persistence.*;
 import javax.xml.soap.Text;
 import java.sql.Blob;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.SequenceGenerator;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**   
@@ -65,6 +60,9 @@ public class TBCatalogdataEntity implements java.io.Serializable {
 	/**节点ID*/
 	@Excel(name="节点ID",width=15)
 	private Integer nodeId;
+
+	/**自定义参数*/
+	private BigDecimal total;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -272,5 +270,14 @@ public class TBCatalogdataEntity implements java.io.Serializable {
 	 */
 	public void setNodeId(Integer nodeId){
 		this.nodeId = nodeId;
+	}
+
+	@Transient
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
 	}
 }

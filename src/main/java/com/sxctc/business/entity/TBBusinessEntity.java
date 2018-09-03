@@ -6,16 +6,11 @@ import java.lang.String;
 import java.lang.Double;
 import java.lang.Integer;
 import java.math.BigDecimal;
+import javax.persistence.*;
 import javax.xml.soap.Text;
 import java.sql.Blob;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.SequenceGenerator;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**   
@@ -105,6 +100,12 @@ public class TBBusinessEntity implements java.io.Serializable {
 	/**时间跨越*/
 	@Excel(name="时间跨越",width=15)
 	private Integer dayRange;
+
+	/**自定义返回参数*/
+	/**总收入*/
+	private BigDecimal total;
+	/**服务目录当年选用数量*/
+	private Integer sum;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -652,5 +653,23 @@ public class TBBusinessEntity implements java.io.Serializable {
 	 */
 	public void setDayRange(Integer dayRange){
 		this.dayRange = dayRange;
+	}
+
+	@Transient
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
+	}
+
+	@Transient
+	public Integer getSum() {
+		return sum;
+	}
+
+	public void setSum(Integer sum) {
+		this.sum = sum;
 	}
 }
