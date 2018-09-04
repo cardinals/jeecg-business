@@ -97,8 +97,9 @@ public class TBStatisCatalogController extends BaseController {
 
         // 遍历查询结果，组装统计字段
         List<TBCatalogdataEntity> results = dataGrid.getResults();
-        if (results.size() == 0) {
+        if (results.size() == 0 || "01".equals(types)) {
             TagUtil.treegrid(response, dataGrid);
+            return;
         }
 
         // 遍历
