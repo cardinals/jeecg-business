@@ -14,8 +14,8 @@
         <%--</t:datagrid>--%>
 
         <t:datagrid name="tBBusinessList" checkbox="false" pagination="true" actionUrl="tBStatisCatalogController.do?typeGroupGrid&typegroupid=${typegroupid}" sortName="unitCode" idField="id" fit="true" queryMode="group" fitColumns="false" singleSelect="false" onLoadSuccess="mergeCells">
-            <t:dgCol title="单位名称"  field="unitCode"  queryMode="single"  dictionary="unit_name"  width="200" align="center"></t:dgCol>
-            <t:dgCol title="系统名称"  field="projectName"  queryMode="single"  width="200" align="center"></t:dgCol>
+            <t:dgCol title="单位名称"  field="unitCode" query="true"  queryMode="single"  dictionary="unit_name"  width="200" align="center"></t:dgCol>
+            <t:dgCol title="系统名称"  field="projectName" query="true"  queryMode="single"  width="200" align="center"></t:dgCol>
             <t:dgCol title="当年所选量"  field="sum"  queryMode="single"  width="100" align="center"></t:dgCol>
             <t:dgCol title="总计（万元）"  field="total"  queryMode="single"  width="100" align="center"></t:dgCol>
         </t:datagrid>
