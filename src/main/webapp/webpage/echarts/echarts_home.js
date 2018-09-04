@@ -133,16 +133,19 @@ $.ajax({
 
             var winTheBidProjectNum = data.attributes.winTheBidProjectNum;
             var targetConstructProjectNum = data.attributes.targetConstructProjectNum;
+            if (winTheBidProjectNum > targetConstructProjectNum){
+                winTheBidProjectNum = targetConstructProjectNum;
+            }
             console.log(data);
             var percent = 0;
             if (winTheBidProjectNum == 0) {
                 percent = 0;
             } else {
-                percent = Math.round(1/3*100);
+                percent = Math.round(winTheBidProjectNum/3*100);
             }
             var data1 = {
                 id: 'echartPie',
-                value: [1, targetConstructProjectNum-1],
+                value: [winTheBidProjectNum, targetConstructProjectNum-winTheBidProjectNum],
                 legend: ['已中标项目', '尚未中标项目'],
                 color: ['#6AB0B8', '#E98F6F', '#CD2626'],
                 // tooltipShow:false,    //设置悬浮提示显示              --默认显示true

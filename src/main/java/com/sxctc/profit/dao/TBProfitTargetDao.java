@@ -19,4 +19,5 @@ public interface TBProfitTargetDao {
     @Arguments({"createBy"})
     @ResultType(Integer.class)
     Integer getSumConfirmIncome(String createBy);
+
 }

@@ -114,7 +114,6 @@ public class TBStatisCatalogController extends BaseController {
                     if (checkNum != null && checkNum != 0) {
                         total += checkNum;
                     }
-
                 }
             }
             if (total != 0 && !price.equals(BigDecimal.ZERO)) {
