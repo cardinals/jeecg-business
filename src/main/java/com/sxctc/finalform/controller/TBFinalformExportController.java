@@ -165,7 +165,7 @@ public class TBFinalformExportController extends BaseController {
 			BigDecimal bg1 = new BigDecimal(cloudCount);
 			BigDecimal bg2 = new BigDecimal(projectCount);
 
-			result.setTotalCoiunt(bg1.add(bg2).toString());
+			result.setTotalCount(bg1.add(bg2).toString());
 		}
 
 		TagUtil.datagrid(response, dataGrid);
@@ -362,7 +362,7 @@ public class TBFinalformExportController extends BaseController {
 			BigDecimal bg1 = new BigDecimal(cloudCount);
 			BigDecimal bg2 = new BigDecimal(projectCount);
 
-			result.setTotalCoiunt(bg1.add(bg2).toString());
+			result.setTotalCount(bg1.add(bg2).toString());
 		}
 
 

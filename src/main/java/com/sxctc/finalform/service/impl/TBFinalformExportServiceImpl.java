@@ -101,12 +101,11 @@ public class TBFinalformExportServiceImpl extends CommonServiceImpl implements T
 		map.put("update_date", t.getUpdateDate());
 		map.put("sys_org_code", t.getSysOrgCode());
 		map.put("sys_company_code", t.getSysCompanyCode());
-		map.put("bpm_status", t.getBpmStatus());
 		map.put("unit_code", t.getUnitCode());
 		map.put("system_name", t.getSystemName());
 		map.put("cloud_count", t.getCloudCount());
 		map.put("project_count", t.getProjectCount());
-		map.put("total_coiunt", t.getTotalCoiunt());
+		map.put("total_coiunt", t.getTotalCount());
 		return map;
 	}
  	
@@ -126,12 +125,11 @@ public class TBFinalformExportServiceImpl extends CommonServiceImpl implements T
  		sql  = sql.replace("#{update_date}",String.valueOf(t.getUpdateDate()));
  		sql  = sql.replace("#{sys_org_code}",String.valueOf(t.getSysOrgCode()));
  		sql  = sql.replace("#{sys_company_code}",String.valueOf(t.getSysCompanyCode()));
- 		sql  = sql.replace("#{bpm_status}",String.valueOf(t.getBpmStatus()));
  		sql  = sql.replace("#{unit_code}",String.valueOf(t.getUnitCode()));
  		sql  = sql.replace("#{system_name}",String.valueOf(t.getSystemName()));
  		sql  = sql.replace("#{cloud_count}",String.valueOf(t.getCloudCount()));
  		sql  = sql.replace("#{project_count}",String.valueOf(t.getProjectCount()));
- 		sql  = sql.replace("#{total_coiunt}",String.valueOf(t.getTotalCoiunt()));
+ 		sql  = sql.replace("#{total_coiunt}",String.valueOf(t.getTotalCount()));
  		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
  		return sql;
  	}

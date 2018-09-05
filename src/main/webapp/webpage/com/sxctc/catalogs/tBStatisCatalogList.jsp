@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/context/mytags.jsp"%>
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
+<style>
+    div.datagrid-cell{
+        height:auto;
+    }
+</style>
 <div id="main_typegroup_list" class="easyui-layout" fit="true">  
     <div region="center" style="padding:0px;border:0px">
         <%--<t:datagrid name="tBCatalogdataList" title="厅局信息管理" actionUrl="systemController.do?typeGroupGrid&typegroupcode=unit_name"
@@ -18,7 +23,7 @@
         </t:datagrid>--%>
 
         <%--<t:datagrid name="tBCatalogdataList" title="服务目录统计" actionUrl="tBStatisCatalogController.do?datagrid&catalogtype=${type}" idField="id" treegrid="true" pagination="false" onLoadSuccess="loadSuccess" queryMode="group" btnCls="bootstrap btn btn-info btn-xs">--%>
-        <t:datagrid name="tBCatalogdataList" checkbox="false" pagination="true" treegrid="true" treeField="name" fitColumns="false" title="服务目录统计" actionUrl="tBStatisCatalogController.do?datagrid&catalogtype=${type}"  idField="id" fit="true" queryMode="group" onLoadSuccess="loadSuccess">
+        <t:datagrid name="tBCatalogdataList" checkbox="false" pagination="true" treegrid="true" treeField="name" fitColumns="false" title="服务目录统计" actionUrl="tBStatisCatalogController.do?datagrid&catalogtype=${type}"  idField="id" fit="true" queryMode="group" onLoadSuccess="loadSuccess" rowStyler="mystyle">
             <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
             <t:dgCol title="名称"  field="name" queryMode="single"  width="500"></t:dgCol>
             <t:dgCol title="单位"  field="danwei"  queryMode="single"  width="100"></t:dgCol>
@@ -55,16 +60,27 @@
 
         $("#tBCatalogdataList").treegrid({
             onExpand : function(row){
-                //$("#tBCatalogdataList").treegrid("expandAll",row.id);
+                $("#tBCatalogdataList").treegrid("expandAll",row.id);
                 var children = $("#tBCatalogdataList").treegrid('getChildren',row.id);
                 if(children.length<=0){
                     row.leaf=true;
                     $("#tBCatalogdataList").treegrid('refresh', row.id);
                 }
             }
+            // onLoadSuccess: function (row) {
+            //     var roots = $("#tBCatalogdataList").treegrid("getRoots");
+            //     if (roots.length > 0) {
+            //         $.each(roots, function (i, item) {
+            //             $("#tBCatalogdataList").treegrid("expandAll", item.id);
+            //         });
+            //     }
+            // }
         });
     });
 
+    function mystyle() {
+        return "height:31px";
+    }
     function queryTypeValue(typegroupid, typegroupname){
         <%--var title = '<t:mutiLang langKey="lang.dictionary.type"/>: ' + typegroupname;--%>
         var title = '使用详情';
