@@ -4,8 +4,8 @@ import com.sxctc.util.DateUtil;
 import com.sxctc.workreport.entity.TBWorkreportdayEntity;
 import com.sxctc.workreport.entity.TBWorkreportdayWeekEntity;
 import com.sxctc.workreport.service.TBWorkreportdayWeekServiceI;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,8 +46,6 @@ import java.io.IOException;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import java.util.Map;
-import java.util.HashMap;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -60,7 +58,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.jeecgframework.core.beanvalidator.BeanValidators;
-import java.util.Set;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.net.URI;
@@ -138,7 +136,22 @@ public class TBWorkreportdayWeekController extends BaseController {
 					cq.eq("reportType",0);
 				}else {
 					cq.notEq("reportType",0);
+					cq.notEq("reportType",9);
 				}
+			}
+
+			//起始时间
+			String start = request.getParameter("searchDate_begin");
+			String end = request.getParameter("searchDate_end");
+			if(StringUtil.isNotEmpty(start)&&StringUtil.isNotEmpty(end)&&start.equals(end)){
+				start=start+" 00:00:00";
+				end=end+" 23:59:59";
+			}
+			if(StringUtil.isNotEmpty(start)){
+				cq.ge("reportStartDate",DateUtils.parseDate(start,"yyyy-MM-dd"));
+			}
+			if(StringUtil.isNotEmpty(end)){
+				cq.le("reportEndDate",DateUtils.parseDate(end,"yyyy-MM-dd"));
 			}
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
@@ -238,7 +251,7 @@ public class TBWorkreportdayWeekController extends BaseController {
 		TBWorkreportdayWeekEntity t = tBWorkreportdayWeekService.get(TBWorkreportdayWeekEntity.class, tBWorkreportdayWeek.getId());
 		try {
 			MyBeanUtils.copyBeanNotNull2Bean(tBWorkreportdayWeek, t);
-			tBWorkreportdayWeekService.saveOrUpdate(t);
+			tBWorkreportdayWeekService.saveOrUpdateWeek(t);
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {
 			e.printStackTrace();

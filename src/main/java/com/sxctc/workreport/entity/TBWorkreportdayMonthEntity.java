@@ -73,6 +73,8 @@ public class TBWorkreportdayMonthEntity implements java.io.Serializable {
 	/**工作总结*/
 	@Excel(name="工作总结",width=15)
 	private String workSum;
+	/**所属系统id*/
+	private String fatherId;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -333,4 +335,17 @@ public class TBWorkreportdayMonthEntity implements java.io.Serializable {
 	public void setWorkSum(String workSum){
 		this.workSum = workSum;
 	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  所属系统id
+	 */
+
+	@Column(name ="father_id",nullable=true,length=36)
+	public String getFatherId() { return fatherId; }
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  所属系统id
+	 */
+	public void setFatherId(String fatherId) { this.fatherId = fatherId; }
 }

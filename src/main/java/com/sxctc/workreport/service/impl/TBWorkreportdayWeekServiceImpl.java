@@ -2,21 +2,20 @@ package com.sxctc.workreport.service.impl;
 import com.sxctc.workreport.service.TBWorkreportdayWeekServiceI;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import com.sxctc.workreport.entity.TBWorkreportdayWeekEntity;
+import org.jeecgframework.core.util.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.io.Serializable;
-import org.jeecgframework.core.util.ApplicationContextUtil;
-import org.jeecgframework.core.util.MyClassLoader;
-import org.jeecgframework.core.util.StringUtil;
+
 import org.jeecgframework.web.cgform.enhance.CgformEnhanceJavaInter;
 
 import org.jeecgframework.minidao.util.FreemarkerParseFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.jeecgframework.core.util.ResourceUtil;
 
 @Service("tBWorkreportdayWeekService")
 @Transactional
@@ -70,7 +69,6 @@ public class TBWorkreportdayWeekServiceImpl extends CommonServiceImpl implements
  	}
  	/**
 	 * 删除操作增强业务
-	 * @param id
 	 * @return
 	 */
 	private void doDelBus(TBWorkreportdayWeekEntity t) throws Exception{
@@ -100,6 +98,7 @@ public class TBWorkreportdayWeekServiceImpl extends CommonServiceImpl implements
 		map.put("report_end_date", t.getReportEndDate());
 		map.put("report_type", t.getReportType());
 		map.put("work_sum", t.getWorkSum());
+		map.put("father_id", t.getFatherId());
 		return map;
 	}
  	
@@ -127,6 +126,7 @@ public class TBWorkreportdayWeekServiceImpl extends CommonServiceImpl implements
  		sql  = sql.replace("#{report_end_date}",String.valueOf(t.getReportEndDate()));
  		sql  = sql.replace("#{report_type}",String.valueOf(t.getReportType()));
  		sql  = sql.replace("#{work_sum}",String.valueOf(t.getWorkSum()));
+ 		sql  = sql.replace("#{father_id}",String.valueOf(t.getFatherId()));
  		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
  		return sql;
  	}
@@ -178,4 +178,43 @@ public class TBWorkreportdayWeekServiceImpl extends CommonServiceImpl implements
 			}
 		}
  	}
+
+ 	/**
+ 	 * @Title saveOrUpdateWeek
+ 	 * @Description 保存更新周报逻辑
+ 	 * @Param [t]
+ 	 * @Return void
+ 	 * @Author liuzc
+ 	 * @Date 2018/9/6 下午3:35
+ 	 **/
+ 	public void saveOrUpdateWeek(TBWorkreportdayWeekEntity t) throws Exception {
+ 		// 先保存更新系统主数据
+		this.saveOrUpdate(t);
+
+		// 再保存更新主数据对应的字数据
+		String hql = "from TBWorkreportdayWeekEntity where reportStartDate=? and reportEndDate=? and fatherId=?";
+		List<TBWorkreportdayWeekEntity> list = this.findHql(hql, t.getReportStartDate(), t.getReportEndDate(), t.getId());
+		// 进行更新
+		if (list.size() == 1) {
+			TBWorkreportdayWeekEntity oldWeekEntity = list.get(0);
+			String childId = oldWeekEntity.getId();
+			MyBeanUtils.copyBeanNotNull2Bean(t, oldWeekEntity);
+			oldWeekEntity.setId(childId);
+			oldWeekEntity.setReportType(9);
+
+			this.saveOrUpdate(oldWeekEntity);
+		}
+
+		// 进行新建
+		if (list.size() == 0) {
+			TBWorkreportdayWeekEntity newWeekEntity = new TBWorkreportdayWeekEntity();
+			MyBeanUtils.copyBeanNotNull2Bean(t, newWeekEntity);
+			newWeekEntity.setId(null);
+			newWeekEntity.setFatherId(t.getId());
+			newWeekEntity.setReportType(9);
+
+			this.save(newWeekEntity);
+		}
+
+	}
 }

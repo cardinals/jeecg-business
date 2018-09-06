@@ -1,22 +1,22 @@
 package com.sxctc.workreport.service.impl;
+import com.sxctc.workreport.entity.TBWorkreportdayMonthEntity;
 import com.sxctc.workreport.service.TBWorkreportdayMonthServiceI;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import com.sxctc.workreport.entity.TBWorkreportdayMonthEntity;
+import org.jeecgframework.core.util.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.io.Serializable;
-import org.jeecgframework.core.util.ApplicationContextUtil;
-import org.jeecgframework.core.util.MyClassLoader;
-import org.jeecgframework.core.util.StringUtil;
+
 import org.jeecgframework.web.cgform.enhance.CgformEnhanceJavaInter;
 
 import org.jeecgframework.minidao.util.FreemarkerParseFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.jeecgframework.core.util.ResourceUtil;
 
 @Service("tBWorkreportdayMonthService")
 @Transactional
@@ -97,6 +97,7 @@ public class TBWorkreportdayMonthServiceImpl extends CommonServiceImpl implement
 		map.put("report_type", t.getReportType());
 		map.put("business_id", t.getBusinessId());
 		map.put("work_sum", t.getWorkSum());
+		map.put("father_id", t.getFatherId());
 		return map;
 	}
  	
@@ -122,6 +123,7 @@ public class TBWorkreportdayMonthServiceImpl extends CommonServiceImpl implement
  		sql  = sql.replace("#{report_type}",String.valueOf(t.getReportType()));
  		sql  = sql.replace("#{business_id}",String.valueOf(t.getBusinessId()));
  		sql  = sql.replace("#{work_sum}",String.valueOf(t.getWorkSum()));
+ 		sql  = sql.replace("#{father_id}",String.valueOf(t.getFatherId()));
  		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
  		return sql;
  	}
@@ -173,4 +175,43 @@ public class TBWorkreportdayMonthServiceImpl extends CommonServiceImpl implement
 			}
 		}
  	}
+
+	/**
+	 * @Title saveOrUpdateMonth
+	 * @Description 保存更新周报逻辑
+	 * @Param [t]
+	 * @Return void
+	 * @Author liuzc
+	 * @Date 2018/9/6 下午3:35
+	 **/
+	public void saveOrUpdateMonth(TBWorkreportdayMonthEntity t) throws Exception {
+		// 先保存更新系统主数据
+		this.saveOrUpdate(t);
+
+		// 再保存更新主数据对应的字数据
+		String hql = "from TBWorkreportdayMonthEntity where reportDate=? and fatherId=?";
+		List<TBWorkreportdayMonthEntity> list = this.findHql(hql, t.getReportDate(), t.getId());
+		// 进行更新
+		if (list.size() == 1) {
+			TBWorkreportdayMonthEntity oldMonthEntity = list.get(0);
+			String childId = oldMonthEntity.getId();
+			MyBeanUtils.copyBeanNotNull2Bean(t, oldMonthEntity);
+			oldMonthEntity.setId(childId);
+			oldMonthEntity.setReportType(9);
+
+			this.saveOrUpdate(oldMonthEntity);
+		}
+
+		// 进行新建
+		if (list.size() == 0) {
+			TBWorkreportdayMonthEntity newMonthEntity = new TBWorkreportdayMonthEntity();
+			MyBeanUtils.copyBeanNotNull2Bean(t, newMonthEntity);
+			newMonthEntity.setId(null);
+			newMonthEntity.setFatherId(t.getId());
+			newMonthEntity.setReportType(9);
+
+			this.save(newMonthEntity);
+		}
+
+	}
 }

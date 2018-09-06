@@ -137,7 +137,18 @@ public class TBWorkreportdayMonthController extends BaseController {
 					cq.eq("reportType",0);
 				}else {
 					cq.notEq("reportType",0);
+					cq.notEq("reportType",9);
 				}
+			}
+
+			//起始时间
+			String start = request.getParameter("reportDate_begin");
+			String end = request.getParameter("reportDate_end");
+			if(StringUtil.isNotEmpty(start)){
+				cq.ge("reportDate",DateUtils.parseDate(start,"yyyy-MM"));
+			}
+			if(StringUtil.isNotEmpty(end)){
+				cq.le("reportDate",DateUtils.parseDate(end,"yyyy-MM"));
 			}
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
@@ -237,7 +248,7 @@ public class TBWorkreportdayMonthController extends BaseController {
 		TBWorkreportdayMonthEntity t = tBWorkreportdayMonthService.get(TBWorkreportdayMonthEntity.class, tBWorkreportdayMonth.getId());
 		try {
 			MyBeanUtils.copyBeanNotNull2Bean(tBWorkreportdayMonth, t);
-			tBWorkreportdayMonthService.saveOrUpdate(t);
+			tBWorkreportdayMonthService.saveOrUpdateMonth(t);
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {
 			e.printStackTrace();
