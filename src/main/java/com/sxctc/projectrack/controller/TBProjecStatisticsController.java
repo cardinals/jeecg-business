@@ -40,4 +40,5 @@ public class TBProjecStatisticsController extends BaseController {
 	public ModelAndView salesReport(HttpServletRequest request) {
 		return new ModelAndView("com/sxctc/projectrack/salesReport");
 	}
+
 }

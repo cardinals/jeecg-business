@@ -83,31 +83,31 @@
             ]
         };
         rankOfSaleChart.setOption(rankOfSaleoption);
-        // $.ajax({
-        //     url:"echartsController.do?getRankOfSale",
-        //     type:"post",
-        //     data:{},
-        //     dataType:"json",
-        //     success:function(data){
-        //         if(data.success){
-        //             var XData = [];
-        //             var yData=[];
-        //             var resultArray = data.obj;
-        //             for (var i = 0; i < resultArray.length; i++) {
-        //                 XData.push(resultArray[i].nameList);
-        //                 yData.push(resultArray[i].valueList);
-        //             }
-        //             rankOfSaleChart.setOption({
-        //                 yAxis: {
-        //                     data: XData
-        //                 },
-        //                 series: [{
-        //                         data: yData
-        //                     }
-        //                 ]});
-        //         }
-        //     }
-        // });
+        $.ajax({
+            url:"echartsController.do?getRankOfSale",
+            type:"post",
+            data:{},
+            dataType:"json",
+            success:function(data){
+                if(data.success){
+                    var XData = [];
+                    var yData=[];
+                    var resultArray = data.obj;
+                    for (var i = 0; i < resultArray.length; i++) {
+                        XData.push(resultArray[i].nameList);
+                        yData.push(resultArray[i].valueList);
+                    }
+                    rankOfSaleChart.setOption({
+                        yAxis: {
+                            data: XData
+                        },
+                        series: [{
+                                data: yData
+                            }
+                        ]});
+                }
+            }
+        });
 
         //厅局建设费用排名
         var rankOfUnitWarp= document.getElementById('rankOfUnit');
@@ -158,46 +158,46 @@
             ]
         };
         rankOfUnitChart.setOption(rankOfUnitoption);
-        // $.ajax({
-        //     url:"echartsController.do?getRankOfUnit",
-        //     type:"post",
-        //     data:{},
-        //     dataType:"json",
-        //     success:function(data){
-        //         if(data.success){
-        //             var xData = [];
-        //             var yData=[];
-        //             var resultArray = data.obj;
-        //             for (var i = 0; i < resultArray.length; i++) {
-        //                 yData.push(resultArray[i].nameList);
-        //                 xData.push(resultArray[i].valueList);
-        //             }
-        //             rankOfUnitChart.setOption({
-        //                 xAxis:  {
-        //                     type: 'value'
-        //                 },
-        //                 yAxis: {
-        //                     type: 'category',
-        //                     data: yData
-        //                 },
-        //                 series: [
-        //                     {
-        //                         name: '服务费用',
-        //                         type: 'bar',
-        //                         stack: '总量',
-        //                         label: {
-        //                             normal: {
-        //                                 show: true,
-        //                                 position: 'insideRight'
-        //                             }
-        //                         },
-        //                         data: xData
-        //                     }
-        //                 ]
-        //             });
-        //         }
-        //     }
-        // });
+        $.ajax({
+            url:"echartsController.do?getRankOfUnit",
+            type:"post",
+            data:{},
+            dataType:"json",
+            success:function(data){
+                if(data.success){
+                    var xData = [];
+                    var yData=[];
+                    var resultArray = data.obj;
+                    for (var i = 0; i < resultArray.length; i++) {
+                        yData.push(resultArray[i].nameList);
+                        xData.push(resultArray[i].valueList);
+                    }
+                    rankOfUnitChart.setOption({
+                        xAxis:  {
+                            type: 'value'
+                        },
+                        yAxis: {
+                            type: 'category',
+                            data: yData
+                        },
+                        series: [
+                            {
+                                name: '服务费用',
+                                type: 'bar',
+                                stack: '总量',
+                                label: {
+                                    normal: {
+                                        show: true,
+                                        position: 'insideRight'
+                                    }
+                                },
+                                data: xData
+                            }
+                        ]
+                    });
+                }
+            }
+        });
 
         //响应时间统计
         //创建到对接、对接到调研、调研到签订方案、签订方案到分配资源、分配资源到上云测试、上云测试到收回协议、收回协议到上云完成

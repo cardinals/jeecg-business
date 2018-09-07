@@ -1,0 +1,1 @@
+select t.* from t_b_business t ,t_b_unit_manage u where t.unit_code =u.unit_code and u.user_code = :userCode;
