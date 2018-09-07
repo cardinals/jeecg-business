@@ -20,6 +20,12 @@ public interface UserProgramService extends CommonService {
      * 
      */
     String getSequenceStatistics(String userCode);
+
+    /**
+     * 获取时序
+     *
+     */
+    String getSequenceDiagram(String businessId);
     /**
      * 获取平台各层费用
      * @return

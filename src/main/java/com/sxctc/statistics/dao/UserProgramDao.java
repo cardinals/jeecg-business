@@ -16,6 +16,10 @@ public interface UserProgramDao {
     @ResultType(String.class)
     String getSequenceStatistics(String userCode);
 
+    @Arguments({"businessId"})
+    @ResultType(String.class)
+    String getSequenceDiagram(String businessId);
+
     @ResultType(Histogram.class)
     List<Histogram> getManagerList();
 

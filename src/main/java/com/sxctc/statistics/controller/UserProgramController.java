@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -36,6 +37,17 @@ public class UserProgramController {
     @RequestMapping(params = "userProgramList")
     public ModelAndView userProjectList(HttpServletRequest request) {
         return new ModelAndView("com/sxctc/projectrack/userProgramList");
+    }
+    /**
+     * 上云时序页面 页面跳转
+     */
+    @RequestMapping(params = "programSequence")
+    public ModelAndView programSequence(HttpServletRequest request, HttpServletResponse response) {
+        String businessId = request.getParameter("businessId");
+        String allCount= userProgramService.getSequenceDiagram(businessId);
+         ModelAndView mav = new ModelAndView("com/sxctc/projectrack/programSequence");
+         mav.addObject("allCount",allCount);
+        return mav;
     }
 
     /**

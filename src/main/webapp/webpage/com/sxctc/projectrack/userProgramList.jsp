@@ -406,7 +406,19 @@
                 {field:'unitName',title:'厅局名称',width:150},
                 {field:'projectName',title:'系统名称',width:200,align:'center'},
                 {field:'joinStatus',title:'上云状态',width:100,align:'center'}
-            ]]
+            ]],
+            onClickRow: function(index,rowData){
+                var url = "userProgramController.do?programSequence&businessId="+rowData.id;
+                $.dialog({
+                    content: "url:"+url,
+                    lock : true,
+                    title:'上云时序图',
+                    opacity : 0.3,
+                    width:900,
+                    height:500,
+                    cache:false
+                });
+            }
         });
         $('#chanceProgramList').datagrid({
             url:'userProgramController.do?getChanceProgramList',

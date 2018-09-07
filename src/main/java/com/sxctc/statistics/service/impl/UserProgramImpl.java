@@ -32,8 +32,12 @@ public class UserProgramImpl extends CommonServiceImpl implements UserProgramSer
     }
 
     @Override
-    public String getSequenceStatistics(String userCode){
+    public  String getSequenceStatistics(String userCode){
         return userProgramDao.getSequenceStatistics(userCode);
+    }
+    @Override
+    public String getSequenceDiagram(String businessId){
+        return userProgramDao.getSequenceDiagram(businessId);
     }
 
     @Override
