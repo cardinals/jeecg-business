@@ -141,7 +141,7 @@ public class TBFinalformExportController extends BaseController {
 		// 遍历
 		for (TBFinalformExportEntity result : results) {
 			String businessId = result.getBusinessId();
-
+			//计算项目收入
 			String hql = "from TBProfitTargetEntity where businessId =?";
 			List<TBProfitTargetEntity> profitTargetList = this.tBFinalformExportService.findHql(hql,businessId);
 			if (profitTargetList.size() > 0) {
@@ -157,7 +157,38 @@ public class TBFinalformExportController extends BaseController {
 			}else{
 				result.setProjectCount("0");
 			}
-			result.setCloudCount("0");
+
+			//计算上云收入
+			String hql1 = "from TBBusiCatalogEntity where businessId =?";
+			List<TBBusiCatalogEntity> busiCatalogEntityList = this.tBFinalformExportService.findHql(hql1,businessId);
+			if(busiCatalogEntityList.size() > 0){
+				//进入数据状态
+				for(TBBusiCatalogEntity tbBusiCatalogEntity : busiCatalogEntityList){
+					String catalogId = tbBusiCatalogEntity.getCatalogId();
+					Integer checkNum = tbBusiCatalogEntity.getCheckNum();
+
+					//关联服务目录表获取单价
+					String hql2 = "from TBCatalogdataEntity where id =?";
+					List<TBCatalogdataEntity> catalogdataEntityList = this.tBFinalformExportService.findHql(hql2,catalogId);
+					if (catalogdataEntityList.size() > 0){
+						for (TBCatalogdataEntity catalogdataEntity : catalogdataEntityList){
+							BigDecimal price = catalogdataEntity.getPrice();
+							if (price != null){
+								BigDecimal bg = new BigDecimal(checkNum);
+								result.setCloudCount(bg.multiply(price).toString());
+							}else {
+								result.setCloudCount("0");
+							}
+						}
+					}else {
+						result.setCloudCount("0");
+					}
+				}
+			}else {
+				result.setCloudCount("0");
+			}
+
+
 
 			// 计算总合计收入
 			String cloudCount = result.getCloudCount();
