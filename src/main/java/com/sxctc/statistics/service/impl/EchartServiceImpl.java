@@ -56,6 +56,11 @@ public class EchartServiceImpl extends CommonServiceImpl implements EchartServic
         return echartsDao.getGradeTotal();
     }
 
+     @Override
+    public List<Histogram>getSecondGradeTotal(String  rootType){
+        return echartsDao.getSecondGradeTotal(rootType);
+    }
+
     @Override
     public String getSequenceStatistics(){
         return echartsDao.getSequenceStatistics();

@@ -60,6 +60,12 @@ public interface EchartServiceI extends CommonService {
      * @return
      */
     public List<Histogram> getGradeTotal();
+
+    /**
+     * 获取第二层费用
+     * @return
+     */
+    public List<Histogram> getSecondGradeTotal(String  rootType);
     /**
      * 获取时间差统计
      * @return

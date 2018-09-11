@@ -33,6 +33,10 @@ public interface EchartsDao {
     @ResultType(Histogram.class)
     public List<Histogram> getGradeTotal();
 
+    @Arguments({"rootType"})
+    @ResultType(Histogram.class)
+    public List<Histogram> getSecondGradeTotal(String  rootType);
+
     @ResultType(String.class)
     public String getSequenceStatistics();
 

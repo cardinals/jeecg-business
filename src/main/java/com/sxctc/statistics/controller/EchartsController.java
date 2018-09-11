@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.util.ResourceUtil;
+import org.jeecgframework.core.util.StringUtil;
 import org.jeecgframework.web.system.pojo.base.TSUser;
 import org.jeecgframework.web.system.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -300,6 +301,28 @@ public class EchartsController {
         AjaxJson json=new AjaxJson();
         try{
             List<Histogram> allCount = echartService.getGradeTotal();
+            json.setObj(allCount);
+        }catch(Exception e){
+            e.printStackTrace();
+            throw new BusinessException(e.getMessage());
+        }
+        json.setMsg("查询成功！");
+        return json;
+    }
+    /**
+     *获取第二次层目录的费用
+     * @return
+     */
+    @RequestMapping(params = "getSecondGradeTotal")
+    @ResponseBody
+    public AjaxJson getSecondGradeTotal(HttpServletRequest request) {
+        String rootType = request.getParameter("rootType");
+        if(StringUtil.equals(rootType,"ALL")){
+            rootType = "%AAS";
+        }
+        AjaxJson json=new AjaxJson();
+        try{
+            List<Histogram> allCount = echartService.getSecondGradeTotal(rootType+"%");
             json.setObj(allCount);
         }catch(Exception e){
             e.printStackTrace();
