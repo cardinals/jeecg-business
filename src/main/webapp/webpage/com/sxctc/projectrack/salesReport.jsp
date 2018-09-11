@@ -21,6 +21,7 @@
         </blockquote>
         <hr>
     </div>
+    <c:if test="${optFlag == 1}">
     <div class="row  border-bottom white-bg dashboard-header">
             <div class="col-sm-5 col-md-5" id="rankOfSale"></div>
             <div class="col-sm-5 col-md-5 col-md-offset-1 col-md-offset-1" id="rankOfUnit"></div>
@@ -32,6 +33,7 @@
             <div class="col-sm-6 col-md-6" id="gradeTotal"></div>
             <div class="col-sm-4 col-md-4 col-md-offset-1 col-md-offset-1" id="gradeDetail"></div>
     </div>
+    </c:if>
 </div>
     <script type="text/javascript">
         //销售业绩排名

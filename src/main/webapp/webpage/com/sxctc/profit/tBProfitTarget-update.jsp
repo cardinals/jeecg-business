@@ -212,9 +212,9 @@
 
      $("#receivedPay").blur(function(){
          var receivedPay = $("#receivedPay").val();
-         var confirmIncome = $("#confirmIncome").val();
-         if (receivedPay != null && confirmIncome != null && confirmIncome != 0) {
-             var num = (receivedPay/confirmIncome)*100;
+         var contractValue = $("#contractValue").val();
+         if (receivedPay != null && contractValue != null && contractValue != 0) {
+             var num = (receivedPay/contractValue)*100;
              $("#receivedPayRatio").val(num.toFixed(2) + "%");
          }
      });

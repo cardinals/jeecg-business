@@ -68,6 +68,8 @@ public class TBWorkreportdayEntity implements java.io.Serializable {
 	/**日志类型*/
 	@Excel(name="日志类型",width=15)
 	private Integer reportType;
+	/**业务id*/
+	private String businessId;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -327,4 +329,18 @@ public class TBWorkreportdayEntity implements java.io.Serializable {
 	public void setReportType(Integer reportType){
 		this.reportType = reportType;
 	}
+
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  日志业务关联表id
+	 */
+
+	@Column(name ="BUSINESS_ID",nullable=true,length=36)
+	public String getBusinessId() { return businessId; }
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  日志业务关联表id
+	 */
+	public void setBusinessId(String businessId) { this.businessId = businessId; }
 }

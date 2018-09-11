@@ -41,4 +41,15 @@ public class TBProjecStatisticsController extends BaseController {
 		return new ModelAndView("com/sxctc/projectrack/salesReport");
 	}
 
+	/**
+	 * 营销数据业务列表列表 页面跳转
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "leaderCockpit")
+	public ModelAndView leaderCockpit(HttpServletRequest request) {
+		request.setAttribute("optFlag", 1);
+		return new ModelAndView("main/hplushome");
+	}
+
 }

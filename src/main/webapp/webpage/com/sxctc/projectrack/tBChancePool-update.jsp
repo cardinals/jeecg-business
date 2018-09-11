@@ -10,7 +10,7 @@
 	</script>
 </head>
 <body>
-<t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" action="tBChancePoolController.do?doUpdate" >
+<t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" action="tBChancePoolController.do?doUpdate" callback="updateCallback">
 	<input id="id" name="id" type="hidden" value="${tBChancePoolPage.id }"/>
 	<table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable">
 		<tr>
@@ -228,5 +228,10 @@
             height:300,
             cache:false
         });
+    }
+
+    function updateCallback() {
+
+
     }
 </script>

@@ -278,6 +278,7 @@ public class TBBusiWorkreportController extends BaseController {
 			tBWorkreportday.setUnitCode(tBBusiWorkreportEntity.getUnitCode());
 			tBWorkreportday.setProjectName(tBBusiWorkreportEntity.getReportTitle());
 			tBWorkreportday.setReportType(tBBusiWorkreportEntity.getReportType());
+			tBWorkreportday.setBusinessId(tBBusiWorkreportEntity.getBusinessId());
 			List<TBWorkreportdayEntity> byQueryString = tBBusiWorkreportService.findByQueryString("from TBWorkreportdayEntity t where t.busiReportId=" + "'" + busiReportId + "'" + " and t.reportDate=" + "'" + s + "'");
 			if (byQueryString.size() > 0) {
 				tBWorkreportday.setId(byQueryString.get(0).getId());

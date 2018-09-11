@@ -128,7 +128,7 @@
 				</label>
 			</td>
 			<td class="value">
-				<input id="demandTime" name="demandTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  datatype="*"  ignore="ignore" value='<fmt:formatDate value='${tBBusinessPage.busJoinTime}' type="date" pattern="yyyy-MM-dd"/>'/>
+				<input id="demandTime" name="demandTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  datatype="*"  ignore="ignore" value='<fmt:formatDate value='${tBBusinessPage.demandTime}' type="date" pattern="yyyy-MM-dd"/>'/>
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">取得现状调研表/资源需求表时间</label>
 			</td>
@@ -140,7 +140,7 @@
 				</label>
 			</td>
 			<td class="value">
-				<input id="planTime" name="planTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  datatype="*"  ignore="ignore" value='<fmt:formatDate value='${tBBusinessPage.busJoinTime}' type="date" pattern="yyyy-MM-dd"/>'/>
+				<input id="planTime" name="planTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  datatype="*"  ignore="ignore" value='<fmt:formatDate value='${tBBusinessPage.planTime}' type="date" pattern="yyyy-MM-dd"/>'/>
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">签订方案时间</label>
 			</td>
@@ -152,7 +152,7 @@
 				</label>
 			</td>
 			<td class="value">
-				<input id="resourceTime" name="resourceTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  datatype="*"  ignore="ignore" value='<fmt:formatDate value='${tBBusinessPage.busJoinTime}' type="date" pattern="yyyy-MM-dd"/>'/>
+				<input id="resourceTime" name="resourceTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  datatype="*"  ignore="ignore" value='<fmt:formatDate value='${tBBusinessPage.resourceTime}' type="date" pattern="yyyy-MM-dd"/>'/>
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">分配资源时间</label>
 			</td>
@@ -164,7 +164,7 @@
 				</label>
 			</td>
 			<td class="value">
-				<input id="testTime" name="testTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  datatype="*"  ignore="ignore" value='<fmt:formatDate value='${tBBusinessPage.busJoinTime}' type="date" pattern="yyyy-MM-dd"/>'/>
+				<input id="testTime" name="testTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  datatype="*"  ignore="ignore" value='<fmt:formatDate value='${tBBusinessPage.testTime}' type="date" pattern="yyyy-MM-dd"/>'/>
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">上云测试时间</label>
 			</td>
@@ -188,7 +188,7 @@
 				</label>
 			</td>
 			<td class="value">
-				<input id="finishTime" name="finishTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  datatype="*"  ignore="ignore" value='<fmt:formatDate value='${tBBusinessPage.busJoinTime}' type="date" pattern="yyyy-MM-dd"/>'/>
+				<input id="finishTime" name="finishTime" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  datatype="*"  ignore="ignore" value='<fmt:formatDate value='${tBBusinessPage.finishTime}' type="date" pattern="yyyy-MM-dd"/>'/>
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">上云完成时间</label>
 			</td>

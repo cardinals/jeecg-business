@@ -4,7 +4,7 @@
 <div class="easyui-layout" fit="true">
    <div id="divMain" region="center" style="padding:0px;border:0px;overflow-x:hidden;">
        <div id="accDiv1" class="easyui-accordion" style="float: left;">
-            <iframe id="mainList" src="${webRoot}/tBBusinessOpptyController.do?chancelist" frameborder="0" height="30%"></iframe>
+            <iframe id="mainList" src="${webRoot}/tBBusinessOpptyController.do?chancelist" frameborder="0" height="40%"></iframe>
            <%--<iframe id="businessOpptyList" height="400" src="${webRoot}/tBBusinessOpptyController.do?list" frameborder="0" width="50%" style="float: left"></iframe>--%>
            <%--<div style="height: 65%; width: 20%"><img src="webpage/com/sxctc/businessoppty/img/oppty.png" /></div>--%>
            <br>
