@@ -2,6 +2,7 @@ package com.sxctc.statistics.service.impl;
 
 import com.sxctc.statistics.dao.EchartsDao;
 import com.sxctc.statistics.service.EchartServiceI;
+import com.sxctc.statistics.vo.CloudCount;
 import com.sxctc.statistics.vo.Histogram;
 import com.sxctc.statistics.vo.StatisticsVo;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
@@ -62,7 +63,7 @@ public class EchartServiceImpl extends CommonServiceImpl implements EchartServic
     }
 
     @Override
-    public int getCloudConfirmCount() {
+    public List<CloudCount> getCloudConfirmCount() {
         return echartsDao.getCloudConfirmCount();
     }
 
@@ -122,8 +123,8 @@ public class EchartServiceImpl extends CommonServiceImpl implements EchartServic
     }
 
     @Override
-    public int getCloudCompleteSystemNum() {
-        return echartsDao.getCloudCompleteSystemNum();
+    public int getTargetRevenueCount() {
+        return echartsDao.getTargetRevenueCount();
     }
 
     @Override

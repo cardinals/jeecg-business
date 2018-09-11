@@ -1,5 +1,6 @@
 package com.sxctc.statistics.service;
 
+import com.sxctc.statistics.vo.CloudCount;
 import com.sxctc.statistics.vo.Histogram;
 import com.sxctc.statistics.vo.StatisticsVo;
 import org.jeecgframework.core.common.service.CommonService;
@@ -74,7 +75,7 @@ public interface EchartServiceI extends CommonService {
     * @author: Dukaimin
     * @data:
     **/
-    public int getCloudConfirmCount();
+    public List<CloudCount> getCloudConfirmCount();
 
     /**
     * @Title: getTrackConfimCount
@@ -187,16 +188,6 @@ public interface EchartServiceI extends CommonService {
     public int getRecoveryAgreementSystemNum();
 
     /**
-     * @Title: getCloudCompleteSystemNum
-     * @description: 获取上云完成系统总数
-     * @Param
-     * @Return
-     * @author: Dukaimin
-     * @data:
-     **/
-    public int getCloudCompleteSystemNum();
-
-    /**
      * @Title: getWinTheBidProjectNum
      * @description: 获取已中标项目数量
      * @Param
@@ -225,4 +216,14 @@ public interface EchartServiceI extends CommonService {
     * @data:
     **/
     public int getTargetConstructProjectNum();
+
+    /**
+    * @Title: getTargetRevenueCount
+    * @description: 获取字典表中2018目标营收额
+    * @Param
+    * @Return
+    * @author: Dukaimin
+    * @data:
+    **/
+    public int getTargetRevenueCount();
 }

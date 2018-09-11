@@ -13,32 +13,42 @@ $.ajax({
     data: {},
     dataType: "json",
     success: function (data) {
+        console.log(data);
         /**
          * 图标所需数据
          */
         if (data.success) {
+            var cloudConfirmCount = data.attributes.cloudConfirmCount;
+            var trackConfirmCount = data.attributes.trackConfirmCount;
+            var targetRevenueCount = data.attributes.targetRevenueCount;
+            var percent = 0;
+            if (cloudConfirmCount == 0 && trackConfirmCount == 0){
+                percent = 0;
+            } else {
+                percent = Math.round((cloudConfirmCount+trackConfirmCount)/targetRevenueCount*100);
+            }
             var data1 = {
                 id: 'echartPie',
-                value: [15, 36, 12],
-                legend: ['上云完成金额', '跟踪完成金额', '未完成金额'],
+                value: [cloudConfirmCount, trackConfirmCount,targetRevenueCount-(cloudConfirmCount+trackConfirmCount)],
+                legend: ['上云完成金额', '项目完成金额', '未完成金额'],
                 color: ['#3FA7DC', '#5170A2', '#E1CA74'],
                 // tooltipShow:false,    //设置悬浮提示显示              --默认显示true
                 // hoverAnimation:false, //设置鼠标悬浮点击饼图动画效果  --默认开启动画true
-                title: '目标完成比例\n70%',
-            }
+                title: '目标完成比例\n'+percent+'%'
+            };
 
             ////////////////////////////////////////
 
             /**
              * 数据处理
              */
-            var seriesData = []
+            var seriesData = [];
             data1.value.forEach(function (item, index) {
                 seriesData.push({
                     value: item,
                     name: data1.legend[index]
                 })
-            })
+            });
             ////////////////////////////////////////
 
             var option2 = {
@@ -136,12 +146,12 @@ $.ajax({
             if (winTheBidProjectNum > targetConstructProjectNum){
                 winTheBidProjectNum = targetConstructProjectNum;
             }
-            console.log(data);
+
             var percent = 0;
             if (winTheBidProjectNum == 0) {
                 percent = 0;
             } else {
-                percent = Math.round(winTheBidProjectNum/3*100);
+                percent = Math.round(winTheBidProjectNum/targetConstructProjectNum*100);
             }
             var data1 = {
                 id: 'echartPie',
@@ -151,20 +161,20 @@ $.ajax({
                 // tooltipShow:false,    //设置悬浮提示显示              --默认显示true
                 // hoverAnimation:false, //设置鼠标悬浮点击饼图动画效果  --默认开启动画true
                 title: '目标完成比例\n'+percent+'%',
-            }
+            };
 
             ////////////////////////////////////////
 
             /**
              * 数据处理
              */
-            var seriesData = []
+            var seriesData = [];
             data1.value.forEach(function(item, index) {
                 seriesData.push({
                     value: item,
                     name: data1.legend[index]
                 })
-            })
+            });
             ////////////////////////////////////////
 
             var option3 = {
@@ -266,7 +276,7 @@ $.ajax({
             var recoveryAgreementSystemNum = data.attributes.recoveryAgreementSystemNum;
             var cloudCompleteNum = data.attributes.cloudCompleteNum;
 
-            console.log(data);
+
 
             option4 = {
                 title : {
@@ -316,7 +326,7 @@ $.ajax({
         }
     }
 });
-
+<!--饼图5-->
 var echartsWarp5= document.getElementById('pieChart5');
 var resizeWorldMapContainer5 = function () {//用于使chart自适应高度和宽度,通过窗体高宽计算容器高宽
     echartsWarp5.style.width = window.innerWidth/2.2+'px';
@@ -333,7 +343,8 @@ $.ajax({
         if (data.success) {
             var cloudCompleteNum = data.attributes.cloudCompleteNum;
             var targetCloudSystemNum = data.attributes.targetCloudSystemNum;
-            console.log(data);
+            
+
             option5 = {
                 title : {
                     text: '2018上云系统数量',
@@ -363,7 +374,7 @@ $.ajax({
                         center: ['50%', '60%'],
                         data:[
                             {value:cloudCompleteNum, name:'上云完成'},
-                            {value:10-cloudCompleteNum, name:'其他'}
+                            {value:targetCloudSystemNum-cloudCompleteNum, name:'其他'}
                         ],
                         itemStyle: {
                             emphasis: {

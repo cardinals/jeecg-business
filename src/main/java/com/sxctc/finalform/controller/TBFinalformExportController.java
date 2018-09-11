@@ -142,7 +142,7 @@ public class TBFinalformExportController extends BaseController {
 		for (TBFinalformExportEntity result : results) {
 			String businessId = result.getBusinessId();
 			//计算项目收入
-			String hql = "from TBProfitTargetEntity where businessId =?";
+			String hql = "from TBProfitTargetEntity where businessId = ?";
 			List<TBProfitTargetEntity> profitTargetList = this.tBFinalformExportService.findHql(hql,businessId);
 			if (profitTargetList.size() > 0) {
 				// 进行数据状态

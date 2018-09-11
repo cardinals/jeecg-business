@@ -1,8 +1,10 @@
 package com.sxctc.statistics.controller;
 
 import com.sxctc.statistics.service.EchartServiceI;
+import com.sxctc.statistics.vo.CloudCount;
 import com.sxctc.statistics.vo.Histogram;
 import io.swagger.annotations.Api;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.model.json.AjaxJson;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -152,6 +155,30 @@ public class EchartsController {
         AjaxJson json=new AjaxJson();
         Map<String,Object> result = new HashMap<String,Object>();
 
+        try {
+            BigDecimal cloudCount = new BigDecimal(0);
+
+            List<CloudCount> cloudConfirmCount = echartService.getCloudConfirmCount();
+            for (CloudCount count : cloudConfirmCount) {
+                String checkNum = count.getCheckNum();
+                String price = count.getPrice();
+                if (StringUtils.isNotBlank(checkNum)&&StringUtils.isNotBlank(checkNum)){
+                    cloudCount = cloudCount.add(new BigDecimal(checkNum).multiply(new BigDecimal(price)));
+                }
+
+            }
+
+
+//          int cloudConfirmCount = echartService.getCloudConfirmCount();
+            int trackConfirmCount = echartService.getTrackConfirmCount();
+            int targetRevenueCount = echartService.getTargetRevenueCount();
+
+            result.put("cloudConfirmCount",cloudCount.intValue());
+            result.put("trackConfirmCount",trackConfirmCount);
+            result.put("targetRevenueCount",targetRevenueCount);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         json.setAttributes(result);
         json.setMsg("查询成功！");
@@ -168,7 +195,7 @@ public class EchartsController {
     public AjaxJson getPieChartData3(HttpServletRequest request) {
         AjaxJson json=new AjaxJson();
         Map<String,Object> result = new HashMap<String,Object>();
-        TSUser user = ResourceUtil.getSessionUser();
+
 
         try {
             int winTheBidProjectNum = echartService.getWinTheBidProjectNum();

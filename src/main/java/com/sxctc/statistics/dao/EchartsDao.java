@@ -1,5 +1,6 @@
 package com.sxctc.statistics.dao;
 
+import com.sxctc.statistics.vo.CloudCount;
 import com.sxctc.statistics.vo.Histogram;
 import com.sxctc.statistics.vo.StatisticsVo;
 import org.jeecgframework.minidao.annotation.Arguments;
@@ -36,8 +37,8 @@ public interface EchartsDao {
     @ResultType(String.class)
     public String getSequenceStatistics();
 
-    @ResultType(Integer.class)
-    public int getCloudConfirmCount();
+    @ResultType(CloudCount.class)
+    public List<CloudCount> getCloudConfirmCount();
 
     @ResultType(Integer.class)
     public int getTrackConfirmCount();
@@ -73,7 +74,7 @@ public interface EchartsDao {
     public int getRecoveryAgreementSystemNum();
 
     @ResultType(Integer.class)
-    public int getCloudCompleteSystemNum();
+    public int getTargetRevenueCount();
 
     @ResultType(Integer.class)
     public int getWinTheBidProjectNum();
