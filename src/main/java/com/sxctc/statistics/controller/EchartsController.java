@@ -171,11 +171,11 @@ public class EchartsController {
 
 
 //          int cloudConfirmCount = echartService.getCloudConfirmCount();
-            int trackConfirmCount = echartService.getTrackConfirmCount();
+            Integer trackConfirmCount = echartService.getTrackConfirmCount();
             int targetRevenueCount = echartService.getTargetRevenueCount();
 
             result.put("cloudConfirmCount",cloudCount.intValue());
-            result.put("trackConfirmCount",trackConfirmCount);
+            result.put("trackConfirmCount",(trackConfirmCount != null)?trackConfirmCount:0);
             result.put("targetRevenueCount",targetRevenueCount);
         } catch (Exception e) {
             e.printStackTrace();

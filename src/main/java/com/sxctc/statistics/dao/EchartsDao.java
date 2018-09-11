@@ -45,7 +45,7 @@ public interface EchartsDao {
     public List<CloudCount> getCloudConfirmCount();
 
     @ResultType(Integer.class)
-    public int getTrackConfirmCount();
+    public Integer getTrackConfirmCount();
 
     @ResultType(Integer.class)
     public int getCloudCompleteNum();

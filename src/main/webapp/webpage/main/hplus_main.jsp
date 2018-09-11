@@ -69,7 +69,7 @@
                         </ul>
                          //update-end--Author: chenj Date:20160726 for: TASK #1207 [改造]h+风格下，去掉logo下面的内容，迁移位置到右上角，主题位置 --%>
                     </div>
-                    <div class="logo-element">SXCTC
+                    <div class="logo-element">SXCTJ
                     </div>
                 </li>
 

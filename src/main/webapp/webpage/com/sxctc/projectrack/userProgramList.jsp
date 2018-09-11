@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/context/mytags.jsp"%>
-<t:base type="jquery,easyui,tools,DatePicker"></t:base>
+<t:base type="jquery,easyui,tools,DatePicker,autocomplete"></t:base>
 
 <link rel="stylesheet" type="text/css" href="plug-in/ztree/css/zTreeStyle.css">
 <script type="text/javascript" src="plug-in/echart/echarts.js"></script>
@@ -28,6 +28,8 @@
     </div>
 </div>
 <script type="text/javascript">
+    var programListdictsData = {};
+    var chanceProgramListdictsData = {};
 
     var setting = {
         check: {
@@ -378,6 +380,21 @@
 
     //加载tree
     $(function(){
+        var promiseArr = [];
+        promiseArr.push(new Promise(function(resolve, reject) {
+            initDictByCode(chanceProgramListdictsData,"unit_name",resolve);
+        }));
+        promiseArr.push(new Promise(function(resolve, reject) {
+            initDictByCode(chanceProgramListdictsData,"control",resolve);
+        }));
+        promiseArr.push(new Promise(function(resolve, reject) {
+            initDictByCode(chanceProgramListdictsData,"dev_flag",resolve);
+        }));
+        promiseArr.push(new Promise(function(resolve, reject) {
+            initDictByCode(programListdictsData,"joinStatus",resolve);
+        }));
+
+
         $.ajax({
             url:"userProgramController.do?getManagerList",
             type:"post",
@@ -402,10 +419,10 @@
         $('#programList').datagrid({
             url:'userProgramController.do?getProgramList',
             columns:[[
-                {field:'unitCode',title:'单位名称',width:100,align:'center'},
+                {field:'unitCode',title:'单位名称',width:100, hidden:true, align:'center'},
                 {field:'unitName',title:'厅局名称',width:150},
                 {field:'projectName',title:'系统名称',width:200,align:'center'},
-                {field:'joinStatus',title:'上云状态',width:100,align:'center'}
+                {field:'joinStatus',title:'上云状态',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,programListdictsData.joinStatus); }}
             ]],
             onClickRow: function(index,rowData){
                 var url = "userProgramController.do?programSequence&businessId="+rowData.id;
@@ -424,10 +441,60 @@
             url:'userProgramController.do?getChanceProgramList',
             columns:[[
                 {field:'projectName',title:'系统名称',width:200,align:'center'},
-                {field:'winningResult',title:'是否中标',width:100,align:'center'},
-                {field:'controlDegree',title:'把控度',width:100,align:'center'},
+                {field:'winningResult',title:'是否中标',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,chanceProgramListdictsData.dev_flag); }},
+                {field:'controlDegree',title:'把控度',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,chanceProgramListdictsData.control); }},
                 {field:'project_plan',title:'计划',width:180,align:'center'}
             ]]
         });
     });
+
+
+    //加载字典数据
+    function initDictByCode(dictObj,code,callback){
+        if(!dictObj[code]){
+            jQuery.ajax({
+                url: "systemController.do?typeListJson&typeGroupName="+code,
+                type:"GET",
+                dataType:"JSON",
+                success: function (back) {
+                    if(back.success){
+                        dictObj[code]= back.obj;
+
+                    }
+                    callback();
+                }
+            });
+        }
+    }
+
+    //列表数据字典项格式化
+    function listDictFormat(value,dicts){
+        if (!value) return '';
+        var valArray = value.toString().split(',');
+        var showVal = '';
+        if (valArray.length > 1) {
+            for (var k = 0; k < valArray.length; k++) {
+                if(dicts && dicts.length>0){
+                    for(var a = 0;a < dicts.length;a++){
+                        if(dicts[a].typecode ==valArray[k]){
+                            showVal = showVal + dicts[a].typename + ',';
+                            break;
+                        }
+                    }
+                }
+            }
+            showVal=showVal.substring(0, showVal.length - 1);
+        }else{
+            if(dicts && dicts.length>0){
+                for(var a = 0;a < dicts.length;a++){
+                    if(dicts[a].typecode == value){
+                        showVal =  dicts[a].typename;
+                        break;
+                    }
+                }
+            }
+        }
+        return showVal;
+    }
+
 </script>

@@ -73,7 +73,7 @@ public class EchartServiceImpl extends CommonServiceImpl implements EchartServic
     }
 
     @Override
-    public int getTrackConfirmCount() {
+    public Integer getTrackConfirmCount() {
         return echartsDao.getTrackConfirmCount();
     }
 

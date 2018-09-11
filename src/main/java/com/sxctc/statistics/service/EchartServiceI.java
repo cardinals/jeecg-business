@@ -91,7 +91,7 @@ public interface EchartServiceI extends CommonService {
     * @author: Dukaimin
     * @data:
     **/
-    public int getTrackConfirmCount();
+    public Integer getTrackConfirmCount();
 
     /**
      * @Title: getCloudCompleteNum

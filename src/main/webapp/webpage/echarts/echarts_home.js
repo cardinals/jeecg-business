@@ -347,8 +347,8 @@ $.ajax({
 
             option5 = {
                 title : {
-                    text: '2018上云系统数量',
-                    subtext: '目标数量：'+targetCloudSystemNum+'个',
+                    text: '2018上云系统数量（目标数量：'+targetCloudSystemNum+'）',
+                    //subtext: '目标数量：'+targetCloudSystemNum+'个',
                     x:'center',
                     textStyle: {
                         fontSize: 20,
