@@ -30,8 +30,8 @@
             <div class="col-sm-11 col-md-11" id="sequenceStatistics"></div>
     </div>
     <div class="row  border-bottom white-bg dashboard-header">
-            <div class="col-sm-6 col-md-6" id="gradeTotal"></div>
-            <div class="col-sm-4 col-md-4 col-md-offset-1 col-md-offset-1" id="gradeDetail"></div>
+            <div class="col-sm-5 col-md-5" id="gradeTotal"></div>
+            <div class="col-sm-5 col-md-5 col-md-offset-1 col-md-offset-1" id="gradeDetail"></div>
     </div>
     </c:if>
 </div>
@@ -351,7 +351,7 @@
                     data:[0, 4700, 2100, 100, 0]
                 },
                 {
-                    name:'生活费',
+                    name:'费用',
                     type:'bar',
                     stack: '总量',
                     itemStyle : { normal: {label : {show: true, position: 'inside'}}},
@@ -360,6 +360,9 @@
             ]
         };
         gradeTotalChart.setOption(gradeTotalOption);
+        gradeTotalChart.on('click', function (parmas) {
+            updateSecondGradeTotal(parmas.name);
+        });
         $.ajax({
             url:"echartsController.do?getGradeTotal",
             type:"post",
@@ -421,39 +424,93 @@
             title:{
                 text:'服务费用统计'
             },
-            visualMap: {
-                show: false,
-                min: 80,
-                max: 600,
-                inRange: {
-                    colorLightness: [0, 1]
+            color: ['#3398DB'],
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
                 }
             },
-            tooltip : {
-                trigger: 'item',
-                formatter: "{b} : {c} ({d}%)"
+            legend: {
+                data: ['服务费用'],
+                x:'right'
             },
-            series : [
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis:  {
+                type: 'value'
+            },
+            yAxis: {
+                type: 'category',
+                data: ['服务一', '服务二', '服务三', '服务四']
+            },
+            series: [
                 {
-                    type: 'pie',
-                    radius: '65%',
-                    data:[
-                        {value:235, name:'服务1'},
-                        {value:274, name:'服务2'},
-                        {value:310, name:'服务2'},
-                        {value:335, name:'服务4'},
-                        {value:400, name:'服务5'}
-                    ],
-                    roseType: 'angle',
-                    itemStyle: {
+                    name: '服务费用',
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
                         normal: {
-                            color: '#37A2DA'
+                            show: true,
+                            position: 'insideRight'
                         }
-                    }
+                    },
+                    data: [77, 66, 87, 30]
                 }
             ]
         };
         gradeDetailChart.setOption(gradeDetailOption);
+        updateSecondGradeTotal("IAAS");
+        function updateSecondGradeTotal(rootType) {
+            $.ajax({
+                url:"echartsController.do?getSecondGradeTotal",
+                type:"post",
+                data:{rootType:rootType},
+                dataType:"json",
+                success:function(data){
+                    if(data.success){
+                        var xData = [];
+                        var yData=[];
+                        var resultArray = data.obj;
+                        for (var i = 0; i < resultArray.length; i++) {
+                            yData.push(resultArray[i].nameList);
+                            xData.push(resultArray[i].valueList);
+                        }
+                        gradeDetailChart.setOption({
+                            title:{
+                                text: rootType+"服务费用统计"
+                            },
+                            xAxis:  {
+                                type: 'value'
+                            },
+                            yAxis: {
+                                type: 'category',
+                                data: yData
+                            },
+                            series: [
+                                {
+                                    name: '服务费用',
+                                    type: 'bar',
+                                    stack: '总量',
+                                    label: {
+                                        normal: {
+                                            show: true,
+                                            position: 'insideRight'
+                                        }
+                                    },
+                                    data: xData
+                                }
+                            ]
+                        });
+                    }
+                }
+            });
+        }
+
 
     </script>
 </body>
