@@ -33,8 +33,8 @@
    <t:dgCol title="备注"  field="remark"  queryMode="single"  width="120" align="center"></t:dgCol>
    <t:dgCol title="是否中标"  field="winningResult"  queryMode="single"  dictionary="dev_flag"  width="100" align="center"></t:dgCol>
    <t:dgCol title="业务主表id"  field="businessId"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <%--<t:dgCol title="操作" field="opt" width="100"></t:dgCol>--%>
-   <t:dgDelOpt title="删除" url="tBChancePoolController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
+   <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
+   <t:dgDelOpt title="删除" url="tBChancePoolController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o" operationCode="delete"/>
    <%--<t:dgToolBar title="录入" icon="icon-add" url="tBChancePoolController.do?goAdd" funname="add"></t:dgToolBar>--%>
    <t:dgToolBar title="编辑" icon="icon-edit" url="tBChancePoolController.do?goUpdate" funname="update" operationCode="update"></t:dgToolBar>
    <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="tBChancePoolController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>

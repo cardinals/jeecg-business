@@ -197,7 +197,7 @@ public class TBChancePoolController extends BaseController {
 		tBChancePool = systemService.getEntity(TBChancePoolEntity.class, tBChancePool.getId());
 		message = "项目机会池删除成功";
 		try{
-			tBChancePoolService.delete(tBChancePool);
+			tBChancePoolService.deleteChancePool(tBChancePool);
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -296,7 +296,7 @@ public class TBChancePoolController extends BaseController {
 			if (winningResult == 1) {
 				// 将数据添加到已签订项目中
 				TBProfitTargetEntity tbProfitTargetEntity = new TBProfitTargetEntity();
-				tbProfitTargetEntity.setBusinessId(tBChancePool.getBusinessId());
+				tbProfitTargetEntity.setBusinessId(t.getBusinessId());
 				tbProfitTargetEntity.setProjectName(tBChancePool.getProjectName());
 				tbProfitTargetEntity.setUnitCode(tBChancePool.getUnitCode());
 				tBProfitTargetService.save(tbProfitTargetEntity);

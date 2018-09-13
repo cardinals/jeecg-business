@@ -1,12 +1,17 @@
 package com.sxctc.finalform.service.impl;
 import com.sxctc.finalform.dao.TBFinalformExportDao;
 import com.sxctc.finalform.service.TBFinalformExportServiceI;
+import com.sxctc.finalform.vo.CloudInComeVo;
+import com.sxctc.profit.entity.TBProfitTargetEntity;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import com.sxctc.finalform.entity.TBFinalformExportEntity;
 import org.jeecgframework.minidao.pojo.MiniDaoPage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.io.Serializable;
@@ -181,4 +186,49 @@ public class TBFinalformExportServiceImpl extends CommonServiceImpl implements T
 			}
 		}
  	}
+
+	/**
+	 * @Title: getSumCloudInCome
+	 * @description: 获取上云收入总和
+	 * @Param
+	 * @Return
+	 * @author: Dukaimin
+	 * @data:
+	 **/
+	public BigDecimal getSumCloudInCome() throws Exception {
+		List<CloudInComeVo> sumCloudInCome = tBFinalformExportDao.getSumCloudInCome();
+		BigDecimal total = new BigDecimal(0);
+		if (sumCloudInCome.size() > 0) {
+			for (CloudInComeVo cloudInComeVo : sumCloudInCome) {
+				Integer checkNum = cloudInComeVo.getCheckNum();
+				BigDecimal price = cloudInComeVo.getPrice();
+				if (checkNum != null && price != null) {
+					total = total.add(price.multiply(new BigDecimal(checkNum)));
+				}
+			}
+		}
+		return total;
+	}
+
+	/**
+	 * @Title: getSumProjectInCome
+	 * @description: 获取项目收入总和
+	 * @Param
+	 * @Return
+	 * @author: Dukaimin
+	 * @data:
+	 **/
+	public BigDecimal getSumProjectInCome() throws Exception {
+		List<TBProfitTargetEntity> sumProjectInCome = tBFinalformExportDao.getSumProjectInCome();
+		BigDecimal total = new BigDecimal(0);
+		if (sumProjectInCome.size() > 0) {
+			for (TBProfitTargetEntity tbProfitTargetEntity : sumProjectInCome) {
+				BigDecimal confirmIncome = tbProfitTargetEntity.getConfirmIncome();
+				if (confirmIncome != null) {
+					total = total.add(confirmIncome);
+				}
+			}
+		}
+		return total;
+	}
 }

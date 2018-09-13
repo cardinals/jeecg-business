@@ -258,4 +258,50 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 			}
 		}
 	}
+
+	/**
+	 * @Title deleteChancePool
+	 * @Description 删除机会池（给管理员账户）
+	 * @Param [entity]
+	 * @Return void
+	 * @Author liuzc
+	 * @Date 2018/9/1 上午10:57
+	 **/
+	public void deleteChancePool(TBChancePoolEntity tBChancePool) throws Exception {
+		// 获取项目归属人
+		String createBy = tBChancePool.getCreateBy();
+		String businessId = tBChancePool.getBusinessId();
+
+		// 1、删除机会池中项目
+		this.delete(tBChancePool);
+
+		// 2、删除商机评估中数据（如果有）
+		String hql = "from TBBusinessOpptyEntity where businessId=? and createBy=? and businessStatus=1";
+		List<TBBusinessOpptyEntity> tBBusinessOpptyList = this.findHql(hql, businessId, createBy);
+		if (tBBusinessOpptyList.size() == 1) {
+			TBBusinessOpptyEntity tbBusinessOpptyEntity = tBBusinessOpptyList.get(0);
+			// 判断是不是其用户下唯一一个评级
+			// 获取他现在的评级
+			Integer sortNum = tbBusinessOpptyEntity.getSortNum();
+			// 根据评级筛选
+			String hql1 = "from TBBusinessOpptyEntity where sortNum=? and createBy=? and businessStatus=1";
+			List<TBBusinessOpptyEntity> tBBusinessOppty = this.findHql(hql1, sortNum, createBy);
+			// 如果不是，则直接删除
+			if (tBBusinessOppty.size() > 1) {
+				this.delete(tbBusinessOpptyEntity);
+			}
+			// 如果是，则更新为空
+			if (tBBusinessOppty.size() == 1) {
+				tbBusinessOpptyEntity.setUpdateDate(null);
+				tbBusinessOpptyEntity.setUpdateBy(null);
+				tbBusinessOpptyEntity.setUpdateName(null);
+				tbBusinessOpptyEntity.setProjectName(null);
+				tbBusinessOpptyEntity.setUnitCode(null);
+				tbBusinessOpptyEntity.setBusinessId(null);
+				this.updateEntitie(tbBusinessOpptyEntity);
+			}
+
+		}
+
+	}
 }

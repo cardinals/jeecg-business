@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.sxctc.profit.entity.TBProfitTargetEntity;
 import org.apache.log4j.Logger;
 import org.jeecgframework.minidao.pojo.MiniDaoPage;
+import org.jeecgframework.web.system.pojo.base.TSUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -204,6 +205,18 @@ public class TBFinalformExportController extends BaseController {
 			BigDecimal bg2 = new BigDecimal(projectCount);
 
 			result.setTotalCount(bg1.add(bg2).toString());
+		}
+
+		/*
+		 * 说明：格式为 字段名:值(可选，不写该值时为分页数据的合计) 多个合计 以 , 分割
+		 */
+		try{
+			BigDecimal sumContractValue = tBFinalformExportService.getSumCloudInCome();
+			BigDecimal sumProfitTarget = tBFinalformExportService.getSumProjectInCome();
+			BigDecimal sumTotal = sumContractValue.add(sumProfitTarget);
+			dataGrid.setFooter("cloudCount:"+(sumContractValue.toString().equalsIgnoreCase("null")?"0.0":sumContractValue)+",projectCount:"+(sumProfitTarget.toString().equalsIgnoreCase("null")?"0.0":sumProfitTarget)+",totalCount:"+(sumTotal.toString().equalsIgnoreCase("null")?"0.0":sumTotal)+",systemName:合计（万元）:");
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 
 		TagUtil.datagrid(response, dataGrid);
@@ -440,6 +453,17 @@ public class TBFinalformExportController extends BaseController {
 			result.setTotalCount(bg1.add(bg2).toString());
 		}
 
+		/*
+		 * 说明：格式为 字段名:值(可选，不写该值时为分页数据的合计) 多个合计 以 , 分割
+		 */
+		try{
+			BigDecimal sumContractValue = tBFinalformExportService.getSumCloudInCome();
+			BigDecimal sumProfitTarget = tBFinalformExportService.getSumProjectInCome();
+			BigDecimal sumTotal = sumContractValue.add(sumProfitTarget);
+			dataGrid.setFooter("cloudCount:"+(sumContractValue.toString().equalsIgnoreCase("null")?"0.0":sumContractValue)+",projectCount:"+(sumProfitTarget.toString().equalsIgnoreCase("null")?"0.0":sumProfitTarget)+",totalCount:"+(sumTotal.toString().equalsIgnoreCase("null")?"0.0":sumTotal)+",systemName:合计（万元）:");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 
 		modelMap.put(NormalExcelConstants.FILE_NAME,"财务报表导出");
 		modelMap.put(NormalExcelConstants.CLASS,TBFinalformExportEntity.class);

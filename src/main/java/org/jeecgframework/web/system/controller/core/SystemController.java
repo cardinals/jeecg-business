@@ -135,7 +135,7 @@ public class SystemController extends BaseController {
 			JSONObject headJson = new JSONObject();
 			headJson.put("typecode", "");
 			headJson.put("typename", "");
-			typeArray.add(headJson);
+			//typeArray.add(headJson);
 			if(typeList != null && !typeList.isEmpty()){
 				for (TSType type : typeList) {
 					JSONObject typeJson = new JSONObject();

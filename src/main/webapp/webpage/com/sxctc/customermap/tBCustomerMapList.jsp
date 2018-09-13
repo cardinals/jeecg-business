@@ -22,10 +22,10 @@
    <t:dgCol title="操作" field="opt" width="100" align="center"></t:dgCol>
    <t:dgDelOpt title="删除" url="tBCustomerMapController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="录入" icon="icon-add" url="tBCustomerMapController.do?goAdd" funname="add" operationCode="add"></t:dgToolBar>
-	<t:dgToolBar title="编辑" icon="icon-edit" url="tBCustomerMapController.do?goUpdate" funname="update" operationCode="update"></t:dgToolBar>
-   <t:dgToolBar title="批量删除"  icon="icon-remove" url="tBCustomerMapController.do?doBatchDel" funname="deleteALLSelect" operationCode="deleteAll"></t:dgToolBar>
-   <t:dgToolBar title="查看" icon="icon-search" url="tBCustomerMapController.do?goUpdate" funname="detail"></t:dgToolBar>
-   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
+	<%--<t:dgToolBar title="编辑" icon="icon-edit" url="tBCustomerMapController.do?goUpdate" funname="update" operationCode="update"></t:dgToolBar>--%>
+   <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="tBCustomerMapController.do?doBatchDel" funname="deleteALLSelect" operationCode="deleteAll"></t:dgToolBar>--%>
+   <%--<t:dgToolBar title="查看" icon="icon-search" url="tBCustomerMapController.do?goUpdate" funname="detail"></t:dgToolBar>--%>
+   <%--<t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>--%>
   </t:datagrid>
   </div>
  </div>

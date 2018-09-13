@@ -21,4 +21,14 @@ public interface TBChancePoolServiceI extends CommonService{
  	 * @Date 2018/9/1 上午10:57
  	 **/
 	public void saveOrUpdateChancePool(TBChancePoolEntity entity, TBChancePoolEntity tBChancePool) throws Exception;
+
+	/**
+	 * @Title deleteChancePool
+	 * @Description 删除机会吃
+	 * @Param [entity]
+	 * @Return void
+	 * @Author liuzc
+	 * @Date 2018/9/1 上午10:57
+	 **/
+	public void deleteChancePool(TBChancePoolEntity entity) throws Exception;
 }

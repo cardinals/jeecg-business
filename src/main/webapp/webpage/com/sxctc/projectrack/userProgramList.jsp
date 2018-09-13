@@ -18,11 +18,11 @@
     </div>
     <div data-options="region:'center', split:true">
         <div class="easyui-layout" data-options="fit:true">
-            <div data-options="region:'north',title:'项目',split:true" style="height:350px">
-                <table id="programList" style="height:500px;width:560px;"></table>
+            <div data-options="region:'north',title:'上云项目',split:true" style="height:350px">
+                <table id="programList" style="height:500px;width:1300px;"></table>
             </div>
             <div data-options="region:'center',title:'机会池'">
-                <table id="chanceProgramList" style="height:500px;width:590px;"></table>
+                <table id="chanceProgramList" style="height:500px;width:2000px;"></table>
             </div>
         </div>
     </div>
@@ -388,10 +388,23 @@
             initDictByCode(chanceProgramListdictsData,"control",resolve);
         }));
         promiseArr.push(new Promise(function(resolve, reject) {
-            initDictByCode(chanceProgramListdictsData,"dev_flag",resolve);
+            initDictByCode(chanceProgramListdictsData,"provide",resolve);
         }));
         promiseArr.push(new Promise(function(resolve, reject) {
+            initDictByCode(chanceProgramListdictsData,"dev_flag",resolve);
+        }));
+
+        promiseArr.push(new Promise(function(resolve, reject) {
             initDictByCode(programListdictsData,"joinStatus",resolve);
+        }));
+        promiseArr.push(new Promise(function(resolve, reject) {
+            initDictByCode(programListdictsData,"provide",resolve);
+        }));
+        promiseArr.push(new Promise(function(resolve, reject) {
+            initDictByCode(programListdictsData,"dev_flag",resolve);
+        }));
+        promiseArr.push(new Promise(function(resolve, reject) {
+            initDictByCode(programListdictsData,"proj_type",resolve);
         }));
 
 
@@ -419,10 +432,18 @@
         $('#programList').datagrid({
             url:'userProgramController.do?getProgramList',
             columns:[[
-                {field:'unitCode',title:'单位名称',width:100, hidden:true, align:'center'},
-                {field:'unitName',title:'厅局名称',width:150},
+                {field:'unitCode',title:'单位名称',width:200, hidden:true, align:'center'},
+                {field:'unitName',title:'厅局名称',width:200, align:'center'},
                 {field:'projectName',title:'系统名称',width:200,align:'center'},
-                {field:'joinStatus',title:'上云状态',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,programListdictsData.joinStatus); }}
+                {field:'joinStatus',title:'上云状态',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,programListdictsData.joinStatus); }},
+                {field:'fundsProvided',title:'资金来源',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,programListdictsData.provide); }},
+                {field:'auditStatus',title:'是否审计系统',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,programListdictsData.dev_flag); }},
+                {field:'projectStatus',title:'系统状态',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,programListdictsData.proj_type); }},
+                {field:'chanceStatus',title:'是否跟踪',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,programListdictsData.dev_flag); }},
+                {field:'busCreateTime',title:'业务创建时间',width:100,align:'center'},
+                {field:'busJoinTime',title:'首次对接时间',width:100,align:'center'},
+                {field:'finishTime',title:'上云完成时间',width:100,align:'center'}
+                // {field:'dayRange',title:'时间跨越',width:100,align:'center'}
             ]],
             onClickRow: function(index,rowData){
                 var url = "userProgramController.do?programSequence&businessId="+rowData.id;
@@ -440,10 +461,21 @@
         $('#chanceProgramList').datagrid({
             url:'userProgramController.do?getChanceProgramList',
             columns:[[
+                {field:'unitCode',title:'单位名称',width:200,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,chanceProgramListdictsData.unit_name); }},
                 {field:'projectName',title:'系统名称',width:200,align:'center'},
+                {field:'projectBudget',title:'项目预算(万元)',width:100,align:'center'},
+                {field:'projectServer',title:'软件和服务(万元)',width:100,align:'center'},
+                {field:'projectHardware',title:'硬件(万元)',width:100,align:'center'},
+                {field:'businessParters',title:'主要合作公司',width:200,align:'center'},
+                {field:'predictTenderTime',title:'预计招标时间',width:100,align:'center'},
+                {field:'fundsProvided',title:'资金来源',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,chanceProgramListdictsData.provide); }},
+                {field:'topRelation',title:'上层关系',width:100,align:'center'},
+                {field:'midRelation',title:'中层关系',width:100,align:'center'},
+                {field:'bottomRelation',title:'下层关系',width:100,align:'center'},
+                {field:'controlDegree',title:'当年把控度',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,chanceProgramListdictsData.control); }},
+                {field:'projectPlan',title:'计划',width:180,align:'center'},
                 {field:'winningResult',title:'是否中标',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,chanceProgramListdictsData.dev_flag); }},
-                {field:'controlDegree',title:'把控度',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,chanceProgramListdictsData.control); }},
-                {field:'project_plan',title:'计划',width:180,align:'center'}
+                {field:'remark',title:'备注',width:100,align:'center'}
             ]]
         });
     });
@@ -469,9 +501,9 @@
 
     //列表数据字典项格式化
     function listDictFormat(value,dicts){
-        if (!value) return '';
+        if (value == null) return '';
         var valArray = value.toString().split(',');
-        var showVal = '';
+        var showVal;
         if (valArray.length > 1) {
             for (var k = 0; k < valArray.length; k++) {
                 if(dicts && dicts.length>0){

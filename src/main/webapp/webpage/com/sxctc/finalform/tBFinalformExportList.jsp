@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="tBFinalformExportList" checkbox="false" pagination="true" sortName="unitCode" fitColumns="false" title="财务报表导出" actionUrl="tBFinalformExportController.do?datagrid" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells">
+  <t:datagrid name="tBFinalformExportList" checkbox="false" pagination="false" sortName="unitCode" fitColumns="false" title="财务报表导出" actionUrl="tBFinalformExportController.do?datagrid" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>

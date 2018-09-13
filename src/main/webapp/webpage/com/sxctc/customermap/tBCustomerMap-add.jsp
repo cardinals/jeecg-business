@@ -16,7 +16,7 @@
 				<tr>
 					<td align="right">
 						<label class="Validform_label">
-							项目名称:
+							客户名称:
 						</label>
 					</td>
 					<td class="value">

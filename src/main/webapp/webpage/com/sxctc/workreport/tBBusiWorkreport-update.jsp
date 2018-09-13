@@ -30,7 +30,7 @@
 					<tr>
 						<td align="right">
 							<label class="Validform_label">
-								迁移系统名称:
+								系统名称:
 							</label>
 						</td>
 						<td class="value">
@@ -47,9 +47,9 @@
 							</label>
 						</td>
 						<td class="value">
-							<input id="reportDate" name="reportDate" type="text" style="width: 150px"  class="Wdate"  ignore="checked" readonly="true" value='<fmt:formatDate value='${tBBusiWorkreportPage.reportDate}' type="date" pattern="yyyy-MM-dd"/>'/>
+							<input id="reportDate" name="reportDate" type="text" style="width: 150px" class="Wdate" onClick="WdatePicker()"  datatype="*"  ignore="checked" value='<fmt:formatDate value='${tBBusiWorkreportPage.reportDate}' type="date" pattern="yyyy-MM-dd"/>'/>
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">今日时间</label>
+							<label class="Validform_label" style="display: none;">日报时间</label>
 						</td>
 					</tr>
 					<c:if test="${toolFlag == '1'}">
