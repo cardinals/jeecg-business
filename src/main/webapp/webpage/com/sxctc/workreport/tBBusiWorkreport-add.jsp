@@ -40,13 +40,13 @@
 				<tr>
 					<td align="right">
 						<label class="Validform_label">
-							今日时间:
+							日报时间:
 						</label>
 					</td>
 					<td class="value">
 					     	 <input id="reportDate" name="reportDate" type="text" maxlength="20" style="width: 150px" class="inputxt"  ignore="ignore" />
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">今日时间</label>
+							<label class="Validform_label" style="display: none;">日报时间</label>
 						</td>
 				</tr>
 				<tr>

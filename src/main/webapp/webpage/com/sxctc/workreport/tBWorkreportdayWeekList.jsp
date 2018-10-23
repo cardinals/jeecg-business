@@ -4,7 +4,7 @@
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
   <c:if test="${toolFlag == '1'}">
-  <t:datagrid name="tBWorkreportdayWeekList" checkbox="true" pagination="true" sortName="unitCode" fitColumns="false" title="周报" actionUrl="tBWorkreportdayWeekController.do?datagrid&reportOpt=0" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells">
+  <t:datagrid name="tBWorkreportdayWeekList" checkbox="false" pagination="true" sortName="unitCode" fitColumns="false" title="周报" actionUrl="tBWorkreportdayWeekController.do?datagrid&reportOpt=0" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells">
    <t:dgCol title="id"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
@@ -35,7 +35,7 @@
   </c:if>
 
   <c:if test="${toolFlag == '0'}">
-   <t:datagrid name="tBWorkreportdayWeekList" checkbox="true" pagination="true" fitColumns="false" title="周报" actionUrl="tBWorkreportdayWeekController.do?datagrid&reportOpt=1" idField="id" fit="true" queryMode="group">
+   <t:datagrid name="tBWorkreportdayWeekList" checkbox="false" pagination="true" fitColumns="false" title="周报" actionUrl="tBWorkreportdayWeekController.do?datagrid&reportOpt=1" idField="id" fit="true" queryMode="group">
     <t:dgCol title="id"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
     <t:dgCol title="创建人名称"  field="createName"  queryMode="group"  width="80"></t:dgCol>
     <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="group"  width="120"></t:dgCol>

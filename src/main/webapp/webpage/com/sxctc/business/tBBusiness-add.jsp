@@ -117,9 +117,9 @@
 				</label>
 			</td>
 			<td class="value">
-				<input id="busJoinTime" name="busJoinTime" type="text" style="width: 150px" class="Wdate" onClick="WdatePicker()" datatype="*" ignore="ignore" />
+				<input id="busJoinTime" name="busJoinTime" type="text" style="width: 150px" class="Wdate" onClick="WdatePicker()" onchange="yanZheng_scdj()" datatype="*" ignore="ignore" />
 				<span class="Validform_checktip hid"></span>
-				<label class="Validform_label" style="display: none;">上云对接时间</label>
+				<label class="Validform_label" style="display: none;">首次对接时间</label>
 			</td>
 		</tr>
 		<tr class="hid2" id="demandTimeTr" >
@@ -129,7 +129,7 @@
 				</label>
 			</td>
 			<td class="value">
-				<input id="demandTime" name="demandTime" type="text" style="width: 150px" class="Wdate" onClick="WdatePicker()" datatype="*" ignore="ignore" />
+				<input id="demandTime" name="demandTime" type="text" style="width: 150px" class="Wdate" onClick="WdatePicker()" onchange="yanZheng_qdxz()" datatype="*" ignore="ignore" />
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">取得现状调研表/资源需求表时间</label>
 			</td>
@@ -141,7 +141,7 @@
 				</label>
 			</td>
 			<td class="value">
-				<input id="planTime" name="planTime" type="text" style="width: 150px" class="Wdate" onClick="WdatePicker()" datatype="*" ignore="ignore" />
+				<input id="planTime" name="planTime" type="text" style="width: 150px" class="Wdate" onClick="WdatePicker()" onchange="yanZheng_qdfa()" datatype="*" ignore="ignore" />
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">签订方案时间</label>
 			</td>
@@ -153,7 +153,7 @@
 				</label>
 			</td>
 			<td class="value">
-				<input id="resourceTime" name="resourceTime" type="text" style="width: 150px" class="Wdate" onClick="WdatePicker()" datatype="*" ignore="ignore" />
+				<input id="resourceTime" name="resourceTime" type="text" style="width: 150px" class="Wdate" onClick="WdatePicker()" onchange="yanZheng_fpzy()" datatype="*" ignore="ignore" />
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">分配资源时间</label>
 			</td>
@@ -165,7 +165,7 @@
 				</label>
 			</td>
 			<td class="value">
-				<input id="testTime" name="testTime" type="text" style="width: 150px" class="Wdate" onClick="WdatePicker()" datatype="*" ignore="ignore" />
+				<input id="testTime" name="testTime" type="text" style="width: 150px" class="Wdate" onClick="WdatePicker()" onchange="yanZheng_sycs()" datatype="*" ignore="ignore" />
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">上云测试时间</label>
 			</td>
@@ -177,7 +177,7 @@
 				</label>
 			</td>
 			<td class="value">
-				<input id="protocolTime" name="protocolTime" type="text" style="width: 150px" class="Wdate" onClick="WdatePicker()" datatype="*" ignore="ignore" />
+				<input id="protocolTime" name="protocolTime" type="text" style="width: 150px" class="Wdate" onClick="WdatePicker()" onchange="yanZheng_shxy()" datatype="*" ignore="ignore" />
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">收回协议时间</label>
 			</td>
@@ -189,7 +189,7 @@
 				</label>
 			</td>
 			<td class="value">
-				<input id="finishTime" name="finishTime" type="text" style="width: 150px" class="Wdate" onClick="WdatePicker()" datatype="*" ignore="ignore" />
+				<input id="finishTime" name="finishTime" type="text" style="width: 150px" class="Wdate" onClick="WdatePicker()" onchange="yanZheng_sywc()" datatype="*" ignore="ignore" />
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">上云完成时间</label>
 			</td>
@@ -205,6 +205,7 @@
         var currTime = getNowFormatDate();
         $("#busCreateTime").val(currTime);
 	})
+
     // $('input:radio[name="projectStatus"]').click(function(){
     //     if($(this).val()==1){
     //         $("input:radio[name='chanceStatus'][value=1]").attr("checked",true);
@@ -361,4 +362,104 @@
         var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate;
         return currentdate;
     }
+
+    function yanZheng_scdj(){
+        var busCreateTime = $("#busCreateTime").val();
+        var busJoinTime = $("#busJoinTime").val();
+        var date_busCreateTime = new Date(busCreateTime);
+        var date_busJoinTime = new Date(busJoinTime);
+        if (date_busCreateTime.getTime() > date_busJoinTime.getTime()){
+            tip("首次对接时间小于业务创建时间！");
+            $("#busJoinTime").val("");
+		}
+        if(busCreateTime == ""){
+            tip("业务创建时间不能为空！");
+            $("#busJoinTime").val("");
+        }
+    }
+    function yanZheng_qdxz(){
+        var busJoinTime = $("#busJoinTime").val();
+        var demandTime = $("#demandTime").val();
+        var date_busJoinTime = new Date(busJoinTime);
+        var date_demandTime = new Date(demandTime);
+        if (date_busJoinTime.getTime() > date_demandTime.getTime()){
+            tip("取得现状调研表时间小于首次对接时间！");
+            $("#demandTime").val("");
+        }
+        if(busJoinTime == ""){
+            tip("首次对接时间不能为空！");
+            $("#demandTime").val("");
+        }
+    }
+    function yanZheng_qdfa(){
+        var demandTime = $("#demandTime").val();
+        var planTime = $("#planTime").val();
+        var date_demandTime = new Date(demandTime);
+        var date_planTime = new Date(planTime);
+        if (date_demandTime.getTime() > date_planTime.getTime()){
+            tip("签订方案时间小于取得现状调研表时间！");
+            $("#planTime").val("");
+        }
+        if(demandTime == ""){
+            tip("取得现状调研表时间不能为空!");
+            $("#planTime").val("");
+		}
+    }
+    function yanZheng_fpzy(){
+        var planTime = $("#planTime").val();
+        var resourceTime = $("#resourceTime").val();
+        var date_planTime = new Date(planTime);
+        var date_resourceTime = new Date(resourceTime);
+        if (date_planTime.getTime() > date_resourceTime.getTime()){
+            tip("分配资源时间小于签订方案时间！");
+            $("#resourceTime").val("");
+        }
+        if(planTime == ""){
+            tip("签订方案时间不能为空!");
+            $("#resourceTime").val("");
+        }
+    }
+    function yanZheng_sycs(){
+        var resourceTime = $("#resourceTime").val();
+        var testTime = $("#testTime").val();
+        var date_resourceTime = new Date(resourceTime);
+        var date_testTime = new Date(testTime);
+        if (date_resourceTime.getTime() > date_testTime.getTime()){
+            tip("上云测试时间小于分配资源时间！");
+            $("#testTime").val("");
+        }
+        if(resourceTime == ""){
+            tip("分配资源时间不能为空!");
+            $("#testTime").val("");
+        }
+    }
+    function yanZheng_shxy(){
+        var testTime = $("#testTime").val();
+        var protocolTime = $("#protocolTime").val();
+        var date_testTime = new Date(testTime);
+        var date_protocolTime = new Date(protocolTime);
+        if (date_testTime.getTime() > date_protocolTime.getTime()){
+            tip("收回协议时间小于上云测试时间！");
+            $("#protocolTime").val("");
+        }
+        if(testTime == ""){
+            tip("上云测试时间不能为空!");
+            $("#protocolTime").val("");
+        }
+    }
+    function yanZheng_sywc(){
+        var protocolTime = $("#protocolTime").val();
+        var finishTime = $("#finishTime").val();
+        var date_protocolTime = new Date(protocolTime);
+        var date_finishTime = new Date(finishTime);
+        if (date_protocolTime.getTime() > date_finishTime.getTime()){
+            tip("上云完成时间小于收回协议时间！");
+            $("#finishTime").val("");
+        }
+        if(protocolTime == ""){
+            tip("收回协议时间不能为空!");
+            $("#finishTime").val("");
+        }
+    }
+
 </script>

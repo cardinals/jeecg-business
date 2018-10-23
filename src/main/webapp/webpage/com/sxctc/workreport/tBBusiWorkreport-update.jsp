@@ -43,7 +43,7 @@
 					<tr>
 						<td align="right" style="width: 20%;">
 							<label class="Validform_label">
-								今日时间:
+								日报时间:
 							</label>
 						</td>
 						<td class="value">
