@@ -126,13 +126,19 @@
 		ajax_check:function(tableName,fieldName,fieldVlaue,param){
 			   //获取编辑页面的数据主键
 					var obid = null;
+					var extendField = null;
 					if(param!=null){
 						 var obid_id = param;
 						 obid = obid_id;
 					}else{
 						 obid = $("input[id='id']").val();
 					}
-					
+
+					// 针对营销业务管理系统专用的厅局系统唯一校验逻辑
+            		extendField = $("#unitCode").val();
+
+
+            		obid = $("input[id='id']").val();
 					$.ajaxSetup({ async: false});//同步ajax 
 					var check_flag="";
 					$.ajax({
@@ -142,7 +148,8 @@
 							tableName : tableName,
 							fieldName : fieldName,
 							fieldVlaue: fieldVlaue,
-							rowObid   : obid
+							rowObid   : obid,
+                            extendField: extendField
 						},
 						dataType : 'json',
 						success : function(response) {

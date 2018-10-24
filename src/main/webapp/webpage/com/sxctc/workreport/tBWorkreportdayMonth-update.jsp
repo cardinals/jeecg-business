@@ -46,7 +46,8 @@
 							</label>
 						</td>
 						<td class="value">
-									  <input id="reportDate" name="reportDate" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()" readonly="readonly"  ignore="ignore" value='<fmt:formatDate value='${tBWorkreportdayMonthPage.reportDate}' type="date" pattern="yyyy-MM-dd"/>'/>
+							<span>&nbsp;<fmt:formatDate value='${tBWorkreportdayMonthPage.reportDate}' type="date" pattern="yyyy-MM"/></span>
+						  	<input id="reportDate"  name="reportDate" type="hidden" style="width: 150px"  class="Wdate" onClick="WdatePicker()" readonly="readonly"  ignore="ignore" value='<fmt:formatDate value='${tBWorkreportdayMonthPage.reportDate}' type="date" pattern="yyyy-MM-dd"/>'/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">月份</label>
 						</td>

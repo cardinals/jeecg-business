@@ -4,7 +4,7 @@
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
    <c:if test="${toolFlag ==  1}">
-   <t:datagrid name="tBWorkreportdayList" checkbox="true" pagination="true" fitColumns="false" title="日报列表" actionUrl="tBWorkreportdayController.do?datagrid&busiReportId=${busiReportId}" idField="id" fit="true" queryMode="group">
+   <t:datagrid name="tBWorkreportdayList" checkbox="true" pagination="true" fitColumns="false" title="日报列表" actionUrl="tBWorkreportdayController.do?datagrid&busiReportId=${busiReportId}" idField="id" fit="true" queryMode="group" singleSelect="true">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName" queryMode="single" width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -32,7 +32,7 @@
   </c:if>
 
    <c:if test="${toolFlag ==  0}">
-    <t:datagrid name="tBWorkreportdayList" checkbox="true" pagination="true" fitColumns="false" title="日报列表" actionUrl="tBWorkreportdayController.do?datagrid&busiReportId=${busiReportId}" idField="id" fit="true" queryMode="group">
+    <t:datagrid name="tBWorkreportdayList" checkbox="true" pagination="true" fitColumns="false" title="日报列表" actionUrl="tBWorkreportdayController.do?datagrid&busiReportId=${busiReportId}" idField="id" fit="true" queryMode="group" singleSelect="true">
      <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
      <t:dgCol title="创建人名称"  field="createName" queryMode="single" width="120"></t:dgCol>
      <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>

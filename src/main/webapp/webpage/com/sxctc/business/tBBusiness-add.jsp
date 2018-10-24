@@ -33,7 +33,7 @@
 				</label>
 			</td>
 			<td class="value">
-				<input id="projectName" name="projectName" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="*" ignore="checked" />
+				<input id="projectName" name="projectName" type="text" maxlength="32" style="width: 150px" class="inputxt" validType="t_b_business,project_name,id"  datatype="*" ignore="checked" />
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">系统名称</label>
 			</td>

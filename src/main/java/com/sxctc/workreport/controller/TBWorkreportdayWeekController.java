@@ -282,7 +282,7 @@ public class TBWorkreportdayWeekController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
-	public ModelAndView goUpdate(TBWorkreportdayWeekEntity tBWorkreportdayWeek, HttpServletRequest req, String toolFlag) {
+	public ModelAndView goUpdate(TBWorkreportdayWeekEntity tBWorkreportdayWeek, HttpServletRequest req, String toolFlag, String isCheck) {
 		TSUser tsUser = ResourceUtil.getSessionUser();
 		try {
 			if (StringUtil.isNotEmpty(tBWorkreportdayWeek.getId())) {
@@ -293,27 +293,29 @@ public class TBWorkreportdayWeekController extends BaseController {
 				tBWorkreportdayWeek.setReportStartDate(DateUtils.parseDate(beginDate,"yyyy-MM-dd"));
 				tBWorkreportdayWeek.setReportEndDate(DateUtils.parseDate(endDate,"yyyy-MM-dd"));
 
-				// 拼装工作内容
-				String doneWork = "";
-//				List<TBWorkreportdayEntity> byQueryString = tBWorkreportdayWeekService.findByQueryString("from TBWorkreportdayEntity where createBy='" + tsUser.getUserName() + "' and reportType=" + tBWorkreportdayWeek.getReportType() + " and reportDate>='" + beginDate + "' and reportDate<='" + endDate + "' and businessId='" + tBWorkreportdayWeek.getBusinessId() + "'");
-				List<TBWorkreportdayEntity> byQueryString = new ArrayList<TBWorkreportdayEntity>();
-				String hql = "from TBWorkreportdayEntity where createBy=? and reportType=? and reportDate>=? and reportDate<=?";
-				if (tBWorkreportdayWeek.getReportType() != 0) {
-					byQueryString = tBWorkreportdayWeekService.findHql(hql, tsUser.getUserName(), tBWorkreportdayWeek.getReportType(), DateUtils.parseDate(beginDate,"yyyy-MM-dd"), DateUtils.parseDate(endDate,"yyyy-MM-dd"));
-				}else {
-					hql += " and businessId=?";
-					byQueryString = tBWorkreportdayWeekService.findHql(hql, tsUser.getUserName(), tBWorkreportdayWeek.getReportType(), DateUtils.parseDate(beginDate,"yyyy-MM-dd"), DateUtils.parseDate(endDate,"yyyy-MM-dd"), tBWorkreportdayWeek.getBusinessId());
-				}
-				if (byQueryString.size() > 0) {
-					for (TBWorkreportdayEntity tbWorkreportdayEntity : byQueryString) {
-						String doneDay = tbWorkreportdayEntity.getDoneDay();
-						if (StringUtils.isNotBlank(doneDay)) {
-							doneWork += (doneDay.replace("|","\r\n") + "\r\n");
+				String doneToday = tBWorkreportdayWeek.getDoneDay();
+				if (StringUtils.isBlank(doneToday) && StringUtils.isBlank(isCheck)) {
+					// 拼装工作内容
+					String doneWork = "";
+					List<TBWorkreportdayEntity> byQueryString = new ArrayList<TBWorkreportdayEntity>();
+					String hql = "from TBWorkreportdayEntity where createBy=? and reportType=? and reportDate>=? and reportDate<=?";
+					if (tBWorkreportdayWeek.getReportType() != 0) {
+						byQueryString = tBWorkreportdayWeekService.findHql(hql, tsUser.getUserName(), tBWorkreportdayWeek.getReportType(), DateUtils.parseDate(beginDate,"yyyy-MM-dd"), DateUtils.parseDate(endDate,"yyyy-MM-dd"));
+					}else {
+						hql += " and businessId=?";
+						byQueryString = tBWorkreportdayWeekService.findHql(hql, tsUser.getUserName(), tBWorkreportdayWeek.getReportType(), DateUtils.parseDate(beginDate,"yyyy-MM-dd"), DateUtils.parseDate(endDate,"yyyy-MM-dd"), tBWorkreportdayWeek.getBusinessId());
+					}
+					if (byQueryString.size() > 0) {
+						for (TBWorkreportdayEntity tbWorkreportdayEntity : byQueryString) {
+							String doneDay = tbWorkreportdayEntity.getDoneDay();
+							if (StringUtils.isNotBlank(doneDay)) {
+								doneWork += (doneDay.replace("|","\r\n") + "\r\n");
+							}
 						}
 					}
-				}
-				if (StringUtils.isNotBlank(doneWork)) {
-					tBWorkreportdayWeek.setDoneDay(doneWork);
+					if (StringUtils.isNotBlank(doneWork)) {
+						tBWorkreportdayWeek.setDoneDay(doneWork);
+					}
 				}
 				req.setAttribute("tBWorkreportdayWeekPage", tBWorkreportdayWeek);
 				req.setAttribute("toolFlag", toolFlag);

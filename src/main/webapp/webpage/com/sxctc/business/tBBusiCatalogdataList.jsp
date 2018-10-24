@@ -33,14 +33,6 @@
                     $("#tBCatalogdataList").treegrid('refresh', row.id);
                 }
             }
-            // onLoadSuccess: function (row) {
-            //     var roots = $("#tBCatalogdataList").treegrid("getRoots");
-            //     if (roots.length > 0) {
-            //         $.each(roots, function (i, item) {
-            //             $("#tBCatalogdataList").treegrid("expand", item.id);
-            //         });
-            //     }
-            // }
         });
     }
     var editingId;
@@ -129,11 +121,11 @@
             tip("请选择子条目");
             return false;
         }
-        if (rows._parentId == undefined){
+        if ((rows._parentId === undefined) && (rows.leaf === undefined) ){
             tip("请选择子条目");
             return false;
         }
-        if(rows.length==0){
+        if(rows.length===0){
             tip("请选择条目");
             return false;
         }

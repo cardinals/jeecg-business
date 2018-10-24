@@ -30,6 +30,16 @@ public class DuplicateCheckPage   implements java.io.Serializable {
 	/**编辑数据ID*/
 	private String rowObid;
 
+	/**针对营销业务管理系统专用的厅局系统唯一校验逻辑*/
+	private String extendField;
+	public String getExtendField() {
+		return extendField;
+	}
+	public void setExtendField(String extendField) {
+		this.extendField = extendField;
+	}
+	/**----------------------------------------*/
+
 	public String getRowObid() {
 		return rowObid;
 	}

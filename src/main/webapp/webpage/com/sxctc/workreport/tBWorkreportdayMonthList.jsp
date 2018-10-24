@@ -4,7 +4,7 @@
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
   <c:if test="${toolFlag == '1'}">
-  <t:datagrid name="tBWorkreportdayMonthList" checkbox="false" pagination="true" sortName="unitCode" fitColumns="false" title="月报" actionUrl="tBWorkreportdayMonthController.do?datagrid&reportOpt=0" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells">
+  <t:datagrid name="tBWorkreportdayMonthList" checkbox="false" pagination="true" sortName="unitCode" fitColumns="false" title="月报" actionUrl="tBWorkreportdayMonthController.do?datagrid&reportOpt=0" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells" singleSelect="true">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -16,7 +16,7 @@
    <t:dgCol title="所属公司"  field="sysCompanyCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="单位名称"  field="unitCode"  queryMode="single"  dictionary="unit_name"  width="120"></t:dgCol>
    <t:dgCol title="系统名称"  field="reportTitle"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="月份"  field="reportDate"  formatter="yyyy-MM-dd"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="月份"  field="reportDate"  formatter="yyyy-MM"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="本月工作工作"  field="doneToday"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="下月工作计划"  field="nextDone"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="协调工作"  field="coordinateWork"  queryMode="single"  width="120"></t:dgCol>
@@ -28,7 +28,7 @@
    <%--<t:dgToolBar title="录入" icon="icon-add" url="tBWorkreportdayMonthController.do?goAdd" funname="add"></t:dgToolBar>--%>
 	<t:dgToolBar title="编辑" icon="icon-edit" url="tBWorkreportdayMonthController.do?goUpdate&toolFlag=1" funname="update" operationCode="update"></t:dgToolBar>
    <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="tBWorkreportdayMonthController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
-   <t:dgToolBar title="查看" icon="icon-search" url="tBWorkreportdayMonthController.do?goUpdate&toolFlag=1" funname="detail"></t:dgToolBar>
+   <t:dgToolBar title="查看" icon="icon-search" url="tBWorkreportdayMonthController.do?goUpdate&toolFlag=1&isCheck=1" funname="detail"></t:dgToolBar>
    <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
@@ -36,7 +36,7 @@
   </c:if>
 
   <c:if test="${toolFlag == '0'}">
-  <t:datagrid name="tBWorkreportdayMonthList" checkbox="false" pagination="true" fitColumns="false" title="月报" actionUrl="tBWorkreportdayMonthController.do?datagrid&reportOpt=1" idField="id" fit="true" queryMode="group">
+  <t:datagrid name="tBWorkreportdayMonthList" checkbox="false" pagination="true" fitColumns="false" title="月报" actionUrl="tBWorkreportdayMonthController.do?datagrid&reportOpt=1" idField="id" fit="true" queryMode="group" singleSelect="true">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"   queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -60,7 +60,7 @@
    <%--<t:dgToolBar title="录入" icon="icon-add" url="tBWorkreportdayMonthController.do?goAdd" funname="add"></t:dgToolBar>--%>
    <t:dgToolBar title="编辑" icon="icon-edit" url="tBWorkreportdayMonthController.do?goUpdate&toolFlag=0" funname="update" operationCode="update"></t:dgToolBar>
    <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="tBWorkreportdayMonthController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
-   <t:dgToolBar title="查看" icon="icon-search" url="tBWorkreportdayMonthController.do?goUpdate&toolFlag=0" funname="detail"></t:dgToolBar>
+   <t:dgToolBar title="查看" icon="icon-search" url="tBWorkreportdayMonthController.do?goUpdate&toolFlag=0&isCheck=1" funname="detail"></t:dgToolBar>
    <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>

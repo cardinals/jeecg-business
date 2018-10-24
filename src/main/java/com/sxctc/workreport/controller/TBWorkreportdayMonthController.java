@@ -279,7 +279,7 @@ public class TBWorkreportdayMonthController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
-	public ModelAndView goUpdate(TBWorkreportdayMonthEntity tBWorkreportdayMonth, HttpServletRequest req, String toolFlag) {
+	public ModelAndView goUpdate(TBWorkreportdayMonthEntity tBWorkreportdayMonth, HttpServletRequest req, String toolFlag, String isCheck) {
 		TSUser tsUser = ResourceUtil.getSessionUser();
 		try {
 			if (StringUtil.isNotEmpty(tBWorkreportdayMonth.getId())) {
@@ -291,19 +291,22 @@ public class TBWorkreportdayMonthController extends BaseController {
 				Date date = sdf.parse(sdf.format(new Date()));
 				tBWorkreportdayMonth.setReportDate(date);
 
-				// 拼装工作内容
-				String doneWork = "";
-				List<TBWorkreportdayEntity> byQueryString = tBWorkreportdayMonthService.findByQueryString("from TBWorkreportdayEntity where createBy='" + tsUser.getUserName() + "' and reportType=" + tBWorkreportdayMonth.getReportType() + " and reportDate>='" + beginDate + "' and reportDate<='" + endDate + "'");
-				if (byQueryString.size() > 0) {
-					for (TBWorkreportdayEntity tbWorkreportdayEntity : byQueryString) {
-						String doneDay = tbWorkreportdayEntity.getDoneDay();
-						if (StringUtils.isNotBlank(doneDay)) {
-							doneWork += (doneDay.replace("|","\r\n") + "\r\n");
+				String doneToday = tBWorkreportdayMonth.getDoneToday();
+				if (StringUtils.isBlank(doneToday) && StringUtils.isBlank(isCheck)) {
+					// 拼装工作内容
+					String doneWork = "";
+					List<TBWorkreportdayEntity> byQueryString = tBWorkreportdayMonthService.findByQueryString("from TBWorkreportdayEntity where createBy='" + tsUser.getUserName() + "' and reportType=" + tBWorkreportdayMonth.getReportType() + " and reportDate>='" + beginDate + "' and reportDate<='" + endDate + "'");
+					if (byQueryString.size() > 0) {
+						for (TBWorkreportdayEntity tbWorkreportdayEntity : byQueryString) {
+							String doneDay = tbWorkreportdayEntity.getDoneDay();
+							if (StringUtils.isNotBlank(doneDay)) {
+								doneWork += (doneDay.replace("|","\r\n") + "\r\n");
+							}
 						}
 					}
-				}
-				if (StringUtils.isNotBlank(doneWork)) {
-					tBWorkreportdayMonth.setDoneToday(doneWork);
+					if (StringUtils.isNotBlank(doneWork)) {
+						tBWorkreportdayMonth.setDoneToday(doneWork);
+					}
 				}
 				req.setAttribute("tBWorkreportdayMonthPage", tBWorkreportdayMonth);
 				req.setAttribute("toolFlag", toolFlag);

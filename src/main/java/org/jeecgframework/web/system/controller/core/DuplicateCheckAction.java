@@ -46,7 +46,12 @@ public class DuplicateCheckAction extends BaseController {
 			String sql = "SELECT count(*) FROM "+duplicateCheckPage.getTableName()
 						+" WHERE "+duplicateCheckPage.getFieldName() +" =? and id != ?";
 			num = jdbcDao.getCountForJdbcParam(sql, new Object[]{duplicateCheckPage.getFieldVlaue(),duplicateCheckPage.getRowObid()});
-		}else{
+		}else if(StringUtils.isNotBlank(duplicateCheckPage.getExtendField())){
+			// 针对营销业务管理系统专用的厅局系统唯一校验逻辑
+			String sql = "SELECT count(*) FROM "+duplicateCheckPage.getTableName()
+					+" WHERE "+duplicateCheckPage.getFieldName() +" =? and unit_code = ?";
+			num = jdbcDao.getCountForJdbcParam(sql, new Object[]{duplicateCheckPage.getFieldVlaue(),duplicateCheckPage.getExtendField()});
+		}else {
 			//[1].添加页面校验
 			String sql = "SELECT count(*) FROM "+duplicateCheckPage.getTableName()
 						+" WHERE "+duplicateCheckPage.getFieldName() +" =?";
