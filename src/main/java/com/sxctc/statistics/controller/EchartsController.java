@@ -163,6 +163,9 @@ public class EchartsController {
             for (CloudCount count : cloudConfirmCount) {
                 String checkNum = count.getCheckNum();
                 String price = count.getPrice();
+                if (StringUtils.isBlank(price)) {
+                    price = "0";
+                }
                 if (StringUtils.isNotBlank(checkNum)&&StringUtils.isNotBlank(checkNum)){
                     cloudCount = cloudCount.add(new BigDecimal(checkNum).multiply(new BigDecimal(price)));
                 }

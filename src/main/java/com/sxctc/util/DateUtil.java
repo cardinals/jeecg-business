@@ -147,7 +147,8 @@ public class DateUtil {
     }
 
     public static void main(String[] args) {
-        getMonthDays(0);
+        System.out.println(getCurrentYear());
+
     }
 
 }

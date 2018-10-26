@@ -43,10 +43,10 @@ public class TBWorkreportdayWeekEntity implements java.io.Serializable {
 	/**所属公司*/
 	private String sysCompanyCode;
 	/**厅局单位*/
-	@Excel(name="厅局单位",width=15)
+	@Excel(name="单位名称",width=30,dicCode = "unit_name",mergeVertical = true)
 	private String unitCode;
 	/**迁移系统名称*/
-	@Excel(name="迁移系统名称",width=15)
+	@Excel(name="系统名称",width=30)
 	private String projectName;
 	/**本周工作内容*/
 	@Excel(name="本周工作内容",width=15)

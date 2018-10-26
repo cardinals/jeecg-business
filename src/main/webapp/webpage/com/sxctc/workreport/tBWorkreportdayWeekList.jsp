@@ -4,7 +4,7 @@
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
   <c:if test="${toolFlag == '1'}">
-  <t:datagrid name="tBWorkreportdayWeekList" checkbox="false" pagination="true" sortName="unitCode" fitColumns="false" title="周报" actionUrl="tBWorkreportdayWeekController.do?datagrid&reportOpt=0" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells" singleSelect="true">
+  <t:datagrid name="tBWorkreportdayWeekList1" checkbox="false" pagination="true" sortName="unitCode" fitColumns="false" title="周报" actionUrl="tBWorkreportdayWeekController.do?datagrid&reportOpt=0" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells" singleSelect="true">
    <t:dgCol title="id"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
@@ -29,13 +29,13 @@
    <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="tBWorkreportdayWeekController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
    <t:dgToolBar title="查看" icon="icon-search" url="tBWorkreportdayWeekController.do?goUpdate&toolFlag=1&isCheck=1" funname="detail"></t:dgToolBar>
    <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
-   <%--<t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>--%>
+   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls1"></t:dgToolBar>
    <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
   </t:datagrid>
   </c:if>
 
   <c:if test="${toolFlag == '0'}">
-   <t:datagrid name="tBWorkreportdayWeekList" checkbox="false" pagination="true" fitColumns="false" title="周报" actionUrl="tBWorkreportdayWeekController.do?datagrid&reportOpt=1" idField="id" fit="true" queryMode="group" singleSelect="true">
+   <t:datagrid name="tBWorkreportdayWeekList2" checkbox="false" pagination="true" fitColumns="false" title="周报" actionUrl="tBWorkreportdayWeekController.do?datagrid&reportOpt=1" idField="id" fit="true" queryMode="group" singleSelect="true">
     <t:dgCol title="id"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
     <t:dgCol title="创建人名称"  field="createName"  queryMode="group"  width="80"></t:dgCol>
     <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
@@ -60,7 +60,7 @@
     <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="tBWorkreportdayWeekController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
     <t:dgToolBar title="查看" icon="icon-search" url="tBWorkreportdayWeekController.do?goUpdate&toolFlag=0&isCheck=1" funname="detail"></t:dgToolBar>
     <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
-    <%--<t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>--%>
+    <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls2"></t:dgToolBar>
     <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
    </t:datagrid>
   </c:if>
@@ -79,8 +79,12 @@ function ImportXls() {
 }
 
 //导出
-function ExportXls() {
-	JeecgExcelExport("tBWorkreportdayWeekController.do?exportXls","tBWorkreportdayWeekList");
+function ExportXls1() {
+	JeecgExcelExport("tBWorkreportdayWeekController.do?exportXls","tBWorkreportdayWeekList1");
+}
+//导出
+function ExportXls2() {
+    JeecgExcelExport("tBWorkreportdayWeekController.do?exportXls","tBWorkreportdayWeekList2");
 }
 
 //模板下载

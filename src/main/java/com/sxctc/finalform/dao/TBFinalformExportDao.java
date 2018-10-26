@@ -14,9 +14,9 @@ import java.util.List;
 @MiniDao
 public interface TBFinalformExportDao {
 
-    @Arguments({"page", "rows"})
+    @Arguments({"t", "page", "rows"})
     @ResultType(TBFinalformExportEntity.class)
-    public MiniDaoPage<TBFinalformExportEntity> tbFinalformExport(int page, int rows);
+    public MiniDaoPage<TBFinalformExportEntity> tbFinalformExport(TBFinalformExportEntity t, int page, int rows);
 
     @ResultType(CloudInComeVo.class)
     public List<CloudInComeVo> getSumCloudInCome();

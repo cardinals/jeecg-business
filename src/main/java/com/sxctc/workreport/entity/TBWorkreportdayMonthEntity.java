@@ -49,13 +49,13 @@ public class TBWorkreportdayMonthEntity implements java.io.Serializable {
 	/**所属公司*/
 	private String sysCompanyCode;
 	/**厅局编号*/
-	@Excel(name="厅局编号",width=15,dicCode="unit_name")
+	@Excel(name="单位名称",width=30,dicCode = "unit_name",mergeVertical = true)
 	private Integer unitCode;
 	/**厅局名称*/
-	@Excel(name="厅局名称",width=15)
+	@Excel(name="厅局名称",width=30)
 	private String reportTitle;
 	/**月份*/
-	@Excel(name="月份",width=15,format = "yyyy-MM-dd")
+	@Excel(name="月份",width=15,format = "yyyy-MM")
 	private Date reportDate;
 	/**本月工作工作*/
 	@Excel(name="本月工作工作",width=15)

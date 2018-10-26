@@ -129,8 +129,8 @@ public class SystemServiceImpl extends CommonServiceImpl implements SystemServic
 	/**
 	 * 根据类型分组编码和名称获取TypeGroup,如果为空则创建一个
 	 *
-	 * @param typecode
-	 * @param typename
+	 * @param typegroupcode
+	 * @param typgroupename
 	 * @return
 	 */
 	@Transactional(readOnly = true)
@@ -143,6 +143,29 @@ public class SystemServiceImpl extends CommonServiceImpl implements SystemServic
 			commonDao.save(tsTypegroup);
 		}
 		return tsTypegroup;
+	}
+
+	/**
+	 * 根据类型分组编码和名称编码获取字典名称
+	 * @param typegroupcode
+	 * @param typecode
+	 * @return
+	 */
+	@Transactional(readOnly = true)
+	public String getTypeName(String typegroupcode,String typecode) {
+		String tsTypeName = null;
+		TSTypegroup tsTypegroup = commonDao.findUniqueByProperty(TSTypegroup.class, "typegroupcode", typegroupcode);
+		if (tsTypegroup == null) {
+			return null;
+		}
+		List<TSType> tsTypes = tsTypegroup.getTSTypes();
+		for (TSType tsType : tsTypes) {
+			String code = tsType.getTypecode();
+			if (typecode.equals(code)) {
+				tsTypeName = tsType.getTypename();
+			}
+		}
+		return tsTypeName;
 	}
 
 	@Transactional(readOnly = true)
@@ -226,7 +249,6 @@ public class SystemServiceImpl extends CommonServiceImpl implements SystemServic
 	/**
 	 * 获取页面控件权限控制的
 	 * JS片段
-	 * @param out
 	 */
 	@Transactional(readOnly = true)
 	public String getAuthFilterJS() {

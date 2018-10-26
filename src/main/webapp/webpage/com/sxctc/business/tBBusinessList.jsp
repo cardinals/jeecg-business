@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="tBBusinessList" checkbox="true" pagination="true" title="上云业务列表" actionUrl="tBBusinessController.do?datagrid" idField="id" fit="true" queryMode="group" fitColumns="false" singleSelect="false" onLoadSuccess="mergeCells">
+  <t:datagrid name="tBBusinessList" checkbox="true" pagination="true" sortName="unitCode" title="上云业务列表" actionUrl="tBBusinessController.do?datagrid" idField="id" fit="true" queryMode="group" fitColumns="false" singleSelect="false" onLoadSuccess="mergeCells">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"   queryMode="single"  width="85"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="80"></t:dgCol>
@@ -24,20 +24,20 @@
    <t:dgCol title="是否上云"  field="cloudStatus" hidden="true" queryMode="single"  dictionary="dev_flag"  width="80"></t:dgCol>
    <t:dgCol title="是否跟踪"  field="chanceStatus"  queryMode="single"  dictionary="dev_flag"  width="70" align="center"></t:dgCol>
    <t:dgCol title="上云工作状态"  field="joinStatus"  queryMode="single"  dictionary="joinStatus"  width="160" extendParams="styler:fmtype" align="center"></t:dgCol>
-   <t:dgCol title="业务创建时间"  field="busCreateTime"  formatter="yyyy-MM-dd"  queryMode="single"  width="100" align="center"></t:dgCol>
-   <t:dgCol title="首次对接时间"  field="busJoinTime"  formatter="yyyy-MM-dd"  queryMode="single"  width="100" align="center"></t:dgCol>
+   <t:dgCol title="业务创建时间"  field="busCreateTime"  formatter="yyyy-MM-dd"  queryMode="single"  width="120" align="center"></t:dgCol>
+   <t:dgCol title="首次对接时间"  field="busJoinTime"  formatter="yyyy-MM-dd"  queryMode="single"  width="120" align="center"></t:dgCol>
    <t:dgCol title="硬件服务目录"  field="hardServeCatalog"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="基础层服务目录"  field="baseServeCatalog"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="是否收回协议"  field="protocolStatus" hidden="true" queryMode="single"  dictionary="dev_flag"  width="100"></t:dgCol>
+   <t:dgCol title="是否收回协议"  field="protocolStatus" hidden="true" queryMode="single"  dictionary="dev_flag"  width="120"></t:dgCol>
    <t:dgCol title="取得需求表时间"  field="demandTime" queryMode="single" formatter="yyyy-MM-dd" width="120"></t:dgCol>
    <t:dgCol title="签订方案时间"  field="planTime" queryMode="single" formatter="yyyy-MM-dd" width="120"></t:dgCol>
    <t:dgCol title="分配资源时间"  field="resourceTime" queryMode="single" formatter="yyyy-MM-dd" width="120"></t:dgCol>
    <t:dgCol title="上云测试时间"  field="testTime" queryMode="single" formatter="yyyy-MM-dd" width="120"></t:dgCol>
-   <t:dgCol title="收回协议时间"  field="protocolTime"  formatter="yyyy-MM-dd"  queryMode="single"  width="150"></t:dgCol>
-   <t:dgCol title="上云完成时间"  field="finishTime" queryMode="single" formatter="yyyy-MM-dd" width="100" align="center"></t:dgCol>
+   <t:dgCol title="收回协议时间"  field="protocolTime"  formatter="yyyy-MM-dd"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="上云完成时间"  field="finishTime" queryMode="single" formatter="yyyy-MM-dd" width="120" align="center"></t:dgCol>
    <t:dgCol title="时间跨越"  field="dayRange"  queryMode="single"  width="70" align="center"></t:dgCol>
-   <t:dgCol title="服务目录操作" field="opt" width="100" align="center"></t:dgCol>
-   <%--<t:dgDelOpt title="删除" url="tBBusinessController.do?doDel&id={id}" urlclass="ace_button" urlStyle="background-color:#ec4758;" urlfont="fa-trash-o" operationCode="delete"/>--%>
+   <t:dgCol title="操作" field="opt" width="150" align="center"></t:dgCol>
+   <t:dgDelOpt title="删除" url="tBBusinessController.do?doDel&id={id}" urlclass="ace_button" urlStyle="background-color:#ec4758;" urlfont="fa-trash-o" operationCode="delete"/>
    <t:dgFunOpt title="服务目录" urlclass="ace_button" urlfont="fa fa-user" funname="checkCatalog(id)" operationCode="catalog" exp="joinStatus#ne#0"></t:dgFunOpt>
    <t:dgToolBar title="录入" icon="icon-add" url="tBBusinessController.do?goAdd" funname="add" operationCode="add"></t:dgToolBar>
    <t:dgToolBar title="编辑" icon="icon-edit" url="tBBusinessController.do?goUpdate" funname="update" operationCode="update"></t:dgToolBar>

@@ -44,24 +44,30 @@ public class TBFinalformExportEntity implements java.io.Serializable {
 	/**所属公司*/
 	private String sysCompanyCode;
 	/**单位名称*/
-	@Excel(name="单位名称",width=15)
-	private Integer unitCode;
+	@Excel(name="单位名称",width=30,dicCode = "unit_name",mergeVertical = true)
+	private String unitCode;
 	/**系统名称*/
-	@Excel(name="系统名称",width=15)
+	@Excel(name="系统名称",width=30)
 	private String systemName;
 	/**上云收入*/
-	@Excel(name="上云收入",width=15)
+	@Excel(name="上云收入(万元)",width=15)
 	private String cloudCount;
 	/**项目收入*/
-	@Excel(name="项目收入",width=15)
+	@Excel(name="项目收入(万元)",width=15)
 	private String projectCount;
 	/**合计收入*/
-	@Excel(name="合计收入",width=15)
+	@Excel(name="合计收入(万元)",width=15)
 	private String totalCount;
 
 	/**自定义字段*/
 	/**业务id*/
 	private String businessId;
+	/**业务完成时间*/
+	private String businessDate;
+	/**报表查询开始时间*/
+	private String businessDate_begin;
+	/**报表查询结束时间*/
+	private String businessDate_end;
 
 	/**
 	 *方法: 取得java.lang.String
@@ -224,8 +230,8 @@ public class TBFinalformExportEntity implements java.io.Serializable {
 	 *@return: java.lang.Integer  单位名称
 	 */
 
-	@Column(name ="UNIT_CODE",nullable=true,length=10)
-	public Integer getUnitCode(){
+	@Column(name ="UNIT_CODE",nullable=true,length=50)
+	public String getUnitCode(){
 		return this.unitCode;
 	}
 
@@ -233,7 +239,7 @@ public class TBFinalformExportEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.Integer
 	 *@param: java.lang.Integer  单位名称
 	 */
-	public void setUnitCode(Integer unitCode){
+	public void setUnitCode(String unitCode){
 		this.unitCode = unitCode;
 	}
 	/**
@@ -312,5 +318,32 @@ public class TBFinalformExportEntity implements java.io.Serializable {
 
 	public void setBusinessId(String businessId) {
 		this.businessId = businessId;
+	}
+
+	@Transient
+	public String getBusinessDate() {
+		return businessDate;
+	}
+
+	public void setBusinessDate(String businessDate) {
+		this.businessDate = businessDate;
+	}
+
+	@Transient
+	public String getBusinessDate_begin() {
+		return businessDate_begin;
+	}
+
+	public void setBusinessDate_begin(String businessDate_begin) {
+		this.businessDate_begin = businessDate_begin;
+	}
+
+	@Transient
+	public String getBusinessDate_end() {
+		return businessDate_end;
+	}
+
+	public void setBusinessDate_end(String businessDate_end) {
+		this.businessDate_end = businessDate_end;
 	}
 }

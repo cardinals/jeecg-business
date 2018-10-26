@@ -59,7 +59,15 @@ public interface SystemService extends CommonService{
 	 * @return
 	 */
 	public TSTypegroup getTypeGroup(String typegroupcode,String typgroupename);
-	
+
+	/**
+	 * 根据类型分组编码和名称编码获取字典名称
+	 * @param typegroupcode
+	 * @param typecode
+	 * @return
+	 */
+	public String getTypeName(String typegroupcode,String typecode);
+
 	/**
 	 * 获取页面控件权限控制的
 	 * JS片段

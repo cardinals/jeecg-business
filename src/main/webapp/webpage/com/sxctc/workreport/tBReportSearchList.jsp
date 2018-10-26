@@ -25,9 +25,9 @@
 	<t:dgToolBar title="编辑" icon="icon-edit" url="tBWorkreportdayController.do?goUpdate" funname="update"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="tBWorkreportdayController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
    <t:dgToolBar title="查看" icon="icon-search" url="tBWorkreportdayController.do?goUpdate&toolFlag=0" funname="detail"></t:dgToolBar>
-   <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>
-   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
-   <t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
+   <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
+   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls1"></t:dgToolBar>
+   <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>&ndash;%&gt;--%>
   </t:datagrid>
   </c:if>
 
@@ -58,7 +58,7 @@
     <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="tBWorkreportdayWeekController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
     <t:dgToolBar title="查看" icon="icon-search" url="tBWorkreportdayWeekController.do?goUpdate&toolFlag=1" funname="detail"></t:dgToolBar>
     <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
-    <%--<t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>--%>
+    <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls2"></t:dgToolBar>
     <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
    </t:datagrid>
   </c:if>
@@ -90,7 +90,7 @@
     <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="tBWorkreportdayMonthController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
     <t:dgToolBar title="查看" icon="icon-search" url="tBWorkreportdayMonthController.do?goUpdate&toolFlag=1" funname="detail"></t:dgToolBar>
     <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
-    <%--<t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>--%>
+    <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls3"></t:dgToolBar>
     <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
    </t:datagrid>
   </c:if>
@@ -112,9 +112,9 @@
        <t:dgToolBar title="编辑" icon="icon-edit" url="tBWorkreportdayController.do?goUpdate" funname="update"></t:dgToolBar>--%>
      <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="tBWorkreportdayController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
      <t:dgToolBar title="查看" icon="icon-search" url="tBWorkreportdayController.do?goUpdate&toolFlag=0" funname="detail"></t:dgToolBar>
-     <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>
+     <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
      <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
-     <t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
+     <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
     </t:datagrid>
    </c:if>
 
@@ -139,9 +139,21 @@ function ImportXls() {
 }
 
 //导出
-function ExportXls() {
+function ExportXls1() {
 	JeecgExcelExport("tBWorkreportdayController.do?exportXls","tBWorkreportdayList");
 }
+ //导出
+ function ExportXls2() {
+     JeecgExcelExport("tBWorkreportdayWeekController.do?exportXls","tBWorkreportdayWeekList");
+ }
+ //导出
+ function ExportXls3() {
+     JeecgExcelExport("tBWorkreportdayMonthController.do?exportXls","tBWorkreportdayMonthList");
+ }
+ //导出
+ function ExportXls() {
+     JeecgExcelExport("tBWorkreportdayController.do?exportXls","tBWorkreportdayList");
+ }
 
 //模板下载
 function ExportXlsByT() {

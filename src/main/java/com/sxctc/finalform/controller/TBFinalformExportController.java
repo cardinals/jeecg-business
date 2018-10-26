@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sxctc.profit.entity.TBProfitTargetEntity;
+import com.sxctc.util.DateUtil;
 import org.apache.log4j.Logger;
 import org.jeecgframework.minidao.pojo.MiniDaoPage;
 import org.jeecgframework.web.system.pojo.base.TSUser;
@@ -127,6 +128,9 @@ public class TBFinalformExportController extends BaseController {
 
 	@RequestMapping(params = "datagrid")
 	public void datagrid(TBFinalformExportEntity tbFinalformExport,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+	    // 封装查询时间条件
+        packageSearchDate(tbFinalformExport);
+
 		MiniDaoPage<TBFinalformExportEntity> miniDaoPage = tBFinalformExportService.tbFinalformExport(tbFinalformExport, dataGrid.getPage(), dataGrid.getRows());
 		List<TBFinalformExportEntity> finalformList = miniDaoPage.getResults();
 
@@ -136,6 +140,23 @@ public class TBFinalformExportController extends BaseController {
 		// 遍历查询结果，组装统计字段
 		List<TBFinalformExportEntity> results = dataGrid.getResults();
 		if (results.size() == 0) {
+			try{
+				BigDecimal sumContractValue = BigDecimal.ZERO;
+				BigDecimal sumProfitTarget = BigDecimal.ZERO;
+                if (tbFinalformExport.getBusinessDate_begin() == null && tbFinalformExport.getBusinessDate_end() == null) {
+					sumContractValue = tBFinalformExportService.getSumCloudInCome();
+					sumProfitTarget = tBFinalformExportService.getSumProjectInCome();
+				}else {
+					for (TBFinalformExportEntity result : results) {
+						sumContractValue = sumContractValue.add(new BigDecimal(result.getCloudCount()));
+						sumProfitTarget = sumProfitTarget.add(new BigDecimal(result.getProjectCount()));
+					}
+				}
+				BigDecimal sumTotal = sumContractValue.add(sumProfitTarget);
+				dataGrid.setFooter("cloudCount:"+(sumContractValue.toString().equalsIgnoreCase("null")?"0.0":sumContractValue)+",projectCount:"+(sumProfitTarget.toString().equalsIgnoreCase("null")?"0.0":sumProfitTarget)+",totalCount:"+(sumTotal.toString().equalsIgnoreCase("null")?"0.0":sumTotal)+",systemName:合计（万元）:");
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 			TagUtil.datagrid(response, dataGrid);
 			return;
 		}
@@ -153,6 +174,9 @@ public class TBFinalformExportController extends BaseController {
 					BigDecimal confirmIncome = tbProfitTargetEntity.getConfirmIncome();
 					if (confirmIncome != null) {
 						result.setProjectCount(confirmIncome.toString());
+						if (tbProfitTargetEntity.getSignTime() != null) {
+							result.setBusinessDate(tbProfitTargetEntity.getSignTime().toString());
+						}
 					}else {
 						result.setProjectCount("0");
 					}
@@ -190,7 +214,9 @@ public class TBFinalformExportController extends BaseController {
 					}
 
 					result.setCloudCount(cloudCount.toString());
-
+					if (entity.getFinishTime() != null) {
+						result.setBusinessDate(entity.getFinishTime().toString());
+					}
 				}else {
 					result.setCloudCount("0");
 				}
@@ -211,8 +237,17 @@ public class TBFinalformExportController extends BaseController {
 		 * 说明：格式为 字段名:值(可选，不写该值时为分页数据的合计) 多个合计 以 , 分割
 		 */
 		try{
-			BigDecimal sumContractValue = tBFinalformExportService.getSumCloudInCome();
-			BigDecimal sumProfitTarget = tBFinalformExportService.getSumProjectInCome();
+			BigDecimal sumContractValue = BigDecimal.ZERO;
+			BigDecimal sumProfitTarget = BigDecimal.ZERO;
+			if (tbFinalformExport.getBusinessDate_begin() == null && tbFinalformExport.getBusinessDate_end() == null) {
+				sumContractValue = tBFinalformExportService.getSumCloudInCome();
+				sumProfitTarget = tBFinalformExportService.getSumProjectInCome();
+			}else {
+				for (TBFinalformExportEntity result : results) {
+					sumContractValue = sumContractValue.add(new BigDecimal(result.getCloudCount()));
+					sumProfitTarget = sumProfitTarget.add(new BigDecimal(result.getProjectCount()));
+				}
+			}
 			BigDecimal sumTotal = sumContractValue.add(sumProfitTarget);
 			dataGrid.setFooter("cloudCount:"+(sumContractValue.toString().equalsIgnoreCase("null")?"0.0":sumContractValue)+",projectCount:"+(sumProfitTarget.toString().equalsIgnoreCase("null")?"0.0":sumProfitTarget)+",totalCount:"+(sumTotal.toString().equalsIgnoreCase("null")?"0.0":sumTotal)+",systemName:合计（万元）:");
 		}catch(Exception e){
@@ -373,9 +408,25 @@ public class TBFinalformExportController extends BaseController {
 	@RequestMapping(params = "exportXls")
 	public String exportXls(TBFinalformExportEntity tBFinalformExport,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
-//		CriteriaQuery cq = new CriteriaQuery(TBFinalformExportEntity.class, dataGrid);
-//		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBFinalformExport, request.getParameterMap());
-//		List<TBFinalformExportEntity> tBFinalformExports = this.tBFinalformExportService.getListByCriteriaQuery(cq,false);
+
+	    // 文件名称组装
+        String businessDate_begin = tBFinalformExport.getBusinessDate_begin();
+        String businessDate_end = tBFinalformExport.getBusinessDate_end();
+        String fileName = "";
+        if (StringUtils.isNotBlank(businessDate_begin) && StringUtils.isBlank(businessDate_end)) {
+            fileName = businessDate_begin + "～" + DateUtil.getCurrentYear() + "年度营销财务报表";
+        }else if (StringUtils.isBlank(businessDate_begin) && StringUtils.isNotBlank(businessDate_end)) {
+            fileName = "2015～" + businessDate_end + "年度营销财务报表";
+        }else if (businessDate_begin.equals(businessDate_end) && StringUtils.isNotBlank(businessDate_begin)) {
+            fileName = businessDate_end + "年度营销财务报表";
+        }else if (StringUtils.isNotBlank(businessDate_begin) && StringUtils.isNotBlank(businessDate_end)){
+            fileName = businessDate_begin + "～" + businessDate_end + "年度营销财务报表";
+        }else {
+            fileName = "营销财务报表";
+        }
+
+        // 封装查询时间条件
+        packageSearchDate(tBFinalformExport);
 
 		MiniDaoPage<TBFinalformExportEntity> miniDaoPage = tBFinalformExportService.tbFinalformExport(tBFinalformExport, dataGrid.getPage(), dataGrid.getRows());
 		List<TBFinalformExportEntity> finalformList = miniDaoPage.getResults();
@@ -399,6 +450,7 @@ public class TBFinalformExportController extends BaseController {
 					BigDecimal confirmIncome = tbProfitTargetEntity.getConfirmIncome();
 					if (confirmIncome != null) {
 						result.setProjectCount(confirmIncome.toString());
+
 					}else {
 						result.setProjectCount("0");
 					}
@@ -453,21 +505,36 @@ public class TBFinalformExportController extends BaseController {
 			result.setTotalCount(bg1.add(bg2).toString());
 		}
 
-		/*
-		 * 说明：格式为 字段名:值(可选，不写该值时为分页数据的合计) 多个合计 以 , 分割
-		 */
 		try{
-			BigDecimal sumContractValue = tBFinalformExportService.getSumCloudInCome();
-			BigDecimal sumProfitTarget = tBFinalformExportService.getSumProjectInCome();
+			// 设置合计行
+			BigDecimal sumContractValue = BigDecimal.ZERO;
+			BigDecimal sumProfitTarget = BigDecimal.ZERO;
+			if (tBFinalformExport.getBusinessDate_begin() == null && tBFinalformExport.getBusinessDate_end() == null) {
+				sumContractValue = tBFinalformExportService.getSumCloudInCome();
+				sumProfitTarget = tBFinalformExportService.getSumProjectInCome();
+			}else {
+				for (TBFinalformExportEntity result : results) {
+					sumContractValue = sumContractValue.add(new BigDecimal(result.getCloudCount()));
+					sumProfitTarget = sumProfitTarget.add(new BigDecimal(result.getProjectCount()));
+				}
+			}
+
 			BigDecimal sumTotal = sumContractValue.add(sumProfitTarget);
-			dataGrid.setFooter("cloudCount:"+(sumContractValue.toString().equalsIgnoreCase("null")?"0.0":sumContractValue)+",projectCount:"+(sumProfitTarget.toString().equalsIgnoreCase("null")?"0.0":sumProfitTarget)+",totalCount:"+(sumTotal.toString().equalsIgnoreCase("null")?"0.0":sumTotal)+",systemName:合计（万元）:");
+			TBFinalformExportEntity totalResult = new TBFinalformExportEntity();
+			totalResult.setUnitCode("");
+			totalResult.setSystemName("合计（万元）：");
+			totalResult.setCloudCount(sumContractValue.toString().equalsIgnoreCase("null")?"0.0":sumContractValue.toString());
+			totalResult.setProjectCount(sumProfitTarget.toString().equalsIgnoreCase("null")?"0.0":sumProfitTarget.toString());
+			totalResult.setTotalCount(sumTotal.toString().equalsIgnoreCase("null")?"0.0":sumTotal.toString());
+			results.add(totalResult);
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 
-		modelMap.put(NormalExcelConstants.FILE_NAME,"财务报表导出");
+		modelMap.put(NormalExcelConstants.FILE_NAME,fileName);
 		modelMap.put(NormalExcelConstants.CLASS,TBFinalformExportEntity.class);
-		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("财务报表导出列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams(fileName, "导出人:"+ResourceUtil.getSessionUser().getRealName(),
 				"导出信息"));
 		modelMap.put(NormalExcelConstants.DATA_LIST,results);
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;
@@ -602,4 +669,25 @@ public class TBFinalformExportController extends BaseController {
 
 		return Result.success();
 	}
+
+	/**
+	 * @Title packageSearchDate
+	 * @Description 封装时间范围查询条件
+	 * @Param [tbFinalformExport]
+	 * @Return void
+	 * @Author liuzc
+	 * @Date 2018/10/25 18:24
+	 **/
+	private void packageSearchDate(TBFinalformExportEntity tbFinalformExport) {
+        String businessDate_begin = tbFinalformExport.getBusinessDate_begin();
+        String businessDate_end = tbFinalformExport.getBusinessDate_end();
+        if (StringUtils.isNotBlank(businessDate_begin) && StringUtils.isBlank(businessDate_end)) {
+            tbFinalformExport.setBusinessDate_end(Integer.toString(Integer.valueOf(DateUtil.getCurrentYear())+1));
+        }else if(StringUtils.isBlank(businessDate_begin) && StringUtils.isNotBlank(businessDate_end)) {
+            tbFinalformExport.setBusinessDate_begin("2015");
+            tbFinalformExport.setBusinessDate_end(Integer.toString(Integer.valueOf(businessDate_end)+1));
+        }else if(StringUtils.isNotBlank(businessDate_end)) {
+            tbFinalformExport.setBusinessDate_end(Integer.toString(Integer.valueOf(businessDate_end)+1));
+        }
+    }
 }

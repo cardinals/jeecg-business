@@ -56,7 +56,7 @@ public class TBFinalformExportServiceImpl extends CommonServiceImpl implements T
 
 	@Override
 	public MiniDaoPage<TBFinalformExportEntity> tbFinalformExport(TBFinalformExportEntity tbFinalformExport, int page, int rows) {
-		return tBFinalformExportDao.tbFinalformExport(page,rows);
+		return tBFinalformExportDao.tbFinalformExport(tbFinalformExport,page,rows);
 	}
 
 	/**

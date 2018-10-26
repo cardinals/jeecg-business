@@ -43,10 +43,10 @@ public class TBWorkreportdayEntity implements java.io.Serializable {
 	/**所属公司*/
 	private String sysCompanyCode;
 	/**厅局单位*/
-	@Excel(name="厅局单位",width=15,dicCode="unit_name")
+	@Excel(name="单位名称",width=30,dicCode = "unit_name",mergeVertical = true)
 	private String unitCode;
 	/**迁移系统名称*/
-	@Excel(name="迁移系统名称",width=15)
+	@Excel(name="系统名称",width=30)
 	private String projectName;
 	/**今日完成的工作*/
 	@Excel(name="今日完成的工作",width=15)
@@ -63,10 +63,9 @@ public class TBWorkreportdayEntity implements java.io.Serializable {
 	/**日志业务关联表id*/
 	private String busiReportId;
 	/**今日时间*/
-	@Excel(name="今日时间",width=15,format = "yyyy-MM-dd")
+	@Excel(name="日报时间",width=15,format = "yyyy-MM-dd")
 	private Date reportDate;
 	/**日志类型*/
-	@Excel(name="日志类型",width=15)
 	private Integer reportType;
 	/**业务id*/
 	private String businessId;

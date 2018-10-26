@@ -141,9 +141,7 @@ public class TBBusinessController extends BaseController {
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBBusiness, request.getParameterMap());
 		try{
 			//自定义追加查询条件
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("unitCode", "desc");
-			cq.setOrder(map);
+			cq.eq("chanceStatus",0);
 
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
@@ -242,16 +240,17 @@ public class TBBusinessController extends BaseController {
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		message = "营销数据业务列表更新成功";
+
+		TBBusinessEntity t = tBBusinessService.get(TBBusinessEntity.class, tBBusiness.getId());
+
 		Date finishTime = tBBusiness.getFinishTime();
-		Date busJoinTime = tBBusiness.getBusJoinTime();
+		Date busJoinTime = t.getBusJoinTime();
 		if (finishTime != null) {
 			long day=(finishTime.getTime()-busJoinTime.getTime())/(24*60*60*1000);
 			if (day >= 0) {
 				tBBusiness.setDayRange((int)day);
 			}
 		}
-
-		TBBusinessEntity t = tBBusinessService.get(TBBusinessEntity.class, tBBusiness.getId());
 		try {
 			MyBeanUtils.copyBeanNotNull2Bean(tBBusiness, t);
 			tBBusinessService.saveOrUpdate(t);
