@@ -4,7 +4,7 @@
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
    <c:if test="${toolFlag == '1'}">
-   <t:datagrid name="tBBusiWorkreportList1" checkbox="false" pagination="true" sortName="unitCode" fitColumns="true" title="今日日报列表" actionUrl="tBBusiWorkreportController.do?datagrid&reportOpt=0" idField="id" fit="true" queryMode="group" singleSelect="true" onLoadSuccess="mergeCells">
+   <t:datagrid name="tBBusiWorkreportList1" checkbox="false" pagination="true" sortName="createBy,unitCode" fitColumns="true" title="今日日报列表" actionUrl="tBBusiWorkreportController.do?datagrid&reportOpt=0" idField="id" fit="true" queryMode="group" singleSelect="true" onLoadSuccess="mergeCells">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -27,7 +27,8 @@
    <t:dgFunOpt title="本周日报" urlclass="ace_button"  funname="checkCatalog(id)"></t:dgFunOpt>
    <t:dgToolBar title="录入今日日报" icon="icon-add" url="tBBusiWorkreportController.do?goUpdate&toolFlag=1" funname="update" operationCode="update"></t:dgToolBar>
    <t:dgToolBar title="查看最近日报" icon="icon-search" url="tBBusiWorkreportController.do?goUpdate&toolFlag=1" funname="detail"></t:dgToolBar>
-    <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls1"></t:dgToolBar>
+    <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls1" operationCode="export"></t:dgToolBar>
+    <t:dgToolBar title="导出今日日报" icon="icon-putout" funname="ExportTodayXls" operationCode="exportToday"></t:dgToolBar>
    </t:datagrid>
    </c:if>
 
@@ -49,7 +50,7 @@
      <t:dgFunOpt title="本周日报" urlclass="ace_button"  funname="checkCatalog(id)"></t:dgFunOpt>
      <t:dgToolBar title="录入今日日报" icon="icon-add" url="tBBusiWorkreportController.do?goUpdate&toolFlag=0" funname="update" operationCode="update"></t:dgToolBar>
      <t:dgToolBar title="查看最近日报" icon="icon-search" url="tBBusiWorkreportController.do?goUpdate&toolFlag=0" funname="detail"></t:dgToolBar>
-     <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls2"></t:dgToolBar>
+     <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls2" operationCode="export"></t:dgToolBar>
     </t:datagrid>
    </c:if>
   </div>
@@ -69,6 +70,10 @@ function ImportXls() {
 //导出
 function ExportXls1() {
 	JeecgExcelExport("tBBusiWorkreportController.do?exportXls","tBBusiWorkreportList1");
+}
+//导出今日日报
+function ExportTodayXls() {
+    JeecgExcelExport("tBBusiWorkreportController.do?exportTodayXls","tBBusiWorkreportList1");
 }
  //导出
  function ExportXls2() {
@@ -125,7 +130,7 @@ function mergeCells(data) {
     for (var i=1; i <data.rows.length; i++) {
         if (data.rows[i]['unitCode'] == data.rows[i-1]['unitCode']) {
             mark += 1;
-            $("#tBBusiWorkreportList").datagrid('mergeCells',{
+            $("#tBBusiWorkreportList1").datagrid('mergeCells',{
                 index: i+1-mark,
                 field: 'unitCode',
                 rowspan:mark

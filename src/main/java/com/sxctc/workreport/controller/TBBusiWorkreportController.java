@@ -1,4 +1,5 @@
 package com.sxctc.workreport.controller;
+import com.sxctc.util.DateUtil;
 import com.sxctc.workreport.entity.TBBusiWorkreportEntity;
 import com.sxctc.workreport.entity.TBWorkreportdayEntity;
 import com.sxctc.workreport.service.TBBusiWorkreportServiceI;
@@ -382,6 +383,28 @@ public class TBBusiWorkreportController extends BaseController {
 		modelMap.put(NormalExcelConstants.DATA_LIST,tBBusiWorkreports);
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
+
+	/**
+	 * 导出今日excel
+	 *
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(params = "exportTodayXls")
+	public String exportTodayXls(TBBusiWorkreportEntity tBBusiWorkreport,HttpServletRequest request,HttpServletResponse response
+			, DataGrid dataGrid,ModelMap modelMap) {
+		CriteriaQuery cq = new CriteriaQuery(TBBusiWorkreportEntity.class, dataGrid);
+		cq.ge("reportDate", java.sql.Date.valueOf(DateUtils.formatDate(new Date(),"yyyy-MM-dd")));
+		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBBusiWorkreport, request.getParameterMap());
+		List<TBBusiWorkreportEntity> tBBusiWorkreports = this.tBBusiWorkreportService.getListByCriteriaQuery(cq,false);
+		modelMap.put(NormalExcelConstants.FILE_NAME,"今日日报列表");
+		modelMap.put(NormalExcelConstants.CLASS,TBBusiWorkreportEntity.class);
+		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("今日日报列表列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+				"导出信息"));
+		modelMap.put(NormalExcelConstants.DATA_LIST,tBBusiWorkreports);
+		return NormalExcelConstants.JEECG_EXCEL_VIEW;
+	}
+
 	/**
 	 * 导出excel 使模板
 	 * 

@@ -33,6 +33,7 @@ public class TBBusiWorkreportEntity implements java.io.Serializable {
 	/**主键*/
 	private String id;
 	/**创建人名称*/
+	@Excel(name="人员名称",width=15,mergeVertical = true)
 	private String createName;
 	/**创建人登录名称*/
 	private String createBy;

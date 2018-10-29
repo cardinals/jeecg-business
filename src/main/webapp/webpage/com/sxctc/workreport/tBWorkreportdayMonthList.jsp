@@ -30,7 +30,7 @@
    <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="tBWorkreportdayMonthController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
    <t:dgToolBar title="查看" icon="icon-search" url="tBWorkreportdayMonthController.do?goUpdate&toolFlag=1&isCheck=1" funname="detail"></t:dgToolBar>
    <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
-   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls1"></t:dgToolBar>
+   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls1" operationCode="export"></t:dgToolBar>
    <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
   </t:datagrid>
   </c:if>
@@ -62,7 +62,7 @@
    <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="tBWorkreportdayMonthController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
    <t:dgToolBar title="查看" icon="icon-search" url="tBWorkreportdayMonthController.do?goUpdate&toolFlag=0&isCheck=1" funname="detail"></t:dgToolBar>
    <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
-   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls2"></t:dgToolBar>
+   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls2" operationCode="export"></t:dgToolBar>
    <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
   </t:datagrid>
   </c:if>
