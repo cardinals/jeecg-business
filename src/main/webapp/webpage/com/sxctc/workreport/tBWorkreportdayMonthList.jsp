@@ -4,7 +4,7 @@
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
   <c:if test="${toolFlag == '1'}">
-  <t:datagrid name="tBWorkreportdayMonthList1" checkbox="false" pagination="true" sortName="unitCode" fitColumns="false" title="月报" actionUrl="tBWorkreportdayMonthController.do?datagrid&reportOpt=0" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells" singleSelect="true">
+  <t:datagrid name="tBWorkreportdayMonthList1" checkbox="false" pagination="true" sortName="createName,unitCode" fitColumns="false" title="月报" actionUrl="tBWorkreportdayMonthController.do?datagrid&reportOpt=0" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells" singleSelect="true">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -36,7 +36,7 @@
   </c:if>
 
   <c:if test="${toolFlag == '0'}">
-  <t:datagrid name="tBWorkreportdayMonthList2" checkbox="false" pagination="true" fitColumns="false" title="月报" actionUrl="tBWorkreportdayMonthController.do?datagrid&reportOpt=1" idField="id" fit="true" queryMode="group" singleSelect="true">
+  <t:datagrid name="tBWorkreportdayMonthList2" checkbox="false" pagination="true" sortName="createName" fitColumns="false" title="月报" actionUrl="tBWorkreportdayMonthController.do?datagrid&reportOpt=1" idField="id" fit="true" queryMode="group" singleSelect="true" onLoadSuccess="mergeCells2">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"   queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -99,9 +99,38 @@ function mergeCells(data) {
     for (var i=1; i <data.rows.length; i++) {
         if (data.rows[i]['unitCode'] == data.rows[i-1]['unitCode']) {
             mark += 1;
-            $("#tBWorkreportdayMonthList").datagrid('mergeCells',{
+            $("#tBWorkreportdayMonthList1").datagrid('mergeCells',{
                 index: i+1-mark,
                 field: 'unitCode',
+                rowspan:mark
+            });
+        }else{
+            mark=1;
+        }
+    }
+    var mark=1;
+    for (var i=1; i <data.rows.length; i++) {
+        if (data.rows[i]['createName'] == data.rows[i-1]['createName']) {
+            mark += 1;
+            $("#tBWorkreportdayMonthList1").datagrid('mergeCells',{
+                index: i+1-mark,
+                field: 'createName',
+                rowspan:mark
+            });
+        }else{
+            mark=1;
+        }
+    }
+}
+
+function mergeCells2(data) {
+    var mark=1;
+    for (var i=1; i <data.rows.length; i++) {
+        if (data.rows[i]['createName'] == data.rows[i-1]['createName']) {
+            mark += 1;
+            $("#tBWorkreportdayMonthList2").datagrid('mergeCells',{
+                index: i+1-mark,
+                field: 'createName',
                 rowspan:mark
             });
         }else{

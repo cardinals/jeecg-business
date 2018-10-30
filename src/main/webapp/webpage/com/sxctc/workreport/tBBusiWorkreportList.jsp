@@ -4,7 +4,7 @@
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
    <c:if test="${toolFlag == '1'}">
-   <t:datagrid name="tBBusiWorkreportList1" checkbox="false" pagination="true" sortName="createBy,unitCode" fitColumns="true" title="今日日报列表" actionUrl="tBBusiWorkreportController.do?datagrid&reportOpt=0" idField="id" fit="true" queryMode="group" singleSelect="true" onLoadSuccess="mergeCells">
+   <t:datagrid name="tBBusiWorkreportList1" checkbox="false" pagination="true" sortName="createName,unitCode" fitColumns="true" title="今日日报列表" actionUrl="tBBusiWorkreportController.do?datagrid&reportOpt=0" idField="id" fit="true" queryMode="group" singleSelect="true" onLoadSuccess="mergeCells">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -33,7 +33,7 @@
    </c:if>
 
    <c:if test="${toolFlag == '0'}">
-    <t:datagrid name="tBBusiWorkreportList2" checkbox="false" pagination="true" fitColumns="true" actionUrl="tBBusiWorkreportController.do?datagrid&reportOpt=1" idField="id" fit="true" queryMode="group" singleSelect="true">
+    <t:datagrid name="tBBusiWorkreportList2" checkbox="false" pagination="true" sortName="createName" fitColumns="true" actionUrl="tBBusiWorkreportController.do?datagrid&reportOpt=1" idField="id" fit="true" queryMode="group" singleSelect="true" onLoadSuccess="mergeCells2">
      <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="20"></t:dgCol>
      <t:dgCol title="创建人名称"  field="createName"  queryMode="single"  width="120"></t:dgCol>
      <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -139,5 +139,34 @@ function mergeCells(data) {
             mark=1;
         }
     }
+    var mark=1;
+    for (var i=1; i <data.rows.length; i++) {
+        if (data.rows[i]['createName'] == data.rows[i-1]['createName']) {
+            mark += 1;
+            $("#tBBusiWorkreportList1").datagrid('mergeCells',{
+                index: i+1-mark,
+                field: 'createName',
+                rowspan:mark
+            });
+        }else{
+            mark=1;
+        }
+    }
 }
+
+function mergeCells2(data) {
+     var mark=1;
+     for (var i=1; i <data.rows.length; i++) {
+         if (data.rows[i]['createName'] == data.rows[i-1]['createName']) {
+             mark += 1;
+             $("#tBBusiWorkreportList2").datagrid('mergeCells',{
+                 index: i+1-mark,
+                 field: 'createName',
+                 rowspan:mark
+             });
+         }else{
+             mark=1;
+         }
+     }
+ }
  </script>
