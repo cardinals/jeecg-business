@@ -344,6 +344,14 @@ public class TBBusiWorkreportController extends BaseController {
 			String id = tBBusiWorkreport.getId();
 			// 去t_b_busi_workreport表查询回填信息
 			TBBusiWorkreportEntity tBBusiWorkreportEntity = tBBusiWorkreportService.getEntity(TBBusiWorkreportEntity.class, id);
+			String doneToday = tBBusiWorkreportEntity.getDoneToday();
+			String unDoneToday = tBBusiWorkreportEntity.getUnDoneToday();
+			String coordinateWork = tBBusiWorkreportEntity.getCoordinateWork();
+			String remark = tBBusiWorkreportEntity.getRemark();
+			if (StringUtils.isNotBlank(doneToday) && doneToday.contains("|")) {tBBusiWorkreportEntity.setDoneToday(doneToday.replace("|","\r\n"));}
+			if (StringUtils.isNotBlank(unDoneToday) && unDoneToday.contains("|")) {tBBusiWorkreportEntity.setDoneToday(unDoneToday.replace("|","\r\n"));}
+			if (StringUtils.isNotBlank(coordinateWork) && coordinateWork.contains("|")) {tBBusiWorkreportEntity.setDoneToday(coordinateWork.replace("|","\r\n"));}
+			if (StringUtils.isNotBlank(remark) && remark.contains("|")) {tBBusiWorkreportEntity.setDoneToday(remark.replace("|","\r\n"));}
 			tBBusiWorkreportEntity.setReportDate(DateUtils.getDate());
 
 			req.setAttribute("tBBusiWorkreportPage", tBBusiWorkreportEntity);
@@ -372,11 +380,19 @@ public class TBBusiWorkreportController extends BaseController {
 	 */
 	@RequestMapping(params = "exportXls")
 	public String exportXls(TBBusiWorkreportEntity tBBusiWorkreport,HttpServletRequest request,HttpServletResponse response
-			, DataGrid dataGrid,ModelMap modelMap) {
+			, DataGrid dataGrid,ModelMap modelMap, String reportDate_begin, String reportDate_end) {
 		CriteriaQuery cq = new CriteriaQuery(TBBusiWorkreportEntity.class, dataGrid);
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBBusiWorkreport, request.getParameterMap());
 		List<TBBusiWorkreportEntity> tBBusiWorkreports = this.tBBusiWorkreportService.getListByCriteriaQuery(cq,false);
-		modelMap.put(NormalExcelConstants.FILE_NAME,"今日日报列表");
+		String fileName = "日报列表";
+		if (StringUtils.isNotBlank(reportDate_begin) && StringUtils.isNotBlank(reportDate_end)) {
+			if (reportDate_begin.equals(reportDate_end)) {
+				fileName = reportDate_begin + "日报列表";
+			}else {
+				fileName = reportDate_begin + "~" + reportDate_end + "日报列表";
+			}
+		}
+		modelMap.put(NormalExcelConstants.FILE_NAME,fileName);
 		modelMap.put(NormalExcelConstants.CLASS,TBBusiWorkreportEntity.class);
 		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("今日日报列表列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
 			"导出信息"));

@@ -74,7 +74,7 @@ public class TBBusiWorkreportEntity implements java.io.Serializable {
 	/**备注*/
 	@Excel(name="备注",width=15)
 	private String remark;
-	
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  主键

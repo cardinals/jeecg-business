@@ -166,7 +166,8 @@ public class TBProfitTargetController extends BaseController {
 		tBProfitTarget = systemService.getEntity(TBProfitTargetEntity.class, tBProfitTarget.getId());
 		message = "毛利润指标删除成功";
 		try{
-			tBProfitTargetService.delete(tBProfitTarget);
+			//tBProfitTargetService.delete(tBProfitTarget);
+			tBProfitTargetService.deleteProfitTarget(tBProfitTarget);
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();

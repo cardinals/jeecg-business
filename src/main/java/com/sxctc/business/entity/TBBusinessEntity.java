@@ -100,6 +100,8 @@ public class TBBusinessEntity implements java.io.Serializable {
 	/**时间跨越*/
 	@Excel(name="时间跨越",width=15)
 	private Integer dayRange;
+	/**备注*/
+	private String remark;
 
 	/**自定义返回参数*/
 	/**总收入*/
@@ -653,6 +655,23 @@ public class TBBusinessEntity implements java.io.Serializable {
 	 */
 	public void setDayRange(Integer dayRange){
 		this.dayRange = dayRange;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  备注
+	 */
+	@Column(name ="REMARK",nullable=true)
+	public String getRemark() {
+		return remark;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  备注
+	 */
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 	@Transient

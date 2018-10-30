@@ -141,8 +141,6 @@ public class TBBusinessController extends BaseController {
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBBusiness, request.getParameterMap());
 		try{
 			//自定义追加查询条件
-			cq.eq("chanceStatus",0);
-
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}

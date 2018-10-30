@@ -14,9 +14,9 @@
    <t:dgCol title="更新日期"  field="updateDate"  formatter="yyyy-MM-dd"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所属部门"  field="sysOrgCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所属公司"  field="sysCompanyCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="厅局名称"  field="unitCode"  queryMode="single" dictionary="unit_name" width="120"></t:dgCol>
-   <t:dgCol title="迁移系统名称"  field="reportTitle"  queryMode="single" width="120"></t:dgCol>
-   <t:dgCol title="最近日报（绿色今日已写）"  field="reportDate"  queryMode="single"  width="120" formatter="yyyy-MM-dd" extendParams="styler:fmtype"></t:dgCol>
+   <t:dgCol title="单位名称"  field="unitCode"  queryMode="single" query="true" dictionary="unit_name" width="120"></t:dgCol>
+   <t:dgCol title="系统名称"  field="reportTitle"  queryMode="single" query="true" width="120"></t:dgCol>
+   <t:dgCol title="日报时间"  field="reportDate"  queryMode="group" query="true"  width="120" formatter="yyyy-MM-dd" extendParams="styler:fmtype"></t:dgCol>
    <t:dgCol title="今日完成的工作"  field="doneToday"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="未完成的工作"  field="unDoneToday"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="需要协调的工作"  field="coordinateWork"  queryMode="single"  width="120"></t:dgCol>
@@ -28,7 +28,7 @@
    <t:dgToolBar title="录入今日日报" icon="icon-add" url="tBBusiWorkreportController.do?goUpdate&toolFlag=1" funname="update" operationCode="update"></t:dgToolBar>
    <t:dgToolBar title="查看最近日报" icon="icon-search" url="tBBusiWorkreportController.do?goUpdate&toolFlag=1" funname="detail"></t:dgToolBar>
     <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls1" operationCode="export"></t:dgToolBar>
-    <t:dgToolBar title="导出今日日报" icon="icon-putout" funname="ExportTodayXls" operationCode="exportToday"></t:dgToolBar>
+    <%--<t:dgToolBar title="导出今日日报" icon="icon-putout" funname="ExportTodayXls" operationCode="exportToday"></t:dgToolBar>--%>
    </t:datagrid>
    </c:if>
 
@@ -44,7 +44,7 @@
      <t:dgCol title="所属部门"  field="sysOrgCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
      <t:dgCol title="所属公司"  field="sysCompanyCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
      <t:dgCol title="日报类型"  field="reportType" width="120" dictionary="reportType"></t:dgCol>
-     <t:dgCol title="最近日报（绿色今日已写）"  field="reportDate"  queryMode="single"  width="120" formatter="yyyy-MM-dd" extendParams="styler:fmtype"></t:dgCol>
+     <t:dgCol title="日报时间"  field="reportDate"  queryMode="group" query="true"  width="120" formatter="yyyy-MM-dd" extendParams="styler:fmtype"></t:dgCol>
      <t:dgCol title="日志内容"  field="doneToday"  queryMode="single"  width="120"></t:dgCol>
      <t:dgCol title="操作" field="opt" width="200"></t:dgCol>
      <t:dgFunOpt title="本周日报" urlclass="ace_button"  funname="checkCatalog(id)"></t:dgFunOpt>
@@ -58,6 +58,12 @@
  <script src = "webpage/com/sxctc/workreport/tBBusiWorkreportList.js"></script>		
  <script type="text/javascript">
  $(document).ready(function(){
+     //给时间控件加上样式
+     $("#tBBusiWorkreportList1tb").find("input[name='reportDate_begin']").attr("class","Wdate").attr("style","height:30px;width:100px;").click(function(){WdatePicker({dateFmt:'yyyy-MM-dd'})});
+     $("#tBBusiWorkreportList1tb").find("input[name='reportDate_end']").attr("class","Wdate").attr("style","height:30px;width:100px;").click(function(){WdatePicker({dateFmt:'yyyy-MM-dd'});});
+
+     $("#tBBusiWorkreportList2tb").find("input[name='reportDate_begin']").attr("class","Wdate").attr("style","height:30px;width:100px;").click(function(){WdatePicker({dateFmt:'yyyy-MM-dd'})});
+     $("#tBBusiWorkreportList2tb").find("input[name='reportDate_end']").attr("class","Wdate").attr("style","height:30px;width:100px;").click(function(){WdatePicker({dateFmt:'yyyy-MM-dd'});});
  });
 
 

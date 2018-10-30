@@ -1,11 +1,14 @@
 package com.sxctc.business.service.impl;
 import com.sxctc.business.entity.TBBusiCatalogEntity;
 import com.sxctc.business.service.TBBusinessServiceI;
+import com.sxctc.businessoppty.entity.TBBusinessOpptyEntity;
+import com.sxctc.profit.entity.TBProfitTargetEntity;
 import com.sxctc.projectrack.entity.TBChancePoolEntity;
 import com.sxctc.workreport.entity.TBBusiWorkreportEntity;
 import com.sxctc.workreport.entity.TBWorkreportdayEntity;
 import com.sxctc.workreport.entity.TBWorkreportdayMonthEntity;
 import com.sxctc.workreport.entity.TBWorkreportdayWeekEntity;
+import org.apache.commons.lang3.StringUtils;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import com.sxctc.business.entity.TBBusinessEntity;
 import org.springframework.stereotype.Service;
@@ -119,6 +122,7 @@ public class TBBusinessServiceImpl extends CommonServiceImpl implements TBBusine
 		map.put("finish_time", t.getFinishTime());
 		map.put("funds_provided", t.getFundsProvided());
 		map.put("day_range", t.getDayRange());
+		map.put("remark", t.getRemark());
 		return map;
 	}
  	
@@ -161,6 +165,7 @@ public class TBBusinessServiceImpl extends CommonServiceImpl implements TBBusine
 		sql  = sql.replace("#{finish_time}",String.valueOf(t.getFinishTime()));
 		sql  = sql.replace("#{funds_provided}",String.valueOf(t.getFundsProvided()));
 		sql  = sql.replace("#{day_range}",String.valueOf(t.getDayRange()));
+		sql  = sql.replace("#{remark}",String.valueOf(t.getRemark()));
 		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
 		return sql;
  	}
@@ -223,6 +228,12 @@ public class TBBusinessServiceImpl extends CommonServiceImpl implements TBBusine
 	 * @Date 2018/8/29 下午1:53
 	 **/
 	public void deleteBusiness(TBBusinessEntity tBBusiness, String busiWorkreportId) throws Exception{
+		// 获取项目归属人
+		String createBy = tBBusiness.getCreateBy();
+		Integer chanceStatus = tBBusiness.getChanceStatus();
+		/**
+		 * 删除系统上云列表和日报有关内容
+		 **/
 		// 删除业务主表
 		this.delete(tBBusiness);
 
@@ -266,6 +277,60 @@ public class TBBusinessServiceImpl extends CommonServiceImpl implements TBBusine
 				this.deleteEntityById(TBBusiCatalogEntity.class,tbBusiCatalogEntity.getId());
 			}
 		}
+
+		/**
+		 * 删除项目机会池和商机评估表中关联内容（如果是有）
+		 **/
+		// 如果是跟踪项目，那么一定有信息
+		if (chanceStatus == 1) {
+			// 获取项目机会池信息
+			TBChancePoolEntity tBChancePool = this.findUniqueByProperty(TBChancePoolEntity.class, "businessId", busiWorkreportId);
+
+			if (tBChancePool != null && StringUtils.isNotBlank(tBChancePool.getId())) {
+				// 1、删除机会池中项目
+				this.delete(tBChancePool);
+
+				// 2、删除商机评估中数据（如果有）
+				String hql = "from TBBusinessOpptyEntity where businessId=? and createBy=? and businessStatus=1";
+				List<TBBusinessOpptyEntity> tBBusinessOpptyList = this.findHql(hql, busiWorkreportId, createBy);
+				if (tBBusinessOpptyList.size() == 1) {
+					TBBusinessOpptyEntity tbBusinessOpptyEntity = tBBusinessOpptyList.get(0);
+					// 判断是不是其用户下唯一一个评级
+					// 获取他现在的评级
+					Integer sortNum = tbBusinessOpptyEntity.getSortNum();
+					// 根据评级筛选
+					String hql1 = "from TBBusinessOpptyEntity where sortNum=? and createBy=? and businessStatus=1";
+					List<TBBusinessOpptyEntity> tBBusinessOppty = this.findHql(hql1, sortNum, createBy);
+					// 如果不是，则直接删除
+					if (tBBusinessOppty.size() > 1) {
+						this.delete(tbBusinessOpptyEntity);
+					}
+					// 如果是，则更新为空
+					if (tBBusinessOppty.size() == 1) {
+						tbBusinessOpptyEntity.setUpdateDate(null);
+						tbBusinessOpptyEntity.setUpdateBy(null);
+						tbBusinessOpptyEntity.setUpdateName(null);
+						tbBusinessOpptyEntity.setProjectName(null);
+						tbBusinessOpptyEntity.setUnitCode(null);
+						tbBusinessOpptyEntity.setBusinessId(null);
+						this.updateEntitie(tbBusinessOpptyEntity);
+					}
+
+				}
+			}
+		}
+
+
+		/**
+		 * 删除已签订项目列表数据（如果有）
+		 **/
+		// 获取项目机会池信息
+		TBProfitTargetEntity tBProfitTarget = this.findUniqueByProperty(TBProfitTargetEntity.class, "businessId", busiWorkreportId);
+		if (tBProfitTarget != null && StringUtils.isNotBlank(tBProfitTarget.getId())) {
+			// 删除已签订项目
+			this.delete(tBProfitTarget);
+		}
+
 	}
 
 	/**

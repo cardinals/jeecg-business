@@ -6,7 +6,7 @@
 </style>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="tBChancePoolList" checkbox="false" pagination="true" fitColumns="false" title="项目机会池" sortName="unitCode" actionUrl="tBChancePoolController.do?datagrid" idField="id" fit="true" queryMode="group" extendParams=""  onLoadSuccess="mergeCells" >
+  <t:datagrid name="tBChancePoolList" checkbox="false" pagination="true" fitColumns="false" title="项目机会池" sortName="createName,unitCode" actionUrl="tBChancePoolController.do?datagrid" idField="id" fit="true" queryMode="group" extendParams=""  onLoadSuccess="mergeCells" >
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy" hidden="true" queryMode="single"  width="110" align="center"></t:dgCol>
@@ -33,8 +33,8 @@
    <t:dgCol title="备注"  field="remark"  queryMode="single"  width="120" align="center"></t:dgCol>
    <t:dgCol title="是否中标"  field="winningResult"  queryMode="single"  dictionary="dev_flag"  width="100" align="center"></t:dgCol>
    <t:dgCol title="业务主表id"  field="businessId"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
-   <t:dgDelOpt title="删除" url="tBChancePoolController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o" operationCode="delete"/>
+   <%--<t:dgCol title="操作" field="opt" width="100"></t:dgCol>--%>
+   <%--<t:dgDelOpt title="删除" url="tBChancePoolController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o" operationCode="delete"/>--%>
    <%--<t:dgToolBar title="录入" icon="icon-add" url="tBChancePoolController.do?goAdd" funname="add"></t:dgToolBar>--%>
    <t:dgToolBar title="编辑" icon="icon-edit" url="tBChancePoolController.do?goUpdate" funname="update" operationCode="update"></t:dgToolBar>
    <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="tBChancePoolController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
@@ -77,6 +77,19 @@ function mergeCells(data) {
             });
         }else{
             mark=1;                                         //一旦前后两行的值不一样了，那么需要合并的格子数mark就需要重新计算
+        }
+    }
+    var mark=1;
+    for (var i=1; i <data.rows.length; i++) {
+        if (data.rows[i]['createName'] == data.rows[i-1]['createName']) {
+            mark += 1;
+            $("#tBChancePoolList").datagrid('mergeCells',{
+                index: i+1-mark,
+                field: 'createName',
+                rowspan:mark
+            });
+        }else{
+            mark=1;
         }
     }
 }

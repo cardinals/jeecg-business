@@ -100,6 +100,18 @@
 		<tr>
 			<td align="right">
 				<label class="Validform_label">
+					备注:
+				</label>
+			</td>
+			<td class="value">
+				<input id="remark" name="remark" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="*" value="${tBBusinessPage.remark}" ignore="ignore" />
+				<span class="Validform_checktip"></span>
+				<label class="Validform_label" style="display: none;">备注</label>
+			</td>
+		</tr>
+		<tr>
+			<td align="right">
+				<label class="Validform_label">
 					业务创建时间:
 				</label>
 			</td>

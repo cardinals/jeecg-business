@@ -11,5 +11,14 @@ public interface TBProfitTargetServiceI extends CommonService{
  	public Serializable save(TBProfitTargetEntity entity) throws Exception;
  	
  	public void saveOrUpdate(TBProfitTargetEntity entity) throws Exception;
- 	
+
+ 	/**
+ 	 * @Title deleteProfitTarget
+ 	 * @Description 自定义删除逻辑
+ 	 * @Param [entity]
+ 	 * @Return void
+ 	 * @Author liuzc
+ 	 * @Date 2018/10/30 14:54
+ 	 **/
+	public void deleteProfitTarget(TBProfitTargetEntity entity) throws Exception;
 }

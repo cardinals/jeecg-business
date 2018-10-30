@@ -190,4 +190,26 @@ public class TBProfitTargetServiceImpl extends CommonServiceImpl implements TBPr
 			}
 		}
  	}
+
+
+	/**
+	 * @Title deleteProfitTarget
+	 * @Description 自定义删除逻辑
+	 * @Param [entity]
+	 * @Return void
+	 * @Author liuzc
+	 * @Date 2018/10/30 14:54
+	 **/
+	public void deleteProfitTarget(TBProfitTargetEntity entity) throws Exception {
+		String businessId = entity.getBusinessId();
+
+		//1. 删除已签订项目
+		this.delete(entity);
+
+		//2. 删除其他相关联业务
+		//删除项目机会池中信息
+		//删除系统上云列表信息
+		//删除日志信息
+
+	}
 }
