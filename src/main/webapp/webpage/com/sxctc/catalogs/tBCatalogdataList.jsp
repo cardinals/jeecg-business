@@ -3,17 +3,17 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="tBCatalogdataList" checkbox="true" pagination="true" treegrid="true" treeField="name" fitColumns="true" title="服务目录管理" actionUrl="tBCatalogdataController.do?datagrid&catalogtype=${type}"  idField="id" fit="true" queryMode="group">
-   <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="名称"  field="name"  queryMode="single"  width="260"></t:dgCol>
-   <t:dgCol title="单位"  field="danwei"  queryMode="single"  width="120"></t:dgCol>
+  <t:datagrid name="tBCatalogdataList" checkbox="true" pagination="true" treegrid="true" fitColumns="true" title="服务目录管理" actionUrl="tBCatalogdataController.do?datagrid&catalogtype=${type}"  idField="id" fit="true" queryMode="group">
+   <t:dgCol title="主键"  field="id"  hidden="true" treefield="id" queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="名称"  field="name" treefield="text" queryMode="single"  width="260"></t:dgCol>
+   <t:dgCol title="单位"  field="danwei" treefield="fieldMap.danwei" queryMode="single"  width="50"></t:dgCol>
    <t:dgCol title="父节点ID"  field="fartherid"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="数量"  field="num"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="类型"  field="type" hidden="true" queryMode="single"  dictionary="catatype"  width="120"></t:dgCol>
-   <t:dgCol title="单价"  field="price" queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="编码"  field="catalogCode" queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="编码"  field="nodeId" queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="备注"  field="beizhu"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="数量"  field="num"  hidden="true" treefield="fieldMap.num" queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="类型"  field="type" hidden="true" treefield="fieldMap.type" queryMode="single"  dictionary="catatype"  width="120"></t:dgCol>
+   <t:dgCol title="单价"  field="price" queryMode="single" treefield="fieldMap.price"  width="50"></t:dgCol>
+   <t:dgCol title="编码"  field="catalogCode" hidden="true" queryMode="single" treefield="fieldMap.catalogCode" width="120"></t:dgCol>
+   <t:dgCol title="编码"  field="nodeId" hidden="true" queryMode="single" treefield="fieldMap.nodeId" width="120"></t:dgCol>
+   <t:dgCol title="备注"  field="beizhu"  queryMode="single" treefield="fieldMap.beizhu" width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
    <t:dgDelOpt title="删除" url="tBCatalogdataController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="录入" icon="icon-add" url="tBCatalogdataController.do?goAdd" funname="add" width="600" height="280"></t:dgToolBar>
@@ -28,12 +28,16 @@
 		$("#tBCatalogdataList").treegrid({
  				 onExpand : function(row){
  				    $("#tBCatalogdataList").treegrid("expandAll",row.id);
- 					var children = $("#tBCatalogdataList").treegrid('getChildren',row.id);
- 					 if(children.length<=0){
- 					 	row.leaf=true;
- 					 	$("#tBCatalogdataList").treegrid('refresh', row.id);
- 					 }
- 				}
+ 					// var children = $("#tBCatalogdataList").treegrid('getChildren',row.id);
+ 					//  if(children.length<=0){
+ 					//  	row.leaf=true;
+ 					//  	$("#tBCatalogdataList").treegrid('refresh', row.id);
+ 					//  }
+ 				},
+                onLoadSuccess: function () {
+                    $("#tBCatalogdataList").treegrid("expandAll");
+                }
+
  		});
  });
  

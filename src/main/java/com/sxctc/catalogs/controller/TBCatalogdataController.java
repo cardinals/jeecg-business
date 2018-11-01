@@ -1,17 +1,23 @@
 package com.sxctc.catalogs.controller;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sxctc.catalogs.entity.TBCatalogdataEntity;
 import com.sxctc.catalogs.service.TBCatalogdataServiceI;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sxctc.util.DateUtil;
 import com.sxctc.util.FastJsonUtil;
 import org.apache.log4j.Logger;
+import org.jeecgframework.core.common.model.json.ComboTree;
+import org.jeecgframework.core.common.model.json.TreeGrid;
+import org.jeecgframework.tag.vo.datatable.SortDirection;
+import org.jeecgframework.tag.vo.easyui.ComboTreeModel;
+import org.jeecgframework.tag.vo.easyui.TreeGridModel;
+import org.jeecgframework.web.system.pojo.base.TSDepart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -39,7 +45,6 @@ import java.io.IOException;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import java.util.Map;
 
 import org.jeecgframework.core.util.ExceptionUtil;
 
@@ -48,7 +53,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpStatus;
 import org.jeecgframework.core.beanvalidator.BeanValidators;
-import java.util.Set;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
@@ -104,6 +109,107 @@ public class TBCatalogdataController extends BaseController {
 	public ModelAndView testlist(HttpServletRequest request) {
 		return new ModelAndView("com/sxctc/catalogs/tBCatalogTab");
 	}
+
+	/**
+	 * 父级权限列表
+	 *
+	 * @param request
+	 * @param comboTree
+	 * @return
+	 */
+	@RequestMapping(params = "setPFunction")
+	@ResponseBody
+	public List<ComboTree> setPFunction(HttpServletRequest request, ComboTree comboTree) {
+		CriteriaQuery cq = new CriteriaQuery(TBCatalogdataEntity.class);
+		if(null != request.getParameter("selfId")){
+			cq.notEq("id", request.getParameter("selfId"));
+		}
+		if (comboTree.getId() != null) {
+			cq.eq("TBPCatalogdata.id", comboTree.getId());
+		}
+		if (comboTree.getId() == null) {
+			cq.isNull("TBPCatalogdata");
+		}
+
+		//cq.addOrder("orgCode", SortDirection.asc);
+
+		cq.add();
+		List<TBCatalogdataEntity> departsList = systemService.getListByCriteriaQuery(cq, false);
+		List<ComboTree> comboTrees = new ArrayList<ComboTree>();
+		ComboTreeModel comboTreeModel = new ComboTreeModel("id", "name", "TBCatalogdatas");
+
+		TBCatalogdataEntity defaultDepart = new TBCatalogdataEntity();
+		defaultDepart.setId("");
+		defaultDepart.setName("请选择");
+		departsList.add(0, defaultDepart);
+
+		comboTrees = systemService.ComboTree(departsList, comboTreeModel, null, true);
+		return comboTrees;
+
+	}
+
+	/**
+	 * 部门列表，树形展示
+	 * @param request
+	 * @param response
+	 * @param treegrid
+	 * @return
+	 */
+	@RequestMapping(params = "datagrid")
+	@ResponseBody
+	public Object departgrid(TBCatalogdataEntity tBCatalogdata,HttpServletRequest request, HttpServletResponse response, TreeGrid treegrid) {
+		String types = request.getParameter("catalogtype");
+		CriteriaQuery cq = new CriteriaQuery(TBCatalogdataEntity.class);
+		if("yes".equals(request.getParameter("isSearch"))){
+			treegrid.setId(null);
+			tBCatalogdata.setId(null);
+		}
+		if(null != tBCatalogdata.getName()){
+			org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBCatalogdata);
+		}
+		if (treegrid.getId() != null) {
+			cq.eq("TBPCatalogdata.id", treegrid.getId());
+		}
+		if (treegrid.getId() == null) {
+			cq.isNull("TBPCatalogdata");
+		}
+
+		cq.eq("type",types);
+		cq.add();
+		List<TreeGrid> departList =null;
+		departList=systemService.getListByCriteriaQuery(cq, false);
+		if(departList.size()==0&&tBCatalogdata.getName()!=null){
+			cq = new CriteriaQuery(TBCatalogdataEntity.class);
+			TBCatalogdataEntity parDepart = new TBCatalogdataEntity();
+			tBCatalogdata.setTBPCatalogdata(parDepart);
+			org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBCatalogdata);
+			departList =systemService.getListByCriteriaQuery(cq, false);
+		}
+		List<TreeGrid> treeGrids = new ArrayList<TreeGrid>();
+		TreeGridModel treeGridModel = new TreeGridModel();
+		treeGridModel.setTextField("name");
+		treeGridModel.setParentText("TBPCatalogdata_name");
+		treeGridModel.setParentId("TBPCatalogdata_id");
+		treeGridModel.setSrc("null");
+		treeGridModel.setIdField("id");
+		treeGridModel.setChildList("TBCatalogdatas");
+		Map<String,Object> fieldMap = new HashMap<String, Object>();
+		fieldMap.put("danwei", "danwei");
+		fieldMap.put("num", "num");
+		fieldMap.put("type", "type");
+		fieldMap.put("price", "price");
+		fieldMap.put("catalogCode", "catalogCode");
+		fieldMap.put("nodeId", "nodeId");
+		fieldMap.put("beizhu", "beizhu");
+		treeGridModel.setFieldMap(fieldMap);
+		treeGrids = systemService.treegrid(departList, treeGridModel);
+
+		JSONArray jsonArray = new JSONArray();
+		for (TreeGrid treeGrid : treeGrids) {
+			jsonArray.add(JSON.parse(treeGrid.toJson()));
+		}
+		return jsonArray;
+	}
 	/**
 	 * easyui AJAX请求数据
 	 * 
@@ -112,7 +218,7 @@ public class TBCatalogdataController extends BaseController {
 	 * @param dataGrid
 	 */
 
-	@RequestMapping(params = "datagrid")
+	@RequestMapping(params = "datagrid1")
 	public void datagrid(TBCatalogdataEntity tBCatalogdata,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(TBCatalogdataEntity.class, dataGrid);
 		String types = request.getParameter("catalogtype");

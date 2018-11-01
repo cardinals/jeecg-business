@@ -1,5 +1,6 @@
 package com.sxctc.business.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.sxctc.business.entity.TBBusiCatalogEntity;
@@ -18,6 +19,7 @@ import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
 import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.common.model.json.DataGrid;
+import org.jeecgframework.core.common.model.json.TreeGrid;
 import org.jeecgframework.core.constant.Globals;
 import org.jeecgframework.core.util.ExceptionUtil;
 import org.jeecgframework.core.util.MyBeanUtils;
@@ -30,6 +32,7 @@ import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.ImportParams;
 import org.jeecgframework.poi.excel.entity.vo.NormalExcelConstants;
 import org.jeecgframework.tag.core.easyui.TagUtil;
+import org.jeecgframework.tag.vo.easyui.TreeGridModel;
 import org.jeecgframework.web.system.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,10 +50,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @Title: Controller
@@ -97,6 +97,92 @@ public class TBBusiCatalogdataController extends BaseController {
 	}
 
 	/**
+	 * easyui treegrid AJAX请求数据
+	 * @param request
+	 * @param response
+	 * @param treegrid
+	 * @return
+	 */
+	@RequestMapping(params = "datagrid")
+	@ResponseBody
+	public Object departgrid(TBCatalogdataEntity tBCatalogdata,HttpServletRequest request, HttpServletResponse response, TreeGrid treegrid, String businessId) {
+		String type = request.getParameter("type");
+		CriteriaQuery cq = new CriteriaQuery(TBCatalogdataEntity.class);
+		if("yes".equals(request.getParameter("isSearch"))){
+			treegrid.setId(null);
+			tBCatalogdata.setId(null);
+		}
+		if(null != tBCatalogdata.getName()){
+			org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBCatalogdata);
+		}
+		if (treegrid.getId() != null) {
+			cq.eq("TBPCatalogdata.id", treegrid.getId());
+		}
+		if (treegrid.getId() == null) {
+			cq.isNull("TBPCatalogdata");
+		}
+
+		if (StringUtils.isNotBlank(type)){
+			cq.eq("type",type);
+		}
+		cq.add();
+		List<TreeGrid> departList =null;
+		departList=systemService.getListByCriteriaQuery(cq, false);
+		if(departList.size()==0&&tBCatalogdata.getName()!=null){
+			cq = new CriteriaQuery(TBCatalogdataEntity.class);
+			TBCatalogdataEntity parDepart = new TBCatalogdataEntity();
+			tBCatalogdata.setTBPCatalogdata(parDepart);
+			org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBCatalogdata);
+			departList =systemService.getListByCriteriaQuery(cq, false);
+		}
+
+		List<TreeGrid> treeGrids = new ArrayList<TreeGrid>();
+		TreeGridModel treeGridModel = new TreeGridModel();
+		treeGridModel.setTextField("name");
+		treeGridModel.setParentText("TBPCatalogdata_name");
+		treeGridModel.setParentId("TBPCatalogdata_id");
+		treeGridModel.setSrc("null");
+		treeGridModel.setIdField("id");
+		treeGridModel.setChildList("TBCatalogdatas");
+		Map<String,Object> fieldMap = new HashMap<String, Object>();
+		fieldMap.put("danwei", "danwei");
+		fieldMap.put("num", "num");
+		fieldMap.put("type", "type");
+		fieldMap.put("price", "price");
+		fieldMap.put("catalogCode", "catalogCode");
+		fieldMap.put("nodeId", "nodeId");
+		fieldMap.put("beizhu", "beizhu");
+		treeGridModel.setFieldMap(fieldMap);
+		treeGrids = systemService.treegrid(departList, treeGridModel);
+
+		// 查询该业务id下面所有的关联
+		List<TBBusiCatalogEntity> tBusiCatalogList = systemService.findByProperty(TBBusiCatalogEntity.class, "businessId", businessId);
+		for (TreeGrid treeGrid : treeGrids) {
+			String id = treeGrid.getId();
+			Map<String, Object> map = treeGrid.getFieldMap();
+			// 遍历
+			for (TBBusiCatalogEntity tbBusiCatalog : tBusiCatalogList) {
+				if (tbBusiCatalog.getCatalogId().equals(id)) {
+//					String checkNumJson = tbBusiCatalog.getCheckNumJson();
+//					if (StringUtils.isNotBlank(checkNumJson)) {
+//						JSONObject jsonObject = JSONObject.parseObject(checkNumJson);
+//						Integer checkNum = jsonObject.getInteger(currentYear);
+//						results.get(i).setNum(checkNum);
+//						map.put("num", checkNum);
+//					}
+					map.put("num", tbBusiCatalog.getCheckNum());
+				}
+			}
+		}
+
+		JSONArray jsonArray = new JSONArray();
+		for (TreeGrid treeGrid : treeGrids) {
+			jsonArray.add(JSON.parse(treeGrid.toJson()));
+		}
+		return jsonArray;
+	}
+
+	/**
 	 * easyui AJAX请求数据
 	 *
 	 * @param request
@@ -104,7 +190,7 @@ public class TBBusiCatalogdataController extends BaseController {
 	 * @param dataGrid
 	 */
 
-	@RequestMapping(params = "datagrid")
+	@RequestMapping(params = "datagrid1")
 	public void datagrid(TBCatalogdataEntity tBCatalogdata,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid, String businessId) {
 		CriteriaQuery cq = new CriteriaQuery(TBCatalogdataEntity.class, dataGrid);
 		if(StringUtil.isEmpty(tBCatalogdata.getId())){

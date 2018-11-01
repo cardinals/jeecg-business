@@ -1,6 +1,7 @@
 package com.sxctc.catalogs.entity;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.lang.String;
 import java.lang.Double;
@@ -9,9 +10,12 @@ import java.math.BigDecimal;
 import javax.persistence.*;
 import javax.xml.soap.Text;
 import java.sql.Blob;
+import java.util.List;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.jeecgframework.core.common.entity.IdEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
+import org.jeecgframework.web.system.pojo.base.TSDepart;
 
 /**   
  * @Title: Entity
@@ -24,9 +28,9 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 @Entity
 @Table(name = "t_b_catalogdata", schema = "")
 @SuppressWarnings("serial")
-public class TBCatalogdataEntity implements java.io.Serializable {
+public class TBCatalogdataEntity extends IdEntity implements java.io.Serializable {
 	/**主键*/
-	private String id;
+//	private String id;
 	/**名称*/
 	@Excel(name="名称",width=15)
 	private String name;
@@ -63,27 +67,53 @@ public class TBCatalogdataEntity implements java.io.Serializable {
 
 	/**自定义参数*/
 	private BigDecimal total;
-	
+
+	/**上级目录*/
+	private TBCatalogdataEntity TBPCatalogdata;
+
+	/**下属目录*/
+	private List<TBCatalogdataEntity> TBCatalogdatas = new ArrayList<TBCatalogdataEntity>();//
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fartherid")
+	public TBCatalogdataEntity getTBPCatalogdata() {
+		return TBPCatalogdata;
+	}
+
+	public void setTBPCatalogdata(TBCatalogdataEntity TBPCatalogdata) {
+		this.TBPCatalogdata = TBPCatalogdata;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "TBPCatalogdata")
+	public List<TBCatalogdataEntity> getTBCatalogdatas() {
+		return TBCatalogdatas;
+	}
+
+	public void setTBCatalogdatas(List<TBCatalogdataEntity> TBCatalogdatas) {
+		this.TBCatalogdatas = TBCatalogdatas;
+	}
+
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  主键
 	 */
-	@Id
-	@GeneratedValue(generator = "paymentableGenerator")
-	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
+//	@Id
+//	@GeneratedValue(generator = "paymentableGenerator")
+//	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
 
-	@Column(name ="ID",nullable=false,length=36)
-	public String getId(){
-		return this.id;
-	}
+//	@Column(name ="ID",nullable=false,length=36)
+//	public String getId(){
+//		return this.id;
+//	}
 
 	/**
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  主键
 	 */
-	public void setId(String id){
-		this.id = id;
-	}
+//	public void setId(String id){
+//		this.id = id;
+//	}
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  名称
@@ -280,4 +310,5 @@ public class TBCatalogdataEntity implements java.io.Serializable {
 	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
+
 }
