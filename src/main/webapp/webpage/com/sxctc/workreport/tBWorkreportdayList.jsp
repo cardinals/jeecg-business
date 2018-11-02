@@ -6,14 +6,14 @@
    <c:if test="${toolFlag ==  1}">
    <t:datagrid name="tBWorkreportdayList" checkbox="true" pagination="true" fitColumns="false" title="日报列表" actionUrl="tBWorkreportdayController.do?datagrid&busiReportId=${busiReportId}" idField="id" fit="true" queryMode="group" singleSelect="true">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="创建人名称"  field="createName" queryMode="single" width="120"></t:dgCol>
+   <t:dgCol title="创建人名称"  field="createName" queryMode="single" width="120" align="center"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="日报时间"  field="reportDate"  formatter="yyyy-MM-dd" queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="日报时间"  field="reportDate"  formatter="yyyy-MM-dd" queryMode="single"  width="120" align="center"></t:dgCol>
    <t:dgCol title="创建日期"  field="createDate"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所属部门"  field="sysOrgCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所属公司"  field="sysCompanyCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="厅局单位"  field="unitCode" queryMode="single" dictionary="unit_name"  width="120"></t:dgCol>
-   <t:dgCol title="迁移系统名称"  field="projectName" queryMode="single" width="120"></t:dgCol>
+   <t:dgCol title="迁移系统名称"  field="projectName" queryMode="single" width="120" align="center"></t:dgCol>
    <t:dgCol title="今日完成的工作"  field="doneDay"  queryMode="single"  width="350"></t:dgCol>
    <t:dgCol title="未完成的工作"  field="unDoneDay"  queryMode="single"  width="350"></t:dgCol>
    <t:dgCol title="需要协调的工作"  field="coordinateWork"  queryMode="single"  width="350"></t:dgCol>

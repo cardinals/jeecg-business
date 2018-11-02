@@ -4,22 +4,22 @@
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
   <c:if test="${toolFlag == '1'}">
-  <t:datagrid name="tBWorkreportdayWeekList1" checkbox="false" pagination="true" sortName="createName,unitCode" fitColumns="false" title="周报" actionUrl="tBWorkreportdayWeekController.do?datagrid&reportOpt=0" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells" singleSelect="true">
-   <t:dgCol title="id"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="创建人名称"  field="createName"  queryMode="group"  width="120"></t:dgCol>
+  <t:datagrid name="tBWorkreportdayWeekList1" checkbox="false" pagination="true" sortName="reportStartDate" sortOrder="desc" fitColumns="false" title="周报" actionUrl="tBWorkreportdayWeekController.do?datagrid&reportOpt=0" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells" singleSelect="true">
+   <t:dgCol title="id"  field="id"  hidden="true"  queryMode="group"  width="60" align="center"></t:dgCol>
+   <t:dgCol title="创建人名称"  field="createName"  queryMode="group"  width="120" align="center"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="创建日期"  field="createDate"  formatter="yyyy-MM-dd"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="所属部门"  field="sysOrgCode"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="所属公司"  field="sysCompanyCode"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="厅局单位"  field="unitCode"  queryMode="group"  width="120" dictionary="unit_name"></t:dgCol>
-   <t:dgCol title="系统名称"  field="projectName"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="周报日期开始"  field="reportStartDate"  formatter="yyyy-MM-dd"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="周报日期结束"  field="reportEndDate"  formatter="yyyy-MM-dd"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="本周工作内容"  field="doneDay"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="下周工作计划"  field="nextDone"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="需要协调的工作"  field="coordinateWork"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="本周工作总结"  field="workSum"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="备注"  field="remark"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="厅局单位"  field="unitCode"  queryMode="group"  width="180" dictionary="unit_name" align="center"></t:dgCol>
+   <t:dgCol title="系统名称"  field="projectName"  queryMode="group"  width="180" align="center"></t:dgCol>
+   <t:dgCol title="周报日期开始"  field="reportStartDate"  formatter="yyyy-MM-dd"  queryMode="group"  width="140" align="center"></t:dgCol>
+   <t:dgCol title="周报日期结束"  field="reportEndDate"  formatter="yyyy-MM-dd"  queryMode="single"  width="140" align="center"></t:dgCol>
+   <t:dgCol title="本周工作内容"  field="doneDay"  queryMode="group"  width="140" align="center"></t:dgCol>
+   <t:dgCol title="下周工作计划"  field="nextDone"  queryMode="group"  width="140" align="center"></t:dgCol>
+   <t:dgCol title="需要协调的工作"  field="coordinateWork"  queryMode="group"  width="150" align="center"></t:dgCol>
+   <t:dgCol title="本周工作总结"  field="workSum"  queryMode="single"  width="140" align="center"></t:dgCol>
+   <t:dgCol title="备注"  field="remark"  queryMode="group"  width="120" align="center"></t:dgCol>
    <t:dgCol title="日志业务关联表id"  field="businessId"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="周报类型"  field="reportType"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <%--<t:dgCol title="操作" field="opt" width="100"></t:dgCol>--%>
@@ -35,18 +35,18 @@
   </c:if>
 
   <c:if test="${toolFlag == '0'}">
-   <t:datagrid name="tBWorkreportdayWeekList2" checkbox="false" pagination="true" sortName="createName" fitColumns="false" title="周报" actionUrl="tBWorkreportdayWeekController.do?datagrid&reportOpt=1" idField="id" fit="true" queryMode="group" singleSelect="true" onLoadSuccess="mergeCells2">
+   <t:datagrid name="tBWorkreportdayWeekList2" checkbox="false" pagination="true" sortName="reportStartDate" sortOrder="desc" fitColumns="false" title="周报" actionUrl="tBWorkreportdayWeekController.do?datagrid&reportOpt=1" idField="id" fit="true" queryMode="group" singleSelect="true" onLoadSuccess="mergeCells2">
     <t:dgCol title="id"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-    <t:dgCol title="创建人名称"  field="createName"  queryMode="group"  width="80"></t:dgCol>
+    <t:dgCol title="创建人名称"  field="createName"  queryMode="group"  width="120" align="center"></t:dgCol>
     <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
     <t:dgCol title="创建日期"  field="createDate"  formatter="yyyy-MM-dd"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
     <t:dgCol title="所属部门"  field="sysOrgCode"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
     <t:dgCol title="所属公司"  field="sysCompanyCode"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
-    <t:dgCol title="厅局单位"  field="unitCode"  queryMode="group" hidden="true" width="120" dictionary="unit_name"></t:dgCol>
-    <t:dgCol title="日报类型"  field="projectName" queryMode="group"  width="80"></t:dgCol>
-    <t:dgCol title="周报日期开始"  field="reportStartDate"  formatter="yyyy-MM-dd"  queryMode="group"  width="150"></t:dgCol>
-    <t:dgCol title="周报日期结束"  field="reportEndDate"  formatter="yyyy-MM-dd"  queryMode="single"  width="150"></t:dgCol>
-    <t:dgCol title="工作内容"  field="doneDay"  queryMode="group"  width="500"></t:dgCol>
+    <t:dgCol title="厅局单位"  field="unitCode"  queryMode="group" hidden="true" width="150" dictionary="unit_name" align="center"></t:dgCol>
+    <t:dgCol title="日报类型"  field="projectName" queryMode="group"  width="100" align="center"></t:dgCol>
+    <t:dgCol title="周报日期开始"  field="reportStartDate"  formatter="yyyy-MM-dd"  queryMode="group"  width="140" align="center"></t:dgCol>
+    <t:dgCol title="周报日期结束"  field="reportEndDate"  formatter="yyyy-MM-dd"  queryMode="single"  width="140" align="center"></t:dgCol>
+    <t:dgCol title="工作内容"  field="doneDay"  queryMode="group"  width="500" align="center"></t:dgCol>
     <t:dgCol title="下周工作计划"  field="nextDone" hidden="true" queryMode="group"  width="250"></t:dgCol>
     <t:dgCol title="需要协调的工作"  field="coordinateWork" hidden="true" queryMode="group"  width="120"></t:dgCol>
     <t:dgCol title="本周工作总结"  field="workSum" hidden="true" queryMode="single"  width="120"></t:dgCol>
