@@ -95,7 +95,7 @@
 			<tr>
 				<td align="right"><label class="Validform_label"> <t:mutiLang langKey="common.password"/>: </label></td>
 				<td class="value">
-                    <input type="password" class="inputxt" value="" name="password" plugin="passwordStrength" datatype="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d$@$!%*#?&]{8,16}$/" errormsg="密码8-16个字符,同时包含大小写字母和数字" />
+                    <input type="password" class="inputxt" value="" name="password" plugin="passwordStrength" datatype="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d$@$!%*#?&]{10,16}$/" errormsg="密码10-16个字符,同时包含大小写字母和数字" />
                     <span class="passwordStrength" style="display: none;">
                         <span><t:mutiLang langKey="common.weak"/></span>
                         <span><t:mutiLang langKey="common.middle"/></span>
@@ -107,7 +107,7 @@
 			<tr>
 				<td align="right"><label class="Validform_label"> <t:mutiLang langKey="common.repeat.password"/>: </label></td>
 				<td class="value">
-                    <input id="repassword" class="inputxt" type="password" value="${user.password}" recheck="password" datatype="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d$@$!%*#?&]{8,16}$/" errormsg="两次输入的密码不一致！"/>
+                    <input id="repassword" class="inputxt" type="password" value="${user.password}" recheck="password" datatype="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d$@$!%*#?&]{10,16}$/" errormsg="两次输入的密码不一致！"/>
                     <span class="Validform_checktip"><t:mutiLang langKey="common.repeat.password"/></span>
                 </td>
 			</tr>

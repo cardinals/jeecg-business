@@ -577,11 +577,17 @@ public class LoginController extends BaseController{
 		// 只有非业务人员才能查看
 		TSUser tsUser = ResourceUtil.getSessionUser();
 		String orgCode = tsUser.getCurrentDepart().getOrgCode();
+		// 总裁
 		if (!"A04A01A01A01".equals(orgCode)) {
 			request.setAttribute("optFlag", 1);
+		}else {
+			// 业务员
+			return new ModelAndView("com/sxctc/main/salesman");
 		}
-		if (!"A04".equals(orgCode)) {
-			return new ModelAndView("com/sxctc/projectrack/salesReport");
+
+		// 总监
+		if ("A04A01A01".equals(orgCode)) {
+			return new ModelAndView("com/sxctc/main/salesReport");
 		}
 		return new ModelAndView("main/hplushome");
 	}

@@ -17,12 +17,12 @@
 			</tr>
 			<tr>
 				<td align="right"><span class="filedzt">新密码:</span></td>
-				<td class="value"><input type="password" value="" name="newpassword" class="inputxt" plugin="passwordStrength" datatype="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d$@$!%*#?&]{8,16}$/" errormsg="密码8-16个字符,同时包含大小写字母和数字" /><span
+				<td class="value"><input type="password" value="" name="newpassword" class="inputxt" plugin="passwordStrength" datatype="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d$@$!%*#?&]{10,16}$/" errormsg="密码10-16个字符,同时包含大小写字母和数字" /><span
 					class="Validform_checktip">密码8-16个字符,同时包含大小写字母和数字</span> <span class="passwordStrength" style="display: none;"><br> <b>密码强度：</b> <span>弱</span><span>中</span><span class="last">强</span> </span></td>
 			</tr>
 			<tr>
 				<td align="right"><span class="filedzt">重复密码:</span></td>
-				<td class="value"><input id="newpassword" type="password" recheck="newpassword" class="inputxt" datatype="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d$@$!%*#?&]{8,16}$/" errormsg="两次输入的密码不一致！"> <span class="Validform_checktip"></span></td>
+				<td class="value"><input id="newpassword" type="password" recheck="newpassword" class="inputxt" datatype="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d$@$!%*#?&]{10,16}$/" errormsg="两次输入的密码不一致！"> <span class="Validform_checktip"></span></td>
 			</tr>
 		</tbody>
 	</table>
