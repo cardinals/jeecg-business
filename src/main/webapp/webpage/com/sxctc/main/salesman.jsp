@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="/jodd" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -16,7 +17,19 @@
 
     <link href="plug-in/hplus/css/animate.css" rel="stylesheet">
     <link href="plug-in/hplus/css/style.css?v=4.1.0" rel="stylesheet">
-
+    <style type="text/css">
+        ul{ padding:0px; margin:0px;}
+        ol{ list-style:none; padding:0px; margin:0px; width:100%;
+            height:20px; line-height:20px; border:1px solid #99CC00;
+            border-top:0px; font-size:12px;}
+        ol li{ display:block; width:33%; float:left;text-indent:2em}
+        .th{ background:#F1FADE; font-weight:bold; border-top:1px }
+        .left{
+            float:left;
+            width:10%;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body class="gray-bg">
@@ -37,8 +50,17 @@
                 <%--<div class="ibox-title">--%>
                     <%--<h5>最新公告</h5>--%>
                 <%--</div>--%>
-                <div class="ibox-content">
-
+                <div class="ibox-content" style="height: 100px">
+                    <div class="left">图图</div>
+                    <div class="left"><div>中间1</div><div>中间1</div></div>
+                    <div class="left"><div>中间1</div><div>中间1</div></div>
+                    <div class="left"><div>中间1</div><div>中间1</div></div>
+                    <div class="left"><div>中间1</div><div>中间1</div></div>
+                    <div class="left"><div>中间1</div><div>中间1</div></div>
+                    <div class="left"><div>中间1</div><div>中间1</div></div>
+                    <div class="left"><div>中间1</div><div>中间1</div></div>
+                    <div class="left"><div>中间1</div><div>中间1</div></div>
+                    <div class="left"><div>中间1</div><div>中间1</div></div>
                 </div>
             </div>
         </div>
@@ -52,21 +74,38 @@
                     <h5>代办事项</h5>
                 </div>
                 <div class="ibox-content">
-                    <ol style="height: 100px;overflow: auto;">
-                        <li>Jeecg工作流开发平台 (商业版)</li>
-                        <li>Jeewx微信管家 (商业版)</li>
-                        <li>OA办公系统 (商业版)</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
+                    <ul style="height: 100px;overflow: auto;">
+                    <ol>
                         <li>专业H5活动开发</li>
                         <li>专业H5活动开发</li>
                         <li>专业H5活动开发</li>
                     </ol>
+                    <ol>
+                        <li>专业H5活动开发</li>
+                        <li>专业H5活动开发</li>
+                        <li>专业H5活动开发</li>
+                    </ol>
+                    <ol>
+                        <li>专业H5活动开发</li>
+                        <li>专业H5活动开发</li>
+                        <li>专业H5活动开发</li>
+                    </ol>
+                    <ol>
+                        <li>专业H5活动开发</li>
+                        <li>专业H5活动开发</li>
+                        <li>专业H5活动开发</li>
+                    </ol>
+                    <ol>
+                        <li>专业H5活动开发</li>
+                        <li>专业H5活动开发</li>
+                        <li>专业H5活动开发</li>
+                    </ol>
+                    <ol>
+                        <li>专业H5活动开发</li>
+                        <li>专业H5活动开发</li>
+                        <li>专业H5活动开发</li>
+                    </ol>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -76,21 +115,38 @@
                     <h5>系统状态</h5>
                 </div>
                 <div class="ibox-content">
-                    <ol style="height: 100px;overflow: auto;">
-                        <li>Jeecg工作流开发平台 (商业版)</li>
-                        <li>Jeewx微信管家 (商业版)</li>
-                        <li>OA办公系统 (商业版)</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                    </ol>
+                    <ul style="height: 100px;overflow: auto;">
+                        <ol>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                        </ol>
+                        <ol>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                        </ol>
+                        <ol>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                        </ol>
+                        <ol>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                        </ol>
+                        <ol>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                        </ol>
+                        <ol>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                        </ol>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -104,29 +160,73 @@
                     <h5>待跟进项目</h5>
                 </div>
                 <div class="ibox-content">
-                    <ol style="height: 100px;overflow: auto;">
-                        <li>Jeecg工作流开发平台 (商业版)</li>
-                        <li>Jeewx微信管家 (商业版)</li>
-                        <li>OA办公系统 (商业版)</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                        <li>专业H5活动开发</li>
-                    </ol>
+                    <ul style="height: 100px;overflow: auto;">
+                        <ol>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                        </ol>
+                        <ol>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                        </ol>
+                        <ol>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                        </ol>
+                        <ol>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                        </ol>
+                        <ol>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                        </ol>
+                        <ol>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                        </ol>
+                        <ol>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                        </ol>
+                        <ol>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                            <li>专业H5活动开发</li>
+                        </ol>
+                    </ul>
+                </div>
                 </div>
             </div>
         </div>
