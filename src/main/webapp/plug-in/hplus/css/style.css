@@ -3533,7 +3533,7 @@ video {
 }
 
 .wrapper-content {
-    padding: 20px;
+    padding: 10px;
 }
 
 #page-wrapper {
@@ -4009,7 +4009,7 @@ code {
 
 .ibox {
     clear: both;
-    margin-bottom: 25px;
+    /*margin-bottom: 25px;*/
     margin-top: 0;
     padding: 0;
 }
@@ -4052,7 +4052,7 @@ code {
 .ibox-content {
     background-color: #ffffff;
     color: inherit;
-    padding: 15px 20px 20px 20px;
+    padding: 0px 20px 0px 20px;
     border-color: #e7eaec;
     -webkit-border-image: none;
     -o-border-image: none;
