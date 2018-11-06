@@ -29,6 +29,10 @@
             width:10%;
             text-align: center;
         }
+        .number_style{
+            font-size: 40px;color: black;
+        }
+
     </style>
 </head>
 
@@ -52,15 +56,15 @@
                 <%--</div>--%>
                 <div class="ibox-content" style="height: 100px">
                     <div class="left">图图</div>
-                    <div class="left"><div>中间1</div><div>中间1</div></div>
-                    <div class="left"><div>中间1</div><div>中间1</div></div>
-                    <div class="left"><div>中间1</div><div>中间1</div></div>
-                    <div class="left"><div>中间1</div><div>中间1</div></div>
-                    <div class="left"><div>中间1</div><div>中间1</div></div>
-                    <div class="left"><div>中间1</div><div>中间1</div></div>
-                    <div class="left"><div>中间1</div><div>中间1</div></div>
-                    <div class="left"><div>中间1</div><div>中间1</div></div>
-                    <div class="left"><div>中间1</div><div>中间1</div></div>
+                    <div class="left"><div>系统总数</div><div class="number_style" id="projectTotalNum">49</div></div>
+                    <div class="left"><div>未对接</div><div class="number_style" id="notDockSystemNum">11</div></div>
+                    <div class="left"><div>上云对接</div><div class="number_style" id="cloudDockSystemNum">10</div></div>
+                    <div class="left"><div>取得需求表</div><div class="number_style" id="researchFormSystemNum">10</div></div>
+                    <div class="left"><div>签订方案</div><div class="number_style" id="signPlanSystemNum">10</div></div>
+                    <div class="left"><div>分配资源</div><div class="number_style" id="allocatingResourcesSystemNum">10</div></div>
+                    <div class="left"><div>上云测试</div><div class="number_style" id="cloudTestSystemNum">10</div></div>
+                    <div class="left"><div>回收协议</div><div class="number_style" id="recoveryAgreementSystemNum">10</div></div>
+                    <div class="left"><div>上云完成</div><div class="number_style" id="cloudCompleteNum">10</div></div>
                 </div>
             </div>
         </div>
@@ -244,6 +248,8 @@
 
 <!-- echart 初始化 -->
 <script type="text/javascript" src="plug-in/echart/echarts.js"></script>
+<!-- echart 初始化 -->
+<script type="text/javascript" src="webpage/com/sxctc/main/salesman.js"></script>
 </body>
 
 </html>
