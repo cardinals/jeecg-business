@@ -27,10 +27,11 @@
         .left{
             float:left;
             width:10%;
+            height:100%;
             text-align: center;
         }
         .number_style{
-            font-size: 40px;color: black;
+            font-size: 44px;color: black;
         }
 
     </style>
@@ -50,24 +51,24 @@
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="col-sm-12">
-            <div class="ibox float-e-margins">
+            <%--<div class="ibox float-e-margins">--%>
                 <%--<div class="ibox-title">--%>
                     <%--<h5>最新公告</h5>--%>
                 <%--</div>--%>
-                <div class="ibox-content" style="height: 100px">
-                    <div class="left">图图</div>
-                    <div class="left"><div>系统总数</div><div class="number_style" id="projectTotalNum">49</div></div>
-                    <div class="left"><div>未对接</div><div class="number_style" id="notDockSystemNum">11</div></div>
-                    <div class="left"><div>上云对接</div><div class="number_style" id="cloudDockSystemNum">10</div></div>
-                    <div class="left"><div>取得需求表</div><div class="number_style" id="researchFormSystemNum">10</div></div>
-                    <div class="left"><div>签订方案</div><div class="number_style" id="signPlanSystemNum">10</div></div>
-                    <div class="left"><div>分配资源</div><div class="number_style" id="allocatingResourcesSystemNum">10</div></div>
-                    <div class="left"><div>上云测试</div><div class="number_style" id="cloudTestSystemNum">10</div></div>
-                    <div class="left"><div>回收协议</div><div class="number_style" id="recoveryAgreementSystemNum">10</div></div>
-                    <div class="left"><div>上云完成</div><div class="number_style" id="cloudCompleteNum">10</div></div>
+                <div class="ibox-content" style="height: 125px">
+                    <div class="left"><div id="echarts_percent" style="width: 100%;height: 100%;"></div></div>
+                    <div class="left"><div style="font-size: 14px;margin-bottom: 10px;">系统总数</div><div class="number_style" id="projectTotalNum"></div></div>
+                    <div class="left"><div style="font-size: 14px;margin-bottom: 10px;">未对接</div><div class="number_style" id="notDockSystemNum"></div></div>
+                    <div class="left"><div style="font-size: 14px;margin-bottom: 10px;">上云对接</div><div class="number_style" id="cloudDockSystemNum"></div></div>
+                    <div class="left"><div style="font-size: 14px;margin-bottom: 10px;">取得需求表</div><div class="number_style" id="researchFormSystemNum"></div></div>
+                    <div class="left"><div style="font-size: 14px;margin-bottom: 10px;">签订方案</div><div class="number_style" id="signPlanSystemNum"></div></div>
+                    <div class="left"><div style="font-size: 14px;margin-bottom: 10px;">分配资源</div><div class="number_style" id="allocatingResourcesSystemNum"></div></div>
+                    <div class="left"><div style="font-size: 14px;margin-bottom: 10px;">上云测试</div><div class="number_style" id="cloudTestSystemNum"></div></div>
+                    <div class="left"><div style="font-size: 14px;margin-bottom: 10px;">回收协议</div><div class="number_style" id="recoveryAgreementSystemNum"></div></div>
+                    <div class="left"><div style="font-size: 14px;margin-bottom: 10px;">上云完成</div><div class="number_style" id="cloudCompleteNum"></div></div>
                 </div>
             </div>
-        </div>
+        <%--</div>--%>
     </div>
 </div>
 <div class="wrapper wrapper-content">
@@ -248,8 +249,9 @@
 
 <!-- echart 初始化 -->
 <script type="text/javascript" src="plug-in/echart/echarts.js"></script>
-<!-- echart 初始化 -->
+<!-- 引入自定义js -->
 <script type="text/javascript" src="webpage/com/sxctc/main/salesman.js"></script>
+
 </body>
 
 </html>
