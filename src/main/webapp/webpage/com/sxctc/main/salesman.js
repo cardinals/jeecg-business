@@ -43,13 +43,13 @@ $(document).ready(function () {
                 }
                 option = {
                     title: {
-                        text: "上云比例"+"\n"+percent+"%",
+                        text: percent+"%",
                         x: 'center',
                         y: 'center',
                         textStyle: {
                             fontWeight: 'normal',
                             color: '#0580f2',
-                            fontSize: '12'
+                            fontSize: '20'
                         }
                     },
                     color: ['rgba(176, 212, 251, 1)'],
@@ -118,7 +118,7 @@ $(document).ready(function () {
                                 }
                             }
                         }, {
-                            value: 20,
+                            value: 100-percent,
                             name: 'invisible'
                         }]
                     }
