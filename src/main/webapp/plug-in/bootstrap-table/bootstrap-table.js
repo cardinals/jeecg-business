@@ -1170,11 +1170,13 @@
             this.pageTo = this.options.totalRows;
         }
 
-        html.push(
+        /*html.push(
             '<div class="pull-' + this.options.paginationDetailHAlign + ' pagination-detail">',
             '<span class="pagination-info">',
             this.options.formatShowingRows(this.pageFrom, this.pageTo, this.options.totalRows),
-            '</span>');
+            '</span>');*/
+        html.push(
+            '<div class="pull-' + this.options.paginationDetailHAlign + ' pagination-detail">');
 
         html.push('<span class="page-list">');
 

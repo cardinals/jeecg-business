@@ -115,10 +115,8 @@
                     </button>
                     <%--</div>--%>
                 </div>
-                <div class="ibox-content" style="height: 100%">
-                    <div>
-                        <table id="tBTodoListList"></table>
-                    </div>
+                <div id="iboxContent" class="ibox-content" style="height: 28rem">
+                    <table id="tBTodoListList"></table>
                 </div>
             </div>
         </div>
@@ -128,6 +126,16 @@
                     <h5>系统状态</h5>
                 </div>
                 <div class="ibox-content" style="overflow: auto; height: 28rem">
+                    <div class="inbox-line">
+                        <div class="inbox-content">10月30日</div>
+                        <div class="inbox-content">测试今日完成工作</div>
+                        <div class="inbox-content btn">完成</div>
+                    </div>
+                    <div class="inbox-line">
+                        <div class="inbox-content">10月30日</div>
+                        <div class="inbox-content">测试今日完成工作</div>
+                        <div class="inbox-content btn">完成</div>
+                    </div>
                     <div class="inbox-line">
                         <div class="inbox-content">10月30日</div>
                         <div class="inbox-content">测试今日完成工作</div>
