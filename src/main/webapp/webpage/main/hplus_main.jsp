@@ -144,7 +144,7 @@
                     <li class="dropdown" onfocus="bindFrameClick()">
                     	<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                                 <span ><strong class="font-bold">${userName }</strong></span>
-                                <span >${roleName }<b class="caret"></b></span>
+                                <%--<span >${roleName }<b class="caret"></b></span>--%>
                         </a>
                         <ul class="dropdown-menu dropdown-alerts">
                             <li>

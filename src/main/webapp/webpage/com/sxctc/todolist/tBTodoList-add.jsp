@@ -12,6 +12,7 @@
  <body>
   <t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" action="tBTodoListController.do?doAdd" >
 					<input id="id" name="id" type="hidden" value="${tBTodoListPage.id }"/>
+					<input id="todoStatus" name="todoStatus" type="hidden" value="0"/>
 		<table style="width: 600px;" cellpadding="0" cellspacing="1" class="formtable">
 				<tr>
 					<td align="right">
@@ -25,20 +26,6 @@
 							<label class="Validform_label" style="display: none;">代办内容</label>
 						</td>
 				</tr>
-				<tr>
-					<td align="right">
-						<label class="Validform_label">
-							代办状态:
-						</label>
-					</td>
-					<td class="value">
-					     	 <input id="todoStatus" name="todoStatus" type="text" maxlength="4" style="width: 150px" class="inputxt"  validType="t_b_todo_list,todo_status,id" datatype="*" ignore="ignore" />
-							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">代办状态</label>
-						</td>
-				</tr>
-				
-				
 			</table>
 		</t:formvalid>
  </body>

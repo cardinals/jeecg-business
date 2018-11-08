@@ -1,45 +1,32 @@
 package org.jeecgframework.web.system.controller.core;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.alibaba.fastjson.JSONObject;
+import com.sxctc.util.DateUtil;
+import com.sxctc.workreport.entity.TBBusiWorkreportEntity;
+import com.sxctc.workreport.entity.TBWorkreportdayMonthEntity;
+import com.sxctc.workreport.entity.TBWorkreportdayWeekEntity;
 import org.apache.commons.lang.StringUtils;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.constant.Globals;
 import org.jeecgframework.core.enums.SysThemesEnum;
 import org.jeecgframework.core.online.util.FreemarkerHelper;
-import org.jeecgframework.core.util.ContextHolderUtils;
-import org.jeecgframework.core.util.IpUtil;
-import org.jeecgframework.core.util.JSONHelper;
-import org.jeecgframework.core.util.ListtoMenu;
-import org.jeecgframework.core.util.LogUtil;
-import org.jeecgframework.core.util.MutiLangUtil;
-import org.jeecgframework.core.util.PasswordUtil;
-import org.jeecgframework.core.util.ResourceUtil;
-import org.jeecgframework.core.util.SysThemesUtil;
-import org.jeecgframework.core.util.oConvertUtils;
+import org.jeecgframework.core.util.*;
 import org.jeecgframework.web.system.manager.ClientManager;
-import org.jeecgframework.web.system.pojo.base.Client;
-import org.jeecgframework.web.system.pojo.base.TSFunction;
-import org.jeecgframework.web.system.pojo.base.TSPasswordResetkey;
-import org.jeecgframework.web.system.pojo.base.TSRole;
-import org.jeecgframework.web.system.pojo.base.TSRoleUser;
-import org.jeecgframework.web.system.pojo.base.TSUser;
+import org.jeecgframework.web.system.pojo.base.*;
 import org.jeecgframework.web.system.service.MutiLangServiceI;
 import org.jeecgframework.web.system.service.SystemService;
 import org.jeecgframework.web.system.service.UserService;
 import org.jeecgframework.web.system.sms.util.MailUtil;
+import org.jsoup.helper.DataUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -573,15 +560,82 @@ public class LoginController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(params = "hplushome")
-	public ModelAndView hplushome(HttpServletRequest request) {
+	public ModelAndView hplushome(HttpServletRequest request) throws Exception{
 		// 只有非业务人员才能查看
 		TSUser tsUser = ResourceUtil.getSessionUser();
 		String orgCode = tsUser.getCurrentDepart().getOrgCode();
+		String realName = tsUser.getRealName();
+		request.setAttribute("realName", realName);
 		// 总裁
 		if (!"A04A01A01A01".equals(orgCode)) {
 			request.setAttribute("optFlag", 1);
 		}else {
 			// 业务员
+			// 获取日报填写状态
+			List<TBBusiWorkreportEntity> reportList = systemService.findByProperty(TBBusiWorkreportEntity.class, "createBy", tsUser.getUserName());
+			for (TBBusiWorkreportEntity tbBusiWorkreport : reportList) {
+				Date reportDate = tbBusiWorkreport.getReportDate();
+				if (reportDate != null) {
+					String s1 = DateUtils.formatDate(reportDate, "yyyy-MM-dd");
+					String s2 = DateUtils.formatDate(new Date(), "yyyy-MM-dd");
+					if (s1.equals(s2)) {
+						// 不显示
+						request.setAttribute("reportOpt", 1);
+					}
+				}
+			}
+
+			// 获取当日所属周/月第几天
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(new Date());
+			int week = cal.get(Calendar.DAY_OF_WEEK)-1;
+			int month = cal.get(Calendar.DAY_OF_MONTH);
+			// 获取系统设置的日志提醒节点
+			TSTypegroup reportWarn = systemService.getTypeGroupByCode("reportWarn");
+			List<TSType> tsTypes = reportWarn.getTSTypes();
+			for (TSType tsType : tsTypes) {
+				int typecode = Integer.parseInt(tsType.getTypecode());
+
+				// 如果满足，则提醒周报
+				if (typecode < 8 && typecode<=week) {
+					List<TBWorkreportdayWeekEntity> weekReport = systemService.findByProperty(TBWorkreportdayWeekEntity.class, "createBy", tsUser.getUserName());
+					for (TBWorkreportdayWeekEntity tbWorkreportdayWeek : weekReport) {
+						Date reportStartDate = tbWorkreportdayWeek.getReportStartDate();
+						if (reportStartDate != null) {
+							JSONObject weekDays = DateUtil.getWeekDays(0);
+							String s1 = weekDays.getString("beginDate");
+							String s2 = DateUtils.formatDate(reportStartDate, "yyyy-MM-dd");
+							if (s1.equals(s2)) {
+								// 不显示
+								request.setAttribute("reportWeekOpt", 2);
+							}
+						}
+					}
+				}else if (typecode < 8 && typecode>week) {
+					// 不显示
+					request.setAttribute("reportWeekOpt", 2);
+				}
+
+				// 如果满足，则提醒月报
+				if (typecode > 8 && typecode<=month) {
+					List<TBWorkreportdayMonthEntity> monthReport = systemService.findByProperty(TBWorkreportdayMonthEntity.class, "createBy", tsUser.getUserName());
+					for (TBWorkreportdayMonthEntity tbWorkreportdayMonth : monthReport) {
+						Date reportMonthDate = tbWorkreportdayMonth.getReportDate();
+						if (reportMonthDate!=null) {
+							String s1 = DateUtils.formatDate(reportMonthDate, "yyyy-MM");
+							String s2 = DateUtils.formatDate(new Date(), "yyyy-MM");
+							if (s1.equals(s2)) {
+								// 不显示
+								request.setAttribute("reportMonthOpt", 3);
+							}
+						}
+					}
+				}else if (typecode > 8 && typecode>month) {
+					// 不显示
+					request.setAttribute("reportMonthOpt", 3);
+				}
+			}
+
 			return new ModelAndView("com/sxctc/main/salesman");
 		}
 

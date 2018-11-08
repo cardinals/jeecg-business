@@ -58,6 +58,9 @@
         .inbox-content {
             display:inline;
         }
+        .datagrid-header {
+            position: absolute; visibility: hidden;
+        }
     </style>
 </head>
 
@@ -65,11 +68,16 @@
 <div class="row  border-bottom white-bg dashboard-header">
     <div class="col-sm-12">
         <blockquote class="text-warning" style="font-size:14px">
-            <%--<h1 class="text-warning" style="font-weight: bold;color:#4F5050">政务云营销大数据管理系统</h1>--%>
-            <%--<h4 class="text-danger">欢迎光临</h4>--%>
-            <%--<iframe id="fancybox-frame" name="fancybox-frame1533801934382" frameborder="0" scrolling="no" hspace="0" height="25px" style="margin-bottom: -7px;" src="http://i.tianqi.com/index.php?c=code&a=getcode&id=34&h=25&w=280&py=taiyuan"></iframe>--%>
+            <c:if test="${reportOpt != 1}">
+            <h5 class="text-danger">您好，${realName}，您今天还没有填写今日日报，<a href="tBBusiWorkreportController.do?mainlist">点击填写今日日报</a></h5>
+            </c:if>
+            <c:if test="${reportWeekOpt != 2 && reportOpt == 1}">
+            <h5 class="text-danger">您好，${realName}，您还没有填写周报，<a href="tBWorkreportdayWeekController.do?mainlist">点击填写周报</a></h5>
+            </c:if>
+            <c:if test="${reportMonthOpt != 3 && reportWeekOpt == 2 && reportOpt == 1}">
+            <h5 class="text-danger">您好，${realName}，您还没有填写月报，<a href="tBWorkreportdayMonthController.do?mainlist">点击填写月报</a></h5>
+            </c:if>
         </blockquote>
-        <%--<hr>--%>
     </div>
 </div>
 <div class="wrapper wrapper-content">
@@ -102,13 +110,13 @@
                 <div class="ibox-title">
                     <h5>代办事项</h5>
                     <%--<div id="toolbar" style="float: right">--%>
-                    <button id="btn_add" type="button" style="margin-left: 79%" class="btn btn-primary btn-sm" onclick="add('新增','tBTodoListController.do?goAdd','tBTodoListList',600,400)">
+                    <button id="btn_add" type="button" class="btn btn-primary btn-sm" onclick="add('新增','tBTodoListController.do?goAdd','tBTodoListList',600,400)">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                     </button>
                     <%--</div>--%>
                 </div>
-                <div class="ibox-content">
-                    <div style="overflow: auto; height: 180px">
+                <div class="ibox-content" style="height: 100%">
+                    <div>
                         <table id="tBTodoListList"></table>
                     </div>
                 </div>
@@ -119,7 +127,7 @@
                 <div class="ibox-title">
                     <h5>系统状态</h5>
                 </div>
-                <div class="ibox-content">
+                <div class="ibox-content" style="overflow: auto; height: 28rem">
                     <div class="inbox-line">
                         <div class="inbox-content">10月30日</div>
                         <div class="inbox-content">测试今日完成工作</div>
@@ -137,7 +145,7 @@
                 <div class="ibox-title">
                     <h5>待跟进项目</h5>
                 </div>
-                <div class="ibox-content">
+                <div class="ibox-content" style="overflow: auto; height: 43rem">
                     <table id="jeecgDemoList" ></table>
                 </div>
             </div>

@@ -4052,7 +4052,7 @@ code {
 .ibox-content {
     background-color: #ffffff;
     color: inherit;
-    padding: 0px 20px 0px 20px;
+    padding: 0px 20px 10px 20px;
     border-color: #e7eaec;
     -webkit-border-image: none;
     -o-border-image: none;
@@ -4115,6 +4115,15 @@ table.table-mail tr td {
     padding: 0;
     text-overflow: ellipsis;
     float: left;
+}
+
+.ibox-title button {
+    display: inline-block;
+    font-size: 14px;
+    margin: 0 0 7px;
+    padding: 0 7px 0 7px;
+    text-overflow: ellipsis;
+    float: right;
 }
 
 .ibox-title .label {

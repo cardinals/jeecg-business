@@ -46,7 +46,8 @@
 							</label>
 						</td>
 						<td class="value">
-                            <input id="reportStartDate" name="reportStartDate" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  ignore="ignore" disabled="disabled" value='<fmt:formatDate value='${tBWorkreportdayWeekPage.reportStartDate}' type="date" pattern="yyyy-MM-dd"/>'/>
+                            <input id="reportStartDate1" name="reportStartDate1" type="text" style="width: 150px" class="Wdate" onClick="WdatePicker()"  ignore="ignore" disabled="disabled" value='<fmt:formatDate value='${tBWorkreportdayWeekPage.reportStartDate}' type="date" pattern="yyyy-MM-dd"/>'/>
+                            <input id="reportStartDate" name="reportStartDate" type="hidden" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  ignore="ignore" readonly="readonly" value='<fmt:formatDate value='${tBWorkreportdayWeekPage.reportStartDate}' type="date" pattern="yyyy-MM-dd"/>'/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">周报日期开始</label>
 						</td>
@@ -58,7 +59,8 @@
 							</label>
 						</td>
 						<td class="value">
-                            <input id="reportEndDate" name="reportEndDate" type="text" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  ignore="ignore" disabled="disabled" value='<fmt:formatDate value='${tBWorkreportdayWeekPage.reportEndDate}' type="date" pattern="yyyy-MM-dd"/>'/>
+                            <input id="reportEndDate1" name="reportEndDate1" type="text" style="width: 150px" class="Wdate" onClick="WdatePicker()"  ignore="ignore" disabled="disabled" value='<fmt:formatDate value='${tBWorkreportdayWeekPage.reportEndDate}' type="date" pattern="yyyy-MM-dd"/>'/>
+                            <input id="reportEndDate" name="reportEndDate" type="hidden" style="width: 150px"  class="Wdate" onClick="WdatePicker()"  ignore="ignore" readonly="readonly" value='<fmt:formatDate value='${tBWorkreportdayWeekPage.reportEndDate}' type="date" pattern="yyyy-MM-dd"/>'/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">周报日期结束</label>
 						</td>
