@@ -561,7 +561,7 @@
         this.$pagination = this.$container.find('.fixed-table-pagination');
 
         this.$tableBody.append(this.$el);
-        this.$container.after('<div class="clearfix"></div>');
+        //this.$container.after('<div class="clearfix"></div>');
 
         this.$el.addClass(this.options.classes);
         if (this.options.striped) {
@@ -1220,8 +1220,8 @@
         });
         pageNumber.push('</ul></span>');
 
-        html.push(this.options.formatRecordsPerPage(pageNumber.join('')));
-        html.push('</span>');
+        //html.push(this.options.formatRecordsPerPage(pageNumber.join('')));
+        //html.push('</span>');
 
         html.push('</div>',
             '<div class="pull-' + this.options.paginationHAlign + ' pagination">',
