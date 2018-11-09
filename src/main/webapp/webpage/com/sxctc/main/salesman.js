@@ -377,6 +377,7 @@ function jeecgDemoTodoSearch(){
 }
 
 function reloadTodoTable(){
+
     $('#tBTodoListList').bootstrapTable('refresh');
 }
 
@@ -629,8 +630,11 @@ function addTodo(title, addurl, gname, width, height) {
         yes : function(index, layero) {
             var body = layer.getChildFrame('body', index);
             body.find('#btn_sub').click();
+            setTimeout('reloadTodoTable()',100);
+            // reloadTodoTable();
             //layer.getFrameIndex(window.name).getdo
             layer.close(index);
+
         },
         btn2 : function(index, layero) {
             layer.closeAll();
@@ -638,7 +642,7 @@ function addTodo(title, addurl, gname, width, height) {
         zIndex : layer.zIndex,
         success : function(layero) {
             layer.setTop(layero);
-            reloadTodoTable()
+
         }
     });
 }
