@@ -1,12 +1,13 @@
 package com.sxctc.todolist.controller;
 import com.sxctc.todolist.entity.TBTodoListEntity;
 import com.sxctc.todolist.service.TBTodoListServiceI;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sxctc.util.DateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,8 +44,6 @@ import java.io.IOException;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import java.util.Map;
-import java.util.HashMap;
 import org.jeecgframework.core.util.ExceptionUtil;
 
 import org.springframework.http.ResponseEntity;
@@ -58,7 +57,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.jeecgframework.core.beanvalidator.BeanValidators;
-import java.util.Set;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.net.URI;
@@ -116,7 +115,6 @@ public class TBTodoListController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @param dataGrid
-	 * @param user
 	 */
 
 	@RequestMapping(params = "datagrid")
@@ -125,12 +123,23 @@ public class TBTodoListController extends BaseController {
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBTodoList, request.getParameterMap());
 		try{
-		//自定义追加查询条件z
+			//自定义追加查询条件
+			cq.eq("createBy", ResourceUtil.getSessionUser().getUserName());
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
 		cq.add();
 		this.tBTodoListService.getDataGridReturn(cq, true);
+
+		List<TBTodoListEntity> results = dataGrid.getResults();
+		for (TBTodoListEntity result : results) {
+			Date createDate = result.getCreateDate();
+			if (DateUtil.getIntervalDays(new Date(), createDate) >1) {
+				result.setIsDel(0);
+			}else {
+				result.setIsDel(1);
+			}
+		}
 		TagUtil.datagrid(response, dataGrid);
 	}
 	
@@ -190,7 +199,6 @@ public class TBTodoListController extends BaseController {
 	/**
 	 * 添加代办事项
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -214,7 +222,6 @@ public class TBTodoListController extends BaseController {
 	/**
 	 * 更新代办事项
 	 * 
-	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")

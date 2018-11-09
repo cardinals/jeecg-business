@@ -6,16 +6,11 @@ import java.lang.String;
 import java.lang.Double;
 import java.lang.Integer;
 import java.math.BigDecimal;
+import javax.persistence.*;
 import javax.xml.soap.Text;
 import java.sql.Blob;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.SequenceGenerator;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**   
@@ -54,7 +49,11 @@ public class TBTodoListEntity implements java.io.Serializable {
 	/**代办状态*/
 	@Excel(name="代办状态",width=15)
 	private Integer todoStatus;
-	
+
+	/**自定义字段*/
+	/**是否删除*/
+	private Integer isDel;
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  主键
@@ -244,5 +243,14 @@ public class TBTodoListEntity implements java.io.Serializable {
 	 */
 	public void setTodoStatus(Integer todoStatus){
 		this.todoStatus = todoStatus;
+	}
+
+	@Transient
+	public Integer getIsDel() {
+		return isDel;
+	}
+
+	public void setIsDel(Integer isDel) {
+		this.isDel = isDel;
 	}
 }

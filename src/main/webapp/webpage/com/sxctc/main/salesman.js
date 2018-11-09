@@ -335,14 +335,17 @@ var TodoTableInit = function () {
                 align: 'center',
                 valign: 'middle',
                 sortable:true
-            }, {
+            },{
                 title: "操作",
                 align: 'center',
                 valign: 'middle',
                 width: 160, // 定义列的宽度，单位为像素px
                 formatter: function (value, row, index) {
-                    // return '<button class="btn btn-success btn-xs" onclick="update(\'tBTodoListController.do?doUpate&todoStatus=1&id='+row.id+'\',\'tBTodoListList\')"><span class="glyphicon glyphicon-save" aria-hidden="true"></span>完成</button>&nbsp;&nbsp;<button class="btn btn-danger btn-xs" onclick="delObj(\'jeecgListDemoController.do?doDel&id='+row.id+'\',\'jeecgDemoList\')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除</button>';
-                    return '<button class="btn btn-success btn-xs" onclick="doTodoUpdate(\'tBTodoListController.do?doUpdate&todoStatus=1&id='+row.id+'\',\'tBTodoListList\')"><span class="glyphicon glyphicon-save" aria-hidden="true"></span>完成</button>&nbsp;&nbsp;<button class="btn btn-danger btn-xs" onclick="delObj(\'tBTodoListController.do?doDel&id='+row.id+'\',\'tBTodoListList\')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除</button>';
+                    if (row.isDel == 1) {
+                        return '<button class="btn btn-success btn-xs" onclick="doTodoUpdate(\'tBTodoListController.do?doUpdate&todoStatus=1&id='+row.id+'\',\'tBTodoListList\')"><span class="glyphicon glyphicon-save" aria-hidden="true"></span>完成</button>&nbsp;&nbsp;<button class="btn btn-danger btn-xs" onclick="delObj(\'tBTodoListController.do?doDel&id='+row.id+'\',\'tBTodoListList\')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除</button>';
+                    }else {
+                        return '<button class="btn btn-success btn-xs" onclick="doTodoUpdate(\'tBTodoListController.do?doUpdate&todoStatus=1&id='+row.id+'\',\'tBTodoListList\')"><span class="glyphicon glyphicon-save" aria-hidden="true"></span>完成</button>';
+                    }
 
                 }
             } ],
@@ -365,7 +368,7 @@ var TodoTableInit = function () {
             rows: params.limit,                         //页面大小
             page: (params.offset / params.limit) + 1,   //页码
             pageIndex:params.pageNumber,//请求第几页
-            field:'id,createDate,todoContent'
+            field:'id,createDate,todoContent,isDel'
         };
         return temp;
     };
@@ -377,7 +380,6 @@ function jeecgDemoTodoSearch(){
 }
 
 function reloadTodoTable(){
-
     $('#tBTodoListList').bootstrapTable('refresh');
 }
 
@@ -630,11 +632,8 @@ function addTodo(title, addurl, gname, width, height) {
         yes : function(index, layero) {
             var body = layer.getChildFrame('body', index);
             body.find('#btn_sub').click();
-            setTimeout('reloadTodoTable()',100);
-            // reloadTodoTable();
-            //layer.getFrameIndex(window.name).getdo
             layer.close(index);
-
+            setTimeout('reloadTodoTable()',100);
         },
         btn2 : function(index, layero) {
             layer.closeAll();

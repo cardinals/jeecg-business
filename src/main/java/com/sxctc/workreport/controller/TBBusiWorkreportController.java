@@ -1,4 +1,6 @@
 package com.sxctc.workreport.controller;
+import com.sxctc.todolist.entity.TBTodoListEntity;
+import com.sxctc.todolist.service.TBTodoListServiceI;
 import com.sxctc.util.DateUtil;
 import com.sxctc.workreport.entity.TBBusiWorkreportEntity;
 import com.sxctc.workreport.entity.TBWorkreportdayEntity;
@@ -92,6 +94,8 @@ public class TBBusiWorkreportController extends BaseController {
 
 	@Autowired
 	private TBBusiWorkreportServiceI tBBusiWorkreportService;
+	@Autowired
+	private TBTodoListServiceI tBTodoListService;
 	@Autowired
 	private SystemService systemService;
 	@Autowired
@@ -296,6 +300,16 @@ public class TBBusiWorkreportController extends BaseController {
 				tBWorkreportday.setBusiReportId(busiReportId);
 				tBBusiWorkreportService.save(tBWorkreportday);
 			}
+
+			// 3、保存到代办事项表
+			if (StringUtils.isNotBlank(unDoneDay)) {
+				TBTodoListEntity tbTodoList = new TBTodoListEntity();
+				tbTodoList.setTodoContent(unDoneDay);
+				tbTodoList.setTodoStatus(0);
+				tBTodoListService.save(tbTodoList);
+
+			}
+
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {
 			e.printStackTrace();
