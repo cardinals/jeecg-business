@@ -37,7 +37,7 @@
             text-align: center;
         }
         .number_style{
-            font-size: 44px;color: black;
+            font-size: 4rem;color: black;
         }
         .status {
             float: left;

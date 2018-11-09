@@ -302,7 +302,7 @@ var TodoTableInit = function () {
             queryParams: oTodoTableInit.queryParams,//传递参数（*）
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber:1,                       //初始化加载第一页，默认第一页
-            pageSize: 10,                       //每页的记录行数（*）
+            pageSize: 1000,                       //每页的记录行数（*）
             pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
             strictSearch: true,
             showColumns: false,                  //是否显示所有的列
@@ -364,7 +364,7 @@ var TodoTableInit = function () {
     //得到查询的参数
     oTodoTableInit.queryParams = function (params) {
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-            pageSize: params.limit, // 每页要显示的数据条数
+            //pageSize: params.limit, // 每页要显示的数据条数
             offset: params.offset,  //页码
             sort: params.sort, // 排序规则
             order: params.order,
@@ -407,7 +407,7 @@ var StatusTableInit = function () {
             queryParams: oStatusTableInit.queryParams,//传递参数（*）
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber:1,                       //初始化加载第一页，默认第一页
-            pageSize: 10,                       //每页的记录行数（*）
+            pageSize: 1000,                       //每页的记录行数（*）
             pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
             strictSearch: true,
             showColumns: false,                  //是否显示所有的列
@@ -634,9 +634,21 @@ function addTodo(title, addurl, gname, width, height) {
         btn : [ '确定', '关闭' ],
         yes : function(index, layero) {
             var body = layer.getChildFrame('body', index);
-            body.find('#btn_sub').click();
-            layer.close(index);
-            setTimeout('reloadTodoTable()',100);
+            // body.find('#btn_sub').click();
+            var todoContent = body.find('#todoContent').val();
+            $.ajax({
+                url : "tBTodoListController.do?doAdd",
+                type : 'POST',
+                dataType: 'json',
+                data: {"todoStatus":0,"todoContent":todoContent},
+                cache : false,
+                success : function(data) {
+                    if (data.success) {
+                        reloadTodoTable();
+                        layer.closeAll();
+                    }
+                }
+            });
         },
         btn2 : function(index, layero) {
             layer.closeAll();
