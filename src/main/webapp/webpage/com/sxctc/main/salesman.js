@@ -130,7 +130,7 @@ $(document).ready(function () {
         }
     });
 
-    /** 加载代办事项和待跟进项目列表 */
+    /** 加载待办事项和待跟进项目列表 */
     var promiseArr = [];
     promiseArr.push(new Promise(function(resolve, reject) {
         initDictByCode(tBBusinessListdictsData,"unit_name",resolve);
@@ -281,7 +281,7 @@ function reloadTable(){
 }
 
 /**
- * 代办事项列表
+ * 待办事项列表
  * @returns {Object}
  * @constructor
  */
@@ -331,7 +331,7 @@ var TodoTableInit = function () {
                 }
             },{
                 field: 'todoContent',
-                title: '代办事项',
+                title: '待办事项',
                 align: 'center',
                 valign: 'middle',
                 sortable:true
@@ -354,6 +354,9 @@ var TodoTableInit = function () {
             },
             onLoadError: function(){  //加载失败时执行
                 console.info("加载数据失败");
+            },
+            onDblClickRow: function (item) {
+                checkDetailTodo("查看","tBTodoListController.do?goUpdate&load=detail&id="+item.id);
             }
         });
     };
@@ -635,6 +638,26 @@ function addTodo(title, addurl, gname, width, height) {
             layer.close(index);
             setTimeout('reloadTodoTable()',100);
         },
+        btn2 : function(index, layero) {
+            layer.closeAll();
+        },
+        zIndex : layer.zIndex,
+        success : function(layero) {
+            layer.setTop(layero);
+
+        }
+    });
+}
+
+function checkDetailTodo(title, addurl) {
+    layer.open({
+        type : 2,
+        title : title,
+        area : [ '50%', '50%' ],
+        shade : 0.3,
+        maxmin : true,
+        content : addurl,
+        btn : [ '关闭' ],
         btn2 : function(index, layero) {
             layer.closeAll();
         },

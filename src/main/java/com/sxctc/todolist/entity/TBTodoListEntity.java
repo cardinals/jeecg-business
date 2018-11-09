@@ -15,7 +15,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**   
  * @Title: Entity
- * @Description: 代办事项
+ * @Description: 待办事项
  * @author onlineGenerator
  * @date 2018-11-06 14:19:37
  * @version V1.0   
@@ -43,11 +43,11 @@ public class TBTodoListEntity implements java.io.Serializable {
 	private Date createDate;
 	/**更新日期*/
 	private Date updateDate;
-	/**代办内容*/
-	@Excel(name="代办内容",width=15)
+	/**待办内容*/
+	@Excel(name="待办内容",width=15)
 	private String todoContent;
-	/**代办状态*/
-	@Excel(name="代办状态",width=15)
+	/**待办状态*/
+	@Excel(name="待办状态",width=15)
 	private Integer todoStatus;
 
 	/**自定义字段*/
@@ -212,7 +212,7 @@ public class TBTodoListEntity implements java.io.Serializable {
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  代办内容
+	 *@return: java.lang.String  待办内容
 	 */
 
 	@Column(name ="TODO_CONTENT",nullable=true)
@@ -222,14 +222,14 @@ public class TBTodoListEntity implements java.io.Serializable {
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  代办内容
+	 *@param: java.lang.String  待办内容
 	 */
 	public void setTodoContent(String todoContent){
 		this.todoContent = todoContent;
 	}
 	/**
 	 *方法: 取得java.lang.Integer
-	 *@return: java.lang.Integer  代办状态
+	 *@return: java.lang.Integer  待办状态
 	 */
 
 	@Column(name ="TODO_STATUS",nullable=true,length=4)
@@ -239,7 +239,7 @@ public class TBTodoListEntity implements java.io.Serializable {
 
 	/**
 	 *方法: 设置java.lang.Integer
-	 *@param: java.lang.Integer  代办状态
+	 *@param: java.lang.Integer  待办状态
 	 */
 	public void setTodoStatus(Integer todoStatus){
 		this.todoStatus = todoStatus;

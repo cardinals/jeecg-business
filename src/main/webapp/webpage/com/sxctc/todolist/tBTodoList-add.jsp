@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
  <head>
-  <title>代办事项</title>
+  <title>待办事项</title>
   <t:base type="jquery,easyui,tools,DatePicker"></t:base>
   <script type="text/javascript">
   //编写自定义JS代码
@@ -17,13 +17,13 @@
 				<tr>
 					<td align="right" style="width: 20%">
 						<label class="Validform_label">
-							代办内容:
+							待办内容:
 						</label>
 					</td>
 					<td class="value">
 							<textarea id="todoContent" style="width:90%;height: 100px;" class="inputxt" rows="6" name="todoContent"  ignore="checked" ></textarea>
 							<span class="Validform_checktip"></span>
-							<label class="Validform_label" style="display: none;">代办内容</label>
+							<label class="Validform_label" style="display: none;">待办内容</label>
 						</td>
 				</tr>
 			</table>

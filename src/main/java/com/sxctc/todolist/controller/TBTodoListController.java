@@ -75,13 +75,13 @@ import io.swagger.annotations.ApiParam;
 
 /**   
  * @Title: Controller  
- * @Description: 代办事项
+ * @Description: 待办事项
  * @author onlineGenerator
  * @date 2018-11-06 14:19:37
  * @version V1.0   
  *
  */
-@Api(value="TBTodoList",description="代办事项",tags="tBTodoListController")
+@Api(value="TBTodoList",description="待办事项",tags="tBTodoListController")
 @Controller
 @RequestMapping("/tBTodoListController")
 public class TBTodoListController extends BaseController {
@@ -100,7 +100,7 @@ public class TBTodoListController extends BaseController {
 
 
 	/**
-	 * 代办事项列表 页面跳转
+	 * 待办事项列表 页面跳转
 	 * 
 	 * @return
 	 */
@@ -144,7 +144,7 @@ public class TBTodoListController extends BaseController {
 	}
 	
 	/**
-	 * 删除代办事项
+	 * 删除待办事项
 	 * 
 	 * @return
 	 */
@@ -154,13 +154,13 @@ public class TBTodoListController extends BaseController {
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		tBTodoList = systemService.getEntity(TBTodoListEntity.class, tBTodoList.getId());
-		message = "代办事项删除成功";
+		message = "待办事项删除成功";
 		try{
 			tBTodoListService.delete(tBTodoList);
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "代办事项删除失败";
+			message = "待办事项删除失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -168,7 +168,7 @@ public class TBTodoListController extends BaseController {
 	}
 	
 	/**
-	 * 批量删除代办事项
+	 * 批量删除待办事项
 	 * 
 	 * @return
 	 */
@@ -177,7 +177,7 @@ public class TBTodoListController extends BaseController {
 	public AjaxJson doBatchDel(String ids,HttpServletRequest request){
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "代办事项删除成功";
+		message = "待办事项删除成功";
 		try{
 			for(String id:ids.split(",")){
 				TBTodoListEntity tBTodoList = systemService.getEntity(TBTodoListEntity.class, 
@@ -188,7 +188,7 @@ public class TBTodoListController extends BaseController {
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "代办事项删除失败";
+			message = "待办事项删除失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -197,7 +197,7 @@ public class TBTodoListController extends BaseController {
 
 
 	/**
-	 * 添加代办事项
+	 * 添加待办事项
 	 * 
 	 * @return
 	 */
@@ -206,13 +206,13 @@ public class TBTodoListController extends BaseController {
 	public AjaxJson doAdd(TBTodoListEntity tBTodoList, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "代办事项添加成功";
+		message = "待办事项添加成功";
 		try{
 			tBTodoListService.save(tBTodoList);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "代办事项添加失败";
+			message = "待办事项添加失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -220,7 +220,7 @@ public class TBTodoListController extends BaseController {
 	}
 	
 	/**
-	 * 更新代办事项
+	 * 更新待办事项
 	 * 
 	 * @return
 	 */
@@ -229,7 +229,7 @@ public class TBTodoListController extends BaseController {
 	public AjaxJson doUpdate(TBTodoListEntity tBTodoList, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		message = "代办事项更新成功";
+		message = "待办事项更新成功";
 		TBTodoListEntity t = tBTodoListService.get(TBTodoListEntity.class, tBTodoList.getId());
 		try {
 			MyBeanUtils.copyBeanNotNull2Bean(tBTodoList, t);
@@ -237,7 +237,7 @@ public class TBTodoListController extends BaseController {
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {
 			e.printStackTrace();
-			message = "代办事项更新失败";
+			message = "待办事项更新失败";
 			throw new BusinessException(e.getMessage());
 		}
 		j.setMsg(message);
@@ -246,7 +246,7 @@ public class TBTodoListController extends BaseController {
 	
 
 	/**
-	 * 代办事项新增页面跳转
+	 * 待办事项新增页面跳转
 	 * 
 	 * @return
 	 */
@@ -259,7 +259,7 @@ public class TBTodoListController extends BaseController {
 		return new ModelAndView("com/sxctc/todolist/tBTodoList-add");
 	}
 	/**
-	 * 代办事项编辑页面跳转
+	 * 待办事项编辑页面跳转
 	 * 
 	 * @return
 	 */
@@ -295,9 +295,9 @@ public class TBTodoListController extends BaseController {
 		CriteriaQuery cq = new CriteriaQuery(TBTodoListEntity.class, dataGrid);
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBTodoList, request.getParameterMap());
 		List<TBTodoListEntity> tBTodoLists = this.tBTodoListService.getListByCriteriaQuery(cq,false);
-		modelMap.put(NormalExcelConstants.FILE_NAME,"代办事项");
+		modelMap.put(NormalExcelConstants.FILE_NAME,"待办事项");
 		modelMap.put(NormalExcelConstants.CLASS,TBTodoListEntity.class);
-		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("代办事项列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("待办事项列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
 			"导出信息"));
 		modelMap.put(NormalExcelConstants.DATA_LIST,tBTodoLists);
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;
@@ -311,9 +311,9 @@ public class TBTodoListController extends BaseController {
 	@RequestMapping(params = "exportXlsByT")
 	public String exportXlsByT(TBTodoListEntity tBTodoList,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
-    	modelMap.put(NormalExcelConstants.FILE_NAME,"代办事项");
+    	modelMap.put(NormalExcelConstants.FILE_NAME,"待办事项");
     	modelMap.put(NormalExcelConstants.CLASS,TBTodoListEntity.class);
-    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("代办事项列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("待办事项列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
     	"导出信息"));
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
     	return NormalExcelConstants.JEECG_EXCEL_VIEW;
@@ -355,7 +355,7 @@ public class TBTodoListController extends BaseController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value="代办事项列表信息",produces="application/json",httpMethod="GET")
+	@ApiOperation(value="待办事项列表信息",produces="application/json",httpMethod="GET")
 	public ResponseMessage<List<TBTodoListEntity>> list() {
 		List<TBTodoListEntity> listTBTodoLists=tBTodoListService.getList(TBTodoListEntity.class);
 		return Result.success(listTBTodoLists);
@@ -363,19 +363,19 @@ public class TBTodoListController extends BaseController {
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	@ApiOperation(value="根据ID获取代办事项信息",notes="根据ID获取代办事项信息",httpMethod="GET",produces="application/json")
+	@ApiOperation(value="根据ID获取待办事项信息",notes="根据ID获取待办事项信息",httpMethod="GET",produces="application/json")
 	public ResponseMessage<?> get(@ApiParam(required=true,name="id",value="ID")@PathVariable("id") String id) {
 		TBTodoListEntity task = tBTodoListService.get(TBTodoListEntity.class, id);
 		if (task == null) {
-			return Result.error("根据ID获取代办事项信息为空");
+			return Result.error("根据ID获取待办事项信息为空");
 		}
 		return Result.success(task);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	@ApiOperation(value="创建代办事项")
-	public ResponseMessage<?> create(@ApiParam(name="代办事项对象")@RequestBody TBTodoListEntity tBTodoList, UriComponentsBuilder uriBuilder) {
+	@ApiOperation(value="创建待办事项")
+	public ResponseMessage<?> create(@ApiParam(name="待办事项对象")@RequestBody TBTodoListEntity tBTodoList, UriComponentsBuilder uriBuilder) {
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
 		Set<ConstraintViolation<TBTodoListEntity>> failures = validator.validate(tBTodoList);
 		if (!failures.isEmpty()) {
@@ -387,15 +387,15 @@ public class TBTodoListController extends BaseController {
 			tBTodoListService.save(tBTodoList);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Result.error("代办事项信息保存失败");
+			return Result.error("待办事项信息保存失败");
 		}
 		return Result.success(tBTodoList);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	@ApiOperation(value="更新代办事项",notes="更新代办事项")
-	public ResponseMessage<?> update(@ApiParam(name="代办事项对象")@RequestBody TBTodoListEntity tBTodoList) {
+	@ApiOperation(value="更新待办事项",notes="更新待办事项")
+	public ResponseMessage<?> update(@ApiParam(name="待办事项对象")@RequestBody TBTodoListEntity tBTodoList) {
 		//调用JSR303 Bean Validator进行校验，如果出错返回含400错误码及json格式的错误信息.
 		Set<ConstraintViolation<TBTodoListEntity>> failures = validator.validate(tBTodoList);
 		if (!failures.isEmpty()) {
@@ -407,16 +407,16 @@ public class TBTodoListController extends BaseController {
 			tBTodoListService.saveOrUpdate(tBTodoList);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Result.error("更新代办事项信息失败");
+			return Result.error("更新待办事项信息失败");
 		}
 
 		//按Restful约定，返回204状态码, 无内容. 也可以返回200状态码.
-		return Result.success("更新代办事项信息成功");
+		return Result.success("更新待办事项信息成功");
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@ApiOperation(value="删除代办事项")
+	@ApiOperation(value="删除待办事项")
 	public ResponseMessage<?> delete(@ApiParam(name="id",value="ID",required=true)@PathVariable("id") String id) {
 		logger.info("delete[{}]" + id);
 		// 验证
@@ -427,7 +427,7 @@ public class TBTodoListController extends BaseController {
 			tBTodoListService.deleteEntityById(TBTodoListEntity.class, id);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Result.error("代办事项删除失败");
+			return Result.error("待办事项删除失败");
 		}
 
 		return Result.success();

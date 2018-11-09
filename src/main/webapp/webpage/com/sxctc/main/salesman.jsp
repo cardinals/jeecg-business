@@ -127,7 +127,7 @@
         <div class="col-sm-6">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>代办事项</h5>
+                    <h5>待办事项</h5>
                     <button id="btn_add" type="button" class="btn btn-primary btn-sm" onclick="addTodo('新增','tBTodoListController.do?goAdd','tBTodoListList',600,400)">
                     <%--<button id="btn_add" type="button" class="btn btn-primary btn-sm" onclick="addTodo()">--%>
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增

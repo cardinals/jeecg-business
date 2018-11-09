@@ -301,7 +301,7 @@ public class TBBusiWorkreportController extends BaseController {
 				tBBusiWorkreportService.save(tBWorkreportday);
 			}
 
-			// 3、保存到代办事项表
+			// 3、保存到待办事项表
 			if (StringUtils.isNotBlank(unDoneDay)) {
 				TBTodoListEntity tbTodoList = new TBTodoListEntity();
 				tbTodoList.setTodoContent(unDoneDay);
