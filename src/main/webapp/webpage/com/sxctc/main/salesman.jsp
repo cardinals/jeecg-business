@@ -7,8 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jeecg 微云快速开发平台</title>
     <link href="plug-in/hplus/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="plug-in/hplus/css/plugins/jQueryUI/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
     <!-- Jquery组件引用 -->
     <script src="plug-in/jquery/jquery-1.9.1.js"></script>
+    <script src="plug-in/lhgDialog/lhgdialog.min.js?skin=metrole"></script>
     <!-- bootstrap组件引用 -->
     <link href="plug-in/bootstrap3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <script src="plug-in/bootstrap3.3.5/js/bootstrap.min.js"></script>
@@ -28,11 +30,6 @@
     <script src="plug-in/hplus/contabs.js"></script>
     <script src="plug-in/hplus/jquery-smartMenu.js"></script>
     <style type="text/css">
-        ul{ padding:0px; margin:0px;}
-        ol{ list-style:none; padding:0px; margin:0px; width:100%;border:1px solid #000000;
-            border-top:0px; font-size:12px;}
-        ol li{ display:block; width:33%; float:left;text-indent:2em; margin: 10px; border:1px solid #000000;}
-        .th{ background:#F1FADE; font-weight:bold; border-top:1px }
         .left{
             float:left;
             width:10%;
@@ -42,24 +39,46 @@
         .number_style{
             font-size: 44px;color: black;
         }
-
-        .trleft {
-            width: 20%;
-        }
-        tr {
-            height: 20px;
-        }
-        .inbox-line {
-            display:inline;
-            border: 1px solid #000000;
-            border-radius: 3px;
+        .status {
+            float: left;
+            width: 80px;
             height: 30px;
+            line-height: 30px;
+            color: #fff;
+            font-size: 12px;
+            margin-right: 5px;
         }
-        .inbox-content {
-            display:inline;
+        .status-content-0 {
+            background-color: #E44743;
+            border: 1px solid #E44743;
         }
-        .datagrid-header {
-            position: absolute; visibility: hidden;
+        .status-content-1 {
+            background-color: #4370E0;
+            border: 1px solid #4370E0;
+        }
+        .status-content-2 {
+            background-color: #CF5998;
+            border: 1px solid #CF5998;
+        }
+        .status-content-3 {
+            background-color: #4FBBE2;
+            border: 1px solid #4FBBE2;
+        }
+        .status-content-4 {
+            background-color: #ECAD40;
+            border: 1px solid #ECAD40;
+        }
+        .status-content-5 {
+            background-color: #9358B2;
+            border: 1px solid #9358B2;
+        }
+        .status-content-6 {
+            background-color: #B48058;
+            border: 1px solid #B48058;
+        }
+        .status-content-7 {
+            background-color: #76B46C;
+            border: 1px solid #76B46C;
         }
     </style>
 </head>
@@ -109,11 +128,10 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>代办事项</h5>
-                    <%--<div id="toolbar" style="float: right">--%>
-                    <button id="btn_add" type="button" class="btn btn-primary btn-sm" onclick="add('新增','tBTodoListController.do?goAdd','tBTodoListList',600,400)">
+                    <button id="btn_add" type="button" class="btn btn-primary btn-sm" onclick="addTodo('新增','tBTodoListController.do?goAdd','tBTodoListList',600,400)">
+                    <%--<button id="btn_add" type="button" class="btn btn-primary btn-sm" onclick="addTodo()">--%>
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                     </button>
-                    <%--</div>--%>
                 </div>
                 <div id="iboxContent" class="ibox-content" style="height: 28rem">
                     <table id="tBTodoListList"></table>
@@ -125,22 +143,8 @@
                 <div class="ibox-title">
                     <h5>系统状态</h5>
                 </div>
-                <div class="ibox-content" style="overflow: auto; height: 28rem">
-                    <div class="inbox-line">
-                        <div class="inbox-content">10月30日</div>
-                        <div class="inbox-content">测试今日完成工作</div>
-                        <div class="inbox-content btn">完成</div>
-                    </div>
-                    <div class="inbox-line">
-                        <div class="inbox-content">10月30日</div>
-                        <div class="inbox-content">测试今日完成工作</div>
-                        <div class="inbox-content btn">完成</div>
-                    </div>
-                    <div class="inbox-line">
-                        <div class="inbox-content">10月30日</div>
-                        <div class="inbox-content">测试今日完成工作</div>
-                        <div class="inbox-content btn">完成</div>
-                    </div>
+                <div id="statusContent" class="ibox-content" style="height: 28rem">
+                    <table id="tBStatusListList" style="min-width:1000px;"></table>
                 </div>
             </div>
         </div>
@@ -153,8 +157,8 @@
                 <div class="ibox-title">
                     <h5>待跟进项目</h5>
                 </div>
-                <div class="ibox-content" style="overflow: auto; height: 43rem">
-                    <table id="jeecgDemoList" ></table>
+                <div id="followContent" class="ibox-content" style="overflow: auto; height: 43rem">
+                    <table id="jeecgDemoList"></table>
                 </div>
             </div>
         </div>

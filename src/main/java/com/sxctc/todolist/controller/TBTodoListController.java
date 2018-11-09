@@ -125,7 +125,7 @@ public class TBTodoListController extends BaseController {
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBTodoList, request.getParameterMap());
 		try{
-		//自定义追加查询条件
+		//自定义追加查询条件z
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}

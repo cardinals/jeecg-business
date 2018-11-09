@@ -146,6 +146,22 @@ public class DateUtil {
         return sdf.format(date);
     }
 
+    /**
+     * 获取两个时间的相差天数
+     *
+     * @param date 日期
+     * @param otherDate 另一个日期
+     * @return 相差天数。如果失败则返回-1
+     */
+    public static int getIntervalDays(Date date, Date otherDate) {
+        int num = -1;
+        if (date != null && otherDate != null) {
+            long time = Math.abs(date.getTime() - otherDate.getTime());
+            num = (int) (time / (24 * 60 * 60 * 1000));
+        }
+        return num;
+    }
+
     public static void main(String[] args) {
         System.out.println(getCurrentYear());
 

@@ -6,16 +6,11 @@ import java.lang.String;
 import java.lang.Double;
 import java.lang.Integer;
 import java.math.BigDecimal;
+import javax.persistence.*;
 import javax.xml.soap.Text;
 import java.sql.Blob;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.SequenceGenerator;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**   
@@ -75,6 +70,9 @@ public class TBBusiWorkreportEntity implements java.io.Serializable {
 	@Excel(name="备注",width=15)
 	private String remark;
 
+	/**自定义字段*/
+	/**未跟踪时间*/
+	private Integer unFollowDay;
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  主键
@@ -383,5 +381,14 @@ public class TBBusiWorkreportEntity implements java.io.Serializable {
 	 */
 	public void setRemark(String remark){
 		this.remark = remark;
+	}
+
+	@Transient
+	public Integer getUnFollowDay() {
+		return unFollowDay;
+	}
+
+	public void setUnFollowDay(Integer unFollowDay) {
+		this.unFollowDay = unFollowDay;
 	}
 }

@@ -139,31 +139,43 @@ $(document).ready(function () {
     //1.初始化Table
     var oTable = new TableInit();
     var oTodoTable = new TodoTableInit();
+    var oStatusTable = new StatusTableInit();
     oTable.Init();
     oTodoTable.Init();
+    oStatusTable.Init();
 
+    // 隐藏列头
     $('#tBTodoListList tr').each(function (i,e) {
         if (i == 0) {
-            // alert($(this).html());
+            $(this).hide();
+        }
+    });
+    $('#tBStatusListList tr').each(function (i,e) {
+        if (i == 0) {
             $(this).hide();
         }
     });
 });
 
-
+/**
+ * 待跟进项目列表
+ * @returns {Object}
+ * @constructor
+ */
 var TableInit = function () {
     var oTableInit = new Object();
     //初始化Table
     oTableInit.Init = function () {
         $('#jeecgDemoList').bootstrapTable({
-            url: 'tBBusiWorkreportController.do?datagrid&reportOpt=0',         //请求后台的URL（*）
+            url: 'tbMainController.do?reportDatagrid&reportOpt=0',         //请求后台的URL（*）
             method: 'get',                      //请求方式（*）
             toolbar: '#toolbar',                //工具按钮用哪个容器
             striped: true,                      //是否显示行间隔色
             cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
             pagination: true,                   //是否显示分页（*）
             sortable: true,                     //是否启用排序
-            sortOrder: "desc",                   //排序方式
+            sortName: "reportDate",
+            sortOrder: "asc",                   //排序方式
             queryParams: oTableInit.queryParams,//传递参数（*）
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber:1,                       //初始化加载第一页，默认第一页
@@ -174,7 +186,7 @@ var TableInit = function () {
             showRefresh: false,                  //是否显示刷新按钮
             minimumCountColumns: 2,             //最少允许的列数
             clickToSelect: true,                //是否启用点击选中行
-            height : $(window).height()-35,   //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            height : $('#followContent').height(),   //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
             uniqueId: "id",                   //每一行的唯一标识，一般为主键列
             showToggle:false,                    //是否显示详细视图和列表视图的切换按钮
             cardView: false,                    //是否显示详细视图
@@ -209,7 +221,7 @@ var TableInit = function () {
                     }
                 }
             }, {
-                field: 'reportTitle',
+                field: 'unFollowDay',
                 title: '未跟进时间',
                 align: 'center',
                 valign: 'middle',
@@ -253,7 +265,7 @@ var TableInit = function () {
             rows: params.limit,                         //页面大小
             page: (params.offset / params.limit) + 1,   //页码
             pageIndex:params.pageNumber,//请求第几页
-            field:'id,unitCode,reportTitle,reportDate,doneToday'
+            field:'id,unitCode,reportTitle,reportDate,doneToday,unFollowDay'
         };
         return temp;
     };
@@ -268,6 +280,11 @@ function reloadTable(){
     $('#tBTodoListList').bootstrapTable('refresh');
 }
 
+/**
+ * 代办事项列表
+ * @returns {Object}
+ * @constructor
+ */
 var TodoTableInit = function () {
     var oTodoTableInit = new Object();
     //初始化Table
@@ -280,6 +297,7 @@ var TodoTableInit = function () {
             cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
             pagination: true,                   //是否显示分页（*）
             sortable: true,                     //是否启用排序
+            sortName: "createDate",
             sortOrder: "desc",                   //排序方式
             queryParams: oTodoTableInit.queryParams,//传递参数（*）
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
@@ -362,6 +380,146 @@ function reloadTodoTable(){
     $('#tBTodoListList').bootstrapTable('refresh');
 }
 
+/**
+ * 系统状态列表
+ * @returns {Object}
+ * @constructor
+ */
+var StatusTableInit = function () {
+    var oStatusTableInit = new Object();
+    //初始化Table
+    oStatusTableInit.Init = function () {
+        $('#tBStatusListList').bootstrapTable({
+            url: 'tBBusinessController.do?datagrid',         //请求后台的URL（*）
+            method: 'get',                      //请求方式（*）
+            toolbar: '#toolbar',                //工具按钮用哪个容器
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            sortable: true,                     //是否启用排序
+            sortOrder: "desc",                   //排序方式
+            queryParams: oStatusTableInit.queryParams,//传递参数（*）
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber:1,                       //初始化加载第一页，默认第一页
+            pageSize: 10,                       //每页的记录行数（*）
+            pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+            strictSearch: true,
+            showColumns: false,                  //是否显示所有的列
+            showRefresh: false,                  //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            height : $('#statusContent').height(),   //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "id",                   //每一行的唯一标识，一般为主键列
+            showToggle:false,                    //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false,                   //是否显示父子表
+            showExport: false,                    //显示到处按钮
+            fitColumns: true,
+            columns: [{
+                field: 'unitCode',
+                title: '单位名称',
+                align: 'center',
+                valign: 'middle',
+                sortable:true,
+                formatter : function(value, rec, index) {
+                    return listDictFormat(value,tBBusinessListdictsData.unit_name);
+                }
+            },{
+                field: 'projectName',
+                title: '系统名称',
+                align: 'center',
+                valign: 'middle',
+                sortable:true
+            }, {
+                field: 'joinStatus',
+                title: '上云状态',
+                align: 'center',
+                valign: 'middle',
+                width:700,
+                sortable:true,
+                formatter : function(value, rec, index) {
+                    if (value == 0) {
+                        return "<div class='status status-content-0'>未对接</div>";
+                    }
+                    if (value == 1) {
+                        return "<div class='status status-content-0'>未对接</div>" +
+                            "<div class='status status-content-1'>上云对接</div>";
+                    }
+                    if (value == 2) {
+                        return "<div class='status status-content-0'>未对接</div>" +
+                            "<div class='status status-content-1'>上云对接</div>" +
+                            "<div class='status status-content-2'>取得调研表</div>";
+                    }
+                    if (value == 3) {
+                        return "<div class='status status-content-0'>未对接</div>" +
+                            "<div class='status status-content-1'>上云对接</div>" +
+                            "<div class='status status-content-2'>取得调研表</div>" +
+                            "<div class='status status-content-3'>签订方案</div>";
+                    }
+                    if (value == 4) {
+                        return "<div class='status status-content-0'>未对接</div>" +
+                            "<div class='status status-content-1'>上云对接</div>" +
+                            "<div class='status status-content-2'>取得调研表</div>" +
+                            "<div class='status status-content-3'>签订方案</div>" +
+                            "<div class='status status-content-4'>分配资源</div>";
+                    }
+                    if (value == 5) {
+                        return "<div class='status status-content-0'>未对接</div>" +
+                            "<div class='status status-content-1'>上云对接</div>" +
+                            "<div class='status status-content-2'>取得调研表</div>" +
+                            "<div class='status status-content-3'>签订方案</div>" +
+                            "<div class='status status-content-4'>分配资源</div>" +
+                            "<div class='status status-content-5'>上云测试</div>";
+                    }
+                    if (value == 6) {
+                        return "<div class='status status-content-0'>未对接</div>" +
+                            "<div class='status status-content-1'>上云对接</div>" +
+                            "<div class='status status-content-2'>取得调研表</div>" +
+                            "<div class='status status-content-3'>签订方案</div>" +
+                            "<div class='status status-content-4'>分配资源</div>" +
+                            "<div class='status status-content-5'>上云测试</div>" +
+                            "<div class='status status-content-6'>回收协议</div>";
+                    }
+                    if (value == 7) {
+                        return "<div class='status status-content-0'>未对接</div>" +
+                            "<div class='status status-content-1'>上云对接</div>" +
+                            "<div class='status status-content-2'>取得调研表</div>" +
+                            "<div class='status status-content-3'>签订方案</div>" +
+                            "<div class='status status-content-4'>分配资源</div>" +
+                            "<div class='status status-content-5'>上云测试</div>" +
+                            "<div class='status status-content-6'>回收协议</div>" +
+                            "<div class='status status-content-7'>上云完成</div>";
+                    }
+                }
+            } ],
+            onLoadSuccess: function(){  //加载成功时执行
+                console.info("加载成功");
+                //合并单元格
+                var data = $('#tBStatusListList').bootstrapTable('getData', true);
+                mergeCells(data, "unitCode", 1, $('#tBStatusListList'));
+            },
+            onLoadError: function(){  //加载失败时执行
+                console.info("加载数据失败");
+            }
+        });
+    };
+
+    //得到查询的参数
+    oStatusTableInit.queryParams = function (params) {
+        var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+            pageSize: params.limit, // 每页要显示的数据条数
+            offset: params.offset,  //页码
+            sort: params.sort, // 排序规则
+            order: params.order,
+            rows: params.limit,                         //页面大小
+            page: (params.offset / params.limit) + 1,   //页码
+            pageIndex:params.pageNumber,//请求第几页
+            field:'id,unitCode,projectName,joinStatus'
+        };
+        return temp;
+    };
+    return oStatusTableInit;
+};
 
 
 //列表数据字典项格式化
@@ -455,5 +613,32 @@ function doTodoUpdate(url,name) {
         });
 
     }, function(){
+    });
+}
+
+
+function addTodo(title, addurl, gname, width, height) {
+    layer.open({
+        type : 2,
+        title : title,
+        area : [ '50%', '50%' ],
+        shade : 0.3,
+        maxmin : true,
+        content : addurl,
+        btn : [ '确定', '关闭' ],
+        yes : function(index, layero) {
+            var body = layer.getChildFrame('body', index);
+            body.find('#btn_sub').click();
+            //layer.getFrameIndex(window.name).getdo
+            layer.close(index);
+        },
+        btn2 : function(index, layero) {
+            layer.closeAll();
+        },
+        zIndex : layer.zIndex,
+        success : function(layero) {
+            layer.setTop(layero);
+            reloadTodoTable()
+        }
     });
 }

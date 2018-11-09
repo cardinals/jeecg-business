@@ -13,9 +13,9 @@
   <t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" action="tBTodoListController.do?doAdd" >
 					<input id="id" name="id" type="hidden" value="${tBTodoListPage.id }"/>
 					<input id="todoStatus" name="todoStatus" type="hidden" value="0"/>
-		<table style="width: 600px;" cellpadding="0" cellspacing="1" class="formtable">
+		<table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable">
 				<tr>
-					<td align="right">
+					<td align="right" style="width: 20%">
 						<label class="Validform_label">
 							代办内容:
 						</label>
