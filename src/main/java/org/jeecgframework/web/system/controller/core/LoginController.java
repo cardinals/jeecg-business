@@ -205,6 +205,7 @@ public class LoginController extends BaseController{
 			
             modelMap.put("roleName", roles.length()>3?roles.substring(0,3)+"...":roles);
             modelMap.put("userName", user.getUserName().length()>5?user.getUserName().substring(0, 5)+"...":user.getUserName());
+            modelMap.put("realName", user.getRealName().length()>5?user.getRealName().substring(0, 5)+"...":user.getRealName());
             modelMap.put("portrait", user.getPortrait());
             //用户当前登录机构
             modelMap.put("currentOrgName", ClientManager.getInstance().getClient().getUser().getCurrentDepart().getDepartname());

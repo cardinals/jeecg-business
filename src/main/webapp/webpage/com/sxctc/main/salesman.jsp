@@ -29,6 +29,7 @@
     <script src="plug-in/themes/bootstrap-ext/js/bootstrap-curdtools.js"></script>
     <script src="plug-in/hplus/contabs.js"></script>
     <script src="plug-in/hplus/jquery-smartMenu.js"></script>
+    <script src="plug-in/hplus/hplus-tab.js"></script>
     <style type="text/css">
         .left{
             float:left;
@@ -80,6 +81,12 @@
             background-color: #76B46C;
             border: 1px solid #76B46C;
         }
+
+        .colStyle {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
     </style>
 </head>
 
@@ -88,13 +95,13 @@
     <div class="col-sm-12">
         <blockquote class="text-warning" style="font-size:14px">
             <c:if test="${reportOpt != 1}">
-            <h5 class="text-danger">您好，${realName}，您今天还没有填写今日日报，<a href="tBBusiWorkreportController.do?mainlist">点击填写今日日报</a></h5>
+            <h5 class="text-danger">您好，${realName}，您今天还没有填写今日日报，<a href="javascript:goAddTabs({id:'report1',title:'日报',close: false,url: 'tBBusiWorkreportController.do?mainlist'});">点击填写今日日报</a></h5>
             </c:if>
             <c:if test="${reportWeekOpt != 2 && reportOpt == 1}">
-            <h5 class="text-danger">您好，${realName}，您还没有填写周报，<a href="tBWorkreportdayWeekController.do?mainlist">点击填写周报</a></h5>
+            <h5 class="text-danger">您好，${realName}，您还没有填写周报，<a href="javascript:goAddTabs({id:'report2',title:'周报',close: false,url: 'tBWorkreportdayWeekController.do?mainlist'});">点击填写周报</a></h5>
             </c:if>
             <c:if test="${reportMonthOpt != 3 && reportWeekOpt == 2 && reportOpt == 1}">
-            <h5 class="text-danger">您好，${realName}，您还没有填写月报，<a href="tBWorkreportdayMonthController.do?mainlist">点击填写月报</a></h5>
+            <h5 class="text-danger">您好，${realName}，您还没有填写月报，<a href="javascript:goAddTabs({id:'report3',title:'月报',close: false,url: 'tBWorkreportdayMonthController.do?mainlist'});">点击填写月报</a></h5>
             </c:if>
         </blockquote>
     </div>

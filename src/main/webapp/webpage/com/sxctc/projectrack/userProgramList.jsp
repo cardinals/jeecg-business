@@ -1,31 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/context/mytags.jsp"%>
-<t:base type="jquery,easyui,tools,DatePicker,autocomplete"></t:base>
+<t:base type="jquery,easyui"></t:base>
 
 <link rel="stylesheet" type="text/css" href="plug-in/ztree/css/zTreeStyle.css">
 <script type="text/javascript" src="plug-in/echart/echarts.js"></script>
 <script type="text/javascript" src="plug-in/ztree/js/jquery.ztree.core-3.5.min.js"></script>
 <script type="text/javascript" src="plug-in/ztree/js/jquery.ztree.excheck-3.5.min.js"></script>
-
 <div class="easyui-layout" fit="true">
-    <div data-options="region:'west',title:'业务员',split:true" style="width:200px;">
+    <div data-options="region:'west',title:'业务人员',split:true" style="width:100px;">
         <ul id="managerList" class="ztree" ></ul>
     </div>
-    <div data-options="region:'east',title:'分析',split:true"  style="width:600px;">
+    <div data-options="region:'east',title:'分析',split:true"  style="width:500px;">
         <div style="width:450px;margin:40px" id="rankOfUnit"></div>
         <div style="width:450px;margin:40px" id="gradeTotal"></div>
         <div style="width:450px;margin:40px" id="sequenceStatistics"></div>
     </div>
     <div data-options="region:'center', split:true">
-        <div class="easyui-layout" data-options="fit:true">
+        <%--<div class="easyui-layout" data-options="fit:true">
             <div data-options="region:'north',title:'上云项目',split:true" style="height:350px">
                 <table id="programList" style="height:500px;width:1300px;"></table>
             </div>
             <div data-options="region:'center',title:'机会池'">
                 <table id="chanceProgramList" style="height:500px;width:2000px;"></table>
             </div>
-        </div>
+        </div>--%>
+        <t:tabs id="tabsOne" iframe="true" tabPosition="top" fit="true">
+            <t:tab href="tBBusinessController.do?list&optFlag=1" icon="icon-search" title="上云项目" id="tBBusinessListIframe"></t:tab>
+            <t:tab href="tBChancePoolController.do?list" icon="icon-search" title="机会池" id="tBChancePoolListIframe"></t:tab>
+            <t:tab href="tBProfitTargetController.do?list" icon="icon-search" title="已签订项目" id="tBProfitTargetListIframe"></t:tab>
+        </t:tabs>
     </div>
+</div>
+<div style="display:none">
+    <!-- 激活选项卡再刷新页面需要该隐藏域 -->
+    <input type="hidden" id="mainPageHiddenId">
+    <select id="mainPageFrameActived" style="display:none">
+        <option value="tBBusinessList" selected="selected"></option>
+        <option value="tBChancePoolList"></option>
+        <option value="tBProfitTargetList"></option>
+    </select>
 </div>
 <script type="text/javascript">
     var programListdictsData = {};
@@ -44,16 +57,22 @@
             onClick:onClick
         }
     };
-    
+
     function onClick(event, treeId, treeNode){
-        $.ajax({
+        initBusiList(treeNode.code);
+        /*$.ajax({
             url:"userProgramController.do?getProgramList",
             type:"post",
             data:{userCode:treeNode.code},
             dataType:"json",
             success:function(data){
                 if(data.success){
-                    $('#programList').datagrid('loadData', data.obj);
+                    //$('#programList').datagrid('loadData', data.obj);
+                    $('#tBBusinessList').datagrid({
+                        queryParams: {
+                            createBy: treeNode.code
+                        }
+                    });
                 }
             }
         });
@@ -67,7 +86,7 @@
                     $('#chanceProgramList').datagrid('loadData', data.obj);
                 }
             }
-        });
+        });*/
         $.ajax({
             url:"userProgramController.do?getSequenceStatistics",
             type:"post",
@@ -528,5 +547,62 @@
         }
         return showVal;
     }
+
+    //初始化子表list/刷新子表数据
+    function initBusiList(id){
+        id = iframeMainBusiPageid(id);
+        if(!id){
+            console.log("树无选中");
+        }else{
+            var listname = $("#mainPageFrameActived").val();
+            if ("tBBusinessList" == listname) {
+                refreshTabData(listname,window.top.reload_businessTab(id));
+            }
+            if ("tBChancePoolList" == listname) {
+                refreshTabData(listname,window.top.reload_chancePoolTab(id));
+            }
+            if ("tBProfitTargetList" == listname) {
+                refreshTabData(listname,window.top.reload_profitTab(id));
+            }
+
+        }
+    }
+    //设置/获取隐藏域主表id
+    function iframeMainBusiPageid(id){
+        if(!id){
+            return $("#mainPageHiddenId").val();
+        }else{
+            $("#mainPageHiddenId").val(id);
+            return id;
+        }
+    }
+
+    /**
+     * 刷新指定的tab里面的数据
+     * @param title 选项卡标题
+     * @param refreshTabFunc  自定义的刷新方法(再各个页面具体实现)
+     */
+    function refreshTabData(title,refreshGridFunc) {
+        if ($("#tabsOne").tabs('exists', title)) {
+            // $('#tabsOne').tabs('select', title);
+            typeof refreshGridFunc === 'function' && refreshGridFunc.call();
+        }
+    }
+
+    $("#tabsOne").click(function(){
+        var createBy = $("#mainPageHiddenId").val();
+        var tab = $('#tabsOne').tabs('getSelected');
+        var index = $('#tabsOne').tabs('getTabIndex',tab);
+        if (index == 0) {
+            $("#mainPageFrameActived").find("option[value='tBBusinessList']").attr("selected",true);
+        }
+        if (index == 1) {
+            $("#mainPageFrameActived").find("option[value='tBChancePoolList']").attr("selected",true);
+        }
+        if (index == 2) {
+            $("#mainPageFrameActived").find("option[value='tBProfitTargetList']").attr("selected",true);
+        }
+    });
+
 
 </script>

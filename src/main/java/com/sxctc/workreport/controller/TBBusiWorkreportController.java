@@ -233,21 +233,6 @@ public class TBBusiWorkreportController extends BaseController {
 	@RequestMapping(params = "doUpdate")
 	@ResponseBody
 	public AjaxJson doUpdate(TBBusiWorkreportEntity tBBusiWorkreport, HttpServletRequest request) {
-		/*String message = null;
-		AjaxJson j = new AjaxJson();
-		message = "今日日报列表更新成功";
-		TBBusiWorkreportEntity t = tBBusiWorkreportService.get(TBBusiWorkreportEntity.class, tBBusiWorkreport.getId());
-		try {
-			MyBeanUtils.copyBeanNotNull2Bean(tBBusiWorkreport, t);
-			tBBusiWorkreportService.saveOrUpdate(t);
-			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
-		} catch (Exception e) {
-			e.printStackTrace();
-			message = "今日日报列表更新失败";
-			throw new BusinessException(e.getMessage());
-		}
-		j.setMsg(message);
-		return j;*/
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		message = "日报管理更新成功";
@@ -265,20 +250,20 @@ public class TBBusiWorkreportController extends BaseController {
 			TBBusiWorkreportEntity tBBusiWorkreportEntity = tBBusiWorkreportService.getEntity(TBBusiWorkreportEntity.class, busiReportId);
 
 			// 更新内容
-			tBBusiWorkreportEntity.setDoneToday(StringUtils.isNotBlank(doneDay)?doneDay.replace("\r\n","|"):doneDay);
-			tBBusiWorkreportEntity.setUnDoneToday(StringUtils.isNotBlank(unDoneDay)?unDoneDay.replace("\r\n","|"):unDoneDay);
-			tBBusiWorkreportEntity.setCoordinateWork(StringUtils.isNotBlank(coordinateWork)?coordinateWork.replace("\r\n","|"):coordinateWork);
-			tBBusiWorkreportEntity.setRemark(StringUtils.isNotBlank(remark)?remark.replace("\r\n","|"):remark);
+			tBBusiWorkreportEntity.setDoneToday(doneDay);
+			tBBusiWorkreportEntity.setUnDoneToday(unDoneDay);
+			tBBusiWorkreportEntity.setCoordinateWork(coordinateWork);
+			tBBusiWorkreportEntity.setRemark(remark);
 			tBBusiWorkreportEntity.setReportDate(DateUtils.parseDate(s,"yyyy-MM-dd"));
 			// 保存更新
 			tBBusiWorkreportService.saveOrUpdate(tBBusiWorkreportEntity);
 
 			// 2、保存 t_b_workreportday 表
 			TBWorkreportdayEntity tBWorkreportday = new TBWorkreportdayEntity();
-			tBWorkreportday.setDoneDay(StringUtils.isNotBlank(doneDay)?doneDay.replace("\r\n","|"):doneDay);
-			tBWorkreportday.setUnDoneDay(StringUtils.isNotBlank(unDoneDay)?unDoneDay.replace("\r\n","|"):unDoneDay);
-			tBWorkreportday.setCoordinateWork(StringUtils.isNotBlank(coordinateWork)?coordinateWork.replace("\r\n","|"):coordinateWork);
-			tBWorkreportday.setRemark(StringUtils.isNotBlank(remark)?remark.replace("\r\n","|"):remark);
+			tBWorkreportday.setDoneDay(doneDay);
+			tBWorkreportday.setUnDoneDay(unDoneDay);
+			tBWorkreportday.setCoordinateWork(coordinateWork);
+			tBWorkreportday.setRemark(remark);
 			tBWorkreportday.setReportDate(DateUtils.parseDate(s,"yyyy-MM-dd"));
 			tBWorkreportday.setUnitCode(tBBusiWorkreportEntity.getUnitCode());
 			tBWorkreportday.setProjectName(tBBusiWorkreportEntity.getReportTitle());
@@ -293,7 +278,6 @@ public class TBBusiWorkreportController extends BaseController {
 				tBWorkreportday.setCreateDate(byQueryString.get(0).getCreateDate());
 				tBWorkreportday.setSysCompanyCode(byQueryString.get(0).getSysCompanyCode());
 				tBWorkreportday.setSysOrgCode(byQueryString.get(0).getSysOrgCode());
-				//tBWorkreportdayService.saveOrUpdate(tBWorkreportday);
 				tBBusiWorkreportService.getSession().merge(tBWorkreportday);
 			}else {
 				tBWorkreportday.setId(null);
@@ -341,31 +325,10 @@ public class TBBusiWorkreportController extends BaseController {
 	 */
 	@RequestMapping(params = "goUpdate")
 	public ModelAndView goUpdate(TBBusiWorkreportEntity tBBusiWorkreport, HttpServletRequest req, String toolFlag) {
-//		if (StringUtil.isNotEmpty(tBBusiWorkreport.getId())) {
-//			tBBusiWorkreport = tBBusiWorkreportService.getEntity(TBBusiWorkreportEntity.class, tBBusiWorkreport.getId());
-//			String doneToday = tBBusiWorkreport.getDoneToday();
-//			String unDoneToday = tBBusiWorkreport.getUnDoneToday();
-//			String coordinateWork = tBBusiWorkreport.getCoordinateWork();
-//			String remark = tBBusiWorkreport.getRemark();
-//			tBBusiWorkreport.setDoneToday(StringUtils.isNotBlank(doneToday) ? doneToday.replace("|","\r\n") : doneToday);
-//			tBBusiWorkreport.setUnDoneToday(StringUtils.isNotBlank(unDoneToday) ? unDoneToday.replace("|","\r\n") : unDoneToday);
-//			tBBusiWorkreport.setCoordinateWork(StringUtils.isNotBlank(coordinateWork) ? coordinateWork.replace("|","\r\n") : coordinateWork);
-//			tBBusiWorkreport.setRemark(StringUtils.isNotBlank(remark) ? remark.replace("|","\r\n") : remark);
-//			req.setAttribute("tBBusiWorkreportPage", tBBusiWorkreport);
-//		}
-
 		if (StringUtil.isNotEmpty(tBBusiWorkreport.getId())) {
 			String id = tBBusiWorkreport.getId();
 			// 去t_b_busi_workreport表查询回填信息
 			TBBusiWorkreportEntity tBBusiWorkreportEntity = tBBusiWorkreportService.getEntity(TBBusiWorkreportEntity.class, id);
-			String doneToday = tBBusiWorkreportEntity.getDoneToday();
-			String unDoneToday = tBBusiWorkreportEntity.getUnDoneToday();
-			String coordinateWork = tBBusiWorkreportEntity.getCoordinateWork();
-			String remark = tBBusiWorkreportEntity.getRemark();
-			if (StringUtils.isNotBlank(doneToday) && doneToday.contains("|")) {tBBusiWorkreportEntity.setDoneToday(doneToday.replace("|","\r\n"));}
-			if (StringUtils.isNotBlank(unDoneToday) && unDoneToday.contains("|")) {tBBusiWorkreportEntity.setDoneToday(unDoneToday.replace("|","\r\n"));}
-			if (StringUtils.isNotBlank(coordinateWork) && coordinateWork.contains("|")) {tBBusiWorkreportEntity.setDoneToday(coordinateWork.replace("|","\r\n"));}
-			if (StringUtils.isNotBlank(remark) && remark.contains("|")) {tBBusiWorkreportEntity.setDoneToday(remark.replace("|","\r\n"));}
 			tBBusiWorkreportEntity.setReportDate(DateUtils.getDate());
 
 			req.setAttribute("tBBusiWorkreportPage", tBBusiWorkreportEntity);

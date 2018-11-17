@@ -120,7 +120,6 @@ public class TBProfitTargetController extends BaseController {
 	 * @param request
 	 * @param response
 	 * @param dataGrid
-	 * @param user
 	 */
 
 	@RequestMapping(params = "datagrid")
@@ -142,8 +141,12 @@ public class TBProfitTargetController extends BaseController {
 		TSUser tsUser = ResourceUtil.getSessionUser();
 		String orgCode = tsUser.getCurrentDepart().getOrgCode();
 		String userName = tsUser.getUserName();
+		String createBy = tBProfitTarget.getCreateBy();
 		if (!"A04A01A01A01".equals(orgCode)) {
 			userName = null;
+		}
+		if (StringUtils.isNotBlank(createBy)) {
+			userName = createBy;
 		}
 		String sumContractValue = String.valueOf(tbProfitTargetDao.getSumContractValue(userName));
 		String sumProfitTarget = String.valueOf(tbProfitTargetDao.getSumProfitTarget(userName));

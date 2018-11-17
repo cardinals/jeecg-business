@@ -149,9 +149,13 @@ public class TBChancePoolController extends BaseController {
         TSUser tsUser = ResourceUtil.getSessionUser();
         String orgCode = tsUser.getCurrentDepart().getOrgCode();
         String userName = tsUser.getUserName();
-        if (!"A04A01A01A01".equals(orgCode)) {
+		String createBy = tBChancePool.getCreateBy();
+		if (!"A04A01A01A01".equals(orgCode)) {
             userName = null;
         }
+        if (StringUtils.isNotBlank(createBy)) {
+			userName = createBy;
+		}
         String sumProjectBudget = String.valueOf(tbChancePoolDao.getSumProjectBudget(userName));
         String sumProjectServer = String.valueOf(tbChancePoolDao.getSumProjectServer(userName));
         String sumProjectHardware = String.valueOf(tbChancePoolDao.getSumProjectHardware(userName));

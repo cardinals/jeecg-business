@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="tBCustomerMapList" checkbox="false" sortName="cooperateStatus,createName" pagination="true" fitColumns="false" title="客户地图" actionUrl="tBCustomerMapController.do?datagrid" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells">
+  <t:datagrid name="tBCustomerMapList" checkbox="false" sortName="cooperateStatus,createName" pagination="true" pageSize="30" fitColumns="false" title="客户地图" actionUrl="tBCustomerMapController.do?datagrid" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建日期"  field="createDate"  formatter="yyyy-MM-dd"  hidden="true"  queryMode="single"  width="120"></t:dgCol>

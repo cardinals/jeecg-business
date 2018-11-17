@@ -225,7 +225,14 @@ var TableInit = function () {
                 title: '未跟进时间',
                 align: 'center',
                 valign: 'middle',
-                sortable:true
+                sortable:true,
+                formatter: function (value, row, index) {
+                    if(value != null && value !== ''){
+                        return value + '天';
+                    }else{
+                        return value;
+                    }
+                }
             }, {
                 field: 'doneToday',
                 title: '最近一次跟进内容',
@@ -238,9 +245,7 @@ var TableInit = function () {
                 valign: 'middle',
                 width: 160, // 定义列的宽度，单位为像素px
                 formatter: function (value, row, index) {
-                    // return '<button class="btn btn-success btn-xs" onclick="addMyTab({id:\'home1\',title:\'日报\',close: true,url: \'tBBusiWorkreportController.do?mainlist\'});"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>录入今日日报</button>';
-                    return '<a class="J_menuItem" href="tBBusiWorkreportController.do?mainlist" data-index="13"><i class="fa fa-tags"></i><span class="menu-text">录入今日日报</span></a>';
-
+                    return '<button class="btn btn-success btn-xs" onclick="goAddTabs({id:\'report1\',title:\'日报\',close: false,url: \'tBBusiWorkreportController.do?mainlist\'});"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>录入今日日报</button>';
                 }
             } ],
             onLoadSuccess: function(){  //加载成功时执行
@@ -309,7 +314,7 @@ var TodoTableInit = function () {
             showRefresh: false,                  //是否显示刷新按钮
             minimumCountColumns: 2,             //最少允许的列数
             clickToSelect: true,                //是否启用点击选中行
-            height : $('#iboxContent').height(),   //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            height : $('#iboxContent').height()+30,   //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
             uniqueId: "id",                   //每一行的唯一标识，一般为主键列
             showToggle:false,                    //是否显示详细视图和列表视图的切换按钮
             cardView: false,                    //是否显示详细视图
@@ -414,7 +419,7 @@ var StatusTableInit = function () {
             showRefresh: false,                  //是否显示刷新按钮
             minimumCountColumns: 2,             //最少允许的列数
             clickToSelect: true,                //是否启用点击选中行
-            height : $('#statusContent').height(),   //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            height : $('#statusContent').height()+30,   //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
             uniqueId: "id",                   //每一行的唯一标识，一般为主键列
             showToggle:false,                    //是否显示详细视图和列表视图的切换按钮
             cardView: false,                    //是否显示详细视图
@@ -679,4 +684,8 @@ function checkDetailTodo(title, addurl) {
 
         }
     });
+}
+
+function goAddTabs(option) {
+    parent.addTabs({id:option.id,title:option.title,close: true,url: option.url});
 }

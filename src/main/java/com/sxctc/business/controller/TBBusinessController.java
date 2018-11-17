@@ -122,7 +122,10 @@ public class TBBusinessController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(params = "list")
-	public ModelAndView list(HttpServletRequest request) {
+	public ModelAndView list(HttpServletRequest request, String optFlag) {
+		if (StringUtils.isNotBlank(optFlag)) {
+			request.setAttribute("optFlag", "1");
+		}
 		return new ModelAndView("com/sxctc/business/tBBusinessList");
 	}
 

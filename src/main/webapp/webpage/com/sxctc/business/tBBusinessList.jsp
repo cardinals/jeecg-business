@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="tBBusinessList" checkbox="true" pagination="true" sortName="createName,unitCode" title="上云业务列表" actionUrl="tBBusinessController.do?datagrid" idField="id" fit="true" queryMode="group" fitColumns="false" singleSelect="false" onLoadSuccess="mergeCells">
+  <t:datagrid name="tBBusinessList" checkbox="true" pagination="true" pageSize="30" sortName="createName,unitCode" title="上云业务列表" actionUrl="tBBusinessController.do?datagrid" idField="id" fit="true" queryMode="group" fitColumns="false" singleSelect="false" onLoadSuccess="mergeCells" extendParams="onSelect:function(index,row){datagridSelect(index,row);}">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"   queryMode="single"  width="85"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="80"></t:dgCol>
@@ -152,6 +152,34 @@ function checkCatalog(id) {
          }else{
              mark=1;
          }
+     }
+ }
+
+ window.top["reload_businessTab"] = function (a) {
+     $("#tBBusinessList").datagrid({
+         queryParams: {
+             createBy: a
+         }
+     });
+ };
+
+ /**
+  * 选中事件加载子表数据
+  */
+ function datagridSelect(index,row){
+     var optFlag = "${optFlag}";
+     if (optFlag=="1"){
+         $('#tBBusinessList').datagrid('unselectAll');
+         var url = "userProgramController.do?programSequence&businessId="+row.id;
+         $.dialog({
+             content: "url:"+url,
+             lock : true,
+             title:'上云时序图',
+             opacity : 0.3,
+             width:900,
+             height:500,
+             cache:false
+         });
      }
  }
  </script>

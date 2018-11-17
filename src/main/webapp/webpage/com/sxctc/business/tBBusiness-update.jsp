@@ -14,7 +14,7 @@
 	<input id="id" name="id" type="hidden" value="${tBBusinessPage.id }"/>
 	<table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable">
 		<tr>
-			<td align="right">
+			<td align="right" style="width: 20%">
 				<label class="Validform_label">
 					单位名称:
 				</label>

@@ -300,7 +300,7 @@ public class TBWorkreportdayMonthController extends BaseController {
 						for (TBWorkreportdayEntity tbWorkreportdayEntity : byQueryString) {
 							String doneDay = tbWorkreportdayEntity.getDoneDay();
 							if (StringUtils.isNotBlank(doneDay)) {
-								doneWork += (doneDay.replace("|","\r\n") + "\r\n");
+								doneWork += (doneDay + "\r\n");
 							}
 						}
 					}

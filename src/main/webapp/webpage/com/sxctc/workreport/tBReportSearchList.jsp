@@ -4,7 +4,7 @@
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
    <c:if test="${toolFlag ==  1}">
-   <t:datagrid name="tBWorkreportdayList" checkbox="true" pagination="true" sortName="reportDate" sortOrder="desc" fitColumns="false" title="日报列表" actionUrl="tBWorkreportdayController.do?datagrid" idField="id" fit="true" queryMode="group" singleSelect="true">
+   <t:datagrid name="tBWorkreportdayList" checkbox="true" pagination="true" pageSize="30" sortName="reportDate,createName,unitCode" sortOrder="desc" fitColumns="false" title="日报列表" actionUrl="tBWorkreportdayController.do?datagrid" idField="id" fit="true" queryMode="group" singleSelect="true" onLoadSuccess="mergeCells">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName" queryMode="single" width="120" align="center"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -32,7 +32,7 @@
   </c:if>
 
   <c:if test="${toolFlag == 2}">
-   <t:datagrid name="tBWorkreportdayWeekList" checkbox="true" pagination="true" sortName="reportStartDate" sortOrder="desc" fitColumns="false" title="周报" actionUrl="tBWorkreportdayWeekController.do?datagrid&reportType=9" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells" singleSelect="true">
+   <t:datagrid name="tBWorkreportdayWeekList" checkbox="true" pagination="true" sortName="reportStartDate,createName,unitCode" sortOrder="desc" fitColumns="false" title="周报" actionUrl="tBWorkreportdayWeekController.do?datagrid&reportType=9" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells" singleSelect="true">
     <t:dgCol title="id"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
     <t:dgCol title="创建人名称"  field="createName"  queryMode="group"  width="120" align="center"></t:dgCol>
     <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
@@ -64,7 +64,7 @@
   </c:if>
 
   <c:if test="${toolFlag == 3}">
-   <t:datagrid name="tBWorkreportdayMonthList" checkbox="false" pagination="true" sortName="reportDate" sortOrder="desc" fitColumns="false" title="月报" actionUrl="tBWorkreportdayMonthController.do?datagrid&reportType=9" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells" singleSelect="true">
+   <t:datagrid name="tBWorkreportdayMonthList" checkbox="false" pagination="true" sortName="reportDate,createName,unitCode" sortOrder="desc" fitColumns="false" title="月报" actionUrl="tBWorkreportdayMonthController.do?datagrid&reportType=9" idField="id" fit="true" queryMode="group" onLoadSuccess="mergeCells" singleSelect="true">
     <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
     <t:dgCol title="创建人名称"  field="createName"  queryMode="single"  width="120" align="center"></t:dgCol>
     <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -160,4 +160,32 @@ function ExportXlsByT() {
 	JeecgExcelExport("tBWorkreportdayController.do?exportXlsByT","tBWorkreportdayList");
 }
 
+function mergeCells(data) {
+    var mark=1;
+    for (var i=1; i <data.rows.length; i++) {
+        if (data.rows[i]['unitCode'] == data.rows[i-1]['unitCode']) {
+            mark += 1;
+            $("#tBBusinessList").datagrid('mergeCells',{
+                index: i+1-mark,
+                field: 'unitCode',
+                rowspan:mark
+            });
+        }else{
+            mark=1;
+        }
+    }
+    var mark=1;
+    for (var i=1; i <data.rows.length; i++) {
+        if (data.rows[i]['createName'] == data.rows[i-1]['createName']) {
+            mark += 1;
+            $("#tBBusinessList").datagrid('mergeCells',{
+                index: i+1-mark,
+                field: 'createName',
+                rowspan:mark
+            });
+        }else{
+            mark=1;
+        }
+    }
+}
  </script>

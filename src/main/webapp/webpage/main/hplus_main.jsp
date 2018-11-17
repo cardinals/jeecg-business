@@ -143,7 +143,8 @@
                     
                     <li class="dropdown" onfocus="bindFrameClick()">
                     	<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                                <span ><strong class="font-bold">${userName }</strong></span>
+                                <%--<span ><strong class="font-bold">${userName }</strong></span>--%>
+                                <span ><strong class="font-bold">${realName }</strong></span>
                                 <%--<span >${roleName }<b class="caret"></b></span>--%>
                         </a>
                         <ul class="dropdown-menu dropdown-alerts">
@@ -214,7 +215,7 @@
             <div class="proccess" id="panelloadingDiv"><b>&nbsp;</b></div> 
             <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="loginController.do?hplushome" frameborder="0" data-id="loginController.do?hplushome" seamless></iframe>
         </div>
-        <div class="footer" style="border-top:none;">
+        <div class="footer" style="border-top:none; background-color: #FAFAFA">
             <%--<div class="pull-right">&copy;  <a href="http://www.sxctc.net/" target="_blank">2018 山西云时代技术有限公司</a>
             </div>--%>
         </div>        
