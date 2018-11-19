@@ -88,7 +88,7 @@
 											var win = frameElement.api.opener;
 											var listRows = win.getDataGrid().treegrid('getData');
 											joinTreeChildren(rows, listRows);
-											convertTreeData(rows, 'name');
+											convertTreeData(rows, 'parentText');
 											return rows;
 										},
 										onSelect:function(node){
@@ -105,7 +105,7 @@
 											}else {
 												//编辑时，选择当前父菜单
 												if(currRow) {
-													$('#fartherid').combotree('setValue', currRow.fartherid);
+													$('#fartherid').combotree('setValue', currRow.parentId);
 												}
 											}
 										}"/>
@@ -179,4 +179,3 @@
 			</table>
 		</t:formvalid>
  </body>
-  <script src = "webpage/com/sxctc/catalogt/tBCatalogdata.js"></script>		

@@ -60,33 +60,7 @@
 
     function onClick(event, treeId, treeNode){
         initBusiList(treeNode.code);
-        /*$.ajax({
-            url:"userProgramController.do?getProgramList",
-            type:"post",
-            data:{userCode:treeNode.code},
-            dataType:"json",
-            success:function(data){
-                if(data.success){
-                    //$('#programList').datagrid('loadData', data.obj);
-                    $('#tBBusinessList').datagrid({
-                        queryParams: {
-                            createBy: treeNode.code
-                        }
-                    });
-                }
-            }
-        });
-        $.ajax({
-            url:"userProgramController.do?getChanceProgramList",
-            type:"post",
-            data:{userCode:treeNode.code},
-            dataType:"json",
-            success:function(data){
-                if(data.success){
-                    $('#chanceProgramList').datagrid('loadData', data.obj);
-                }
-            }
-        });*/
+
         $.ajax({
             url:"userProgramController.do?getSequenceStatistics",
             type:"post",
@@ -137,6 +111,7 @@
                 }
             }
         });
+
         $.ajax({
             url:"userProgramController.do?getGradeTotal",
             type:"post",
@@ -188,6 +163,7 @@
                 }
             }
         });
+
         $.ajax({
             url:"userProgramController.do?getRankOfUnit",
             type:"post",
@@ -399,34 +375,6 @@
 
     //加载tree
     $(function(){
-        var promiseArr = [];
-        promiseArr.push(new Promise(function(resolve, reject) {
-            initDictByCode(chanceProgramListdictsData,"unit_name",resolve);
-        }));
-        promiseArr.push(new Promise(function(resolve, reject) {
-            initDictByCode(chanceProgramListdictsData,"control",resolve);
-        }));
-        promiseArr.push(new Promise(function(resolve, reject) {
-            initDictByCode(chanceProgramListdictsData,"provide",resolve);
-        }));
-        promiseArr.push(new Promise(function(resolve, reject) {
-            initDictByCode(chanceProgramListdictsData,"dev_flag",resolve);
-        }));
-
-        promiseArr.push(new Promise(function(resolve, reject) {
-            initDictByCode(programListdictsData,"joinStatus",resolve);
-        }));
-        promiseArr.push(new Promise(function(resolve, reject) {
-            initDictByCode(programListdictsData,"provide",resolve);
-        }));
-        promiseArr.push(new Promise(function(resolve, reject) {
-            initDictByCode(programListdictsData,"dev_flag",resolve);
-        }));
-        promiseArr.push(new Promise(function(resolve, reject) {
-            initDictByCode(programListdictsData,"proj_type",resolve);
-        }));
-
-
         $.ajax({
             url:"userProgramController.do?getManagerList",
             type:"post",
@@ -448,105 +396,9 @@
                 }
             }
         });
-        $('#programList').datagrid({
-            url:'userProgramController.do?getProgramList',
-            columns:[[
-                {field:'unitCode',title:'单位名称',width:200, hidden:true, align:'center'},
-                {field:'unitName',title:'厅局名称',width:200, align:'center'},
-                {field:'projectName',title:'系统名称',width:200,align:'center'},
-                {field:'joinStatus',title:'上云状态',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,programListdictsData.joinStatus); }},
-                {field:'fundsProvided',title:'资金来源',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,programListdictsData.provide); }},
-                {field:'auditStatus',title:'是否审计系统',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,programListdictsData.dev_flag); }},
-                {field:'projectStatus',title:'系统状态',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,programListdictsData.proj_type); }},
-                {field:'chanceStatus',title:'是否跟踪',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,programListdictsData.dev_flag); }},
-                {field:'busCreateTime',title:'业务创建时间',width:100,align:'center'},
-                {field:'busJoinTime',title:'首次对接时间',width:100,align:'center'},
-                {field:'finishTime',title:'上云完成时间',width:100,align:'center'}
-                // {field:'dayRange',title:'时间跨越',width:100,align:'center'}
-            ]],
-            onClickRow: function(index,rowData){
-                var url = "userProgramController.do?programSequence&businessId="+rowData.id;
-                $.dialog({
-                    content: "url:"+url,
-                    lock : true,
-                    title:'上云时序图',
-                    opacity : 0.3,
-                    width:900,
-                    height:500,
-                    cache:false
-                });
-            }
-        });
-        $('#chanceProgramList').datagrid({
-            url:'userProgramController.do?getChanceProgramList',
-            columns:[[
-                {field:'unitCode',title:'单位名称',width:200,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,chanceProgramListdictsData.unit_name); }},
-                {field:'projectName',title:'系统名称',width:200,align:'center'},
-                {field:'projectBudget',title:'项目预算(万元)',width:100,align:'center'},
-                {field:'projectServer',title:'软件和服务(万元)',width:100,align:'center'},
-                {field:'projectHardware',title:'硬件(万元)',width:100,align:'center'},
-                {field:'businessParters',title:'主要合作公司',width:200,align:'center'},
-                {field:'predictTenderTime',title:'预计招标时间',width:100,align:'center'},
-                {field:'fundsProvided',title:'资金来源',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,chanceProgramListdictsData.provide); }},
-                {field:'topRelation',title:'上层关系',width:100,align:'center'},
-                {field:'midRelation',title:'中层关系',width:100,align:'center'},
-                {field:'bottomRelation',title:'下层关系',width:100,align:'center'},
-                {field:'controlDegree',title:'当年把控度',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,chanceProgramListdictsData.control); }},
-                {field:'projectPlan',title:'计划',width:180,align:'center'},
-                {field:'winningResult',title:'是否中标',width:100,align:'center',formatter : function(value, rec, index) { return listDictFormat(value,chanceProgramListdictsData.dev_flag); }},
-                {field:'remark',title:'备注',width:100,align:'center'}
-            ]]
-        });
+
+        $(".layout-button-right").click();
     });
-
-
-    //加载字典数据
-    function initDictByCode(dictObj,code,callback){
-        if(!dictObj[code]){
-            jQuery.ajax({
-                url: "systemController.do?typeListJson&typeGroupName="+code,
-                type:"GET",
-                dataType:"JSON",
-                success: function (back) {
-                    if(back.success){
-                        dictObj[code]= back.obj;
-
-                    }
-                    callback();
-                }
-            });
-        }
-    }
-
-    //列表数据字典项格式化
-    function listDictFormat(value,dicts){
-        if (value == null) return '';
-        var valArray = value.toString().split(',');
-        var showVal;
-        if (valArray.length > 1) {
-            for (var k = 0; k < valArray.length; k++) {
-                if(dicts && dicts.length>0){
-                    for(var a = 0;a < dicts.length;a++){
-                        if(dicts[a].typecode ==valArray[k]){
-                            showVal = showVal + dicts[a].typename + ',';
-                            break;
-                        }
-                    }
-                }
-            }
-            showVal=showVal.substring(0, showVal.length - 1);
-        }else{
-            if(dicts && dicts.length>0){
-                for(var a = 0;a < dicts.length;a++){
-                    if(dicts[a].typecode == value){
-                        showVal =  dicts[a].typename;
-                        break;
-                    }
-                }
-            }
-        }
-        return showVal;
-    }
 
     //初始化子表list/刷新子表数据
     function initBusiList(id){

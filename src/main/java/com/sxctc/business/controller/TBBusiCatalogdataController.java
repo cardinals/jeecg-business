@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.sxctc.business.entity.TBBusiCatalogEntity;
 import com.sxctc.catalogs.entity.TBCatalogdataEntity;
+import com.sxctc.catalogs.entity.TBCatalogdataTree;
 import com.sxctc.catalogs.service.TBCatalogdataServiceI;
 import com.sxctc.util.DateUtil;
 import com.sxctc.util.FastJsonUtil;
@@ -105,9 +106,9 @@ public class TBBusiCatalogdataController extends BaseController {
 	 */
 	@RequestMapping(params = "datagrid")
 	@ResponseBody
-	public Object departgrid(TBCatalogdataEntity tBCatalogdata,HttpServletRequest request, HttpServletResponse response, TreeGrid treegrid, String businessId) {
+	public Object departgrid(TBCatalogdataTree tBCatalogdata, HttpServletRequest request, HttpServletResponse response, TreeGrid treegrid, String businessId) {
 		String type = request.getParameter("type");
-		CriteriaQuery cq = new CriteriaQuery(TBCatalogdataEntity.class);
+		CriteriaQuery cq = new CriteriaQuery(TBCatalogdataTree.class);
 		if("yes".equals(request.getParameter("isSearch"))){
 			treegrid.setId(null);
 			tBCatalogdata.setId(null);
@@ -129,8 +130,8 @@ public class TBBusiCatalogdataController extends BaseController {
 		List<TreeGrid> departList =null;
 		departList=systemService.getListByCriteriaQuery(cq, false);
 		if(departList.size()==0&&tBCatalogdata.getName()!=null){
-			cq = new CriteriaQuery(TBCatalogdataEntity.class);
-			TBCatalogdataEntity parDepart = new TBCatalogdataEntity();
+			cq = new CriteriaQuery(TBCatalogdataTree.class);
+			TBCatalogdataTree parDepart = new TBCatalogdataTree();
 			tBCatalogdata.setTBPCatalogdata(parDepart);
 			org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBCatalogdata);
 			departList =systemService.getListByCriteriaQuery(cq, false);

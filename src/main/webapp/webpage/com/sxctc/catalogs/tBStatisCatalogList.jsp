@@ -23,7 +23,7 @@
         </t:datagrid>--%>
 
         <%--<t:datagrid name="tBCatalogdataList" title="服务目录统计" actionUrl="tBStatisCatalogController.do?datagrid&catalogtype=${type}" idField="id" treegrid="true" pagination="false" onLoadSuccess="loadSuccess" queryMode="group" btnCls="bootstrap btn btn-info btn-xs">--%>
-        <t:datagrid name="tBCatalogdataList" checkbox="false" pagination="true" treegrid="true" treeField="name" fitColumns="false" title="服务目录统计" actionUrl="tBStatisCatalogController.do?datagrid&catalogtype=${type}"  idField="id" fit="true" queryMode="group" onLoadSuccess="loadSuccess" rowStyler="mystyle">
+        <%--<t:datagrid name="tBCatalogdataList" checkbox="false" pagination="true" treegrid="true" treeField="name" fitColumns="false" title="服务目录统计" actionUrl="tBStatisCatalogController.do?datagrid&catalogtype=${type}"  idField="id" fit="true" queryMode="group" onLoadSuccess="loadSuccess" rowStyler="mystyle">
             <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
             <t:dgCol title="名称"  field="name" queryMode="single"  width="500"></t:dgCol>
             <t:dgCol title="单位"  field="danwei"  queryMode="single"  width="100"></t:dgCol>
@@ -34,6 +34,19 @@
             <t:dgCol title="合计（万元）"  field="total" queryMode="single"  width="120"></t:dgCol>
             <t:dgCol title="备注"  field="beizhu"  queryMode="single"  width="120"></t:dgCol>
             <t:dgCol title="操作" field="opt" width="150"></t:dgCol>
+            <t:dgFunOpt funname="queryTypeValue(id,typegroupname)" title="查看使用详情" urlclass="ace_button"  urlfont="fa-search" exp="danwei#ne#"></t:dgFunOpt>
+        </t:datagrid>--%>
+        <t:datagrid name="tBCatalogdataList" checkbox="true" pagination="true" treegrid="true" fitColumns="true" title="服务目录统计" actionUrl="tBStatisCatalogController.do?datagrid&catalogtype=${type}"  idField="id" fit="true" queryMode="group">
+            <t:dgCol title="主键"  field="id"  hidden="true" treefield="id" queryMode="single"  width="120"></t:dgCol>
+            <t:dgCol title="名称"  field="name" treefield="text" queryMode="single"  width="260"></t:dgCol>
+            <t:dgCol title="单位"  field="danwei" treefield="fieldMap.danwei" queryMode="single"  width="50"></t:dgCol>
+            <t:dgCol title="父节点ID"  field="fartherid"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
+            <t:dgCol title="数量"  field="num"  hidden="true" treefield="fieldMap.num" queryMode="single"  width="120"></t:dgCol>
+            <t:dgCol title="类型"  field="type" hidden="true" treefield="fieldMap.type" queryMode="single"  dictionary="catatype"  width="120"></t:dgCol>
+            <t:dgCol title="单价"  field="price" queryMode="single" treefield="fieldMap.price"  width="50"></t:dgCol>
+            <t:dgCol title="合计（万元）"  field="total" treefield="fieldMap.total" queryMode="single"  width="120"></t:dgCol>
+            <t:dgCol title="备注"  field="beizhu"  queryMode="single" treefield="fieldMap.beizhu" width="120"></t:dgCol>
+            <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
             <t:dgFunOpt funname="queryTypeValue(id,typegroupname)" title="查看使用详情" urlclass="ace_button"  urlfont="fa-search" exp="danwei#ne#"></t:dgFunOpt>
         </t:datagrid>
     </div>
@@ -61,20 +74,15 @@
         $("#tBCatalogdataList").treegrid({
             onExpand : function(row){
                 $("#tBCatalogdataList").treegrid("expandAll",row.id);
-                var children = $("#tBCatalogdataList").treegrid('getChildren',row.id);
-                if(children.length<=0){
-                    row.leaf=true;
-                    $("#tBCatalogdataList").treegrid('refresh', row.id);
-                }
+                // var children = $("#tBCatalogdataList").treegrid('getChildren',row.id);
+                //  if(children.length<=0){
+                //  	row.leaf=true;
+                //  	$("#tBCatalogdataList").treegrid('refresh', row.id);
+                //  }
+            },
+            onLoadSuccess: function () {
+                $("#tBCatalogdataList").treegrid("expandAll");
             }
-            // onLoadSuccess: function (row) {
-            //     var roots = $("#tBCatalogdataList").treegrid("getRoots");
-            //     if (roots.length > 0) {
-            //         $.each(roots, function (i, item) {
-            //             $("#tBCatalogdataList").treegrid("expandAll", item.id);
-            //         });
-            //     }
-            // }
         });
     });
 
