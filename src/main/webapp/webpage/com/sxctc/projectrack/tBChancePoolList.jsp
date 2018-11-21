@@ -6,18 +6,18 @@
 </style>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="tBChancePoolList" checkbox="false" pagination="true" pageSize="30" fitColumns="false" title="项目机会池" sortName="createName,unitCode" actionUrl="tBChancePoolController.do?datagrid" idField="id" fit="true" queryMode="group" extendParams=""  onLoadSuccess="mergeCells" >
+  <t:datagrid name="tBChancePoolList" checkbox="false" pagination="true" pageSize="30" fitColumns="false" title="项目机会池" sortName="createName,unitCode" actionUrl="tBChancePoolController.do?datagrid" idField="id" fit="true" queryMode="group" extendParams=""  onLoadSuccess="mergeCells">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="创建人名称"  field="createName"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="创建人名称"  field="createName"  queryMode="single"  width="85" align="center"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy" hidden="true" queryMode="single"  width="110" align="center"></t:dgCol>
    <t:dgCol title="创建日期"  field="createDate"  formatter="yyyy-MM-dd"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="更新人名称"  field="updateName"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="更新人登录名称"  field="updateBy"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="更新日期"  field="updateDate"  formatter="yyyy-MM-dd"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="更新日期"  field="updateDate"  formatter="yyyy-MM-dd"  queryMode="single"  width="120" align="center"></t:dgCol>
    <t:dgCol title="所属部门"  field="sysOrgCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所属公司"  field="sysCompanyCode"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="单位名称"  field="unitCode"  queryMode="single"  dictionary="unit_name"  width="200" align="center"></t:dgCol>
-   <t:dgCol title="项目名称"  field="projectName"  queryMode="single"  width="120" align="center"></t:dgCol>
+   <t:dgCol title="项目名称"  field="projectName"  queryMode="single"  width="200" align="center"></t:dgCol>
    <t:dgCol title="项目预算(万元)"  field="projectBudget"  queryMode="single"  width="100" align="center"></t:dgCol>
    <t:dgCol title="软件和服务(万元)"  field="projectServer"  queryMode="single"  width="115" align="center"></t:dgCol>
    <t:dgCol title="硬件(万元)"  field="projectHardware"  queryMode="single"  width="100" align="center"></t:dgCol>
@@ -31,7 +31,7 @@
    <t:dgCol title="当年把控度"  field="controlDegree"  queryMode="single" dictionary="control"  width="100" align="center"></t:dgCol>
    <t:dgCol title="现状及下一步计划"  field="projectPlan"  queryMode="single"  width="120" align="center"></t:dgCol>
    <t:dgCol title="备注"  field="remark"  queryMode="single"  width="120" align="center"></t:dgCol>
-   <t:dgCol title="是否中标"  field="winningResult"  queryMode="single"  dictionary="dev_flag"  width="100" align="center"></t:dgCol>
+   <t:dgCol title="是否中标"  field="winningResult" hidden="true" queryMode="single"  dictionary="dev_flag"  width="100" align="center"></t:dgCol>
    <t:dgCol title="业务主表id"  field="businessId"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <%--<t:dgCol title="操作" field="opt" width="100"></t:dgCol>--%>
    <%--<t:dgDelOpt title="删除" url="tBChancePoolController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o" operationCode="delete"/>--%>

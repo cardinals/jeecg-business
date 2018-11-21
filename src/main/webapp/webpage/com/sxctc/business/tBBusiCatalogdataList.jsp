@@ -58,7 +58,6 @@
 
     //保存数据
     function saveData(title,addurl,gname){
-        alert("进来保存方法了")
         if (editingId != undefined){
             var t = $('#'+gname);
             t.treegrid('endEdit', editingId);
@@ -69,8 +68,6 @@
         // 保存
         var id=this.gettBCatalogdataListSelections('id').toString();
         var num=this.gettBCatalogdataListSelections('fieldMap.num');
-        alert(id);
-        alert(num);
         $.ajax({
             url:"tBBusiCatalogController.do?doAdd",
             type:"post",

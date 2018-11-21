@@ -174,7 +174,7 @@ var TableInit = function () {
             cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
             pagination: true,                   //是否显示分页（*）
             sortable: true,                     //是否启用排序
-            sortName: "reportDate",
+            sortName: "unitCode",
             sortOrder: "asc",                   //排序方式
             queryParams: oTableInit.queryParams,//传递参数（*）
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
@@ -408,7 +408,8 @@ var StatusTableInit = function () {
             cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
             pagination: true,                   //是否显示分页（*）
             sortable: true,                     //是否启用排序
-            sortOrder: "desc",                   //排序方式
+            sortName: "unitCode",
+            sortOrder: "asc",                   //排序方式
             queryParams: oStatusTableInit.queryParams,//传递参数（*）
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber:1,                       //初始化加载第一页，默认第一页
@@ -507,7 +508,7 @@ var StatusTableInit = function () {
                 console.info("加载成功");
                 //合并单元格
                 var data = $('#tBStatusListList').bootstrapTable('getData', true);
-                mergeCells(data, "unitCode", 1, $('#tBStatusListList'));
+                mergeCells(data, "unitCode", 1, '#tBStatusListList');
             },
             onLoadError: function(){  //加载失败时执行
                 console.info("加载数据失败");

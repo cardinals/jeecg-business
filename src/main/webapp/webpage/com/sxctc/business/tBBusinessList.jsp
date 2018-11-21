@@ -5,7 +5,7 @@
   <div region="center" style="padding:0px;border:0px">
   <t:datagrid name="tBBusinessList" checkbox="true" pagination="true" pageSize="30" sortName="createName,unitCode" title="上云业务列表" actionUrl="tBBusinessController.do?datagrid" idField="id" fit="true" queryMode="group" fitColumns="false" singleSelect="false" onLoadSuccess="mergeCells" extendParams="onSelect:function(index,row){datagridSelect(index,row);}">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="创建人名称"  field="createName"   queryMode="single"  width="85"></t:dgCol>
+   <t:dgCol title="创建人名称"  field="createName" align="center"  queryMode="single"  width="85"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy"  hidden="true"  queryMode="single"  width="80"></t:dgCol>
    <t:dgCol title="创建日期"  field="createDate"  formatter="yyyy-MM-dd"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="更新人名称"  field="updateName"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
@@ -29,11 +29,11 @@
    <t:dgCol title="硬件服务目录"  field="hardServeCatalog"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="基础层服务目录"  field="baseServeCatalog"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="是否收回协议"  field="protocolStatus" hidden="true" queryMode="single"  dictionary="dev_flag"  width="120"></t:dgCol>
-   <t:dgCol title="取得需求表时间"  field="demandTime" queryMode="single" formatter="yyyy-MM-dd" width="120"></t:dgCol>
-   <t:dgCol title="签订方案时间"  field="planTime" queryMode="single" formatter="yyyy-MM-dd" width="120"></t:dgCol>
-   <t:dgCol title="分配资源时间"  field="resourceTime" queryMode="single" formatter="yyyy-MM-dd" width="120"></t:dgCol>
-   <t:dgCol title="上云测试时间"  field="testTime" queryMode="single" formatter="yyyy-MM-dd" width="120"></t:dgCol>
-   <t:dgCol title="收回协议时间"  field="protocolTime"  formatter="yyyy-MM-dd"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="取得需求表时间"  field="demandTime" queryMode="single" formatter="yyyy-MM-dd" width="120" align="center"></t:dgCol>
+   <t:dgCol title="签订方案时间"  field="planTime" queryMode="single" formatter="yyyy-MM-dd" width="120" align="center"></t:dgCol>
+   <t:dgCol title="分配资源时间"  field="resourceTime" queryMode="single" formatter="yyyy-MM-dd" width="120" align="center"></t:dgCol>
+   <t:dgCol title="上云测试时间"  field="testTime" queryMode="single" formatter="yyyy-MM-dd" width="120" align="center"></t:dgCol>
+   <t:dgCol title="收回协议时间"  field="protocolTime"  formatter="yyyy-MM-dd"  queryMode="single"  width="120" align="center"></t:dgCol>
    <t:dgCol title="上云完成时间"  field="finishTime" queryMode="single" formatter="yyyy-MM-dd" width="120" align="center"></t:dgCol>
    <t:dgCol title="时间跨越"  field="dayRange"  queryMode="single"  width="70" align="center"></t:dgCol>
    <t:dgCol title="备注"  field="remark"  queryMode="single"  width="120" align="center"></t:dgCol>

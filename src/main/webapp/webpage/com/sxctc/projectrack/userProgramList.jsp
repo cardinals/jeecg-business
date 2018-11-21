@@ -450,6 +450,9 @@
         }
         if (index == 1) {
             $("#mainPageFrameActived").find("option[value='tBChancePoolList']").attr("selected",true);
+            if (createBy != null && createBy !== '') {
+                sessionStorage.setItem("createBy", createBy);
+            }
         }
         if (index == 2) {
             $("#mainPageFrameActived").find("option[value='tBProfitTargetList']").attr("selected",true);
