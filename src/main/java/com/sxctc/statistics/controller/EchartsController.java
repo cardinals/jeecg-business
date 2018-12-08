@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -179,7 +180,7 @@ public class EchartsController {
 
             result.put("cloudConfirmCount",cloudCount.intValue());
             result.put("trackConfirmCount",(trackConfirmCount != null)?trackConfirmCount:0);
-            result.put("targetRevenueCount",targetRevenueCount);
+            result.put("targetRevenueCount",targetRevenueCount*10000);
         } catch (Exception e) {
             e.printStackTrace();
         }

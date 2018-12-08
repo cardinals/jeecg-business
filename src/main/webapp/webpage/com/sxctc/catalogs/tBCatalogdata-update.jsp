@@ -124,7 +124,7 @@
 							</label>
 						</td>
 						<td class="value">
-						    <input id="name" name="name" type="text" maxlength="32" style="width: 150px" class="inputxt"  ignore="ignore"  value='${tBCatalogdataPage.name}'/>
+						    <input id="name" name="name" type="text" maxlength="32" style="width: 150px" class="inputxt"  value='${tBCatalogdataPage.name}'/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">名称</label>
 						</td>
@@ -148,7 +148,7 @@
 							</label>
 						</td>
 						<td class="value">
-							<input id="price" name="price" type="text" maxlength="32" style="width: 150px" class="inputxt"  ignore="ignore"  value='${tBCatalogdataPage.price}'/>
+							<input id="price" name="price" type="text" maxlength="32" style="width: 150px" class="inputxt"  datatype="/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/"  value='${tBCatalogdataPage.price}'/>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">单价</label>
 						</td>

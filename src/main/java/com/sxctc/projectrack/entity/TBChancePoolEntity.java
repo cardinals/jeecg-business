@@ -94,7 +94,7 @@ public class TBChancePoolEntity implements java.io.Serializable {
     @Excel(name="备注",width=15)
     private String remark;
     /**是否中标*/
-    @Excel(name="是否中标",width=15,dicCode="dev_flag")
+    @Excel(name="是否中标",width=15,dicCode="winResult")
     private Integer winningResult;
     /**业务主表id*/
     private String businessId;

@@ -202,7 +202,7 @@
 				</label>
 			</td>
 			<td class="value">
-				<t:dictSelect field="winningResult" type="radio"  datatype="*"  typeGroupCode="dev_flag"   defaultVal="${tBChancePoolPage.winningResult}" hasLabel="false"  title="是否中标" ></t:dictSelect>
+				<t:dictSelect field="winningResult" type="radio"  datatype="*"  typeGroupCode="winResult"   defaultVal="${tBChancePoolPage.winningResult}" hasLabel="false"  title="是否中标" ></t:dictSelect>
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">是否中标</label>
 			</td>

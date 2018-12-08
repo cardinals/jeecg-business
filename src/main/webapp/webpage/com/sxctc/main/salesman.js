@@ -248,11 +248,8 @@ var TableInit = function () {
                     return '<button class="btn btn-success btn-xs" onclick="goAddTabs({id:\'report1\',title:\'日报\',close: false,url: \'tBBusiWorkreportController.do?mainlist\'});"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>录入今日日报</button>';
                 }
             } ],
-            onLoadSuccess: function(){  //加载成功时执行
-                console.info("加载成功");
-                var data = $('#jeecgDemoList').bootstrapTable('getData', true);
-                //合并单元格
-                mergeCells(data, "unitCode", 1, $('#jeecgDemoList'));
+            onLoadSuccess: function(data){  //加载成功时执行
+                mergeCells(data,'jeecgDemoList');
             },
             onLoadError: function(){  //加载失败时执行
                 console.info("加载数据失败");
@@ -355,7 +352,6 @@ var TodoTableInit = function () {
                 }
             } ],
             onLoadSuccess: function(){  //加载成功时执行
-                console.info("加载成功");
             },
             onLoadError: function(){  //加载失败时执行
                 console.info("加载数据失败");
@@ -504,11 +500,8 @@ var StatusTableInit = function () {
                     }
                 }
             } ],
-            onLoadSuccess: function(){  //加载成功时执行
-                console.info("加载成功");
-                //合并单元格
-                var data = $('#tBStatusListList').bootstrapTable('getData', true);
-                mergeCells(data, "unitCode", 1, '#tBStatusListList');
+            onLoadSuccess: function(data){  //加载成功时执行
+                mergeCells(data,"tBStatusListList");
             },
             onLoadError: function(){  //加载失败时执行
                 console.info("加载数据失败");
@@ -581,7 +574,7 @@ function initDictByCode(dictObj,code,callback){
         });
     }
 }
-
+/*
 function mergeCells(data,fieldName,colspan,target){
     //声明一个map计算相同属性值在data对象出现的次数和
     var sortMap = {};
@@ -604,7 +597,7 @@ function mergeCells(data,fieldName,colspan,target){
         $(target).bootstrapTable('mergeCells',{index:index, field:fieldName, colspan: colspan, rowspan: count});
         index += count;
     }
-}
+}*/
 
 function doTodoUpdate(url,name) {
     layer.confirm('确认完成？', {
@@ -690,3 +683,20 @@ function checkDetailTodo(title, addurl) {
 function goAddTabs(option) {
     parent.addTabs({id:option.id,title:option.title,close: true,url: option.url});
 }
+
+function mergeCells(data,target) {
+    var mark=1;
+    for (var i=1; i <data.rows.length; i++) {
+        if (data.rows[i]['unitCode'] == data.rows[i-1]['unitCode']) {
+            mark += 1;
+            $("#"+target).bootstrapTable('mergeCells',{
+                index: i+1-mark,
+                field: 'unitCode',
+                rowspan:mark
+            });
+        }else{
+            mark=1;
+        }
+    }
+}
+

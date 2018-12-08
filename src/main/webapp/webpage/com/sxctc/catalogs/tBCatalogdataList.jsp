@@ -10,7 +10,7 @@
    <t:dgCol title="父节点ID"  field="fartherid"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="数量"  field="num"  hidden="true" treefield="fieldMap.num" queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="类型"  field="type" hidden="true" treefield="fieldMap.type" queryMode="single"  dictionary="catatype"  width="120"></t:dgCol>
-   <t:dgCol title="单价"  field="price" queryMode="single" treefield="fieldMap.price"  width="50"></t:dgCol>
+   <t:dgCol title="单价(元)"  field="price" queryMode="single" treefield="fieldMap.price"  width="50"></t:dgCol>
    <t:dgCol title="编码"  field="catalogCode" hidden="true" queryMode="single" treefield="fieldMap.catalogCode" width="120"></t:dgCol>
    <t:dgCol title="编码"  field="nodeId" hidden="true" queryMode="single" treefield="fieldMap.nodeId" width="120"></t:dgCol>
    <t:dgCol title="备注"  field="beizhu"  queryMode="single" treefield="fieldMap.beizhu" width="120"></t:dgCol>
@@ -35,7 +35,7 @@
  					//  }
  				},
                 onLoadSuccess: function () {
-                    $("#tBCatalogdataList").treegrid("expandAll");
+                    //$("#tBCatalogdataList").treegrid("expandAll");
                 }
 
  		});

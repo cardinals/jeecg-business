@@ -12,9 +12,9 @@
  <body>
   <t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" action="tBChancePoolController.do?doAdd" >
 					<input id="id" name="id" type="hidden" value="${tBChancePoolPage.id }"/>
-		<table style="width: 600px;" cellpadding="0" cellspacing="1" class="formtable">
+		<table style="width: 100%;" cellpadding="0" cellspacing="1" class="formtable">
 				<tr>
-					<td align="right">
+					<td align="right" style="width: 30%">
 						<label class="Validform_label">
 							单位名称:
 						</label>
@@ -24,13 +24,15 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">单位名称</label>
 						</td>
+				</tr>
+				<tr>
 					<td align="right">
 						<label class="Validform_label">
 							项目名称:
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="projectName" name="projectName" type="text" maxlength="32" style="width: 150px" class="inputxt"  ignore="ignore" />
+					     	 <input id="projectName" name="projectName" type="text" maxlength="32" style="width: 150px" class="inputxt" datatype="*" />
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">项目名称</label>
 						</td>
@@ -46,6 +48,8 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">项目预算(万元)</label>
 						</td>
+				</tr>
+				<tr>
 					<td align="right">
 						<label class="Validform_label">
 							软件和服务(万元):
@@ -68,6 +72,8 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">硬件(万元)</label>
 						</td>
+				</tr>
+				<tr>
 					<td align="right">
 						<label class="Validform_label">
 							主要合作公司:
@@ -90,6 +96,8 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">竞争对手</label>
 						</td>
+				</tr>
+				<tr>
 					<td align="right">
 						<label class="Validform_label">
 							预计招标时间:
@@ -112,6 +120,8 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">资金来源</label>
 						</td>
+				</tr>
+				<tr>
 					<td align="right">
 						<label class="Validform_label">
 							上层关系:
@@ -134,6 +144,8 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">中层关系</label>
 						</td>
+				</tr>
+				<tr>
 					<td align="right">
 						<label class="Validform_label">
 							下层关系:
@@ -152,17 +164,19 @@
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="controlDegree" name="controlDegree" type="text" maxlength="32" style="width: 150px" class="inputxt"  ignore="ignore" />
+						<t:dictSelect id="controlDegree" field="controlDegree" type="list"  datatype="n"  typeGroupCode="control" hasLabel="false"  title="当年把控度" ></t:dictSelect>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">当年把控度</label>
 						</td>
+				</tr>
+				<tr>
 					<td align="right">
 						<label class="Validform_label">
 							现状及下一步计划:
 						</label>
 					</td>
 					<td class="value">
-					     	 <input id="projectPlan" name="projectPlan" type="text" maxlength="0" style="width: 150px" class="inputxt"  ignore="ignore" />
+						<textarea id="projectPlan" style="width:50%;height: 100px;" class="inputxt" rows="6" name="projectPlan"  ignore="ignore" ></textarea>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">现状及下一步计划</label>
 						</td>
@@ -178,13 +192,15 @@
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">备注</label>
 						</td>
+				</tr>
+				<tr>
 					<td align="right">
 						<label class="Validform_label">
 							是否中标:
 						</label>
 					</td>
 					<td class="value">
-							  <t:dictSelect field="winningResult" type="radio"  datatype="n"  typeGroupCode="dev_flag"  defaultVal="${tBChancePoolPage.winningResult}" hasLabel="false"  title="是否中标" ></t:dictSelect>     
+							  <t:dictSelect field="winningResult" type="radio"  datatype="n"  typeGroupCode="winResult"  defaultVal="${tBChancePoolPage.winningResult}" hasLabel="false"  title="是否中标" ></t:dictSelect>
 							<span class="Validform_checktip"></span>
 							<label class="Validform_label" style="display: none;">是否中标</label>
 						</td>

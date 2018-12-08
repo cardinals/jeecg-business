@@ -6,7 +6,7 @@
 </style>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="tBChancePoolList" checkbox="false" pagination="true" pageSize="30" fitColumns="false" title="项目机会池" sortName="createName,unitCode" actionUrl="tBChancePoolController.do?datagrid" idField="id" fit="true" queryMode="group" extendParams=""  onLoadSuccess="mergeCells">
+  <t:datagrid name="tBChancePoolList" checkbox="false" pagination="true" pageSize="30" fitColumns="false" title="项目机会池" sortName="createName,unitCode" actionUrl="tBChancePoolController.do?datagrid&winningResult=0" idField="id" fit="true" queryMode="group" extendParams=""  onLoadSuccess="mergeCells">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  queryMode="single"  width="85" align="center"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy" hidden="true" queryMode="single"  width="110" align="center"></t:dgCol>
@@ -31,11 +31,13 @@
    <t:dgCol title="当年把控度"  field="controlDegree"  queryMode="single" dictionary="control"  width="100" align="center"></t:dgCol>
    <t:dgCol title="现状及下一步计划"  field="projectPlan"  queryMode="single"  width="120" align="center"></t:dgCol>
    <t:dgCol title="备注"  field="remark"  queryMode="single"  width="120" align="center"></t:dgCol>
-   <t:dgCol title="是否中标"  field="winningResult" hidden="true" queryMode="single"  dictionary="dev_flag"  width="100" align="center"></t:dgCol>
+   <t:dgCol title="是否中标"  field="winningResult" hidden="true" queryMode="single"  dictionary="winResult"  width="100" align="center"></t:dgCol>
    <t:dgCol title="业务主表id"  field="businessId"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-   <%--<t:dgCol title="操作" field="opt" width="100"></t:dgCol>--%>
+   <t:dgCol title="操作" field="opt" width="200"></t:dgCol>
+   <t:dgFunOpt title="中标" funname="auditPass(id)" urlclass="ace_button"  urlfont="fa-check" />
+   <t:dgFunOpt title="未中标" funname="auditRefuse(id)" urlclass="ace_button"  urlfont="fa-times" urlStyle="background-color:#ec4758;"/>
    <%--<t:dgDelOpt title="删除" url="tBChancePoolController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o" operationCode="delete"/>--%>
-   <%--<t:dgToolBar title="录入" icon="icon-add" url="tBChancePoolController.do?goAdd" funname="add"></t:dgToolBar>--%>
+   <t:dgToolBar title="录入" icon="icon-add" url="tBChancePoolController.do?goAdd" funname="add" operationCode="saleAdd"></t:dgToolBar>
    <t:dgToolBar title="编辑" icon="icon-edit" url="tBChancePoolController.do?goUpdate" funname="update" operationCode="update"></t:dgToolBar>
    <%--<t:dgToolBar title="批量删除"  icon="icon-remove" url="tBChancePoolController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>--%>
    <t:dgToolBar title="查看" icon="icon-search" url="tBChancePoolController.do?goUpdate" funname="detail"></t:dgToolBar>
@@ -101,4 +103,69 @@ window.top["reload_chancePoolTab"] = function (a) {
         }
     });
 };
+
+
+function auditPass(id) {
+    var url = "tBChancePoolController.do?doUpdate&winningResult=1&id="+id;
+    var name = "tBChancePoolList";
+    $.dialog.setting.zIndex = getzIndex(true);
+
+    var navigatorName = "Microsoft Internet Explorer";
+
+    if( navigator.appName == navigatorName ||"default,shortcut".indexOf(getCookie("JEECGINDEXSTYLE"))>=0){
+
+        $.dialog.confirm(content, function(){
+            doSubmit(url,name);
+            rowid = '';
+        }, function(){
+        });
+    }else{
+        layer.open({
+            title:"中标确认",
+            content:"确认中标吗？",
+            icon:7,
+            shade: 0.3,
+            yes:function(index){
+                doSubmit(url,name);
+                rowid = '';
+            },
+            btn:['确定','取消'],
+            btn2:function(index){
+                layer.close(index);
+            }
+        });
+    }
+}
+
+function auditRefuse(id) {
+    var url = "tBChancePoolController.do?doUpdate&winningResult=2&id="+id;
+    var name = "tBChancePoolList";
+    $.dialog.setting.zIndex = getzIndex(true);
+
+    var navigatorName = "Microsoft Internet Explorer";
+
+    if( navigator.appName == navigatorName ||"default,shortcut".indexOf(getCookie("JEECGINDEXSTYLE"))>=0){
+
+        $.dialog.confirm(content, function(){
+            doSubmit(url,name);
+            rowid = '';
+        }, function(){
+        });
+    }else{
+        layer.open({
+            title:"未中标确认",
+            content:"确认修改为未中标状态吗？<br><span style='color: red'>如果确认，系统中有关信息会消失</span>",
+            icon:7,
+            shade: 0.3,
+            yes:function(index){
+                doSubmit(url,name);
+                rowid = '';
+            },
+            btn:['确定','取消'],
+            btn2:function(index){
+                layer.close(index);
+            }
+        });
+    }
+}
  </script>

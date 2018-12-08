@@ -43,8 +43,8 @@
             <t:dgCol title="父节点ID"  field="fartherid"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
             <t:dgCol title="数量"  field="num"  hidden="true" treefield="fieldMap.num" queryMode="single"  width="120"></t:dgCol>
             <t:dgCol title="类型"  field="type" hidden="true" treefield="fieldMap.type" queryMode="single"  dictionary="catatype"  width="120"></t:dgCol>
-            <t:dgCol title="单价"  field="price" queryMode="single" treefield="fieldMap.price"  width="50"></t:dgCol>
-            <t:dgCol title="合计（万元）"  field="total" treefield="fieldMap.total" queryMode="single"  width="120"></t:dgCol>
+            <t:dgCol title="单价(元)"  field="price" queryMode="single" treefield="fieldMap.price"  width="50"></t:dgCol>
+            <t:dgCol title="合计(元)"  field="total" treefield="fieldMap.total" queryMode="single"  width="120"></t:dgCol>
             <t:dgCol title="备注"  field="beizhu"  queryMode="single" treefield="fieldMap.beizhu" width="120"></t:dgCol>
             <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
             <t:dgFunOpt funname="queryTypeValue(id,typegroupname)" title="查看使用详情" urlclass="ace_button"  urlfont="fa-search" exp="danwei#ne#"></t:dgFunOpt>
@@ -81,7 +81,7 @@
                 //  }
             },
             onLoadSuccess: function () {
-                $("#tBCatalogdataList").treegrid("expandAll");
+                //$("#tBCatalogdataList").treegrid("expandAll");
             }
         });
     });

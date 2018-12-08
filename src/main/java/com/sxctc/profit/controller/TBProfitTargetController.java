@@ -2,6 +2,9 @@ package com.sxctc.profit.controller;
 import com.sxctc.profit.dao.TBProfitTargetDao;
 import com.sxctc.profit.entity.TBProfitTargetEntity;
 import com.sxctc.profit.service.TBProfitTargetServiceI;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.text.SimpleDateFormat;
@@ -135,6 +138,11 @@ public class TBProfitTargetController extends BaseController {
 		cq.add();
 		this.tBProfitTargetService.getDataGridReturn(cq, true);
 
+		List<TBProfitTargetEntity> results = dataGrid.getResults();
+		for (TBProfitTargetEntity result : results) {
+			// 标准化金额展示
+			standardMoney(result,2,2);
+		}
 		/*
 		 * 说明：格式为 字段名:值(可选，不写该值时为分页数据的合计) 多个合计 以 , 分割
 		 */
@@ -142,16 +150,17 @@ public class TBProfitTargetController extends BaseController {
 		String orgCode = tsUser.getCurrentDepart().getOrgCode();
 		String userName = tsUser.getUserName();
 		String createBy = tBProfitTarget.getCreateBy();
-		if (!"A04A01A01A01".equals(orgCode)) {
+		if (!"A04A01A01A01".equals(orgCode) && !"A04A02A01A01".equals(orgCode)) {
 			userName = null;
 		}
 		if (StringUtils.isNotBlank(createBy)) {
 			userName = createBy;
 		}
+		BigDecimal bdl = new BigDecimal("10000");
 		String sumContractValue = String.valueOf(tbProfitTargetDao.getSumContractValue(userName));
 		String sumProfitTarget = String.valueOf(tbProfitTargetDao.getSumProfitTarget(userName));
 		String sumConfirmIncome = String.valueOf(tbProfitTargetDao.getSumConfirmIncome(userName));
-		dataGrid.setFooter("contractValue:"+(sumContractValue.equalsIgnoreCase("null")?"0.0":sumContractValue)+",profitTarget:"+(sumProfitTarget.equalsIgnoreCase("null")?"0.0":sumProfitTarget)+",confirmIncome:"+(sumConfirmIncome.equalsIgnoreCase("null")?"0.0":sumConfirmIncome)+",projectName:合计（万元）:");
+		dataGrid.setFooter("contractValue:"+(sumContractValue.equalsIgnoreCase("null")?"0.0":new BigDecimal(sumContractValue).divide(bdl, 2, RoundingMode.HALF_UP))+",profitTarget:"+(sumProfitTarget.equalsIgnoreCase("null")?"0.0":new BigDecimal(sumProfitTarget).divide(bdl, 2, RoundingMode.HALF_UP))+",confirmIncome:"+(sumConfirmIncome.equalsIgnoreCase("null")?"0.0":new BigDecimal(sumConfirmIncome).divide(bdl, 2, RoundingMode.HALF_UP))+",projectName:合计（万元）:");
 
 		TagUtil.datagrid(response, dataGrid);
 	}
@@ -247,6 +256,10 @@ public class TBProfitTargetController extends BaseController {
 		TBProfitTargetEntity t = tBProfitTargetService.get(TBProfitTargetEntity.class, tBProfitTarget.getId());
 		try {
 			MyBeanUtils.copyBeanNotNull2Bean(tBProfitTarget, t);
+
+			// 标准化金额入库
+			standardMoney(t,2,1);
+
 			tBProfitTargetService.saveOrUpdate(t);
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {
@@ -309,6 +322,13 @@ public class TBProfitTargetController extends BaseController {
 		CriteriaQuery cq = new CriteriaQuery(TBProfitTargetEntity.class, dataGrid);
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBProfitTarget, request.getParameterMap());
 		List<TBProfitTargetEntity> tBProfitTargets = this.tBProfitTargetService.getListByCriteriaQuery(cq,false);
+
+		// 将金额单位变成元
+		for (TBProfitTargetEntity result : tBProfitTargets) {
+			// 标准化金额展示
+			standardMoney(result,2,2);
+		}
+
 		modelMap.put(NormalExcelConstants.FILE_NAME,"毛利润指标");
 		modelMap.put(NormalExcelConstants.CLASS,TBProfitTargetEntity.class);
 		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("毛利润指标列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),

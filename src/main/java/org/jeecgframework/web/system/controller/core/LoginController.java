@@ -544,7 +544,6 @@ public class LoginController extends BaseController{
 	 */
 	@RequestMapping(params = "acehome")
 	public ModelAndView acehome(HttpServletRequest request) {
-		
 		SysThemesEnum sysTheme = SysThemesUtil.getSysTheme(request);
 		//ACE ACE2 DIY时需要在home.jsp头部引入依赖的js及css文件
 		if("ace".equals(sysTheme.getStyle())||"diy".equals(sysTheme.getStyle())||"acele".equals(sysTheme.getStyle())){
@@ -568,76 +567,84 @@ public class LoginController extends BaseController{
 		String realName = tsUser.getRealName();
 		request.setAttribute("realName", realName);
 		// 总裁
-		if (!"A04A01A01A01".equals(orgCode)) {
+		if (!"A04A01A01A01".equals(orgCode) && !"A04A02A01A01".equals(orgCode)) {
 			request.setAttribute("optFlag", 1);
 		}else {
 			// 业务员
-			// 获取日报填写状态
-			List<TBBusiWorkreportEntity> reportList = systemService.findByProperty(TBBusiWorkreportEntity.class, "createBy", tsUser.getUserName());
-			for (TBBusiWorkreportEntity tbBusiWorkreport : reportList) {
-				Date reportDate = tbBusiWorkreport.getReportDate();
-				if (reportDate != null) {
-					String s1 = DateUtils.formatDate(reportDate, "yyyy-MM-dd");
-					String s2 = DateUtils.formatDate(new Date(), "yyyy-MM-dd");
-					if (s1.equals(s2)) {
+			if ("A04A01A01A01".equals(orgCode)) {
+				// 获取日报填写状态
+				List<TBBusiWorkreportEntity> reportList = systemService.findByProperty(TBBusiWorkreportEntity.class, "createBy", tsUser.getUserName());
+				for (TBBusiWorkreportEntity tbBusiWorkreport : reportList) {
+					Date reportDate = tbBusiWorkreport.getReportDate();
+					if (reportDate != null) {
+						String s1 = DateUtils.formatDate(reportDate, "yyyy-MM-dd");
+						String s2 = DateUtils.formatDate(new Date(), "yyyy-MM-dd");
+						if (s1.equals(s2)) {
+							// 不显示
+							request.setAttribute("reportOpt", 1);
+						}
+					}
+				}
+
+				// 获取当日所属周/月第几天
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(new Date());
+				int week = cal.get(Calendar.DAY_OF_WEEK)-1;
+				int month = cal.get(Calendar.DAY_OF_MONTH);
+				// 获取系统设置的日志提醒节点
+				TSTypegroup reportWarn = systemService.getTypeGroupByCode("reportWarn");
+				List<TSType> tsTypes = reportWarn.getTSTypes();
+				for (TSType tsType : tsTypes) {
+					int typecode = Integer.parseInt(tsType.getTypecode());
+
+					// 如果满足，则提醒周报
+					if (typecode < 8 && typecode<=week) {
+						List<TBWorkreportdayWeekEntity> weekReport = systemService.findByProperty(TBWorkreportdayWeekEntity.class, "createBy", tsUser.getUserName());
+						for (TBWorkreportdayWeekEntity tbWorkreportdayWeek : weekReport) {
+							Date reportStartDate = tbWorkreportdayWeek.getReportStartDate();
+							if (reportStartDate != null) {
+								JSONObject weekDays = DateUtil.getWeekDays(0);
+								String s1 = weekDays.getString("beginDate");
+								String s2 = DateUtils.formatDate(reportStartDate, "yyyy-MM-dd");
+								if (s1.equals(s2)) {
+									// 不显示
+									request.setAttribute("reportWeekOpt", 2);
+								}
+							}
+						}
+					}else if (typecode < 8 && typecode>week) {
 						// 不显示
-						request.setAttribute("reportOpt", 1);
+						request.setAttribute("reportWeekOpt", 2);
 					}
-				}
-			}
 
-			// 获取当日所属周/月第几天
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(new Date());
-			int week = cal.get(Calendar.DAY_OF_WEEK)-1;
-			int month = cal.get(Calendar.DAY_OF_MONTH);
-			// 获取系统设置的日志提醒节点
-			TSTypegroup reportWarn = systemService.getTypeGroupByCode("reportWarn");
-			List<TSType> tsTypes = reportWarn.getTSTypes();
-			for (TSType tsType : tsTypes) {
-				int typecode = Integer.parseInt(tsType.getTypecode());
-
-				// 如果满足，则提醒周报
-				if (typecode < 8 && typecode<=week) {
-					List<TBWorkreportdayWeekEntity> weekReport = systemService.findByProperty(TBWorkreportdayWeekEntity.class, "createBy", tsUser.getUserName());
-					for (TBWorkreportdayWeekEntity tbWorkreportdayWeek : weekReport) {
-						Date reportStartDate = tbWorkreportdayWeek.getReportStartDate();
-						if (reportStartDate != null) {
-							JSONObject weekDays = DateUtil.getWeekDays(0);
-							String s1 = weekDays.getString("beginDate");
-							String s2 = DateUtils.formatDate(reportStartDate, "yyyy-MM-dd");
-							if (s1.equals(s2)) {
-								// 不显示
-								request.setAttribute("reportWeekOpt", 2);
+					// 如果满足，则提醒月报
+					if (typecode > 8 && typecode<=month) {
+						List<TBWorkreportdayMonthEntity> monthReport = systemService.findByProperty(TBWorkreportdayMonthEntity.class, "createBy", tsUser.getUserName());
+						for (TBWorkreportdayMonthEntity tbWorkreportdayMonth : monthReport) {
+							Date reportMonthDate = tbWorkreportdayMonth.getReportDate();
+							if (reportMonthDate!=null) {
+								String s1 = DateUtils.formatDate(reportMonthDate, "yyyy-MM");
+								String s2 = DateUtils.formatDate(new Date(), "yyyy-MM");
+								if (s1.equals(s2)) {
+									// 不显示
+									request.setAttribute("reportMonthOpt", 3);
+								}
 							}
 						}
+					}else if (typecode > 8 && typecode>month) {
+						// 不显示
+						request.setAttribute("reportMonthOpt", 3);
 					}
-				}else if (typecode < 8 && typecode>week) {
-					// 不显示
-					request.setAttribute("reportWeekOpt", 2);
 				}
 
-				// 如果满足，则提醒月报
-				if (typecode > 8 && typecode<=month) {
-					List<TBWorkreportdayMonthEntity> monthReport = systemService.findByProperty(TBWorkreportdayMonthEntity.class, "createBy", tsUser.getUserName());
-					for (TBWorkreportdayMonthEntity tbWorkreportdayMonth : monthReport) {
-						Date reportMonthDate = tbWorkreportdayMonth.getReportDate();
-						if (reportMonthDate!=null) {
-							String s1 = DateUtils.formatDate(reportMonthDate, "yyyy-MM");
-							String s2 = DateUtils.formatDate(new Date(), "yyyy-MM");
-							if (s1.equals(s2)) {
-								// 不显示
-								request.setAttribute("reportMonthOpt", 3);
-							}
-						}
-					}
-				}else if (typecode > 8 && typecode>month) {
-					// 不显示
-					request.setAttribute("reportMonthOpt", 3);
-				}
+				return new ModelAndView("com/sxctc/main/salesman");
 			}
 
-			return new ModelAndView("com/sxctc/main/salesman");
+			// 销售
+			if ("A04A02A01A01".equals(orgCode)) {
+				return new ModelAndView("com/sxctc/main/salesman1");
+			}
+
 		}
 
 		// 总监

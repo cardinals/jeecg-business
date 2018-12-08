@@ -141,6 +141,12 @@ public class TBBusiWorkreportController extends BaseController {
 					cq.notEq("reportType",0);
 				}
 			}
+
+			// 只查询未结束的系统
+			List<String> busiList = getVaildBusinessIdList();
+			if (busiList != null && busiList.size()>0) {
+				cq.in("businessId",busiList.toArray());
+			}
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}

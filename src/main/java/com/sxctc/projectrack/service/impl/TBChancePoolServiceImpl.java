@@ -1,10 +1,18 @@
 package com.sxctc.projectrack.service.impl;
+import com.sxctc.business.entity.TBBusinessEntity;
+import com.sxctc.business.service.TBBusinessServiceI;
 import com.sxctc.businessoppty.entity.TBBusinessOpptyEntity;
 import com.sxctc.profit.entity.TBProfitTargetEntity;
 import com.sxctc.projectrack.service.TBChancePoolServiceI;
+import com.sxctc.util.DateUtil;
+import com.sxctc.workreport.entity.TBBusiWorkreportEntity;
+import com.sxctc.workreport.entity.TBWorkreportdayMonthEntity;
+import com.sxctc.workreport.entity.TBWorkreportdayWeekEntity;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import com.sxctc.projectrack.entity.TBChancePoolEntity;
+import org.jeecgframework.core.util.*;
 import org.jeecgframework.web.system.pojo.base.TSUser;
+import org.jeecgframework.web.system.service.SystemService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
@@ -12,15 +20,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.io.Serializable;
-import org.jeecgframework.core.util.ApplicationContextUtil;
-import org.jeecgframework.core.util.MyClassLoader;
-import org.jeecgframework.core.util.StringUtil;
+
 import org.jeecgframework.web.cgform.enhance.CgformEnhanceJavaInter;
 
 import org.jeecgframework.minidao.util.FreemarkerParseFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.jeecgframework.core.util.ResourceUtil;
 
 @Service("tBChancePoolService")
 @Transactional
@@ -28,6 +33,8 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+	@Autowired
+	private SystemService systemService;
 
 	public void delete(TBChancePoolEntity entity) throws Exception{
 		super.delete(entity);
@@ -302,6 +309,63 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 			}
 
 		}
+
+	}
+
+	/**
+	 * @Title saveChancePool
+	 * @Description 销售新增项目机会池项目
+	 * @Param [entity]
+	 * @Return void
+	 * @Author liuzc
+	 * @Date 2018/12/6 15:43
+	 **/
+	public void saveChancePool(TBChancePoolEntity entity) throws Exception {
+		// 1、销售新增机会池项目时候，默认往系统上云列表中新增一条记录
+		TBBusinessEntity tBBusiness = new TBBusinessEntity();
+		String unitName = systemService.getTypeName("unit_name", entity.getUnitCode().toString());
+		tBBusiness.setUnitCode(entity.getUnitCode());
+		tBBusiness.setUnitName(unitName);
+		tBBusiness.setProjectName(entity.getProjectName());
+		tBBusiness.setFundsProvided(entity.getFundsProvided());
+		tBBusiness.setAuditStatus(1); // 是审计系统
+		tBBusiness.setProjectStatus(2); // 当你新建
+		tBBusiness.setChanceStatus(1); // 跟踪
+		tBBusiness.setJoinStatus(0); // 未对接
+		tBBusiness.setBusCreateTime(DateUtils.getDate());
+		this.save(tBBusiness);
+
+		// 2、保存项目机会池项目
+		entity.setBusinessId(tBBusiness.getId());
+		this.save(entity);
+
+		// 3、保存日志
+		// 同时往日志表里存一条数据
+		TBBusiWorkreportEntity tbBusiWorkreportEntity1 = new TBBusiWorkreportEntity();
+		tbBusiWorkreportEntity1.setBusinessId(tBBusiness.getId());
+		tbBusiWorkreportEntity1.setUnitCode(String.valueOf(tBBusiness.getUnitCode()));
+		tbBusiWorkreportEntity1.setReportTitle(tBBusiness.getProjectName());
+		tbBusiWorkreportEntity1.setReportType(0);
+		// 保存初级日报
+		this.save(tbBusiWorkreportEntity1);
+
+		// 同时往周报表里存一条数据
+		TBWorkreportdayWeekEntity tbWorkreportdayWeekEntity = new TBWorkreportdayWeekEntity();
+		tbWorkreportdayWeekEntity.setBusinessId(tBBusiness.getId());
+		tbWorkreportdayWeekEntity.setUnitCode(String.valueOf(tBBusiness.getUnitCode()));
+		tbWorkreportdayWeekEntity.setProjectName(tBBusiness.getProjectName());
+		tbWorkreportdayWeekEntity.setReportType(0);
+		// 保存周报
+		this.save(tbWorkreportdayWeekEntity);
+
+		// 同时往月报表里存一条数据
+		TBWorkreportdayMonthEntity tbWorkreportdayMonthEntity = new TBWorkreportdayMonthEntity();
+		tbWorkreportdayMonthEntity.setBusinessId(tBBusiness.getId());
+		tbWorkreportdayMonthEntity.setUnitCode(tBBusiness.getUnitCode());
+		tbWorkreportdayMonthEntity.setReportTitle(tBBusiness.getProjectName());
+		tbWorkreportdayMonthEntity.setReportType(0);
+		// 保存月报
+		this.save(tbWorkreportdayMonthEntity);
 
 	}
 }

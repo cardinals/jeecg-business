@@ -1,9 +1,15 @@
 package org.jeecgframework.core.common.controller;
 
+import com.sxctc.projectrack.entity.TBChancePoolEntity;
+import org.apache.poi.ss.formula.functions.T;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.jeecgframework.core.common.service.CommonService;
 import org.jeecgframework.core.interceptors.DateConvertEditor;
+import org.jeecgframework.core.util.ResourceUtil;
+import org.jeecgframework.web.system.pojo.base.TSUser;
+import org.jeecgframework.web.system.service.SystemService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -11,6 +17,10 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +34,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/baseController")
 public class BaseController {
+
+	@Autowired
+	private SystemService systemService;
 
 	/**
 	 * 将前台传递过来的日期格式的字符串，自动转化为Date类型
@@ -106,5 +119,107 @@ public class BaseController {
 
         return result;
     }
-	
+
+	/**
+	 * @Title standardMoney
+	 * @Description 标准化类中的金额（标准化金额类型必须是BigDecimal）
+	 * @Param  t 任意类
+	 *         standFlag 标准类型：1——>元 标准；2——>万元 标准
+	 *         opt 入库/出库（变成standFlag类型）：1——>入库；2——>出库
+	 * @Return void
+	 * @Author liuzc
+	 * @Date 2018/11/29 15:34
+	 **/
+	public void standardMoney(Object t, int standFlag, int opt) {
+		try{
+			// 反射创建对象
+			Class aClass = t.getClass();
+			Object o = aClass.newInstance();
+
+			// 获取所以私有变量
+			Field[] fields = aClass.getDeclaredFields();
+
+			// 初始化标准化指标
+			BigDecimal bg100 = new BigDecimal(100);
+			BigDecimal bg1W = new BigDecimal(10000);
+
+			// 遍历类中BigDecimal类型金额进行标准化
+			for (Field field : fields) {
+
+				// 设置可访问私有变量
+				field.setAccessible(true);
+
+				// 将属性的首字母大写
+				String fieldName = field.getName();
+				fieldName = fieldName.replaceFirst(fieldName.substring(0, 1), fieldName.substring(0, 1).toUpperCase());
+
+				// 获取变量类型进行判断
+				String fieldType = field.getType().getName();
+				if (fieldType.equals("java.math.BigDecimal")) {
+					// 如果type是类类型，则前面包含"class "，后面跟类名
+					Method m = aClass.getMethod("get" + fieldName);
+
+					// 调用getter方法获取属性值
+					BigDecimal value = (BigDecimal) m.invoke(t);
+					if (value != null) {
+						// 进行金额标准化
+						// 单位为：元 的标准
+						if (standFlag == 1) {
+							// 库中数据是以分为单位
+							// 将元统一乘以100入库
+							if (opt == 1) {
+								value = value.multiply(bg100);
+							}
+							// 将元统一除以100出库
+							if (opt == 2) {
+								value = value.divide(bg100, 2, RoundingMode.HALF_UP);
+							}
+						}
+						// 单位为：万元 的标准
+						if (standFlag == 2) {
+							// 库中数据是以分为单位
+							// 将万元统一乘以10000入库
+							if (opt == 1) {
+								value = value.multiply(bg1W);
+							}
+							// 将万元统一除以10000出库
+							if (opt == 2) {
+								value = value.divide(bg1W, 2, RoundingMode.HALF_UP);
+							}
+						}
+
+						// 给属性重新赋值
+						field.set(t,value);
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @Title getVaildBusinessIdList
+	 * @Description 查询系统中所有未结束的业务Id
+	 * @Param []
+	 * @Return java.util.List<java.lang.String>
+	 * @Author liuzc
+	 * @Date 2018/12/3 16:51
+	 **/
+	public List<String> getVaildBusinessIdList() {
+		// 获取当前用户
+		TSUser tsUser = ResourceUtil.getSessionUser();
+
+		// 进行查询
+		String hql1 = "select id from TBBusinessEntity where chanceStatus = ? and joinStatus != ? and createBy = ?";
+		List<String> busiList = systemService.findHql(hql1, 0, 7, tsUser.getUserName());
+		String hql2 = "select businessId from TBChancePoolEntity where winningResult != ? and createBy = ?";
+		List<String> poolList = systemService.findHql(hql2, 2, tsUser.getUserName());
+
+		// 进行合并
+		busiList.addAll(poolList);
+
+		// 返回
+		return busiList;
+	}
 }

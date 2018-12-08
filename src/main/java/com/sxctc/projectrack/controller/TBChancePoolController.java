@@ -9,6 +9,8 @@ import com.sxctc.projectrack.dao.TBChancePoolDao;
 import com.sxctc.projectrack.entity.TBChancePoolEntity;
 import com.sxctc.projectrack.service.TBChancePoolServiceI;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
@@ -143,23 +145,31 @@ public class TBChancePoolController extends BaseController {
 		cq.add();
 		this.tBChancePoolService.getDataGridReturn(cq, true);
 
-        /*
+		// 将金额变为万元
+		List<TBChancePoolEntity> results = dataGrid.getResults();
+		for (TBChancePoolEntity result : results) {
+			// 标准化金额单位为元
+			standardMoney(result,2,2);
+		}
+
+		/*
          * 说明：格式为 字段名:值(可选，不写该值时为分页数据的合计) 多个合计 以 , 分割
          */
-        TSUser tsUser = ResourceUtil.getSessionUser();
-        String orgCode = tsUser.getCurrentDepart().getOrgCode();
-        String userName = tsUser.getUserName();
+		TSUser tsUser = ResourceUtil.getSessionUser();
+		String orgCode = tsUser.getCurrentDepart().getOrgCode();
+		String userName = tsUser.getUserName();
 		String createBy = tBChancePool.getCreateBy();
-		if (!"A04A01A01A01".equals(orgCode)) {
-            userName = null;
-        }
-        if (StringUtils.isNotBlank(createBy)) {
+		if (!"A04A01A01A01".equals(orgCode) && !"A04A02A01A01".equals(orgCode)) {
+			userName = null;
+		}
+		if (StringUtils.isNotBlank(createBy)) {
 			userName = createBy;
 		}
-        String sumProjectBudget = String.valueOf(tbChancePoolDao.getSumProjectBudget(userName));
+		BigDecimal bdl = new BigDecimal("10000");
+		String sumProjectBudget = String.valueOf(tbChancePoolDao.getSumProjectBudget(userName));
         String sumProjectServer = String.valueOf(tbChancePoolDao.getSumProjectServer(userName));
         String sumProjectHardware = String.valueOf(tbChancePoolDao.getSumProjectHardware(userName));
-        dataGrid.setFooter("projectBudget:"+(sumProjectBudget.equalsIgnoreCase("null")?"0.0":sumProjectBudget)+",projectServer:"+(sumProjectServer.equalsIgnoreCase("null")?"0.0":sumProjectServer)+",projectHardware:"+(sumProjectHardware.equalsIgnoreCase("null")?"0.0":sumProjectHardware)+",projectName:合计（万元）：");
+        dataGrid.setFooter("projectBudget:"+(sumProjectBudget.equalsIgnoreCase("null")?"0.0": new BigDecimal(sumProjectBudget).divide(bdl, 2, RoundingMode.HALF_UP))+",projectServer:"+(sumProjectServer.equalsIgnoreCase("null")?"0.0": new BigDecimal(sumProjectServer).divide(bdl, 2, RoundingMode.HALF_UP))+",projectHardware:"+(sumProjectHardware.equalsIgnoreCase("null")?"0.0": new BigDecimal(sumProjectHardware).divide(bdl, 2, RoundingMode.HALF_UP))+",projectName:合计（万元）：");
 
 		TagUtil.datagrid(response, dataGrid);
 	}
@@ -253,7 +263,8 @@ public class TBChancePoolController extends BaseController {
 		AjaxJson j = new AjaxJson();
 		message = "项目机会池添加成功";
 		try{
-			tBChancePoolService.save(tBChancePool);
+			//tBChancePoolService.save(tBChancePool);
+			tBChancePoolService.saveChancePool(tBChancePool);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -292,6 +303,8 @@ public class TBChancePoolController extends BaseController {
 			}
 			t.setHistoryPlan(jsonObject.toJSONString());
 
+			// 标准化金额单位为元入库
+			standardMoney(t,1,1);
 
 			tBChancePoolService.saveOrUpdate(t);
 
@@ -396,6 +409,11 @@ public class TBChancePoolController extends BaseController {
 		CriteriaQuery cq = new CriteriaQuery(TBChancePoolEntity.class, dataGrid);
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBChancePool, request.getParameterMap());
 		List<TBChancePoolEntity> tBChancePools = this.tBChancePoolService.getListByCriteriaQuery(cq,false);
+		for (TBChancePoolEntity result : tBChancePools) {
+			// 标准化金额单位为元
+			standardMoney(result,1,2);
+		}
+
 		modelMap.put(NormalExcelConstants.FILE_NAME,"项目机会池");
 		modelMap.put(NormalExcelConstants.CLASS,TBChancePoolEntity.class);
 		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("项目机会池列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),

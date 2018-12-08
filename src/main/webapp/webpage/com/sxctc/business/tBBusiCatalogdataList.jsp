@@ -8,7 +8,7 @@
             <t:dgCol title="id"  field="id"   hidden="true" treefield="id"  queryMode="group"  width="140"></t:dgCol>
             <t:dgCol title="名称"  field="name" treefield="text" width="150"></t:dgCol>
             <t:dgCol title="单位"  field="danwei" treefield="fieldMap.danwei" width="40"></t:dgCol>
-            <t:dgCol title="单价"  field="price" treefield="fieldMap.price" width="40"></t:dgCol>
+            <t:dgCol title="单价(元)"  field="price" treefield="fieldMap.price" width="40"></t:dgCol>
             <t:dgCol title="数量"  field="num" treefield="fieldMap.num" extendParams="editor:'numberbox'" width="80"></t:dgCol>
             <t:dgCol title="备注"  field="beizhu" treefield="fieldMap.beizhu" width="80"></t:dgCol>
 
@@ -50,7 +50,7 @@
 
             },
             onLoadSuccess: function () {
-                $("#tBCatalogdataList").treegrid("expandAll");
+                //$("#tBCatalogdataList").treegrid("expandAll");
             }
         });
     }

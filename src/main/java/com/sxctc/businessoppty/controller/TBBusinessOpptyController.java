@@ -170,7 +170,7 @@ public class TBBusinessOpptyController extends BaseController {
 		int total = dataGrid.getTotal();
 		List<TBBusinessOpptyEntity> tbProfitTargetEntities = new ArrayList<>();
 		HashMap<Integer, String> map = new HashMap<Integer, String>();
-		if (!"A04A01A01A01".equals(orgCode)) {
+		if (!"A04A01A01A01".equals(orgCode) && !"A04A02A01A01".equals(orgCode)) {
 			for (TBBusinessOpptyEntity result : results) {
 				String projectName = result.getProjectName();
 				Integer num = result.getSortNum();

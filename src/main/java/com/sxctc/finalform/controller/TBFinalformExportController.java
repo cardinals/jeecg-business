@@ -6,6 +6,7 @@ import com.sxctc.finalform.entity.TBFinalformExportEntity;
 import com.sxctc.finalform.service.TBFinalformExportServiceI;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.text.SimpleDateFormat;
@@ -173,7 +174,7 @@ public class TBFinalformExportController extends BaseController {
 				for (TBProfitTargetEntity tbProfitTargetEntity : profitTargetList) {
 					BigDecimal confirmIncome = tbProfitTargetEntity.getConfirmIncome();
 					if (confirmIncome != null) {
-						result.setProjectCount(confirmIncome.toString());
+						result.setProjectCount(confirmIncome.divide(new BigDecimal("10000"), 2, RoundingMode.HALF_UP).toString());
 						if (tbProfitTargetEntity.getSignTime() != null) {
 							result.setBusinessDate(tbProfitTargetEntity.getSignTime().toString());
 						}
@@ -213,7 +214,7 @@ public class TBFinalformExportController extends BaseController {
 						}
 					}
 
-					result.setCloudCount(cloudCount.toString());
+					result.setCloudCount(cloudCount.divide(new BigDecimal("10000"), 2, RoundingMode.HALF_UP).toString());
 					if (entity.getFinishTime() != null) {
 						result.setBusinessDate(entity.getFinishTime().toString());
 					}
@@ -240,12 +241,12 @@ public class TBFinalformExportController extends BaseController {
 			BigDecimal sumContractValue = BigDecimal.ZERO;
 			BigDecimal sumProfitTarget = BigDecimal.ZERO;
 			if (tbFinalformExport.getBusinessDate_begin() == null && tbFinalformExport.getBusinessDate_end() == null) {
-				sumContractValue = tBFinalformExportService.getSumCloudInCome();
-				sumProfitTarget = tBFinalformExportService.getSumProjectInCome();
+				sumContractValue = tBFinalformExportService.getSumCloudInCome().divide(new BigDecimal("10000"), 2, RoundingMode.HALF_UP);
+				sumProfitTarget = tBFinalformExportService.getSumProjectInCome().divide(new BigDecimal("10000"), 2, RoundingMode.HALF_UP);
 			}else {
 				for (TBFinalformExportEntity result : results) {
-					sumContractValue = sumContractValue.add(new BigDecimal(result.getCloudCount()));
-					sumProfitTarget = sumProfitTarget.add(new BigDecimal(result.getProjectCount()));
+					sumContractValue = sumContractValue.add(new BigDecimal(result.getCloudCount()).divide(new BigDecimal("10000"), 2, RoundingMode.HALF_UP));
+					sumProfitTarget = sumProfitTarget.add(new BigDecimal(result.getProjectCount()).divide(new BigDecimal("10000"), 2, RoundingMode.HALF_UP));
 				}
 			}
 			BigDecimal sumTotal = sumContractValue.add(sumProfitTarget);

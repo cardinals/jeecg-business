@@ -1,11 +1,14 @@
 package com.sxctc.main.controller;
 
+import com.sxctc.business.entity.TBBusinessEntity;
 import com.sxctc.main.service.TBMainServicel;
 import com.sxctc.util.DateUtil;
 import com.sxctc.workreport.entity.TBBusiWorkreportEntity;
 import com.sxctc.workreport.service.TBBusiWorkreportServiceI;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
 import org.jeecgframework.core.common.model.json.AjaxJson;
@@ -25,7 +28,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/tbMainController")
-public class TBMainController {
+public class TBMainController extends BaseController {
     @Autowired
     private TBMainServicel tbMainService;
     @Autowired
@@ -95,7 +98,12 @@ public class TBMainController {
             calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - 7);
             Date today = calendar.getTime();
             cq.le("reportDate", today);
-            //cq.add(Restrictions.or(Restrictions.le("reportDate",today),Restrictions.isNull("reportDate")));
+
+            // 只查询未结束的系统
+            List<String> busiList = getVaildBusinessIdList();
+            if (busiList != null && busiList.size()>0) {
+                cq.in("businessId",busiList.toArray());
+            }
         }catch (Exception e) {
             throw new BusinessException(e.getMessage());
         }
