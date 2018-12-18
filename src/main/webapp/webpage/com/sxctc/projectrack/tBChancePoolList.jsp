@@ -104,7 +104,10 @@ window.top["reload_chancePoolTab"] = function (a) {
     });
 };
 
-
+/**
+ * 中标逻辑
+ * @param id
+ */
 function auditPass(id) {
     var url = "tBChancePoolController.do?doUpdate&winningResult=1&id="+id;
     var name = "tBChancePoolList";
@@ -137,35 +140,39 @@ function auditPass(id) {
     }
 }
 
+/**
+ * 未中标逻辑
+ * @param id
+ */
 function auditRefuse(id) {
-    var url = "tBChancePoolController.do?doUpdate&winningResult=2&id="+id;
-    var name = "tBChancePoolList";
-    $.dialog.setting.zIndex = getzIndex(true);
+   var url = "tBChancePoolController.do?doUpdate&winningResult=2&id="+id;
+   var name = "tBChancePoolList";
+   $.dialog.setting.zIndex = getzIndex(true);
 
-    var navigatorName = "Microsoft Internet Explorer";
+   var navigatorName = "Microsoft Internet Explorer";
 
-    if( navigator.appName == navigatorName ||"default,shortcut".indexOf(getCookie("JEECGINDEXSTYLE"))>=0){
+   if( navigator.appName == navigatorName ||"default,shortcut".indexOf(getCookie("JEECGINDEXSTYLE"))>=0){
 
-        $.dialog.confirm(content, function(){
-            doSubmit(url,name);
-            rowid = '';
-        }, function(){
-        });
-    }else{
-        layer.open({
-            title:"未中标确认",
-            content:"确认修改为未中标状态吗？<br><span style='color: red'>如果确认，系统中有关信息会消失</span>",
-            icon:7,
-            shade: 0.3,
-            yes:function(index){
-                doSubmit(url,name);
-                rowid = '';
-            },
-            btn:['确定','取消'],
-            btn2:function(index){
-                layer.close(index);
-            }
-        });
-    }
+       $.dialog.confirm(content, function(){
+           doSubmit(url,name);
+           rowid = '';
+       }, function(){
+       });
+   }else{
+       layer.open({
+           title:"未中标确认",
+           content:"确认修改为未中标状态吗？<br><span style='color: red'>如果确认，系统中有关信息会消失</span>",
+           icon:7,
+           shade: 0.3,
+           yes:function(index){
+               doSubmit(url,name);
+               rowid = '';
+           },
+           btn:['确定','取消'],
+           btn2:function(index){
+               layer.close(index);
+           }
+       });
+   }
 }
  </script>

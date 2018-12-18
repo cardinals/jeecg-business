@@ -30,13 +30,22 @@ public class UserProgramController {
     private UserProgramService userProgramService;
 
     /**
-     * 营销人员销售费用页面 页面跳转
+     * 营销人员售前费用页面 页面跳转
      *
      * 
      */
     @RequestMapping(params = "userProgramList")
     public ModelAndView userProjectList(HttpServletRequest request) {
         return new ModelAndView("com/sxctc/projectrack/userProgramList");
+    }
+    /**
+     * 营销人员销售费用页面 页面跳转
+     *
+     *
+     */
+    @RequestMapping(params = "saleProgramList")
+    public ModelAndView saleProjectList(HttpServletRequest request) {
+        return new ModelAndView("com/sxctc/projectrack/saleProgramList");
     }
     /**
      * 上云时序页面 页面跳转
@@ -56,10 +65,13 @@ public class UserProgramController {
      */
     @RequestMapping(params = "getManagerList")
     @ResponseBody
-    public AjaxJson getManagerList(HttpServletRequest request) {
+    public AjaxJson getManagerList(HttpServletRequest request, int optFlag) {
         AjaxJson json=new AjaxJson();
         try{
-            List<Histogram> allCount= userProgramService.getManagerList();
+            String manageType = null;
+            if (optFlag == 1) { manageType = "manager"; }
+            if (optFlag == 2) { manageType = "salesman"; }
+            List<Histogram> allCount= userProgramService.getManagerList(manageType);
             json.setObj(allCount);
         }catch(Exception e){
             e.printStackTrace();

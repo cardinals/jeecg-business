@@ -130,6 +130,16 @@ public class TBBusinessController extends BaseController {
 	}
 
 	/**
+	 * 导入销售负责系统列表 页面跳转
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "salelist")
+	public ModelAndView salelist(HttpServletRequest request) {
+		return new ModelAndView("com/sxctc/business/tBSaleBusinessList");
+	}
+
+	/**
 	 * easyui AJAX请求数据
 	 * 
 	 * @param request
@@ -144,6 +154,35 @@ public class TBBusinessController extends BaseController {
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBBusiness, request.getParameterMap());
 		try{
 			//自定义追加查询条件
+		}catch (Exception e) {
+			throw new BusinessException(e.getMessage());
+		}
+		cq.add();
+		this.tBBusinessService.getDataGridReturn(cq, true);
+		TagUtil.datagrid(response, dataGrid);
+	}
+
+	/**
+	 * easyui AJAX请求数据
+	 *
+	 * @param request
+	 * @param response
+	 * @param dataGrid
+	 */
+
+	@RequestMapping(params = "saledatagrid")
+	public void saledatagrid(TBBusinessEntity tBBusiness,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+		CriteriaQuery cq = new CriteriaQuery(TBBusinessEntity.class, dataGrid);
+		//查询条件组装器
+		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBBusiness, request.getParameterMap());
+		try{
+			//自定义追加查询条件
+			cq.eq("sysOrgCode","A04A02A01A01");
+
+			//只查询中标或者跟踪结束的项目
+			List<String> busiIdArr = tBBusinessService.findHql("select businessId from TBChancePoolEntity where sysOrgCode=? and winningResult!=?","A04A02A01A01",0);
+			cq.in("id",busiIdArr.toArray());
+
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
@@ -295,7 +334,46 @@ public class TBBusinessController extends BaseController {
 		}
 		return new ModelAndView("com/sxctc/business/tBBusiness-update");
 	}
-	
+
+	/**
+	 * 导出入销售负责系统
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "importSaleBusiness")
+	@ResponseBody
+	public AjaxJson importSaleBusiness(TBBusinessEntity tBBusiness, HttpServletRequest request) {
+		String message = null;
+		AjaxJson j = new AjaxJson();
+		message = "营销数据业务列表添加成功";
+		try{
+			// 获取当前系统用户
+			TSUser tsUser = ResourceUtil.getSessionUser();
+
+			// 查询所选系统
+			tBBusiness = tBBusinessService.getEntity(TBBusinessEntity.class, tBBusiness.getId());
+
+			// 判断是否是售前所负责的单位
+			String hql = "select unitCode from TBUnitManageEntity where userCode=?";
+			List<Integer> unitList = tBBusinessService.findHql(hql, tsUser.getUserName());
+			// 如果不包含
+			if (!unitList.contains(tBBusiness.getUnitCode())) {
+				message = "您不负责该单位，请重新选择";
+				j.setSuccess(false);
+			}else {
+				// 如果负责，继续进行业务操作
+				tBBusinessService.importSaleBusiness(tBBusiness);
+			}
+			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
+		}catch(Exception e){
+			e.printStackTrace();
+			message = "营销数据业务列表添加失败";
+			throw new BusinessException(e.getMessage());
+		}
+		j.setMsg(message);
+		return j;
+	}
+
 	/**
 	 * 导入功能跳转
 	 * 

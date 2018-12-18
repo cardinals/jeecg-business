@@ -4,6 +4,7 @@ import com.sxctc.business.service.TBBusinessServiceI;
 import com.sxctc.businessoppty.entity.TBBusinessOpptyEntity;
 import com.sxctc.profit.entity.TBProfitTargetEntity;
 import com.sxctc.projectrack.entity.TBChancePoolEntity;
+import com.sxctc.unitManage.entity.TBUnitManageEntity;
 import com.sxctc.workreport.entity.TBBusiWorkreportEntity;
 import com.sxctc.workreport.entity.TBWorkreportdayEntity;
 import com.sxctc.workreport.entity.TBWorkreportdayMonthEntity;
@@ -11,6 +12,7 @@ import com.sxctc.workreport.entity.TBWorkreportdayWeekEntity;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import com.sxctc.business.entity.TBBusinessEntity;
+import org.jeecgframework.web.system.pojo.base.TSUser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -389,5 +391,55 @@ public class TBBusinessServiceImpl extends CommonServiceImpl implements TBBusine
 			tbChancePoolEntity.setWinningResult(0);
 			this.save(tbChancePoolEntity);
 		}
+	}
+
+	/**
+	 * @Title importSaleBusiness
+	 * @Description 导入销售负责系统
+	 * @Param [tBBusiness]
+	 * @Return void
+	 * @Author liuzc
+	 * @Date 2018/12/10 14:15
+	 **/
+	public void importSaleBusiness(TBBusinessEntity tBBusiness) throws Exception {
+		// 获取当前系统用户
+		TSUser tsUser = ResourceUtil.getSessionUser();
+
+		// 修改系统负责人
+		tBBusiness.setCreateBy(tsUser.getUserName());
+		tBBusiness.setCreateName(tsUser.getRealName());
+		tBBusiness.setSysOrgCode(tsUser.getCurrentDepart().getOrgCode());
+		tBBusiness.setSysCompanyCode(tsUser.getCurrentDepart().getSysCompanyCode());
+		tBBusiness.setChanceStatus(0);
+		// 更新
+		this.saveOrUpdate(tBBusiness);
+
+		// 同时往日志表里存一条数据
+		TBBusiWorkreportEntity tbBusiWorkreportEntity1 = new TBBusiWorkreportEntity();
+		tbBusiWorkreportEntity1.setBusinessId(tBBusiness.getId());
+		tbBusiWorkreportEntity1.setUnitCode(String.valueOf(tBBusiness.getUnitCode()));
+		tbBusiWorkreportEntity1.setReportTitle(tBBusiness.getProjectName());
+		tbBusiWorkreportEntity1.setReportType(0);
+		// 保存初级日报
+		this.save(tbBusiWorkreportEntity1);
+
+		// 同时往周报表里存一条数据
+		TBWorkreportdayWeekEntity tbWorkreportdayWeekEntity = new TBWorkreportdayWeekEntity();
+		tbWorkreportdayWeekEntity.setBusinessId(tBBusiness.getId());
+		tbWorkreportdayWeekEntity.setUnitCode(String.valueOf(tBBusiness.getUnitCode()));
+		tbWorkreportdayWeekEntity.setProjectName(tBBusiness.getProjectName());
+		tbWorkreportdayWeekEntity.setReportType(0);
+		// 保存周报
+		this.save(tbWorkreportdayWeekEntity);
+
+		// 同时往月报表里存一条数据
+		TBWorkreportdayMonthEntity tbWorkreportdayMonthEntity = new TBWorkreportdayMonthEntity();
+		tbWorkreportdayMonthEntity.setBusinessId(tBBusiness.getId());
+		tbWorkreportdayMonthEntity.setUnitCode(tBBusiness.getUnitCode());
+		tbWorkreportdayMonthEntity.setReportTitle(tBBusiness.getProjectName());
+		tbWorkreportdayMonthEntity.setReportType(0);
+		// 保存月报
+		this.save(tbWorkreportdayMonthEntity);
+
 	}
 }

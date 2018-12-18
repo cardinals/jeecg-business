@@ -13,7 +13,7 @@ public interface UserProgramService extends CommonService {
      * 获取销售人员列表
      * @return
      */
-    List<Histogram> getManagerList();
+    List<Histogram> getManagerList(String manageType);
 
     /**
      * 获取时间差统计

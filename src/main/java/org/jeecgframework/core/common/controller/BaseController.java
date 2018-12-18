@@ -209,15 +209,19 @@ public class BaseController {
 	public List<String> getVaildBusinessIdList() {
 		// 获取当前用户
 		TSUser tsUser = ResourceUtil.getSessionUser();
+		String userName = tsUser.getUserName();
 
 		// 进行查询
 		String hql1 = "select id from TBBusinessEntity where chanceStatus = ? and joinStatus != ? and createBy = ?";
-		List<String> busiList = systemService.findHql(hql1, 0, 7, tsUser.getUserName());
-		String hql2 = "select businessId from TBChancePoolEntity where winningResult != ? and createBy = ?";
-		List<String> poolList = systemService.findHql(hql2, 2, tsUser.getUserName());
+		List<String> busiList = systemService.findHql(hql1, 0, 7, userName);
+		String hql2 = "select businessId from TBChancePoolEntity where winningResult = ? and createBy = ?";
+		List<String> poolList = systemService.findHql(hql2, 0, userName);
+		String hql3 = "select businessId from TBProfitTargetEntity where projectStatus != ? and createBy = ?";
+		List<String> profitList = systemService.findHql(hql3, 2, userName);
 
 		// 进行合并
 		busiList.addAll(poolList);
+		busiList.addAll(profitList);
 
 		// 返回
 		return busiList;

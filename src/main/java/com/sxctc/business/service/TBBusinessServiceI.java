@@ -31,4 +31,14 @@ public interface TBBusinessServiceI extends CommonService{
 	 * @Date 2018/8/29 下午2:02
 	 **/
 	public void doAddBusiness(TBBusinessEntity tBBusiness) throws Exception;
+
+	/**
+	 * @Title importSaleBusiness
+	 * @Description 导入销售负责系统
+	 * @Param [tBBusiness]
+	 * @Return void
+	 * @Author liuzc
+	 * @Date 2018/12/10 14:15
+	 **/
+	public void importSaleBusiness(TBBusinessEntity tBBusiness) throws Exception;
 }

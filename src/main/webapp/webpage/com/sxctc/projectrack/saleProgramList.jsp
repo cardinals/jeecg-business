@@ -7,7 +7,7 @@
 <script type="text/javascript" src="plug-in/ztree/js/jquery.ztree.core-3.5.min.js"></script>
 <script type="text/javascript" src="plug-in/ztree/js/jquery.ztree.excheck-3.5.min.js"></script>
 <div class="easyui-layout" fit="true">
-    <div data-options="region:'west',title:'售前业务人员',split:true" style="width:100px;">
+    <div data-options="region:'west',title:'销售业务人员',split:true" style="width:100px;">
         <ul id="managerList" class="ztree" ></ul>
     </div>
     <div data-options="region:'east',title:'分析',split:true"  style="width:500px;">
@@ -25,7 +25,7 @@
             </div>
         </div>--%>
         <t:tabs id="tabsOne" iframe="true" tabPosition="top" fit="true">
-            <t:tab href="tBBusinessController.do?list&optFlag=1" icon="icon-search" title="上云项目" id="tBBusinessListIframe"></t:tab>
+            <%--<t:tab href="tBBusinessController.do?list&optFlag=1" icon="icon-search" title="上云项目" id="tBBusinessListIframe"></t:tab>--%>
             <t:tab href="tBChancePoolController.do?list" icon="icon-search" title="机会池" id="tBChancePoolListIframe"></t:tab>
             <t:tab href="tBProfitTargetController.do?list" icon="icon-search" title="已签订项目" id="tBProfitTargetListIframe"></t:tab>
         </t:tabs>
@@ -378,7 +378,7 @@
         $.ajax({
             url:"userProgramController.do?getManagerList",
             type:"post",
-            data:{"optFlag":1},
+            data:{"optFlag":2},
             dataType:"json",
             success:function(d){
                 if (d.success) {

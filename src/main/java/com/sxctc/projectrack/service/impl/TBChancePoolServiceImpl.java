@@ -6,6 +6,7 @@ import com.sxctc.profit.entity.TBProfitTargetEntity;
 import com.sxctc.projectrack.service.TBChancePoolServiceI;
 import com.sxctc.util.DateUtil;
 import com.sxctc.workreport.entity.TBBusiWorkreportEntity;
+import com.sxctc.workreport.entity.TBWorkreportdayEntity;
 import com.sxctc.workreport.entity.TBWorkreportdayMonthEntity;
 import com.sxctc.workreport.entity.TBWorkreportdayWeekEntity;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
@@ -219,24 +220,22 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 	 * @Author liuzc
 	 * @Date 2018/9/1 上午10:57
 	 **/
-	public void saveOrUpdateChancePool(TBChancePoolEntity t, TBChancePoolEntity tBChancePool) throws Exception {
-		TSUser tsUser = ResourceUtil.getSessionUser();
-
+	public void saveOrUpdateChancePool(TBChancePoolEntity t, TBChancePoolEntity e) throws Exception {
 		// 更新
 		this.saveOrUpdate(t);
 
-		// 如果是已中标，则将数据添加到已签订项目中
-		Integer winningResult = tBChancePool.getWinningResult();
+		// 1、如果是已中标，则将数据添加到已签订项目中
+		Integer winningResult = t.getWinningResult();
 		if (winningResult == 1) {
 			// 将数据添加到已签订项目中
 			TBProfitTargetEntity tbProfitTargetEntity = new TBProfitTargetEntity();
-			tbProfitTargetEntity.setBusinessId(tBChancePool.getBusinessId());
-			tbProfitTargetEntity.setProjectName(tBChancePool.getProjectName());
-			tbProfitTargetEntity.setUnitCode(tBChancePool.getUnitCode());
+			tbProfitTargetEntity.setBusinessId(t.getBusinessId());
+			tbProfitTargetEntity.setProjectName(t.getProjectName());
+			tbProfitTargetEntity.setUnitCode(t.getUnitCode());
 			this.save(tbProfitTargetEntity);
 
 			// 更新商机评估表将业务状态置为0
-			List<TBBusinessOpptyEntity> byQueryString = this.findByQueryString("from TBBusinessOpptyEntity where businessId='" + t.getBusinessId() + "' and businessStatus=1 and createBy='" + tsUser.getUserName() + "'");
+			List<TBBusinessOpptyEntity> byQueryString = this.findByQueryString("from TBBusinessOpptyEntity where businessId='" + t.getBusinessId() + "'");
 			if (byQueryString.size() > 0) {
 				for (TBBusinessOpptyEntity tbBusinessOpptyEntity : byQueryString) {
 					tbBusinessOpptyEntity.setBusinessStatus(0);
@@ -245,8 +244,8 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 					String evaluateWin = tbBusinessOpptyEntity.getEvaluateWin();
 					String evaluateFirst = tbBusinessOpptyEntity.getEvaluateFirst();
 					String evaluateConfirm = tbBusinessOpptyEntity.getEvaluateConfirm();
-					String hql = "from TBBusinessOpptyEntity where evaluateWin=? and evaluateFirst=? and evaluateConfirm=? and businessStatus=1 and createBy=?";
-					List<TBBusinessOpptyEntity> tBBusinessOpptyList = this.findHql(hql, evaluateWin, evaluateFirst, evaluateConfirm, tsUser.getUserName());
+					String hql = "from TBBusinessOpptyEntity where evaluateWin=? and evaluateFirst=? and evaluateConfirm=? and businessStatus=1";
+					List<TBBusinessOpptyEntity> tBBusinessOpptyList = this.findHql(hql, evaluateWin, evaluateFirst, evaluateConfirm);
 					if (tBBusinessOpptyList.size() == 0) {
 						TBBusinessOpptyEntity tbBusinessOppty = new TBBusinessOpptyEntity();
 						tbBusinessOppty.setBusinessStatus(1);
@@ -262,6 +261,39 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 
 					}
 				}
+			}
+		}
+
+		// 2、如果未中标，删除日报信息
+		// 1、删除今日日报
+		List<TBBusiWorkreportEntity> busiReportList = this.findByProperty(TBBusiWorkreportEntity.class, "businessId", t.getBusinessId());
+		if (busiReportList.size() > 0) {
+			for (TBBusiWorkreportEntity tbBusiWorkreportEntity : busiReportList) {
+				String busiReportId = tbBusiWorkreportEntity.getId();
+				this.deleteEntityById(TBBusiWorkreportEntity.class,busiReportId);
+				// 删除历史日报关联数据
+				List<TBWorkreportdayEntity> workReportList = this.findByProperty(TBWorkreportdayEntity.class, "busiReportId", busiReportId);
+				if (workReportList.size() > 0) {
+					for (TBWorkreportdayEntity tbWorkreportdayEntity : workReportList) {
+						this.deleteEntityById(TBWorkreportdayEntity.class,tbWorkreportdayEntity.getId());
+					}
+				}
+			}
+		}
+		// 2、删除周报
+		List<TBWorkreportdayWeekEntity> weekReportList = this.findByProperty(TBWorkreportdayWeekEntity.class, "businessId", t.getBusinessId());
+		if (weekReportList.size() > 0) {
+			for (TBWorkreportdayWeekEntity tbWeekreportEntity : weekReportList) {
+				String busiReportId = tbWeekreportEntity.getId();
+				this.deleteEntityById(TBWorkreportdayWeekEntity.class,busiReportId);
+			}
+		}
+		// 3、删除月报
+		List<TBWorkreportdayMonthEntity> monthReportList = this.findByProperty(TBWorkreportdayMonthEntity.class, "businessId", t.getBusinessId());
+		if (busiReportList.size() > 0) {
+			for (TBWorkreportdayMonthEntity tbMonthreportEntity : monthReportList) {
+				String busiReportId = tbMonthreportEntity.getId();
+				this.deleteEntityById(TBWorkreportdayMonthEntity.class,busiReportId);
 			}
 		}
 	}

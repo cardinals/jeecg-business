@@ -231,6 +231,8 @@ public class TBProfitTargetController extends BaseController {
 		AjaxJson j = new AjaxJson();
 		message = "毛利润指标添加成功";
 		try{
+			// 标准化金额单位为元入库
+			standardMoney(tBProfitTarget,2,1);
 			tBProfitTargetService.save(tBProfitTarget);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
@@ -294,6 +296,8 @@ public class TBProfitTargetController extends BaseController {
 	public ModelAndView goUpdate(TBProfitTargetEntity tBProfitTarget, HttpServletRequest req) {
 		if (StringUtil.isNotEmpty(tBProfitTarget.getId())) {
 			tBProfitTarget = tBProfitTargetService.getEntity(TBProfitTargetEntity.class, tBProfitTarget.getId());
+			// 标准化金额单位为元入库
+			standardMoney(tBProfitTarget,2,2);
 			req.setAttribute("tBProfitTargetPage", tBProfitTarget);
 		}
 		return new ModelAndView("com/sxctc/profit/tBProfitTarget-update");

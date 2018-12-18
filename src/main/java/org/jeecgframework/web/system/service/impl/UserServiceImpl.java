@@ -460,4 +460,56 @@ public class UserServiceImpl extends CommonServiceImpl implements UserService {
 		return floor;
 	}
 
+	/**
+	 * 初始化 用户角色新建立需要初始化的内容信息
+	 * @param user
+	 * @param orgIds
+	 */
+	private void initUserInfo(TSUser user,String[] orgIds) {
+		if(orgIds!=null && orgIds.length>0){
+			List<TSUserOrg> userOrgList = new ArrayList<TSUserOrg>();
+			for (String orgId : orgIds) {
+				if(StringUtils.isBlank(orgId))continue;
+				TSDepart depart = new TSDepart();
+				depart.setId(orgId);
+
+				// 1、初始化商业评估列表
+				TSDepart tsDepart = this.getEntity(TSDepart.class, orgId);
+				if(tsDepart == null)continue;
+				String orgCode = tsDepart.getOrgCode();
+				String sysOrgCode = tsDepart.getSysOrgCode();
+				String realName = user.getRealName();
+				String userName = user.getUserName();
+				commonDao.executeSql("INSERT INTO `business`.`t_b_business_oppty`(`id`, `create_name`, `create_by`, `create_date`, `update_name`, `update_by`, `update_date`, `sys_org_code`, `sys_company_code`, `oppty_range`, `evaluate_win`, `evaluate_first`, `evaluate_confirm`, `oppty_ratio`, `oppty_point`, `project_name`, `unit_code`, `business_id`, `sort_num`, `business_status`) VALUES (REPLACE(UUID(),'-',''), ?, ?, '2018-08-27 15:22:16', NULL, NULL, NULL, ?, ?, 1, '1W', '3F', '*C', '100%', NULL, NULL, NULL, NULL, 1, 1)", realName, userName, orgCode, sysOrgCode);
+				commonDao.executeSql("INSERT INTO `business`.`t_b_business_oppty`(`id`, `create_name`, `create_by`, `create_date`, `update_name`, `update_by`, `update_date`, `sys_org_code`, `sys_company_code`, `oppty_range`, `evaluate_win`, `evaluate_first`, `evaluate_confirm`, `oppty_ratio`, `oppty_point`, `project_name`, `unit_code`, `business_id`, `sort_num`, `business_status`) VALUES (REPLACE(UUID(),'-',''), ?, ?, '2018-08-27 15:22:16', NULL, NULL, NULL, ?, ?, 1, '1W', '2F', '*C', '99%', NULL, NULL, NULL, NULL, 2, 1) ", realName, userName, orgCode, sysOrgCode);
+				commonDao.executeSql("INSERT INTO `business`.`t_b_business_oppty`(`id`, `create_name`, `create_by`, `create_date`, `update_name`, `update_by`, `update_date`, `sys_org_code`, `sys_company_code`, `oppty_range`, `evaluate_win`, `evaluate_first`, `evaluate_confirm`, `oppty_ratio`, `oppty_point`, `project_name`, `unit_code`, `business_id`, `sort_num`, `business_status`) VALUES (REPLACE(UUID(),'-',''), ?, ?, '2018-08-27 15:22:16', NULL, NULL, NULL, ?, ?, 1, '1W', '1F', '9C', '91%', NULL, NULL, NULL, NULL, 3, 1) ", realName, userName, orgCode, sysOrgCode);
+				commonDao.executeSql("INSERT INTO `business`.`t_b_business_oppty`(`id`, `create_name`, `create_by`, `create_date`, `update_name`, `update_by`, `update_date`, `sys_org_code`, `sys_company_code`, `oppty_range`, `evaluate_win`, `evaluate_first`, `evaluate_confirm`, `oppty_ratio`, `oppty_point`, `project_name`, `unit_code`, `business_id`, `sort_num`, `business_status`) VALUES (REPLACE(UUID(),'-',''), ?, ?, '2018-08-27 15:22:16', NULL, NULL, NULL, ?, ?, 1, '1W', '1F', '8C', '85%', NULL, NULL, NULL, NULL, 4, 1) ", realName, userName, orgCode, sysOrgCode);
+				commonDao.executeSql("INSERT INTO `business`.`t_b_business_oppty`(`id`, `create_name`, `create_by`, `create_date`, `update_name`, `update_by`, `update_date`, `sys_org_code`, `sys_company_code`, `oppty_range`, `evaluate_win`, `evaluate_first`, `evaluate_confirm`, `oppty_ratio`, `oppty_point`, `project_name`, `unit_code`, `business_id`, `sort_num`, `business_status`) VALUES (REPLACE(UUID(),'-',''), ?, ?, '2018-08-27 15:22:16', NULL, NULL, NULL, ?, ?, 1, '1W', '1F', '7C', '85%', NULL, NULL, NULL, NULL, 5, 1) ", realName, userName, orgCode, sysOrgCode);
+				commonDao.executeSql("INSERT INTO `business`.`t_b_business_oppty`(`id`, `create_name`, `create_by`, `create_date`, `update_name`, `update_by`, `update_date`, `sys_org_code`, `sys_company_code`, `oppty_range`, `evaluate_win`, `evaluate_first`, `evaluate_confirm`, `oppty_ratio`, `oppty_point`, `project_name`, `unit_code`, `business_id`, `sort_num`, `business_status`) VALUES (REPLACE(UUID(),'-',''), ?, ?, '2018-08-27 15:22:16', NULL, NULL, NULL, ?, ?, 1, '1W', '1F', '6C', '85%', 1, NULL, NULL, NULL, 6, 1)    ", realName, userName, orgCode, sysOrgCode);
+				commonDao.executeSql("INSERT INTO `business`.`t_b_business_oppty`(`id`, `create_name`, `create_by`, `create_date`, `update_name`, `update_by`, `update_date`, `sys_org_code`, `sys_company_code`, `oppty_range`, `evaluate_win`, `evaluate_first`, `evaluate_confirm`, `oppty_ratio`, `oppty_point`, `project_name`, `unit_code`, `business_id`, `sort_num`, `business_status`) VALUES (REPLACE(UUID(),'-',''), ?, ?, '2018-08-27 15:22:16', NULL, NULL, NULL, ?, ?, 2, '1W', '1F', '5C', '50%', NULL, NULL, NULL, NULL, 7, 1) ", realName, userName, orgCode, sysOrgCode);
+				commonDao.executeSql("INSERT INTO `business`.`t_b_business_oppty`(`id`, `create_name`, `create_by`, `create_date`, `update_name`, `update_by`, `update_date`, `sys_org_code`, `sys_company_code`, `oppty_range`, `evaluate_win`, `evaluate_first`, `evaluate_confirm`, `oppty_ratio`, `oppty_point`, `project_name`, `unit_code`, `business_id`, `sort_num`, `business_status`) VALUES (REPLACE(UUID(),'-',''), ?, ?, '2018-08-27 15:22:16', NULL, NULL, NULL, ?, ?, 2, '1W', '1F', '4C', '50%', NULL, NULL, NULL, NULL, 8, 1) ", realName, userName, orgCode, sysOrgCode);
+				commonDao.executeSql("INSERT INTO `business`.`t_b_business_oppty`(`id`, `create_name`, `create_by`, `create_date`, `update_name`, `update_by`, `update_date`, `sys_org_code`, `sys_company_code`, `oppty_range`, `evaluate_win`, `evaluate_first`, `evaluate_confirm`, `oppty_ratio`, `oppty_point`, `project_name`, `unit_code`, `business_id`, `sort_num`, `business_status`) VALUES (REPLACE(UUID(),'-',''), ?, ?, '2018-08-27 15:22:16', NULL, NULL, NULL, ?, ?, 2, '1W', '1F', '3C', '50%', NULL, NULL, NULL, NULL, 9, 1) ", realName, userName, orgCode, sysOrgCode);
+				commonDao.executeSql("INSERT INTO `business`.`t_b_business_oppty`(`id`, `create_name`, `create_by`, `create_date`, `update_name`, `update_by`, `update_date`, `sys_org_code`, `sys_company_code`, `oppty_range`, `evaluate_win`, `evaluate_first`, `evaluate_confirm`, `oppty_ratio`, `oppty_point`, `project_name`, `unit_code`, `business_id`, `sort_num`, `business_status`) VALUES (REPLACE(UUID(),'-',''), ?, ?, '2018-08-27 15:22:16', NULL, NULL, NULL, ?, ?, 2, '1W', '1F', '2C', '50%', NULL, NULL, NULL, NULL, 10, 1)", realName, userName, orgCode, sysOrgCode);
+				commonDao.executeSql("INSERT INTO `business`.`t_b_business_oppty`(`id`, `create_name`, `create_by`, `create_date`, `update_name`, `update_by`, `update_date`, `sys_org_code`, `sys_company_code`, `oppty_range`, `evaluate_win`, `evaluate_first`, `evaluate_confirm`, `oppty_ratio`, `oppty_point`, `project_name`, `unit_code`, `business_id`, `sort_num`, `business_status`) VALUES (REPLACE(UUID(),'-',''), ?, ?, '2018-08-27 15:22:16', NULL, NULL, NULL, ?, ?, 2, '1W', '1F', '1C', '50%', NULL, NULL, NULL, NULL, 11, 1)", realName, userName, orgCode, sysOrgCode);
+				commonDao.executeSql("INSERT INTO `business`.`t_b_business_oppty`(`id`, `create_name`, `create_by`, `create_date`, `update_name`, `update_by`, `update_date`, `sys_org_code`, `sys_company_code`, `oppty_range`, `evaluate_win`, `evaluate_first`, `evaluate_confirm`, `oppty_ratio`, `oppty_point`, `project_name`, `unit_code`, `business_id`, `sort_num`, `business_status`) VALUES (REPLACE(UUID(),'-',''), ?, ?, '2018-08-27 15:22:16', NULL, NULL, NULL, ?, ?, 2, '1W', '1F', '0C', '50%', NULL, NULL, NULL, NULL, 12, 1)", realName, userName, orgCode, sysOrgCode);
+				commonDao.executeSql("INSERT INTO `business`.`t_b_business_oppty`(`id`, `create_name`, `create_by`, `create_date`, `update_name`, `update_by`, `update_date`, `sys_org_code`, `sys_company_code`, `oppty_range`, `evaluate_win`, `evaluate_first`, `evaluate_confirm`, `oppty_ratio`, `oppty_point`, `project_name`, `unit_code`, `business_id`, `sort_num`, `business_status`) VALUES (REPLACE(UUID(),'-',''), ?, ?, '2018-08-27 15:22:16', NULL, NULL, NULL, ?, ?, 2, '0W', '2F', '8C', '50%', NULL, NULL, NULL, NULL, 13, 1)", realName, userName, orgCode, sysOrgCode);
+				commonDao.executeSql("INSERT INTO `business`.`t_b_business_oppty`(`id`, `create_name`, `create_by`, `create_date`, `update_name`, `update_by`, `update_date`, `sys_org_code`, `sys_company_code`, `oppty_range`, `evaluate_win`, `evaluate_first`, `evaluate_confirm`, `oppty_ratio`, `oppty_point`, `project_name`, `unit_code`, `business_id`, `sort_num`, `business_status`) VALUES (REPLACE(UUID(),'-',''), ?, ?, '2018-08-27 15:22:16', NULL, NULL, NULL, ?, ?, 2, '0W', '2F', '7C', '50%', NULL, NULL, NULL, NULL, 14, 1)", realName, userName, orgCode, sysOrgCode);
+				commonDao.executeSql("INSERT INTO `business`.`t_b_business_oppty`(`id`, `create_name`, `create_by`, `create_date`, `update_name`, `update_by`, `update_date`, `sys_org_code`, `sys_company_code`, `oppty_range`, `evaluate_win`, `evaluate_first`, `evaluate_confirm`, `oppty_ratio`, `oppty_point`, `project_name`, `unit_code`, `business_id`, `sort_num`, `business_status`) VALUES (REPLACE(UUID(),'-',''), ?, ?, '2018-08-27 15:22:16', NULL, NULL, NULL, ?, ?, 3, '0W', '2F', '6C', '26%', 2, NULL, NULL, NULL, 15, 1)   ", realName, userName, orgCode, sysOrgCode);
+				commonDao.executeSql("INSERT INTO `business`.`t_b_business_oppty`(`id`, `create_name`, `create_by`, `create_date`, `update_name`, `update_by`, `update_date`, `sys_org_code`, `sys_company_code`, `oppty_range`, `evaluate_win`, `evaluate_first`, `evaluate_confirm`, `oppty_ratio`, `oppty_point`, `project_name`, `unit_code`, `business_id`, `sort_num`, `business_status`) VALUES (REPLACE(UUID(),'-',''), ?, ?, '2018-08-27 15:22:16', NULL, NULL, NULL, ?, ?, 3, '0W', '2F', '*C', '22%', NULL, NULL, NULL, NULL, 16, 1)", realName, userName, orgCode, sysOrgCode);
+				commonDao.executeSql("INSERT INTO `business`.`t_b_business_oppty`(`id`, `create_name`, `create_by`, `create_date`, `update_name`, `update_by`, `update_date`, `sys_org_code`, `sys_company_code`, `oppty_range`, `evaluate_win`, `evaluate_first`, `evaluate_confirm`, `oppty_ratio`, `oppty_point`, `project_name`, `unit_code`, `business_id`, `sort_num`, `business_status`) VALUES (REPLACE(UUID(),'-',''), ?, ?, '2018-08-27 15:22:16', NULL, NULL, NULL, ?, ?, 3, '0W', '1F', '*C', '3%', NULL, NULL, NULL, NULL, 17, 1) ", realName, userName, orgCode, sysOrgCode);
+				commonDao.executeSql("INSERT INTO `business`.`t_b_business_oppty`(`id`, `create_name`, `create_by`, `create_date`, `update_name`, `update_by`, `update_date`, `sys_org_code`, `sys_company_code`, `oppty_range`, `evaluate_win`, `evaluate_first`, `evaluate_confirm`, `oppty_ratio`, `oppty_point`, `project_name`, `unit_code`, `business_id`, `sort_num`, `business_status`) VALUES (REPLACE(UUID(),'-',''), ?, ?, '2018-08-27 15:22:16', NULL, NULL, NULL, ?, ?, 3, '0W', '0F', '*C', '0%', NULL, NULL, NULL, NULL, 18, 1) ", realName, userName, orgCode, sysOrgCode);
+
+				// 2、初始化日志信息
+
+				TSUserOrg userOrg = new TSUserOrg();
+				userOrg.setTsUser(user);
+				userOrg.setTsDepart(depart);
+
+				userOrgList.add(userOrg);
+			}
+			if (!userOrgList.isEmpty()) {
+				commonDao.batchSave(userOrgList);
+			}
+		}
+	}
 }

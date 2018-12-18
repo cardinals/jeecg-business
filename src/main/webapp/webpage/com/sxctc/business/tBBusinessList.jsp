@@ -46,6 +46,7 @@
    <%--<t:dgToolBar title="查看" icon="icon-search" url="tBBusinessController.do?goUpdate" funname="detail"></t:dgToolBar>--%>
    <%--<t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>--%>
    <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
+   <t:dgToolBar title="导入销售负责系统" icon="icon-add" url="tBBusinessController.do?salelist" funname="importSaleBusiness" operationCode="importSales"></t:dgToolBar>
    <%--<t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>--%>
   </t:datagrid>
   </div>
@@ -181,5 +182,51 @@ function checkCatalog(id) {
              cache:false
          });
      }
+ }
+
+ function importSaleBusiness(title,url,id) {
+     $.dialog({
+         content: 'url:'+url,
+         zIndex: getzIndex(),
+         title : title,
+         lock : true,
+         opacity : 0.3,
+         width: 850,
+         height:400,
+         ok: function(){
+             var iframe = this.iframe.contentWindow;
+             var busiId=iframe.gettBSaleBusinessListSelections('id').toString();
+             $.ajax({
+                 async : false,
+                 cache : false,
+                 url : 'tBBusinessController.do?importSaleBusiness',// 请求的action路径
+                 type : 'POST',
+                 data : {'id':busiId},
+                 error : function() {// 请求失败处理函数
+                 },
+                 success : function(data) {
+                     var d = $.parseJSON(data);
+                     if (d.success) {
+                         var msg = d.msg;
+                         tip(msg);
+                         reloadTable();
+                     }else {
+                         var msg = d.msg;
+                         tip(msg);
+                         reloadTable();
+                     }
+                 }
+             });
+             return true;
+         },
+         cancelVal: '关闭',
+         cancel: function(){
+         }
+
+     });
+ }
+
+ function reloadTable(){
+     $('#tBBusinessList').datagrid('reload');
  }
  </script>

@@ -264,6 +264,8 @@ public class TBChancePoolController extends BaseController {
 		message = "项目机会池添加成功";
 		try{
 			//tBChancePoolService.save(tBChancePool);
+			// 标准化金额：万元变元
+			standardMoney(tBChancePool,2,1);
 			tBChancePoolService.saveChancePool(tBChancePool);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
@@ -304,49 +306,10 @@ public class TBChancePoolController extends BaseController {
 			t.setHistoryPlan(jsonObject.toJSONString());
 
 			// 标准化金额单位为元入库
-			standardMoney(t,1,1);
+			standardMoney(t,2,1);
 
-			tBChancePoolService.saveOrUpdate(t);
-
-			// 如果是已中标，则将数据添加到已签订项目中
-			Integer winningResult = tBChancePool.getWinningResult();
-			if (winningResult == 1) {
-				// 将数据添加到已签订项目中
-				TBProfitTargetEntity tbProfitTargetEntity = new TBProfitTargetEntity();
-				tbProfitTargetEntity.setBusinessId(t.getBusinessId());
-				tbProfitTargetEntity.setProjectName(tBChancePool.getProjectName());
-				tbProfitTargetEntity.setUnitCode(tBChancePool.getUnitCode());
-				tBProfitTargetService.save(tbProfitTargetEntity);
-
-				// 更新商机评估表将业务状态置为0
-				List<TBBusinessOpptyEntity> byQueryString = tBBusinessOpptyService.findByQueryString("from TBBusinessOpptyEntity where businessId='" + t.getBusinessId() + "'");
-				if (byQueryString.size() > 0) {
-					for (TBBusinessOpptyEntity tbBusinessOpptyEntity : byQueryString) {
-						tbBusinessOpptyEntity.setBusinessStatus(0);
-						tBBusinessOpptyService.saveOrUpdate(tbBusinessOpptyEntity);
-
-						String evaluateWin = tbBusinessOpptyEntity.getEvaluateWin();
-						String evaluateFirst = tbBusinessOpptyEntity.getEvaluateFirst();
-						String evaluateConfirm = tbBusinessOpptyEntity.getEvaluateConfirm();
-						String hql = "from TBBusinessOpptyEntity where evaluateWin=? and evaluateFirst=? and evaluateConfirm=? and businessStatus=1";
-						List<TBBusinessOpptyEntity> tBBusinessOpptyList = tBBusinessOpptyService.findHql(hql, evaluateWin, evaluateFirst, evaluateConfirm);
-						if (tBBusinessOpptyList.size() == 0) {
-							TBBusinessOpptyEntity tbBusinessOppty = new TBBusinessOpptyEntity();
-							tbBusinessOppty.setBusinessStatus(1);
-							tbBusinessOppty.setSortNum(tbBusinessOpptyEntity.getSortNum());
-							tbBusinessOppty.setOpptyPoint(tbBusinessOpptyEntity.getOpptyPoint());
-							tbBusinessOppty.setOpptyRatio(tbBusinessOpptyEntity.getOpptyRatio());
-							tbBusinessOppty.setEvaluateConfirm(tbBusinessOpptyEntity.getEvaluateConfirm());
-							tbBusinessOppty.setEvaluateFirst(tbBusinessOpptyEntity.getEvaluateFirst());
-							tbBusinessOppty.setEvaluateWin(tbBusinessOpptyEntity.getEvaluateWin());
-							tbBusinessOppty.setOpptyRange(tbBusinessOpptyEntity.getOpptyRange());
-
-							tBBusinessOpptyService.save(tbBusinessOppty);
-
-						}
-					}
-				}
-			}
+			// 更新
+			tBChancePoolService.saveOrUpdateChancePool(t,tBChancePool);
 
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {
@@ -381,6 +344,8 @@ public class TBChancePoolController extends BaseController {
 	public ModelAndView goUpdate(TBChancePoolEntity tBChancePool, HttpServletRequest req) {
 		if (StringUtil.isNotEmpty(tBChancePool.getId())) {
 			tBChancePool = tBChancePoolService.getEntity(TBChancePoolEntity.class, tBChancePool.getId());
+			// 标准化金额
+			standardMoney(tBChancePool,2,2);
 			req.setAttribute("tBChancePoolPage", tBChancePool);
 		}
 		return new ModelAndView("com/sxctc/projectrack/tBChancePool-update");

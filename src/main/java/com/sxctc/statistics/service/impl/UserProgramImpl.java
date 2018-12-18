@@ -27,8 +27,8 @@ public class UserProgramImpl extends CommonServiceImpl implements UserProgramSer
     private UserProgramDao userProgramDao;
 
     @Override
-    public List<Histogram> getManagerList() {
-        return  userProgramDao.getManagerList();
+    public List<Histogram> getManagerList(String manageType) {
+        return  userProgramDao.getManagerList(manageType);
     }
 
     @Override

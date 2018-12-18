@@ -34,6 +34,7 @@
 			</td>
 			<td class="value">
 				<input id="projectName" name="projectName" type="text" maxlength="32" style="width: 150px" class="inputxt" validType="t_b_business,project_name,id"  datatype="*" ignore="checked" />
+				<%--<button id="projectPlanBtn" class="btn btn-success" type="button" onclick="checkHistory()" style="border-radius: 5px"><span><i class="fa fa-search"></i>导入销售负责系统</span></button>--%>
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">系统名称</label>
 			</td>
@@ -216,15 +217,22 @@
 	$(function(){
         var currTime = getNowFormatDate();
         $("#busCreateTime").val(currTime);
+        $("#projectPlanBtn").removeAttr("disabled");
 	})
 
-    // $('input:radio[name="projectStatus"]').click(function(){
-    //     if($(this).val()==1){
-    //         $("input:radio[name='chanceStatus'][value=1]").attr("checked",true);
-    //     }else {
-    //         $("input:radio[name='chanceStatus'][value=0]").attr("checked",true);
-    //     }
-    // });
+    function checkHistory() {
+        var url = "tBBusinessController.do?list";
+        $.dialog({
+            content: "url:" + url,
+            lock : true,
+            title:'销售负责项目列表',
+            zIndex: getzIndex(),
+            opacity : 0.3,
+            width:400,
+            height:300,
+            cache:false
+        });
+    }
 
     $('#joinStatus').change(function(){
         var joinStatusVal = $(this).val();
