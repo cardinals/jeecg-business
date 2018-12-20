@@ -73,5 +73,6 @@
 </div>
 
 </body>
-
+<!-- 页面js -->
+<script type="text/javascript" src="webpage/com/sxctc/main/salesman.js"></script>
 </html>

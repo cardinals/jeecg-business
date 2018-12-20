@@ -265,35 +265,37 @@ public class TBChancePoolServiceImpl extends CommonServiceImpl implements TBChan
 		}
 
 		// 2、如果未中标，删除日报信息
-		// 1、删除今日日报
-		List<TBBusiWorkreportEntity> busiReportList = this.findByProperty(TBBusiWorkreportEntity.class, "businessId", t.getBusinessId());
-		if (busiReportList.size() > 0) {
-			for (TBBusiWorkreportEntity tbBusiWorkreportEntity : busiReportList) {
-				String busiReportId = tbBusiWorkreportEntity.getId();
-				this.deleteEntityById(TBBusiWorkreportEntity.class,busiReportId);
-				// 删除历史日报关联数据
-				List<TBWorkreportdayEntity> workReportList = this.findByProperty(TBWorkreportdayEntity.class, "busiReportId", busiReportId);
-				if (workReportList.size() > 0) {
-					for (TBWorkreportdayEntity tbWorkreportdayEntity : workReportList) {
-						this.deleteEntityById(TBWorkreportdayEntity.class,tbWorkreportdayEntity.getId());
+		if (winningResult == 2) {
+			// 1、删除今日日报
+			List<TBBusiWorkreportEntity> busiReportList = this.findByProperty(TBBusiWorkreportEntity.class, "businessId", t.getBusinessId());
+			if (busiReportList.size() > 0) {
+				for (TBBusiWorkreportEntity tbBusiWorkreportEntity : busiReportList) {
+					String busiReportId = tbBusiWorkreportEntity.getId();
+					this.deleteEntityById(TBBusiWorkreportEntity.class,busiReportId);
+					// 删除历史日报关联数据
+					List<TBWorkreportdayEntity> workReportList = this.findByProperty(TBWorkreportdayEntity.class, "busiReportId", busiReportId);
+					if (workReportList.size() > 0) {
+						for (TBWorkreportdayEntity tbWorkreportdayEntity : workReportList) {
+							this.deleteEntityById(TBWorkreportdayEntity.class,tbWorkreportdayEntity.getId());
+						}
 					}
 				}
 			}
-		}
-		// 2、删除周报
-		List<TBWorkreportdayWeekEntity> weekReportList = this.findByProperty(TBWorkreportdayWeekEntity.class, "businessId", t.getBusinessId());
-		if (weekReportList.size() > 0) {
-			for (TBWorkreportdayWeekEntity tbWeekreportEntity : weekReportList) {
-				String busiReportId = tbWeekreportEntity.getId();
-				this.deleteEntityById(TBWorkreportdayWeekEntity.class,busiReportId);
+			// 2、删除周报
+			List<TBWorkreportdayWeekEntity> weekReportList = this.findByProperty(TBWorkreportdayWeekEntity.class, "businessId", t.getBusinessId());
+			if (weekReportList.size() > 0) {
+				for (TBWorkreportdayWeekEntity tbWeekreportEntity : weekReportList) {
+					String busiReportId = tbWeekreportEntity.getId();
+					this.deleteEntityById(TBWorkreportdayWeekEntity.class,busiReportId);
+				}
 			}
-		}
-		// 3、删除月报
-		List<TBWorkreportdayMonthEntity> monthReportList = this.findByProperty(TBWorkreportdayMonthEntity.class, "businessId", t.getBusinessId());
-		if (busiReportList.size() > 0) {
-			for (TBWorkreportdayMonthEntity tbMonthreportEntity : monthReportList) {
-				String busiReportId = tbMonthreportEntity.getId();
-				this.deleteEntityById(TBWorkreportdayMonthEntity.class,busiReportId);
+			// 3、删除月报
+			List<TBWorkreportdayMonthEntity> monthReportList = this.findByProperty(TBWorkreportdayMonthEntity.class, "businessId", t.getBusinessId());
+			if (busiReportList.size() > 0) {
+				for (TBWorkreportdayMonthEntity tbMonthreportEntity : monthReportList) {
+					String busiReportId = tbMonthreportEntity.getId();
+					this.deleteEntityById(TBWorkreportdayMonthEntity.class,busiReportId);
+				}
 			}
 		}
 	}

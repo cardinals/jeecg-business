@@ -135,6 +135,11 @@ public class TBWorkreportdayMonthController extends BaseController {
 			if (StringUtils.isNotBlank(reportOpt)){
 				if ("0".equals(reportOpt)){
 					cq.eq("reportType",0);
+					// 只查询未结束的系统
+					List<String> busiList = getVaildBusinessIdList();
+					if (busiList != null && busiList.size()>0) {
+						cq.in("businessId",busiList.toArray());
+					}
 				}else {
 					cq.notEq("reportType",0);
 					cq.notEq("reportType",9);
@@ -149,12 +154,6 @@ public class TBWorkreportdayMonthController extends BaseController {
 			}
 			if(StringUtil.isNotEmpty(end)){
 				cq.le("reportDate",DateUtils.parseDate(end,"yyyy-MM"));
-			}
-
-			// 只查询未结束的系统
-			List<String> busiList = getVaildBusinessIdList();
-			if (busiList != null && busiList.size()>0) {
-				cq.in("businessId",busiList.toArray());
 			}
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());

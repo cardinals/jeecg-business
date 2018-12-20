@@ -8,45 +8,17 @@
 </style>
 <div id="main_typegroup_list" class="easyui-layout" fit="true">  
     <div region="center" style="padding:0px;border:0px">
-        <%--<t:datagrid name="tBCatalogdataList" title="厅局信息管理" actionUrl="systemController.do?typeGroupGrid&typegroupcode=unit_name"
-        idField="id" treegrid="false" pagination="false"  sortOrder="desc" sortName="createDate" onLoadSuccess="loadSuccess" queryMode="group" btnCls="bootstrap btn btn-info btn-xs">
-            <t:dgCol title="common.code" field="id" hidden="true"></t:dgCol>
-            <t:dgCol title="厅局名称" field="typegroupname" width="100" query="true"></t:dgCol>
-            <t:dgCol title="dict.code" field="typegroupcode" width="100" treefield="code" query="true"></t:dgCol>
-            <t:dgCol title="common.operation" field="opt" width="100"></t:dgCol>
-            &lt;%&ndash;<t:dgDelOpt url="systemController.do?delTypeGroup&id={id}" title="common.delete" urlclass="ace_button" urlStyle="background-color:#ec4758;" urlfont="fa-trash-o"></t:dgDelOpt>&ndash;%&gt;
-            <t:dgFunOpt funname="queryTypeValue(id,typegroupname)" title="管理" urlclass="ace_button"  urlfont="fa-search"></t:dgFunOpt>
-            &lt;%&ndash;<t:dgToolBar title="common.add.param" langArg="lang.dictionary.type" icon="fa fa-plus" url="systemController.do?aouTypeGroup" funname="add"></t:dgToolBar>
-            &lt;%&ndash;<t:dgToolBar title="common.add.param" langArg="lang.dictionary.value" icon="icon-add" funname="tBCatalogdataList_AddType"></t:dgToolBar>&ndash;%&gt;
-            <t:dgToolBar title="common.edit" icon="fa fa-edit" url="systemController.do?aouTypeGroup" funname="update"></t:dgToolBar>
-            <t:dgToolBar title="common.refreshType" icon="fa fa-refresh" url="systemController.do?refreshTypeGroupAndTypes" funname="doSubmit"></t:dgToolBar>&ndash;%&gt;
-        </t:datagrid>--%>
-
-        <%--<t:datagrid name="tBCatalogdataList" title="服务目录统计" actionUrl="tBStatisCatalogController.do?datagrid&catalogtype=${type}" idField="id" treegrid="true" pagination="false" onLoadSuccess="loadSuccess" queryMode="group" btnCls="bootstrap btn btn-info btn-xs">--%>
-        <%--<t:datagrid name="tBCatalogdataList" checkbox="false" pagination="true" treegrid="true" treeField="name" fitColumns="false" title="服务目录统计" actionUrl="tBStatisCatalogController.do?datagrid&catalogtype=${type}"  idField="id" fit="true" queryMode="group" onLoadSuccess="loadSuccess" rowStyler="mystyle">
-            <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-            <t:dgCol title="名称"  field="name" queryMode="single"  width="500"></t:dgCol>
-            <t:dgCol title="单位"  field="danwei"  queryMode="single"  width="100"></t:dgCol>
-            <t:dgCol title="父节点ID"  field="fartherid"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
-            <t:dgCol title="数量"  field="num"  hidden="true"  queryMode="single"  width="50"></t:dgCol>
-            <t:dgCol title="类型"  field="type" hidden="true" queryMode="single"  dictionary="catatype"  width="120"></t:dgCol>
-            <t:dgCol title="单价"  field="price" queryMode="single"  width="60"></t:dgCol>
-            <t:dgCol title="合计（万元）"  field="total" queryMode="single"  width="120"></t:dgCol>
-            <t:dgCol title="备注"  field="beizhu"  queryMode="single"  width="120"></t:dgCol>
-            <t:dgCol title="操作" field="opt" width="150"></t:dgCol>
-            <t:dgFunOpt funname="queryTypeValue(id,typegroupname)" title="查看使用详情" urlclass="ace_button"  urlfont="fa-search" exp="danwei#ne#"></t:dgFunOpt>
-        </t:datagrid>--%>
-        <t:datagrid name="tBCatalogdataList" checkbox="true" pagination="true" treegrid="true" fitColumns="true" title="服务目录统计" actionUrl="tBStatisCatalogController.do?datagrid&catalogtype=${type}"  idField="id" fit="true" queryMode="group">
+        <t:datagrid name="tBCatalogdataList" checkbox="true" pagination="true" treegrid="true" fitColumns="false" title="服务目录统计" actionUrl="tBStatisCatalogController.do?datagrid&catalogtype=${type}"  idField="id" fit="true" queryMode="group">
             <t:dgCol title="主键"  field="id"  hidden="true" treefield="id" queryMode="single"  width="120"></t:dgCol>
-            <t:dgCol title="名称"  field="name" treefield="text" queryMode="single"  width="260"></t:dgCol>
-            <t:dgCol title="单位"  field="danwei" treefield="fieldMap.danwei" queryMode="single"  width="50"></t:dgCol>
+            <t:dgCol title="名称"  field="name" treefield="text" queryMode="single"  width="450"></t:dgCol>
+            <t:dgCol title="单位"  field="danwei" treefield="fieldMap.danwei" queryMode="single"  width="80"></t:dgCol>
             <t:dgCol title="父节点ID"  field="fartherid"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
             <t:dgCol title="数量"  field="num"  hidden="true" treefield="fieldMap.num" queryMode="single"  width="120"></t:dgCol>
             <t:dgCol title="类型"  field="type" hidden="true" treefield="fieldMap.type" queryMode="single"  dictionary="catatype"  width="120"></t:dgCol>
-            <t:dgCol title="单价(元)"  field="price" queryMode="single" treefield="fieldMap.price"  width="50"></t:dgCol>
+            <t:dgCol title="单价(元)"  field="price" queryMode="single" treefield="fieldMap.price"  width="80"></t:dgCol>
             <t:dgCol title="合计(元)"  field="total" treefield="fieldMap.total" queryMode="single"  width="120"></t:dgCol>
             <t:dgCol title="备注"  field="beizhu"  queryMode="single" treefield="fieldMap.beizhu" width="120"></t:dgCol>
-            <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
+            <t:dgCol title="操作" field="opt" width="200"></t:dgCol>
             <t:dgFunOpt funname="queryTypeValue(id,typegroupname)" title="查看使用详情" urlclass="ace_button"  urlfont="fa-search" exp="danwei#ne#"></t:dgFunOpt>
         </t:datagrid>
     </div>

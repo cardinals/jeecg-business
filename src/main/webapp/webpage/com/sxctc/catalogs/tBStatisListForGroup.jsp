@@ -17,7 +17,7 @@
             <t:dgCol title="单位名称"  field="unitCode" query="true"  queryMode="single"  dictionary="unit_name"  width="200" align="center"></t:dgCol>
             <t:dgCol title="系统名称"  field="projectName" query="true"  queryMode="single"  width="200" align="center"></t:dgCol>
             <t:dgCol title="当年所选量"  field="sum"  queryMode="single"  width="100" align="center"></t:dgCol>
-            <t:dgCol title="总计（万元）"  field="total"  queryMode="single"  width="100" align="center"></t:dgCol>
+            <t:dgCol title="总计（元）"  field="total"  queryMode="single"  width="100" align="center"></t:dgCol>
         </t:datagrid>
     </div>
 </div>

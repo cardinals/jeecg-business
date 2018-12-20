@@ -737,7 +737,7 @@ public class UserController extends BaseController {
 				user.setDeleteFlag(Globals.Delete_Normal);
 				//默认添加为系统用户
 				user.setUserType(Globals.USER_TYPE_SYSTEM);
-				this.userService.saveOrUpdate(user, orgid.split(","), roleid.split(","));				
+				this.userService.saveOrUpdate(user, orgid.split(","), roleid.split(","));
 				message = "用户: " + user.getUserName() + "添加成功";
 				logType=Globals.Log_Type_INSERT;
 			}

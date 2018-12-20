@@ -31,6 +31,7 @@ public class MyTest {
             List<String> poolList = new ArrayList<String>();
             busiList.addAll(poolList);
 
+            System.out.println(busiList.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
