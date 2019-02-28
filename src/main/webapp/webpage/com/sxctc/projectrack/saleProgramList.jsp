@@ -7,10 +7,10 @@
 <script type="text/javascript" src="plug-in/ztree/js/jquery.ztree.core-3.5.min.js"></script>
 <script type="text/javascript" src="plug-in/ztree/js/jquery.ztree.excheck-3.5.min.js"></script>
 <div class="easyui-layout" fit="true">
-    <div data-options="region:'west',title:'销售业务人员',split:true" style="width:100px;">
+    <div data-options="region:'west',title:'销售业务人员',split:true" style="width:115px;">
         <ul id="managerList" class="ztree" ></ul>
     </div>
-    <div data-options="region:'east',title:'分析',split:true"  style="width:500px;">
+    <div data-options="region:'east',title:'分析',split:true,collapsed:true"  style="width:500px;">
         <div style="width:450px;margin:40px" id="rankOfUnit"></div>
         <div style="width:450px;margin:40px" id="gradeTotal"></div>
         <div style="width:450px;margin:40px" id="sequenceStatistics"></div>
