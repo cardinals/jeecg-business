@@ -32,7 +32,6 @@ public class UserProgramController {
     /**
      * 营销人员售前费用页面 页面跳转
      *
-     * 
      */
     @RequestMapping(params = "userProgramList")
     public ModelAndView userProjectList(HttpServletRequest request) {
@@ -60,7 +59,7 @@ public class UserProgramController {
     }
 
     /**
-     *获取销售人员列表
+     *获取销售/售前人员列表
      * 
      */
     @RequestMapping(params = "getManagerList")

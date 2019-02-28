@@ -6,7 +6,7 @@
 </style>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="tBChancePoolList" checkbox="false" pagination="true" pageSize="30" fitColumns="false" title="项目机会池" sortName="createName,unitCode" actionUrl="tBChancePoolController.do?datagrid&winningResult=0" idField="id" fit="true" queryMode="group" extendParams=""  onLoadSuccess="mergeCells">
+  <t:datagrid name="tBChancePoolList" checkbox="false" pagination="true" pageSize="30" fitColumns="false" title="项目机会池" sortName="createName,unitCode" actionUrl="tBChancePoolController.do?datagrid&winningResult=0&userType=${userType}" idField="id" fit="true" queryMode="group" extendParams=""  onLoadSuccess="mergeCells">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="创建人名称"  field="createName"  queryMode="single"  width="85" align="center"></t:dgCol>
    <t:dgCol title="创建人登录名称"  field="createBy" hidden="true" queryMode="single"  width="110" align="center"></t:dgCol>

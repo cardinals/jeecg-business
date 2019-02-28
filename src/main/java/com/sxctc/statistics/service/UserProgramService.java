@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserProgramService extends CommonService {
 
     /**
-     * 获取销售人员列表
+     * 获取销售/售前人员列表
      * @return
      */
     List<Histogram> getManagerList(String manageType);

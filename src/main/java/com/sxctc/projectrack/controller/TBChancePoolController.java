@@ -20,6 +20,7 @@ import com.sxctc.util.DateUtil;
 import com.sxctc.util.FastJsonUtil;
 import org.apache.log4j.Logger;
 import org.jeecgframework.core.util.*;
+import org.jeecgframework.web.system.pojo.base.TSRoleUser;
 import org.jeecgframework.web.system.pojo.base.TSUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -120,6 +121,7 @@ public class TBChancePoolController extends BaseController {
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
+		request.setAttribute("userType",request.getParameter("userType"));
 		return new ModelAndView("com/sxctc/projectrack/tBChancePoolList");
 	}
 
@@ -133,11 +135,17 @@ public class TBChancePoolController extends BaseController {
 
 	@RequestMapping(params = "datagrid")
 	public void datagrid(TBChancePoolEntity tBChancePool,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+		String userType = request.getParameter("userType");
 		CriteriaQuery cq = new CriteriaQuery(TBChancePoolEntity.class, dataGrid);
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBChancePool, request.getParameterMap());
 		try{
 			//自定义追加查询条件
+			if (StringUtils.isNotBlank(userType)) {
+				// 查询销售用户列表
+				List<String> salesman = tBChancePoolService.findHql("select TSUser.userName from TSRoleUser where TSRole.roleCode=?", "salesman");
+				cq.in("createBy",salesman.toArray());
+			}
 			cq.notEq("winningResult",1);
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
