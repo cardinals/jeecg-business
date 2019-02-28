@@ -7,10 +7,10 @@
 <script type="text/javascript" src="plug-in/ztree/js/jquery.ztree.core-3.5.min.js"></script>
 <script type="text/javascript" src="plug-in/ztree/js/jquery.ztree.excheck-3.5.min.js"></script>
 <div class="easyui-layout" fit="true">
-    <div data-options="region:'west',title:'销售业务人员',split:true" style="width:100px;">
+    <div data-options="region:'west',title:'销售业务人员',split:true" style="width:115px;">
         <ul id="managerList" class="ztree" ></ul>
     </div>
-    <div data-options="region:'east',title:'分析',split:true"  style="width:500px;">
+    <div data-options="region:'east',title:'分析',split:true,collapsed:true"  style="width:500px;">
         <div style="width:450px;margin:40px" id="rankOfUnit"></div>
         <div style="width:450px;margin:40px" id="gradeTotal"></div>
         <div style="width:450px;margin:40px" id="sequenceStatistics"></div>
@@ -26,8 +26,8 @@
         </div>--%>
         <t:tabs id="tabsOne" iframe="true" tabPosition="top" fit="true">
             <%--<t:tab href="tBBusinessController.do?list&optFlag=1" icon="icon-search" title="上云项目" id="tBBusinessListIframe"></t:tab>--%>
-            <t:tab href="tBChancePoolController.do?list" icon="icon-search" title="机会池" id="tBChancePoolListIframe"></t:tab>
-            <t:tab href="tBProfitTargetController.do?list" icon="icon-search" title="已签订项目" id="tBProfitTargetListIframe"></t:tab>
+            <t:tab href="tBChancePoolController.do?list&userType=1" icon="icon-search" title="机会池" id="tBChancePoolListIframe"></t:tab>
+            <t:tab href="tBProfitTargetController.do?list&userType=1" icon="icon-search" title="已签订项目" id="tBProfitTargetListIframe"></t:tab>
         </t:tabs>
     </div>
 </div>
@@ -35,8 +35,7 @@
     <!-- 激活选项卡再刷新页面需要该隐藏域 -->
     <input type="hidden" id="mainPageHiddenId">
     <select id="mainPageFrameActived" style="display:none">
-        <option value="tBBusinessList" selected="selected"></option>
-        <option value="tBChancePoolList"></option>
+        <option value="tBChancePoolList" selected="selected"></option>
         <option value="tBProfitTargetList"></option>
     </select>
 </div>
@@ -445,16 +444,16 @@
         var createBy = $("#mainPageHiddenId").val();
         var tab = $('#tabsOne').tabs('getSelected');
         var index = $('#tabsOne').tabs('getTabIndex',tab);
-        if (index == 0) {
+        /*if (index == 0) {
             $("#mainPageFrameActived").find("option[value='tBBusinessList']").attr("selected",true);
-        }
-        if (index == 1) {
+        }*/
+        if (index == 0) {
             $("#mainPageFrameActived").find("option[value='tBChancePoolList']").attr("selected",true);
             if (createBy != null && createBy !== '') {
                 sessionStorage.setItem("createBy", createBy);
             }
         }
-        if (index == 2) {
+        if (index == 1) {
             $("#mainPageFrameActived").find("option[value='tBProfitTargetList']").attr("selected",true);
         }
     });

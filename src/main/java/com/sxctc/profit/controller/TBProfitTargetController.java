@@ -114,6 +114,7 @@ public class TBProfitTargetController extends BaseController {
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
+		request.setAttribute("userType",request.getParameter("userType"));
 		return new ModelAndView("com/sxctc/profit/tBProfitTargetList");
 	}
 
@@ -127,11 +128,17 @@ public class TBProfitTargetController extends BaseController {
 
 	@RequestMapping(params = "datagrid")
 	public void datagrid(TBProfitTargetEntity tBProfitTarget,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+		String userType = request.getParameter("userType");
 		CriteriaQuery cq = new CriteriaQuery(TBProfitTargetEntity.class, dataGrid);
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, tBProfitTarget, request.getParameterMap());
 		try{
-		//自定义追加查询条件
+			//自定义追加查询条件
+			if (StringUtils.isNotBlank(userType)) {
+				// 查询销售用户列表
+				List<String> salesman = tBProfitTargetService.findHql("select TSUser.userName from TSRoleUser where TSRole.roleCode=?", "salesman");
+				cq.in("createBy",salesman.toArray());
+			}
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}

@@ -24,6 +24,7 @@ public interface UserProgramDao {
     @ResultType(Histogram.class)
     List<Histogram> getManagerList(String manageType);
 
+
     @Arguments({"userCode"})
     @ResultType(Histogram.class)
     List<Histogram> getGradeTotal(String userCode);
